@@ -7,7 +7,7 @@ Give developers a platform for easy deployment, management and monitoring of vir
 
 ## Objectives
 
-provide a web platform that makes it painless to manage the following from a web interface
+provide a platform that makes it more convenient to manage the following from a web interface
 1. Deploy a virtual machine of the user's choice quickly by filling minimal amount of details
 2. Configure firewall settings
 3. Allow console access ( Set up authentication credentials (SSH keys) for your instances )
