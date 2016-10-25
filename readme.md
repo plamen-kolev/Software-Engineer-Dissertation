@@ -2,9 +2,11 @@
 ## About Allow people to easily deploy servers and monitor their performance through a web interface
 
 ## Aims
+`High level description of the task`  
 Give developers a platform for easy deployment, management and monitoring of virtual servers
 
 ## Objectives
+
 provide a web platform that makes it painless to manage the following from a web interface
 1. Deploy a virtual machine of the user's choice quickly by filling minimal amount of details
 2. Configure firewall settings
@@ -25,10 +27,18 @@ provide a web platform that makes it painless to manage the following from a web
 - Allow importing and exporting of SSH public keys. Possible multiple auths
 - Allow web console to manage the system
 
+# Tasks
+1. Research virtualbox deployment script automation
+ - virtualbox api documentation
+ - see sample and similar scripts and see capabilities and constrains
+
+2. Create
+
 # Keywords
 Platform-as-a-Service
 System as a service
 Cloud computing
+Virtualbox
 
 # Technologies:
 1. docker
