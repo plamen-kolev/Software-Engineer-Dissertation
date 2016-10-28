@@ -93,3 +93,28 @@ Puppet and Jenkins, Octopus Deploy, Chef, Kubernetes, docker, Flynn.
 
 3. Cloud Computing Explained: Implementation Handbook for EnterprisesCloud Computing ExplainedCloud Computing Explained `John Rhoton`
  - describes the benefits and challenges of Cloud Computing and leads the reader through the process of assessing the suitability of a cloud-based approach for a given situation, calculating and justifying the investment that is required to transform the process or application, and then developing a solid design that considers the implementation as well as the ongoing operations and governance required to maintain the solution in a partially outsourced delivery model.
+
+
+ # Presentation notes
+ 1. What am I going to do
+ 2. How I am going to do it
+ 3. What will happen at the end
+ 4. Own it !
+ 5. The tools I am going to use
+ 6. Put a timeline
+
+## General notes
+1. Emphasise the important
+2. Who why when where how
+
+3. Things to tell: My project in details (80%), summary at the end 10% and questions 10%
+4. Repetition and rehersal
+5. Speak slowly (but fast when 'excited')
+6. be passionated
+7. interact with the audience(eye contact)
+
+- clear topic
+- clear and sensible plan
+- relavant background materials
+- smart Objectives
+- dont waffle
