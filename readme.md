@@ -95,7 +95,7 @@ Puppet and Jenkins, Octopus Deploy, Chef, Kubernetes, docker, Flynn.
  - describes the benefits and challenges of Cloud Computing and leads the reader through the process of assessing the suitability of a cloud-based approach for a given situation, calculating and justifying the investment that is required to transform the process or application, and then developing a solid design that considers the implementation as well as the ongoing operations and governance required to maintain the solution in a partially outsourced delivery model.
 
 
- # Presentation notes
+# Presentation notes
  1. What am I going to do
  2. How I am going to do it
  3. What will happen at the end
