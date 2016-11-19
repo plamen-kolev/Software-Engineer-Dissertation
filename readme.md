@@ -58,6 +58,27 @@ Openshift
 # Books
 
 # Research resources (Articles, Blogs, Guides)
+Virtualisation paper http://cs.gmu.edu/~menasce/papers/menasce-cmg05-virtualization.pdf
+https://www.ca.com/gb/collateral/white-papers/creating-rest-apis-to-enable-our-connected-world.register.html  
+https://blog.chef.io/2012/10/08/all-you-wanted-to-know-about-continuous-delivery-almost-webinar-whitepaper/
+http://hpe-composable-assets.mr-file-serve.com/prod/attachment/1/4AA6-1024ENW.pdf
+https://docs.chef.io/resource_bash.html
+https://learn.chef.io/tutorials/learn-the-basics/rhel/virtualbox/
+http://searchservervirtualization.techtarget.com/essentialguide/How-to-design-your-server-virtualization-infrastructure
+http://searchservervirtualization.techtarget.com/tip/Five-tips-for-building-a-VMware-virtual-infrastructure
+https://www.techopedia.com/definition/30459/virtual-infrastructure
+https://technet.microsoft.com/en-us/library/hh395484.aspx
+https://forums.virtualbox.org/viewtopic.php?f=32&t=60069
+https://turbonomic.com/free-tool-vhm-fiber-optic/?utm_source=facebook&utm_medium=social-display&utm_campaign=vhm-fiber-optic&utm_content=custom-master-desktop&utm_term=23842524981040521
+http://www.oracle.com/technetwork/server-storage/vm/ovm3-demo-vbox-1680215.pdf
+https://puppet.com/system/files/2016-07/puppet-wp-top-5-things-to-automate-with-puppet-right-now.pdf
+http://cloudcomputing.ieee.org/images/files/publications/articles/TheStateofPublicInfrastructureasaServiceCloudSecurity.pdf
+http://cloudcomputing.ieee.org/images/files/publications/articles/CC_Vulnerabilities.pdf
+https://s3.amazonaws.com/ieeecs.cdn.cci/documents/07030253.pdf
+http://www.reuters.com/article/us-intel-cloudera-idUSBREA2U0ME20140331
+http://www.intel.com/content/dam/www/public/us/en/documents/guides/cloud-computing-virtualization-building-private-iaas-guide.pdf
+https://www.quora.com/What-are-the-advantages-of-using-Linux-red-hat
+Why use bash http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_01_02.html
 
 [VBoxHeadless - Running Virtual Machines with VirtualBox 5.1 on a headless Ubuntu 16.04 LTS Server](https://www.howtoforge.com/tutorial/running-virtual-machines-with-virtualbox-5.1-on-a-headless-ubuntu-16.04-lts-server/)
 
