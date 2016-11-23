@@ -1,8 +1,8 @@
 # Web Platform for Digital Deployment of Virtual Servers  
-## About Allow people to easily deploy servers and monitor their performance through a web interface
+## About
+Allow people to easily deploy servers and monitor their performance through a web interface
 
 ## Aims
-`High level description of the task`  
 Give developers a platform for easy deployment, management and monitoring of virtual servers
 
 ## Objectives
@@ -39,11 +39,17 @@ Platform-as-a-Service
 System as a service
 Cloud computing
 Virtualbox
+Virtualisation
+
 
 # Technologies:
 1. docker
 2. kubernets
 3. flynn
+4. Chef
+5. Virtualbox
+6. bash
+7. Web API
 
 # Similar applications in the wild
 digitalocean
@@ -87,6 +93,7 @@ Openshift
 | 2016 Gartner Magic Quadrant for Enterprise Application Platform-as-a-Service Worldwide | Background | | https://www.gartner.com/technology/media-products/reprints/cybozu/277028.html?submissionGuid=607cc1a6-8d77-4532-9b4d-43fcb322a849 |
 | Create your own Heroku on EC2 with Vagrant, Docker, and Dokku | Alternatives | |http://blog.clearbit.com/ec2-heroku/ |
 | Make Your Own Heroku with Dokku and DigitalOcean | Alternatives | | https://rogerstringer.com/2015/05/13/make-your-own-heroku/ |
+|What is server virtualization?| Background | | http://www.nec.com/en/global/solutions/servervirtualization/merit.html |
 
 
 # citation example
@@ -113,27 +120,16 @@ Puppet and Jenkins, Octopus Deploy, Chef, Kubernetes, docker, Flynn.
 3. Cloud Computing Explained: Implementation Handbook for EnterprisesCloud Computing ExplainedCloud Computing Explained `John Rhoton`
  - describes the benefits and challenges of Cloud Computing and leads the reader through the process of assessing the suitability of a cloud-based approach for a given situation, calculating and justifying the investment that is required to transform the process or application, and then developing a solid design that considers the implementation as well as the ongoing operations and governance required to maintain the solution in a partially outsourced delivery model.
 
-
-# Presentation notes
- 1. What am I going to do
- 2. How I am going to do it
- 3. What will happen at the end
- 4. Own it !
- 5. The tools I am going to use
- 6. Put a timeline
-
-## General notes
-1. Emphasise the important
-2. Who why when where how
-
-3. Things to tell: My project in details (80%), summary at the end 10% and questions 10%
-4. Repetition and rehersal
-5. Speak slowly (but fast when 'excited')
-6. be passionated
-7. interact with the audience(eye contact)
-
-- clear topic
-- clear and sensible plan
-- relavant background materials
-- smart Objectives
-- dont waffle
+# Project Proposal
+Why is the project worth doing:
+1. Rise of popularity of the cloud
+2. Virtualisation removes incompatable hardware architecture bugs through the hypervisor
+3. Low cost
+4. Lowers barrier to entry
+5. Server migrations are easy
+6. Scalable
+7. Utilisation
+8. security concern
+9. definition
+10. Benefits of virtualisation
+11. APIS
