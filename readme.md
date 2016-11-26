@@ -133,3 +133,12 @@ Why is the project worth doing:
 9. definition
 10. Benefits of virtualisation
 11. APIS
+
+- why is the project worth doing
+- what is the problem I am trying to solve
+- what are the addressed needs
+- specific need it addresses
+- identify specific points where the proposed project will go beyond existing work
+- why use restful api
+- which server is best
+- redundancy, alternatives and software candidates

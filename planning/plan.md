@@ -16,7 +16,6 @@
     - (13) get familiar with Virtualbox API
   - (8) write proof of concept shell deployment script
   - (3) research Virtual Machine caching for instant deployment of Virtual Machines
-  - (3) read UFW firewall manual page
   - (3) research network/disk/CPU/temperature monitors
   - (3) Research on web frameworks for rapid development with strong API support (convention over configuration frameworks)
   - write proof of concept script that will setup login credentials automatically:
