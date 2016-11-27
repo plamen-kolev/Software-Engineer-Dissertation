@@ -53,6 +53,8 @@ Will be achieved through the virutalisation technology's API. Adds required secu
 **Relevance: ** Because the solution will include managing ports, installing applications and giving authentication tokens, it is important to be mindful of potential security threat vectors.
 
 # Diagrammatic work plan
+![gantt diagram](gantt.jpg "Logo Title Text 1")
+<img src="gantt.jpg"/>
 
 #	Explanation work plan
 
