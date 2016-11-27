@@ -4,8 +4,8 @@
 ## Abstract
 In 2016 there are currently three billion people that have access to the internet. The website google.com handles between two and three billion search queries per day [[1]](#1). Achieving such task requires full usage of the available hardware . Part of Google's ability to scale and be performant is due to the emergence of cloud infrastructure.  The topic of the paper is tightly connected with one of the building blocks of cloud computing, which is virtualisation.
 
-`EXPLAIN VIRTUALISATION`  
-Creating a platform for virtual machines enables an organisation to quickly set up any environment that can be used in a variety of cases.  Virtualisation can help solve the following problems.
+Techopedia defines the term virtualisation, as the ability of one piece of hardware to run multiple operating systems [[2]](#2).
+Creating a platform that uses such technology enables an organisation to quickly set up any environment that can be used in a variety of cases.  Virtualisation can help solve the following problems.
 
 ## Problem
 These days, it is a common place for a company to buy a computer per person which requires physical access to perform repairs and maintenance. Physical systems are also more difficult to manage due to their distributions. Another downside is hardware utilisation, a case where one machine uses maximum resources but another one is idle. The solution of this problem is virtualisation. With this technology, which is part of modern Intel processor chips, one server can run numerous operating systems concurrently. This helps with performance, as a virtual machine can be configured on the fly to use more or less resources. Another problem that my work will help to solve is .....
@@ -58,6 +58,7 @@ Will be achieved through the virutalisation technology's API. Adds required secu
 
 # References
 1. http://www.internetlivestats.com/google-search-statistics/
+2. https://www.techopedia.com/definition/719/virtualization
 
 <style>
     @import url('https://fonts.googleapis.com/css?family=Open+Sans|Raleway');

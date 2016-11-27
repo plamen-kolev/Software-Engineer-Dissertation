@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2016-11-21" view-index="0" gantt-divider-location="413" resource-divider-location="300" version="2.8.1" locale="en_GB">
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2016-09-25" view-index="0" gantt-divider-location="413" resource-divider-location="300" version="2.8.1" locale="en_US">
     <description/>
-    <view zooming-state="default:7" id="gantt-chart">
+    <view zooming-state="default:6" id="gantt-chart">
         <field id="tpd3" name="Name" width="254" order="0"/>
         <field id="tpd4" name="Begin date" width="57" order="1"/>
         <field id="tpd5" name="End date" width="98" order="2"/>
-        <option id="color.recent"><![CDATA[#ffff33 #009999 #ff0000 #990033]]></option>
+        <option id="color.recent"><![CDATA[#99ff66 #ffff33 #009999 #ff0000 #990033]]></option>
     </view>
     <view id="resource-table">
         <field id="0" name="Name" width="210" order="0"/>
@@ -52,9 +52,9 @@
         <task id="16" name="define hardware requirements" meeting="false" start="2016-11-23" duration="5" complete="0" expand="true">
             <task id="18" name="document hardware requirements" meeting="false" start="2016-11-23" duration="5" complete="0" expand="true"/>
         </task>
-        <task id="85" name="investigate virtual machine deployment" meeting="false" start="2016-12-02" duration="1" complete="0" expand="true"/>
-        <task id="89" name="investigate shell deployment script with chef" meeting="false" start="2016-12-05" duration="2" complete="0" expand="true"/>
-        <task id="90" name="write proof of concept deployment script" meeting="false" start="2016-12-15" duration="4" complete="0" expand="true"/>
+        <task id="85" name="investigate virtual machine deployment" meeting="false" start="2016-12-02" duration="2" complete="0" expand="true"/>
+        <task id="89" name="investigate shell deployment script with chef" meeting="false" start="2016-12-05" duration="5" complete="0" expand="true"/>
+        <task id="90" name="write proof of concept deployment script" meeting="false" start="2016-12-12" duration="4" complete="0" expand="true"/>
         <task id="92" name="pick web framework with strong api support" meeting="false" start="2016-12-19" duration="3" complete="0" expand="true"/>
         <task id="94" name="crismas vacation and exam preparation" color="#ff0000" meeting="false" start="2016-12-26" duration="24" complete="0" expand="true"/>
         <task id="95" name="write proof of concept credential setup script" meeting="false" start="2017-01-27" duration="6" complete="0" expand="true"/>
@@ -68,6 +68,7 @@
         <task id="283" name="create basic website features" meeting="false" start="2017-03-31" duration="6" complete="0" expand="true"/>
         <task id="354" name="create website api" meeting="false" start="2017-04-07" duration="4" complete="0" expand="true"/>
         <task id="351" name="due date" color="#ffff33" meeting="false" start="2017-05-05" duration="1" complete="0" expand="true"/>
+        <task id="355" name="easter" color="#99ff66" meeting="false" start="2017-03-27" duration="20" complete="0" expand="true"/>
     </tasks>
     <resources/>
     <allocations/>
