@@ -96,7 +96,8 @@ Openshift
 |What is server virtualization?| Background | | http://www.nec.com/en/global/solutions/servervirtualization/merit.html |
 | How To: Port Forwarding on VirtualBox | Guide ||https://github.com/CenturyLinkLabs/panamax-ui/wiki/How-To%3A-Port-Forwarding-on-VirtualBox|
 | Cloud Computing, Server Utilization, & the Environment | Background | | https://aws.amazon.com/blogs/aws/cloud-computing-server-utilization-the-environment/ |
-
+| Virtualbox network configuration ||| https://www.virtualbox.org/manual/ch06.html |
+| Chef, setup virtualmachine to manage ||| https://learn.chef.io/tutorials/learn-the-basics/ubuntu/virtualbox/set-up-a-machine-to-manage/ |
 # citation example
 `sunt in culpa qui officia deserunt mollit anim id est laborum (Menasc D. 2005).`
 
