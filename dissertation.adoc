@@ -25,3 +25,22 @@ vboxmanage guestproperty enumerate server_1 | grep  V4/IP | egrep -oh  "[0-9]{1,
 ----
 
 The command will grab only the IP of the guest.
+
+As the guest operating system, i am using ubuntu 16.04 and deploy it with a vagrant file shown below.
+[[app-listing]]
+[source,shell]
+
+----
+Vagrant.configure(2) do |config|
+    config.vm.provider "virtualbox" do |vb|
+    # very important, otherwise the vm will try to raise the
+    # cable connection that does not exist
+        vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
+    end
+end
+----
+
+I was having issues making the chef server weui accessible from the outside
+I have issue with ssl as the originator is port-forwarded : solution, make the network private instead of public
+
+https://www.digitalocean.com/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers < used this guide for some of the initial chef setup
