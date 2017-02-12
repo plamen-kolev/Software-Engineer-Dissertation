@@ -1,0 +1,97 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'commander/import'
+require 'random-word' # used for vm name generation
+require 'fileutils' # used for recursive folder creation
+require 'vagrant-wrapper'
+
+# Allowed distributions
+$distributions = {
+  'ubuntu' => 'ubuntu/xenial64',
+  'debian' => 'debian/jessie64'
+}
+
+program :name, 'deploy'
+program :version, '0.0.1'
+program :description, 'Create and destroy virtual machines'
+
+command :new do |c|
+  c.syntax = 'deploy new [options]'
+  c.summary = 'Creates a new virtual machine'
+  c.description = ''
+  c.example 'description', 'command example'
+  c.option '--username STRING',String, 'Specifies the authenticated user'
+  c.option '--password STRING',String, 'Specifies the authenticated user\'s password'
+  c.option '--distribution STRING',String, 'The distribution flavour (ubuntu, debian, etc.)'
+  c.option '--vmname STRING',String, 'The name of the machine, generates a random name if left blank'
+  c.action do |args, options|
+    
+    # VARS
+
+    options.default :vmname => "#{RandomWord.adjs.next}_#{RandomWord.adjs.next}_#{RandomWord.nouns.next}"
+
+    distribution = $distributions[options.distribution.to_s]
+    vm_directory = ["userspace",options.username, options.vmname].join('/')
+    # enforce required arguments
+
+    {'username' => options.username, 'password' => options.password, 'distribution' => options.distribution}.each do |key, value|
+      if value.to_s.empty?
+        $stderr.puts "Missing argument: --#{key},\nuse --help for detailed instructions"
+        exit 1
+      end
+    end
+
+    # generate config file name (vagrant file)
+    
+    # validate that the username and password matches
+
+    # validate that distribution is allowed
+    
+    if ! distribution
+      $stderr.puts "Distribution '#{options.distribution.to_s}' is not a recognized option,\nOptions are: #{$distributions.keys}, aborting"
+      exit 1
+    end
+
+    # validate vmname not taken
+
+    # validate folder not taken
+
+    vagrant_conf = <<HERE
+    Vagrant.configure(2) do |config|
+      config.vm.box = "#{distribution}"
+      config.vm.provider "virtualbox" do |vb|
+        vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
+         vb.name = "#{options.vmname}"
+      end
+    end
+HERE
+
+    if Dir.exists?(vm_directory)
+      $stderr.puts "Directory #{vm_directory} exists, aborting"
+      exit 1
+    else
+      FileUtils.mkdir_p(vm_directory)
+    end
+    
+    # puts vagrant_conf
+
+    # write conf file
+    File.open("#{vm_directory}/Vagrantfile", 'w') { |file| 
+      file.write(vagrant_conf)
+    }
+
+    # build machine
+    exec(
+      {
+        "VAGRANT_DOTFILE_PATH" => "#{vm_directory}/",
+        "VAGRANT_VAGRANTFILE" => "#{vm_directory}/Vagrantfile",
+      },
+      "/usr/bin/vagrant up"
+    )
+
+    $stdout.puts("Virtual machine '#{options.vmname}' created successfully for user '#{options.username}' using distribution '#{distribution}'")
+    exit 0
+
+  end
+end

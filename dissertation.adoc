@@ -44,3 +44,6 @@ I was having issues making the chef server weui accessible from the outside
 I have issue with ssl as the originator is port-forwarded : solution, make the network private instead of public
 
 https://www.digitalocean.com/community/tutorials/how-to-set-up-a-chef-12-configuration-management-system-on-ubuntu-14-04-servers < used this guide for some of the initial chef setup
+
+# creating certificate pem file
+http://www.beginninglinux.com/home/server-administration/openssh-keys-certificates-authentication-pem-pub-crt
