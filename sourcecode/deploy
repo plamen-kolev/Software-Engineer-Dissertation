@@ -1,16 +1,37 @@
 #!/usr/bin/env ruby
 
+# dependencies
+
 require 'rubygems'
 require 'commander/import'
 require 'random-word' # used for vm name generation
 require 'fileutils' # used for recursive folder creation
-require 'vagrant-wrapper'
+require 'dotenv' # reading .env files
+# require 'sqlite3'
+require 'bcrypt'
+require 'active_record'
+
+# load .env file
+Dotenv.load
 
 # Allowed distributions
 $distributions = {
   'ubuntu' => 'ubuntu/xenial64',
   'debian' => 'debian/jessie64'
 }
+
+$webserver_root = [Dir.pwd, 'deepsky'].join('/')
+
+ActiveRecord::Base.establish_connection(
+  adapter:  ENV['DATABASE_ADAPTER'], # or 'postgresql' or 'sqlite3' or 'oracle_enhanced'
+  database: [$webserver_root,'db','development.sqlite3'].join('/'),
+)
+
+class User < ActiveRecord::Base
+end
+
+class Machine < ActiveRecord::Base
+end
 
 program :name, 'deploy'
 program :version, '0.0.1'
@@ -29,7 +50,8 @@ command :new do |c|
     
     # VARS
 
-    options.default :vmname => "#{RandomWord.adjs.next}_#{RandomWord.adjs.next}_#{RandomWord.nouns.next}"
+    options.default :vmname => "#{RandomWord.adjs.next} #{RandomWord.adjs.next} #{RandomWord.nouns.next}"
+    options.vmname = options.vmname.parametarize
 
     distribution = $distributions[options.distribution.to_s]
     vm_directory = ["userspace",options.username, options.vmname].join('/')
@@ -41,10 +63,25 @@ command :new do |c|
         exit 1
       end
     end
-
-    # generate config file name (vagrant file)
     
-    # validate that the username and password matches
+    # validate that the username exists
+
+    db_user = User.where(email: options.username).take
+
+    if (not db_user) or db_user.email != options.username
+      $stderr.puts "Unable to find user '#{options.username}' in the system"
+      exit 1
+    end
+
+    # validate password match
+
+    bcrypt   = ::BCrypt::Password.new(db_user.encrypted_password)
+    password = ::BCrypt::Engine.hash_secret(options.password, bcrypt.salt)
+
+    if password != db_user.encrypted_password
+      $stderr.puts "Username or password incorrect"
+      exit 1
+    end
 
     # validate that distribution is allowed
     
@@ -54,8 +91,18 @@ command :new do |c|
     end
 
     # validate vmname not taken
+    machine = Machine.where(title: options.vmname).take
+    if machine
+      $stderr.puts "Name #{options.vmname} taken.We require unique names for each virtual machine, please use --vmname and specify name"
+      exit 1
+    end
 
     # validate folder not taken
+
+    if File.directory?(vm_directory)
+      $stderr.puts "Folder #{vm_directory} contains a virtual machine, aborting"
+      exit 1      
+    end
 
     vagrant_conf = <<HERE
     Vagrant.configure(2) do |config|
