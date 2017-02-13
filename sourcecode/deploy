@@ -10,8 +10,8 @@ require 'dotenv' # reading .env files
 require 'bcrypt'
 require 'active_record'
 require 'slugify'
-require 'faker'
 require "ipaddr" # used for incrementing ip addresses
+require "open3" # used for vm password generation
 
 
 # load .env file
@@ -40,11 +40,11 @@ program :name, 'deploy'
 program :version, '0.0.1'
 program :description, 'Create and destroy virtual machines'
 
-command :new do |c|
-  c.syntax = 'deploy new [options]'
-  c.summary = 'Creates a new virtual machine'
-  c.description = ''
-  c.example 'description', 'command example'
+command :destroy do |c|
+  c.syntax = 'deploy destroy [options]'
+  c.summary = 'Removes a virtual machine'
+  c.description = 'Removes a virtual machine'
+  c.example "Example", ""
 
   # used for authentication of the user
 
@@ -52,11 +52,64 @@ command :new do |c|
   c.option '--auth_password STRING',String, 'Specifies the authenticated user\'s password'
 
   # options for the actual virtual machine credentials, e.g. adduser foo with password bar
-  c.option '--vm_user', String, "Username of the machine"
-  c.option '--vm_password', String "Password of the machine"
-
-  c.option '--distribution STRING',String, 'The distribution flavour (ubuntu, debian, etc.)'
   c.option '--vm_name STRING',String, 'The name of the machine, generates a random name if left blank'
+  c.action do |args, options|
+
+    # VARS
+
+    distribution = $distributions[options.distribution.to_s]
+    vm_directory = [Dir.pwd, "userspace",options.auth_user, options.vm_name].join('/')
+
+    # enforce required arguments
+
+    {'auth_user' => options.auth_user, 'auth_password' => options.auth_password, 'vm_name' => options.vm_name}.each do |key, value|
+      if value.to_s.empty?
+        $stderr.puts "Missing argument: --#{key},\nuse --help for detailed instructions"
+        exit 1
+      end
+    end
+    
+    # validate user credentials
+
+    db_user = authenticated!(options.auth_user, options.auth_password)
+
+    # validate user owns virtual machine
+    machine = Machine.where(title: options.vm_name, user_id: db_user.id).take
+    if ! machine
+      $stderr.puts "No virtual machine found for user '#{options.auth_user}' with name '#{options.vm_name}'"
+      exit 1
+    end
+
+    Dir.chdir("#{vm_directory}") do
+      result = system(
+        "/usr/bin/vagrant destroy -f"
+      )
+    end
+
+    FileUtils.rm_rf("#{vm_directory}")
+    machine.destroy
+
+  end
+end
+
+command :new do |c|
+  c.syntax = 'deploy new [options]'
+  c.summary = 'Creates a new virtual machine'
+  c.description = 'Deploys a new virtual machine, sets up user and allocates public ip'
+  c.example "Example", "deploy new --auth_user local@host.com --vm_user plamen --vm_password password --auth_password password --distribution ubuntu"
+
+  # used for authentication of the user
+
+  c.option '--auth_user STRING',      String, 'Specifies the authenticated user'
+  c.option '--auth_password STRING',  String, 'Specifies the authenticated user\'s password'
+
+  # options for the actual virtual machine credentials, e.g. adduser foo with password bar
+  c.option '--vm_user STRING',        String, "Username of the machine"
+  c.option '--vm_password STRING',    String, "Password of the machine"
+
+  c.option '--distribution STRING',   String, 'The distribution flavour (ubuntu, debian, etc.)'
+  c.option '--vm_name STRING',        String, 'The name of the machine, generates a random name if left blank'
+
   c.action do |args, options|
 
     # VARS
@@ -65,7 +118,9 @@ command :new do |c|
     options.vm_name = options.vm_name.slugify
 
     distribution = $distributions[options.distribution.to_s]
-    vm_directory = ["userspace",options.auth_user, options.vm_name].join('/')
+    vm_directory = [Dir.pwd, "userspace",options.auth_user, options.vm_name].join('/')
+    vm_manifest_folder = vm_directory + '/manifests'
+
     # enforce required arguments
 
     {'vm_user' => options.vm_user, 'vm_password' => options.vm_password,'auth_user' => options.auth_user, 'auth_password' => options.auth_password, 'distribution' => options.distribution}.each do |key, value|
@@ -74,27 +129,8 @@ command :new do |c|
         exit 1
       end
     end
-    
-    # validate that the username exists
 
-    db_user = User.where(email: options.auth_user).take
-
-    if (not db_user) or db_user.email != options.auth_user
-      $stderr.puts "Unable to find user '#{options.auth_user}' in the system"
-      exit 1
-    end
-
-    # validate password match
-
-    bcrypt   = ::BCrypt::Password.new(db_user.encrypted_auth_password)
-    password = ::BCrypt::Engine.hash_secret(options.auth_password, bcrypt.salt)
-
-    if password != db_user.encrypted_password
-      $stderr.puts "Username or password incorrect"
-      exit 1
-    end
-
-    # validate that distribution is allowed
+    db_user = authenticated!(options.auth_user, options.auth_password)
     
     if ! distribution
       $stderr.puts "Distribution '#{options.distribution.to_s}' is not a recognized option,\nOptions are: #{$distributions.keys}, aborting"
@@ -109,7 +145,7 @@ command :new do |c|
       exit 1
     end
 
-    # validate folder not taken
+    # validate folder empty
 
     if File.directory?(vm_directory)
       $stderr.puts "Folder #{vm_directory} contains a virtual machine, aborting"
@@ -118,46 +154,49 @@ command :new do |c|
 
     # generate public ip
     ips = Machine.all.collect { |obj| obj.ip }
-    new_ip = generate_ip(ips)
+    ip = generate_ip(ips)
 
-    vagrant_conf = <<HERE
-    Vagrant.configure(2) do |config|
-      config.vm.box = "#{distribution}"
-      config.vm.network "public_network", ip: "#{new_ip}"
-      config.vm.provider "virtualbox" do |vb|
-        vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
-         vb.name = "#{options.vm_name}"
-      end
-    end
-HERE
+    # vagrant specific configs
+    shell_script = shell_script()
+    
+    puppet_conf = puppet_conf(vm_user: options.vm_user.to_s , vm_password: options.vm_password.to_s)
+
+    vagrant_conf = vagrant_conf(distribution: distribution, ip: ip, vm_name: options.vm_name)
     
     if Dir.exists?(vm_directory)
       $stderr.puts "Directory #{vm_directory} exists, aborting"
       exit 1
     else
-      FileUtils.mkdir_p(vm_directory)
+      FileUtils.mkdir_p(vm_manifest_folder)
     end
     
     # puts vagrant_conf
 
-    # write conf file
+    # write conf files
     File.open("#{vm_directory}/Vagrantfile", 'w') { |file| 
       file.write(vagrant_conf)
     }
+
+    File.open("#{vm_manifest_folder}/setup.sh", 'w') { |file| 
+      file.write(shell_script)
+    }
+
+    File.open("#{vm_manifest_folder}/default.pp", 'w') { |file| 
+      file.write(puppet_conf)
+    }
     
     # build machine
-    new_machine = Machine.create(title: options.vm_name, user_id: db_user.id, ip: new_ip, deployed: false)
-    result = system(
-      {
-        "VAGRANT_DOTFILE_PATH" => "#{vm_directory}/",
-        "VAGRANT_VAGRANTFILE" => "#{vm_directory}/Vagrantfile",
-      },
-      "/usr/bin/vagrant up"
-    )
+    new_machine = Machine.create(title: options.vm_name, user_id: db_user.id, ip: ip, deployed: false)
 
-    puts result.inspect
+    result = ''
+    Dir.chdir("#{vm_directory}") do
+      result = system(
+        "/usr/bin/vagrant up"
+      )
+    end
+
     if result
-      $stdout.puts("Virtual machine '#{options.vm_name}' created successfully for user '#{options.auth_user}' using distribution '#{distribution}'") 
+      $stdout.puts("Virtual machine '#{options.vm_name}' created successfully for user '#{options.auth_user}' using distribution '#{distribution}', ip: #{ip}, user: #{options.vm_user}") 
       new_machine.deployed=true
       new_machine.save
       exit 0
@@ -169,15 +208,19 @@ HERE
 end
 
 def generate_ip(ips)
-  ips.sort! { |a,b| compare_ips(a,b) }
-  # grap the last ip from the array
-  last = ips[-1]
-  addr = IPAddr.new(last)
-  begin
-    return addr.succ.to_s
-  rescue IPAddr::InvalidAddressError
-    $stderr.puts("Ip range exhausted")
-    exit 1
+  if ips.size == 0
+    return '192.168.0.50'
+  else
+    ips.sort! { |a,b| compare_ips(a,b) }
+    # grap the last ip from the array
+    last = ips[-1]
+    addr = IPAddr.new(last)
+    begin
+      return addr.succ.to_s
+    rescue IPAddr::InvalidAddressError
+      $stderr.puts("Ip range exhausted")
+      exit 1
+    end
   end
 end
 
@@ -193,3 +236,80 @@ def compare_ips(first, second)
   return 0
 end
 
+def authenticated!(username, password)
+  db_user = User.where(email: username).take
+
+    if (not db_user) or db_user.email != username
+      $stderr.puts "Unable to find user '#{username}' in the system"
+      exit 1
+    end
+
+    # validate password match
+
+    bcrypt   = ::BCrypt::Password.new(db_user.encrypted_password)
+    password = ::BCrypt::Engine.hash_secret(password, bcrypt.salt)
+
+    if password != db_user.encrypted_password
+      $stderr.puts "Username or password incorrect"
+      exit 1
+    end
+    return db_user
+end
+
+def puppet_conf(params = {})
+    
+  hash_pwd = ''
+  # Open3.popen3("mkpasswd -m sha-512 #{params[:vm_password]}") { |stdin, stdout, stderr|  
+  #   hash_pwd = stdout.read.strip # gets rid of newline
+  # }
+
+  conf = <<PUPPETCONF
+    include 'stdlib'
+
+    exec {"apt-get update":
+      command => '/usr/bin/apt-get update'
+    }
+
+    user { "#{params[:vm_user]}":
+      ensure           => 'present',
+      # gid              => '501',
+      home             => "/home/#{params[:vm_user]}",
+      password         =>   pw_hash('#{params[:vm_password]}', 'SHA-512', 'mysalt'),
+      # password_max_a ge => '99999',
+      # password_min_age => '0',
+      shell            => '/bin/bash',
+      managehome  => true,
+      system => true,
+      uid              => '501',
+    }
+PUPPETCONF
+
+  return conf
+end
+
+def vagrant_conf(params = {})
+  conf = <<VAGRANTCONF
+    Vagrant.configure(2) do |config|
+      config.vm.box = "#{params[:distribution]}"
+      config.vm.network "public_network", ip: "#{params[:ip]}"
+      config.vm.provision "shell", path: "manifests/setup.sh"
+      config.vm.provision :puppet
+
+      config.vm.provider "virtualbox" do |vb|
+        vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
+         vb.name = "#{params[:vm_name]}"
+      end
+    end
+VAGRANTCONF
+  return conf  
+end
+
+def shell_script()
+  conf = <<SHELL
+      /usr/bin/apt-get install puppet  -y
+      /usr/bin/puppet module install puppetlabs-stdlib
+      # puppet module install puppetlabs-mysql
+      # puppet module install puppetlabs-vcsrepo
+SHELL
+  return conf
+end
