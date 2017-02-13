@@ -7,9 +7,11 @@ namespace :faker do
     User.create(:email => "user2@host.com", :password => 'password', :password_confirmation => 'password')
 
     # associate machines with users
+    ip = IPAddr.new("192.168.0.50")
     (1..10).each do |n|
-      Machine.create(title: "#{Faker::Hacker.verb}_#{Faker::Hacker.verb}_#{Faker::Hacker.verb}", user_id:1)
-      Machine.create(title: "#{Faker::Hacker.verb}_#{Faker::Hacker.verb}_#{Faker::Hacker.verb}", user_id:2)
+      puts ip.succ.to_s.inspect
+      Machine.create(title: "#{Faker::Hacker.verb}_#{Faker::Hacker.verb}_#{Faker::Hacker.verb}", user_id:1, ip: ip.succ.to_s, deployed: true)
+      ip = IPAddr.new(ip.succ.to_s)
     end
   end
 

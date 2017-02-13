@@ -7,9 +7,12 @@ require 'commander/import'
 require 'random-word' # used for vm name generation
 require 'fileutils' # used for recursive folder creation
 require 'dotenv' # reading .env files
-# require 'sqlite3'
 require 'bcrypt'
 require 'active_record'
+require 'slugify'
+require 'faker'
+require "ipaddr" # used for incrementing ip addresses
+
 
 # load .env file
 Dotenv.load
@@ -42,22 +45,30 @@ command :new do |c|
   c.summary = 'Creates a new virtual machine'
   c.description = ''
   c.example 'description', 'command example'
-  c.option '--username STRING',String, 'Specifies the authenticated user'
-  c.option '--password STRING',String, 'Specifies the authenticated user\'s password'
+
+  # used for authentication of the user
+
+  c.option '--auth_user STRING',String, 'Specifies the authenticated user'
+  c.option '--auth_password STRING',String, 'Specifies the authenticated user\'s password'
+
+  # options for the actual virtual machine credentials, e.g. adduser foo with password bar
+  c.option '--vm_user', String, "Username of the machine"
+  c.option '--vm_password', String "Password of the machine"
+
   c.option '--distribution STRING',String, 'The distribution flavour (ubuntu, debian, etc.)'
-  c.option '--vmname STRING',String, 'The name of the machine, generates a random name if left blank'
+  c.option '--vm_name STRING',String, 'The name of the machine, generates a random name if left blank'
   c.action do |args, options|
-    
+
     # VARS
 
-    options.default :vmname => "#{RandomWord.adjs.next} #{RandomWord.adjs.next} #{RandomWord.nouns.next}"
-    options.vmname = options.vmname.parametarize
+    options.default :vm_name => "#{RandomWord.adjs.next} #{RandomWord.adjs.next} #{RandomWord.nouns.next}"
+    options.vm_name = options.vm_name.slugify
 
     distribution = $distributions[options.distribution.to_s]
-    vm_directory = ["userspace",options.username, options.vmname].join('/')
+    vm_directory = ["userspace",options.auth_user, options.vm_name].join('/')
     # enforce required arguments
 
-    {'username' => options.username, 'password' => options.password, 'distribution' => options.distribution}.each do |key, value|
+    {'vm_user' => options.vm_user, 'vm_password' => options.vm_password,'auth_user' => options.auth_user, 'auth_password' => options.auth_password, 'distribution' => options.distribution}.each do |key, value|
       if value.to_s.empty?
         $stderr.puts "Missing argument: --#{key},\nuse --help for detailed instructions"
         exit 1
@@ -66,17 +77,17 @@ command :new do |c|
     
     # validate that the username exists
 
-    db_user = User.where(email: options.username).take
+    db_user = User.where(email: options.auth_user).take
 
-    if (not db_user) or db_user.email != options.username
-      $stderr.puts "Unable to find user '#{options.username}' in the system"
+    if (not db_user) or db_user.email != options.auth_user
+      $stderr.puts "Unable to find user '#{options.auth_user}' in the system"
       exit 1
     end
 
     # validate password match
 
-    bcrypt   = ::BCrypt::Password.new(db_user.encrypted_password)
-    password = ::BCrypt::Engine.hash_secret(options.password, bcrypt.salt)
+    bcrypt   = ::BCrypt::Password.new(db_user.encrypted_auth_password)
+    password = ::BCrypt::Engine.hash_secret(options.auth_password, bcrypt.salt)
 
     if password != db_user.encrypted_password
       $stderr.puts "Username or password incorrect"
@@ -91,9 +102,10 @@ command :new do |c|
     end
 
     # validate vmname not taken
-    machine = Machine.where(title: options.vmname).take
+
+    machine = Machine.where(title: options.vm_name).take
     if machine
-      $stderr.puts "Name #{options.vmname} taken.We require unique names for each virtual machine, please use --vmname and specify name"
+      $stderr.puts "Name #{options.vm_name} taken.We require unique names for each virtual machine, please use --vm_name and specify name"
       exit 1
     end
 
@@ -104,16 +116,21 @@ command :new do |c|
       exit 1      
     end
 
+    # generate public ip
+    ips = Machine.all.collect { |obj| obj.ip }
+    new_ip = generate_ip(ips)
+
     vagrant_conf = <<HERE
     Vagrant.configure(2) do |config|
       config.vm.box = "#{distribution}"
+      config.vm.network "public_network", ip: "#{new_ip}"
       config.vm.provider "virtualbox" do |vb|
         vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
-         vb.name = "#{options.vmname}"
+         vb.name = "#{options.vm_name}"
       end
     end
 HERE
-
+    
     if Dir.exists?(vm_directory)
       $stderr.puts "Directory #{vm_directory} exists, aborting"
       exit 1
@@ -127,9 +144,10 @@ HERE
     File.open("#{vm_directory}/Vagrantfile", 'w') { |file| 
       file.write(vagrant_conf)
     }
-
+    
     # build machine
-    exec(
+    new_machine = Machine.create(title: options.vm_name, user_id: db_user.id, ip: new_ip, deployed: false)
+    result = system(
       {
         "VAGRANT_DOTFILE_PATH" => "#{vm_directory}/",
         "VAGRANT_VAGRANTFILE" => "#{vm_directory}/Vagrantfile",
@@ -137,8 +155,41 @@ HERE
       "/usr/bin/vagrant up"
     )
 
-    $stdout.puts("Virtual machine '#{options.vmname}' created successfully for user '#{options.username}' using distribution '#{distribution}'")
-    exit 0
+    puts result.inspect
+    if result
+      $stdout.puts("Virtual machine '#{options.vm_name}' created successfully for user '#{options.auth_user}' using distribution '#{distribution}'") 
+      new_machine.deployed=true
+      new_machine.save
+      exit 0
+    else
+      $stderr.puts("Errors were encountered: #{$?.inspect}")
+    end
 
   end
 end
+
+def generate_ip(ips)
+  ips.sort! { |a,b| compare_ips(a,b) }
+  # grap the last ip from the array
+  last = ips[-1]
+  addr = IPAddr.new(last)
+  begin
+    return addr.succ.to_s
+  rescue IPAddr::InvalidAddressError
+    $stderr.puts("Ip range exhausted")
+    exit 1
+  end
+end
+
+def compare_ips(first, second)
+  ip1 = first.split('.').map(&:to_i)
+  ip2 = second.split('.').map(&:to_i)
+  raise if ip1.size != ip2.size
+  for i in 0..ip1.size-1 do
+    if ip1[i] != ip2[i]
+      return ip1[i] <=> ip2[i]
+    end
+  end
+  return 0
+end
+
