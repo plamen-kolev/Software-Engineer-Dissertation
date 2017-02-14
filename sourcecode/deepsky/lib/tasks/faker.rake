@@ -9,8 +9,8 @@ namespace :faker do
     # associate machines with users
     ip = IPAddr.new("192.168.0.50")
     (1..10).each do |n|
-      puts ip.succ.to_s.inspect
-      Machine.create(title: "#{Faker::Hacker.verb}_#{Faker::Hacker.verb}_#{Faker::Hacker.verb}", user_id:1, ip: ip.succ.to_s, deployed: true)
+      title = "#{Faker::Hacker.verb}_#{Faker::Hacker.verb}_#{Faker::Hacker.verb}".parameterize
+      Machine.create(title: "#{title}", user_id:1, ip: ip.succ.to_s, deployed: true)
       ip = IPAddr.new(ip.succ.to_s)
     end
   end

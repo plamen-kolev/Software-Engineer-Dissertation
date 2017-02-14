@@ -3,6 +3,7 @@
 # dependencies
 
 require 'rubygems'
+require 'bundler/setup'
 require 'commander/import'
 require 'random-word' # used for vm name generation
 require 'fileutils' # used for recursive folder creation
@@ -62,12 +63,11 @@ command :destroy do |c|
 
     # enforce required arguments
 
-    {'auth_user' => options.auth_user, 'auth_password' => options.auth_password, 'vm_name' => options.vm_name}.each do |key, value|
-      if value.to_s.empty?
-        $stderr.puts "Missing argument: --#{key},\nuse --help for detailed instructions"
-        exit 1
-      end
-    end
+    valid_args!({
+      'auth_user' => options.auth_user, 
+      'auth_password' => options.auth_password, 
+      'vm_name' => options.vm_name
+    })
     
     # validate user credentials
 
@@ -89,6 +89,41 @@ command :destroy do |c|
     FileUtils.rm_rf("#{vm_directory}")
     machine.destroy
 
+  end
+end
+
+command :list do |c|
+  c.syntax = 'deploy list [options]'
+  c.summary = 'List virtual machines associated with a user'
+  c.description = 'List virtual machines associated with a user'
+  c.example "Example", ""
+
+  # used for authentication of the user
+
+  c.option '--auth_user STRING',String, 'Specifies the authenticated user'
+  c.option '--auth_password STRING',String, 'Specifies the authenticated user\'s password'
+
+  c.action do |args, options|
+
+    # VARS
+
+    # enforce required arguments
+
+    valid_args!({
+      'auth_user' => options.auth_user, 
+      'auth_password' => options.auth_password
+    })
+
+    # validate user credentials
+
+    db_user = authenticated!(options.auth_user, options.auth_password)
+    machines = Machine.where(user_id: db_user.id)
+    
+    machines.each do |machine|
+      $stdout.printf "#{machine.title} \t"
+    end
+    # adds newline for good formatting
+    $stdout.puts ""
   end
 end
 
@@ -123,12 +158,14 @@ command :new do |c|
 
     # enforce required arguments
 
-    {'vm_user' => options.vm_user, 'vm_password' => options.vm_password,'auth_user' => options.auth_user, 'auth_password' => options.auth_password, 'distribution' => options.distribution}.each do |key, value|
-      if value.to_s.empty?
-        $stderr.puts "Missing argument: --#{key},\nuse --help for detailed instructions"
-        exit 1
-      end
-    end
+    valid_args!({
+      'vm_user' => options.vm_user, 
+      'vm_password' => options.vm_password,
+      'auth_user' => options.auth_user, 
+      'auth_password' => options.auth_password, 
+      'distribution' => options.distribution
+    })
+
 
     db_user = authenticated!(options.auth_user, options.auth_password)
     
@@ -312,4 +349,13 @@ def shell_script()
       # puppet module install puppetlabs-vcsrepo
 SHELL
   return conf
+end
+
+def valid_args!(args={})
+  args.each do |key, value|
+    if value.to_s.empty?
+      $stderr.puts "Missing argument: --#{key},\nuse --help for detailed instructions"
+      exit 1
+    end
+  end
 end
