@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20170214140248) do
     t.datetime "updated_at", null: false
     t.string   "ip"
     t.boolean  "deployed"
+    t.index ["ip"], name: "index_machines_on_ip", unique: true
     t.index ["title"], name: "index_machines_on_title", unique: true
     t.index ["user_id"], name: "index_machines_on_user_id"
   end

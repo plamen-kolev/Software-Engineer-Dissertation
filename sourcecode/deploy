@@ -6,14 +6,15 @@ require 'rubygems'
 require 'bundler/setup'
 require 'commander/import'
 require 'random-word' # used for vm name generation
-require 'fileutils' # used for recursive folder creation
-require 'dotenv' # reading .env files
+require 'fileutils'   # used for recursive folder creation
+require 'dotenv'      # reading .env files
 require 'bcrypt'
 require 'active_record'
 require 'slugify'
-require "ipaddr" # used for incrementing ip addresses
-require "open3" # used for vm password generation
-
+require "ipaddr"      # used for incrementing ip addresses
+require "open3"       # used for vm password generation
+require 'socket'      # used for netmasks
+require 'resolv'      # use to check if generated ip is valid
 
 # load .env file
 Dotenv.load
@@ -184,14 +185,15 @@ command :new do |c|
 
     # generate public ip
     ips = Machine.all.collect { |obj| obj.ip }
-    ip = generate_ip(ips)
+    available_ip = generate_ip(ips)
+    $stdout.puts "Using address #{available_ip}"
 
     # vagrant specific configs
     shell_script = shell_script()
     
     puppet_conf = puppet_conf(vm_user: options.vm_user.to_s , vm_password: options.vm_password.to_s)
 
-    vagrant_conf = vagrant_conf(distribution: distribution, ip: ip, vm_name: options.vm_name)
+    vagrant_conf = vagrant_conf(distribution: distribution, ip: available_ip, vm_name: options.vm_name)
     
     if Dir.exists?(vm_directory)
       $stderr.puts "Directory #{vm_directory} exists, aborting"
@@ -199,8 +201,6 @@ command :new do |c|
     else
       FileUtils.mkdir_p(vm_manifest_folder)
     end
-    
-    # puts vagrant_conf
 
     # write conf files
     File.open("#{vm_directory}/Vagrantfile", 'w') { |file| 
@@ -216,7 +216,7 @@ command :new do |c|
     }
     
     # build machine
-    new_machine = Machine.create(title: options.vm_name, user_id: db_user.id, ip: ip, deployed: false)
+    new_machine = Machine.create(title: options.vm_name, user_id: db_user.id, ip: available_ip, deployed: false)
 
     result = ''
     Dir.chdir("#{vm_directory}") do
@@ -226,7 +226,17 @@ command :new do |c|
     end
 
     if result
-      $stdout.puts("Virtual machine '#{options.vm_name}' created successfully for user '#{options.auth_user}' using distribution '#{distribution}', ip: #{ip}, user: #{options.vm_user}") 
+      $stdout.puts <<-HERE
+#{"="*50}
+  Operation successfull:
+#{"-"*50}
+  VM NAME:\t|\t#{options.vm_name}
+  IP:\t\t|\t#{available_ip}
+  User:\t\t|\t#{options.vm_user}
+#{"-"*50}
+  Distribution:\t|\t#{distribution}
+#{"="*50}
+HERE
       new_machine.deployed=true
       new_machine.save
       exit 0
@@ -237,33 +247,30 @@ command :new do |c|
   end
 end
 
-def generate_ip(ips)
-  if ips.size == 0
-    return '192.168.0.50'
-  else
-    ips.sort! { |a,b| compare_ips(a,b) }
-    # grap the last ip from the array
-    last = ips[-1]
-    addr = IPAddr.new(last)
-    begin
-      return addr.succ.to_s
-    rescue IPAddr::InvalidAddressError
-      $stderr.puts("Ip range exhausted")
-      exit 1
-    end
-  end
-end
+def generate_ip(blacklisted_ips)
+  
+  # Your own ip address and netmask
+  # https://www.snip2code.com/Snippet/339491/Use-Ruby-to-get-your-ip-address-and-netm
+  sockips = Socket.getifaddrs.select{|ifaddr| ifaddr.addr.afamily == Socket::AF_INET && ifaddr.name == ENV['NETWORK_INTERFACE']}. \
+    map{|ifaddr| [ifaddr.addr, ifaddr.netmask].map &:ip_address}
 
-def compare_ips(first, second)
-  ip1 = first.split('.').map(&:to_i)
-  ip2 = second.split('.').map(&:to_i)
-  raise if ip1.size != ip2.size
-  for i in 0..ip1.size-1 do
-    if ip1[i] != ip2[i]
-      return ip1[i] <=> ip2[i]
-    end
-  end
-  return 0
+  # grab netmask for the specified interface
+  host_ip, netmask = sockips.first
+
+  # map to string flatters the object array to strign array
+  range = IPAddr.new("#{host_ip}/#{netmask}").to_range.map(&:to_s)
+
+  # blacklist broadcast ips ranges based on the host's ip, e.g. if the host has ip of 12.200.30.20, 12.200.30.0 and 12.200.30.255 will be blacklisted 
+  tokenized_ip = host_ip.split('.')
+  tokenized_ip.pop
+  tokenized_ip = tokenized_ip.join('.')
+  
+  blacklisted_ips += ["#{tokenized_ip}.0", "#{tokenized_ip}.255", host_ip]
+  
+  # array difference of available ips and taken ips
+  available_ips = range - blacklisted_ips
+  
+  return available_ips[-1]
 end
 
 def authenticated!(options)
@@ -281,23 +288,20 @@ def authenticated!(options)
     bcrypt   = ::BCrypt::Password.new(db_user.encrypted_password)
     password = ::BCrypt::Engine.hash_secret(options.auth_password, bcrypt.salt)
 
-    if password != db_user.encrypted_password
-      $stderr.puts "Username or password incorrect"
-      exit 1
+    unless password != db_user.encrypted_password
+      return db_user
     end
-    return db_user
   else
-    return User.where(token: options.auth_token).take
+    user = User.where(token: options.auth_token).take
+    return user if user
   end
+
+  $stderr.puts "Username or password incorrect"
+  exit 1
 end
 
 def puppet_conf(params = {})
     
-  hash_pwd = ''
-  # Open3.popen3("mkpasswd -m sha-512 #{params[:vm_password]}") { |stdin, stdout, stderr|  
-  #   hash_pwd = stdout.read.strip # gets rid of newline
-  # }
-
   conf = <<PUPPETCONF
     include 'stdlib'
 
@@ -326,7 +330,7 @@ def vagrant_conf(params = {})
   conf = <<VAGRANTCONF
     Vagrant.configure(2) do |config|
       config.vm.box = "#{params[:distribution]}"
-      config.vm.network "public_network", ip: "10.59.138.80", :bridge => '#{ENV['NETWORK_INTERFACE']}'
+      config.vm.network "public_network", ip: "#{params[:ip]}", :bridge => '#{ENV['NETWORK_INTERFACE']}'
       config.vm.provision "shell", path: "manifests/setup.sh"
       config.vm.provision :puppet
 
@@ -350,7 +354,6 @@ SHELL
 end
 
 def valid_args!(args={}, options)
-  
   errors=0
   # first, check if auth args are passed
   
