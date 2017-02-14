@@ -9,34 +9,19 @@ require 'random-word' # used for vm name generation
 require 'fileutils'   # used for recursive folder creation
 require 'dotenv'      # reading .env files
 require 'bcrypt'
-require 'active_record'
+
 require 'slugify'
 require "ipaddr"      # used for incrementing ip addresses
 require "open3"       # used for vm password generation
 require 'socket'      # used for netmasks
 require 'resolv'      # use to check if generated ip is valid
 
+require_relative 'lib/helpers'
+
 # load .env file
 Dotenv.load
 
-# Allowed distributions
-$distributions = {
-  'ubuntu' => 'ubuntu/xenial64',
-  'debian' => 'debian/jessie64'
-}
-
-$webserver_root = [Dir.pwd, 'deepsky'].join('/')
-
-ActiveRecord::Base.establish_connection(
-  adapter:  ENV['DATABASE_ADAPTER'], # or 'postgresql' or 'sqlite3' or 'oracle_enhanced'
-  database: [$webserver_root,'db','development.sqlite3'].join('/'),
-)
-
-class User < ActiveRecord::Base
-end
-
-class Machine < ActiveRecord::Base
-end
+helper = Helper::Person.new(ENV)
 
 program :name, 'deploy'
 program :version, '0.0.1'
@@ -46,6 +31,32 @@ program :description, 'Create and destroy virtual machines'
 global_option '--auth_user STRING',String, 'Specifies the authenticated user'
 global_option '--auth_password STRING',String, 'Specifies the authenticated user\'s password'
 global_option '--auth_token STRING', String, 'Instead of using user/password, use token instead'
+
+command :list do |c|
+  c.syntax = 'deploy list [options]'
+  c.summary = 'List virtual machines associated with a user'
+  c.description = 'List virtual machines associated with a user'
+  c.example "Example", ""
+
+  # used for authentication of the user
+
+  c.action do |args, options|
+
+    helper.valid_args!(options)
+
+    # validate user credentials
+
+    helper.authenticate!(options)
+    helper.fetch_machines()
+    
+    helper.machines.each do |machine|
+      $stdout.printf "#{machine.title} \t"
+    end
+
+    # adds newline for formatting
+    $stdout.puts ""
+  end
+end
 
 command :destroy do |c|
   c.syntax = 'deploy destroy [options]'
@@ -57,27 +68,24 @@ command :destroy do |c|
   c.option '--vm_name STRING',String, 'The name of the machine, generates a random name if left blank'
   c.action do |args, options|
 
-    # VARS
-
-    distribution = $distributions[options.distribution.to_s]
-    
 
     # enforce required arguments
 
-    valid_args!({
+    helper.valid_args!({
       'vm_name' => options.vm_name
     }, options)
-    
+
     # validate user credentials
 
-    db_user = authenticated!(options)
-    vm_directory = [Dir.pwd, "userspace",db_user.email, options.vm_name].join('/')
+    helper.authenticate!(options)
 
-    # validate user owns virtual machine
-    errors = 0
-    machine = Machine.where(title: options.vm_name, user_id: db_user.id).take
+    vm_directory = [Dir.pwd, "userspace",helper.user.email, options.vm_name].join('/')
+
+    # machine = Helper::Machine.where(title: options.vm_name, user_id: helper.user.id).take
+    machine = helper.get_machine(options.vm_name)
+
     if ! machine
-      $stderr.puts "No virtual machine found for user '#{db_user.email}' with name '#{options.vm_name}'"
+      $stderr.puts "No virtual machine found with name '#{options.vm_name}'"
     end
 
     if Dir.exists?(vm_directory)
@@ -97,280 +105,227 @@ command :destroy do |c|
   end
 end
 
-command :list do |c|
-  c.syntax = 'deploy list [options]'
-  c.summary = 'List virtual machines associated with a user'
-  c.description = 'List virtual machines associated with a user'
-  c.example "Example", ""
+# command :new do |c|
+#   c.syntax = 'deploy new [options]'
+#   c.summary = 'Creates a new virtual machine'
+#   c.description = 'Deploys a new virtual machine, sets up user and allocates public ip'
+#   c.example "Example", "deploy new --auth_user local@host.com --auth_password password --vm_user plamen --vm_password password --distribution ubuntu"
 
-  # used for authentication of the user
 
-  c.action do |args, options|
+#   # used for authentication of the user
 
-    # VARS
+#   # options for the actual virtual machine credentials, e.g. adduser foo with password bar
+#   c.option '--vm_user STRING',        String, "Username of the machine"
+#   c.option '--vm_password STRING',    String, "Password of the machine"
 
-    # validates credentials only
-    valid_args!(options)
+#   c.option '--distribution STRING',   String, 'The distribution flavour (ubuntu, debian, etc.)'
+#   c.option '--vm_name STRING',        String, 'The name of the machine, generates a random name if left blank'
 
-    # validate user credentials
+#   c.action do |args, options|
 
-    db_user = authenticated!(options)
-    machines = Machine.where(user_id: db_user.id)
+#     # VARS
+
+#     options.default :vm_name => "#{RandomWord.adjs.next} #{RandomWord.adjs.next} #{RandomWord.nouns.next}"
+#     options.vm_name = options.vm_name.slugify
+
+#     distribution = $distributions[options.distribution.to_s]
+
+#     # enforce required arguments
+
+#     valid_args!({
+#       'vm_user' => options.vm_user, 
+#       'vm_password' => options.vm_password,
+#       'distribution' => options.distribution
+#     }, options)
+
+
+#     db_user = authenticated!(options)
+#     vm_directory = [Dir.pwd, "userspace",db_user.email, options.vm_name].join('/')
+#     vm_manifest_folder = vm_directory + '/manifests'
     
-    machines.each do |machine|
-      $stdout.printf "#{machine.title} \t"
-    end
-    # adds newline for formatting
-    $stdout.puts ""
-  end
-end
+#     if ! distribution
+#       $stderr.puts "Distribution '#{options.distribution.to_s}' is not a recognized option,\nOptions are: #{$distributions.keys}, aborting"
+#       exit 1
+#     end
 
-command :new do |c|
-  c.syntax = 'deploy new [options]'
-  c.summary = 'Creates a new virtual machine'
-  c.description = 'Deploys a new virtual machine, sets up user and allocates public ip'
-  c.example "Example", "deploy new --auth_user local@host.com --auth_password password --vm_user plamen --vm_password password --distribution ubuntu"
+#     # validate vmname not taken
 
+#     machine = DBWrapper::Machine.where(title: options.vm_name).take
+#     if machine
+#       $stderr.puts "Name #{options.vm_name} taken.We require unique names for each virtual machine, please use --vm_name and specify name"
+#       exit 1
+#     end
 
-  # used for authentication of the user
+#     # validate folder empty
 
-  # options for the actual virtual machine credentials, e.g. adduser foo with password bar
-  c.option '--vm_user STRING',        String, "Username of the machine"
-  c.option '--vm_password STRING',    String, "Password of the machine"
+#     if File.directory?(vm_directory)
+#       $stderr.puts "Folder #{vm_directory} contains a virtual machine, aborting"
+#       exit 1      
+#     end
 
-  c.option '--distribution STRING',   String, 'The distribution flavour (ubuntu, debian, etc.)'
-  c.option '--vm_name STRING',        String, 'The name of the machine, generates a random name if left blank'
+#     # generate public ip
+#     ips = DBWrapper::Machine.all.collect { |obj| obj.ip }
+#     available_ip = generate_ip(ips)
+#     $stdout.puts "Using address #{available_ip}"
 
-  c.action do |args, options|
-
-    # VARS
-
-    options.default :vm_name => "#{RandomWord.adjs.next} #{RandomWord.adjs.next} #{RandomWord.nouns.next}"
-    options.vm_name = options.vm_name.slugify
-
-    distribution = $distributions[options.distribution.to_s]
-
-    # enforce required arguments
-
-    valid_args!({
-      'vm_user' => options.vm_user, 
-      'vm_password' => options.vm_password,
-      'distribution' => options.distribution
-    }, options)
-
-
-    db_user = authenticated!(options)
-    vm_directory = [Dir.pwd, "userspace",db_user.email, options.vm_name].join('/')
-    vm_manifest_folder = vm_directory + '/manifests'
+#     # vagrant specific configs
+#     shell_script = shell_script()
     
-    if ! distribution
-      $stderr.puts "Distribution '#{options.distribution.to_s}' is not a recognized option,\nOptions are: #{$distributions.keys}, aborting"
-      exit 1
-    end
+#     puppet_conf = puppet_conf(vm_user: options.vm_user.to_s , vm_password: options.vm_password.to_s)
 
-    # validate vmname not taken
-
-    machine = Machine.where(title: options.vm_name).take
-    if machine
-      $stderr.puts "Name #{options.vm_name} taken.We require unique names for each virtual machine, please use --vm_name and specify name"
-      exit 1
-    end
-
-    # validate folder empty
-
-    if File.directory?(vm_directory)
-      $stderr.puts "Folder #{vm_directory} contains a virtual machine, aborting"
-      exit 1      
-    end
-
-    # generate public ip
-    ips = Machine.all.collect { |obj| obj.ip }
-    available_ip = generate_ip(ips)
-    $stdout.puts "Using address #{available_ip}"
-
-    # vagrant specific configs
-    shell_script = shell_script()
+#     vagrant_conf = vagrant_conf(distribution: distribution, ip: available_ip, vm_name: options.vm_name)
     
-    puppet_conf = puppet_conf(vm_user: options.vm_user.to_s , vm_password: options.vm_password.to_s)
+#     if Dir.exists?(vm_directory)
+#       $stderr.puts "Directory #{vm_directory} exists, aborting"
+#       exit 1
+#     else
+#       FileUtils.mkdir_p(vm_manifest_folder)
+#     end
 
-    vagrant_conf = vagrant_conf(distribution: distribution, ip: available_ip, vm_name: options.vm_name)
+#     # write conf files
+#     File.open("#{vm_directory}/Vagrantfile", 'w') { |file| 
+#       file.write(vagrant_conf)
+#     }
+
+#     File.open("#{vm_manifest_folder}/setup.sh", 'w') { |file| 
+#       file.write(shell_script)
+#     }
+
+#     File.open("#{vm_manifest_folder}/default.pp", 'w') { |file| 
+#       file.write(puppet_conf)
+#     }
     
-    if Dir.exists?(vm_directory)
-      $stderr.puts "Directory #{vm_directory} exists, aborting"
-      exit 1
-    else
-      FileUtils.mkdir_p(vm_manifest_folder)
-    end
+#     # build machine
+#     new_machine = Machine.create(title: options.vm_name, user_id: db_user.id, ip: available_ip, deployed: false)
 
-    # write conf files
-    File.open("#{vm_directory}/Vagrantfile", 'w') { |file| 
-      file.write(vagrant_conf)
-    }
+#     result = ''
+#     Dir.chdir("#{vm_directory}") do
+#       result = system(
+#         "/usr/bin/vagrant up"
+#       )
+#     end
 
-    File.open("#{vm_manifest_folder}/setup.sh", 'w') { |file| 
-      file.write(shell_script)
-    }
+#     if result
+#       $stdout.puts <<-HERE
+# #{"="*50}
+#   Operation successfull:
+# #{"-"*50}
+#   VM NAME:\t|\t#{options.vm_name}
+#   IP:\t\t|\t#{available_ip}
+#   User:\t\t|\t#{options.vm_user}
+# #{"-"*50}
+#   Distribution:\t|\t#{distribution}
+# #{"="*50}
+# HERE
+#       new_machine.deployed=true
+#       new_machine.save
+#       exit 0
+#     else
+#       $stderr.puts("Errors were encountered: #{$?.inspect}")
+#     end
 
-    File.open("#{vm_manifest_folder}/default.pp", 'w') { |file| 
-      file.write(puppet_conf)
-    }
+#   end
+# end
+
+# def generate_ip(blacklisted_ips)
+  
+#   # Your own ip address and netmask
+#   # https://www.snip2code.com/Snippet/339491/Use-Ruby-to-get-your-ip-address-and-netm
+#   sockips = Socket.getifaddrs.select{|ifaddr| ifaddr.addr.afamily == Socket::AF_INET && ifaddr.name == ENV['NETWORK_INTERFACE']}. \
+#     map{|ifaddr| [ifaddr.addr, ifaddr.netmask].map &:ip_address}
+
+#   # grab netmask for the specified interface
+#   host_ip, netmask = sockips.first
+
+#   # map to string flatters the object array to strign array
+#   range = IPAddr.new("#{host_ip}/#{netmask}").to_range.map(&:to_s)
+
+#   # blacklist broadcast ips ranges based on the host's ip, e.g. if the host has ip of 12.200.30.20, 12.200.30.0 and 12.200.30.255 will be blacklisted 
+#   tokenized_ip = host_ip.split('.')
+#   tokenized_ip.pop
+#   tokenized_ip = tokenized_ip.join('.')
+  
+#   blacklisted_ips += ["#{tokenized_ip}.0", "#{tokenized_ip}.255", host_ip]
+  
+#   # array difference of available ips and taken ips
+#   available_ips = range - blacklisted_ips
+  
+#   return available_ips[-1]
+# end
+
+
+
+# def puppet_conf(params = {})
     
-    # build machine
-    new_machine = Machine.create(title: options.vm_name, user_id: db_user.id, ip: available_ip, deployed: false)
+#   conf = <<PUPPETCONF
+#     include 'stdlib'
 
-    result = ''
-    Dir.chdir("#{vm_directory}") do
-      result = system(
-        "/usr/bin/vagrant up"
-      )
-    end
+#     exec {"apt-get update":
+#       command => '/usr/bin/apt-get update'
+#     }
 
-    if result
-      $stdout.puts <<-HERE
-#{"="*50}
-  Operation successfull:
-#{"-"*50}
-  VM NAME:\t|\t#{options.vm_name}
-  IP:\t\t|\t#{available_ip}
-  User:\t\t|\t#{options.vm_user}
-#{"-"*50}
-  Distribution:\t|\t#{distribution}
-#{"="*50}
-HERE
-      new_machine.deployed=true
-      new_machine.save
-      exit 0
-    else
-      $stderr.puts("Errors were encountered: #{$?.inspect}")
-    end
+#     user { "#{params[:vm_user]}":
+#       ensure           => 'present',
+#       # gid              => '501',
+#       home             => "/home/#{params[:vm_user]}",
+#       password         =>   pw_hash('#{params[:vm_password]}', 'SHA-512', 'mysalt'),
+#       # password_max_a ge => '99999',
+#       # password_min_age => '0',
+#       shell            => '/bin/bash',
+#       managehome  => true,
+#       system => true,
+#       uid              => '501',
+#     }
+# PUPPETCONF
 
-  end
-end
+#   return conf
+# end
 
-def generate_ip(blacklisted_ips)
+# def vagrant_conf(params = {})
+#   conf = <<VAGRANTCONF
+#     Vagrant.configure(2) do |config|
+#       config.vm.box = "#{params[:distribution]}"
+#       config.vm.network "public_network", ip: "#{params[:ip]}", :bridge => '#{ENV['NETWORK_INTERFACE']}'
+#       config.vm.provision "shell", path: "manifests/setup.sh"
+#       config.vm.provision :puppet
+
+#       config.vm.provider "virtualbox" do |vb|
+#         vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
+#          vb.name = "#{params[:vm_name]}"
+#       end
+#     end
+# VAGRANTCONF
+#   return conf  
+# end
+
+# def shell_script()
+#   conf = <<SHELL
+#       /usr/bin/apt-get install puppet  -y
+#       /usr/bin/puppet module install puppetlabs-stdlib
+#       # puppet module install puppetlabs-mysql
+#       # puppet module install puppetlabs-vcsrepo
+# SHELL
+#   return conf
+# end
+
+# def valid_args!(args={}, options)
+#   errors=0
+#   # first, check if auth args are passed
   
-  # Your own ip address and netmask
-  # https://www.snip2code.com/Snippet/339491/Use-Ruby-to-get-your-ip-address-and-netm
-  sockips = Socket.getifaddrs.select{|ifaddr| ifaddr.addr.afamily == Socket::AF_INET && ifaddr.name == ENV['NETWORK_INTERFACE']}. \
-    map{|ifaddr| [ifaddr.addr, ifaddr.netmask].map &:ip_address}
-
-  # grab netmask for the specified interface
-  host_ip, netmask = sockips.first
-
-  # map to string flatters the object array to strign array
-  range = IPAddr.new("#{host_ip}/#{netmask}").to_range.map(&:to_s)
-
-  # blacklist broadcast ips ranges based on the host's ip, e.g. if the host has ip of 12.200.30.20, 12.200.30.0 and 12.200.30.255 will be blacklisted 
-  tokenized_ip = host_ip.split('.')
-  tokenized_ip.pop
-  tokenized_ip = tokenized_ip.join('.')
+#   if !((options.auth_user and options.auth_password) or options.auth_token)
+#     $stderr.puts "Missing authentication: \nUse --auth_user username --auth_password password\nOr --auth_token token,\n"
+#     errors+=1
+#   end
   
-  blacklisted_ips += ["#{tokenized_ip}.0", "#{tokenized_ip}.255", host_ip]
-  
-  # array difference of available ips and taken ips
-  available_ips = range - blacklisted_ips
-  
-  return available_ips[-1]
-end
+#   args.each do |key, value|
+#     if value.to_s.empty?
+#       $stderr.puts "Missing argument: --#{key},\n"
+#       errors+=1
+#     end
+#   end
 
-def authenticated!(options)
-
-  # using username password requires validation
-  if options.auth_user and options.auth_password
-    db_user = User.where(email: options.auth_user).take
-    if (not db_user) or db_user.email != options.auth_user
-      $stderr.puts "Username or password incorrect"
-      exit 1
-    end
-
-    # validate password match
-
-    bcrypt   = ::BCrypt::Password.new(db_user.encrypted_password)
-    password = ::BCrypt::Engine.hash_secret(options.auth_password, bcrypt.salt)
-
-    unless password != db_user.encrypted_password
-      return db_user
-    end
-  else
-    user = User.where(token: options.auth_token).take
-    return user if user
-  end
-
-  $stderr.puts "Username or password incorrect"
-  exit 1
-end
-
-def puppet_conf(params = {})
-    
-  conf = <<PUPPETCONF
-    include 'stdlib'
-
-    exec {"apt-get update":
-      command => '/usr/bin/apt-get update'
-    }
-
-    user { "#{params[:vm_user]}":
-      ensure           => 'present',
-      # gid              => '501',
-      home             => "/home/#{params[:vm_user]}",
-      password         =>   pw_hash('#{params[:vm_password]}', 'SHA-512', 'mysalt'),
-      # password_max_a ge => '99999',
-      # password_min_age => '0',
-      shell            => '/bin/bash',
-      managehome  => true,
-      system => true,
-      uid              => '501',
-    }
-PUPPETCONF
-
-  return conf
-end
-
-def vagrant_conf(params = {})
-  conf = <<VAGRANTCONF
-    Vagrant.configure(2) do |config|
-      config.vm.box = "#{params[:distribution]}"
-      config.vm.network "public_network", ip: "#{params[:ip]}", :bridge => '#{ENV['NETWORK_INTERFACE']}'
-      config.vm.provision "shell", path: "manifests/setup.sh"
-      config.vm.provision :puppet
-
-      config.vm.provider "virtualbox" do |vb|
-        vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
-         vb.name = "#{params[:vm_name]}"
-      end
-    end
-VAGRANTCONF
-  return conf  
-end
-
-def shell_script()
-  conf = <<SHELL
-      /usr/bin/apt-get install puppet  -y
-      /usr/bin/puppet module install puppetlabs-stdlib
-      # puppet module install puppetlabs-mysql
-      # puppet module install puppetlabs-vcsrepo
-SHELL
-  return conf
-end
-
-def valid_args!(args={}, options)
-  errors=0
-  # first, check if auth args are passed
-  
-  if !((options.auth_user and options.auth_password) or options.auth_token)
-    $stderr.puts "Missing authentication: \nUse --auth_user username --auth_password password\nOr --auth_token token,\n"
-    errors+=1
-  end
-  
-  args.each do |key, value|
-    if value.to_s.empty?
-      $stderr.puts "Missing argument: --#{key},\n"
-      errors+=1
-    end
-  end
-
-  if errors > 0
-    $stderr.puts "Use --help for more information"
-    exit 1 
-  end
-end
+#   if errors > 0
+#     $stderr.puts "Use --help for more information"
+#     exit 1 
+#   end
+# end
