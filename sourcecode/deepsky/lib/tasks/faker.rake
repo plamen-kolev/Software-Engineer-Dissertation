@@ -8,11 +8,15 @@ namespace :faker do
 
     # associate machines with users
     ip = IPAddr.new("192.168.0.50")
-    (1..10).each do |n|
+    (1..2).each do |n|
       title = "#{Faker::Hacker.verb}_#{Faker::Hacker.verb}_#{Faker::Hacker.verb}".parameterize
-      Machine.create(title: "#{title}", user_id:1, ip: ip.succ.to_s, deployed: true)
+      Machine.create(title: "#{title}", user_id: rand(1..2), ip: ip.succ.to_s, deployed: false)
       ip = IPAddr.new(ip.succ.to_s)
     end
+
+    u = User.where(email: 'local@host.com').take
+    u.token = 'securetoken'
+    u.save
   end
 
 end

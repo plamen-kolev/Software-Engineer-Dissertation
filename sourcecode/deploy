@@ -41,16 +41,16 @@ program :name, 'deploy'
 program :version, '0.0.1'
 program :description, 'Create and destroy virtual machines'
 
+# used for authentication of the user
+global_option '--auth_user STRING',String, 'Specifies the authenticated user'
+global_option '--auth_password STRING',String, 'Specifies the authenticated user\'s password'
+global_option '--auth_token STRING', String, 'Instead of using user/password, use token instead'
+
 command :destroy do |c|
   c.syntax = 'deploy destroy [options]'
   c.summary = 'Removes a virtual machine'
   c.description = 'Removes a virtual machine'
   c.example "Example", ""
-
-  # used for authentication of the user
-
-  c.option '--auth_user STRING',String, 'Specifies the authenticated user'
-  c.option '--auth_password STRING',String, 'Specifies the authenticated user\'s password'
 
   # options for the actual virtual machine credentials, e.g. adduser foo with password bar
   c.option '--vm_name STRING',String, 'The name of the machine, generates a random name if left blank'
@@ -59,35 +59,39 @@ command :destroy do |c|
     # VARS
 
     distribution = $distributions[options.distribution.to_s]
-    vm_directory = [Dir.pwd, "userspace",options.auth_user, options.vm_name].join('/')
+    
 
     # enforce required arguments
 
     valid_args!({
-      'auth_user' => options.auth_user, 
-      'auth_password' => options.auth_password, 
       'vm_name' => options.vm_name
-    })
+    }, options)
     
     # validate user credentials
 
-    db_user = authenticated!(options.auth_user, options.auth_password)
+    db_user = authenticated!(options)
+    vm_directory = [Dir.pwd, "userspace",db_user.email, options.vm_name].join('/')
 
     # validate user owns virtual machine
+    errors = 0
     machine = Machine.where(title: options.vm_name, user_id: db_user.id).take
     if ! machine
-      $stderr.puts "No virtual machine found for user '#{options.auth_user}' with name '#{options.vm_name}'"
-      exit 1
+      $stderr.puts "No virtual machine found for user '#{db_user.email}' with name '#{options.vm_name}'"
     end
 
-    Dir.chdir("#{vm_directory}") do
-      result = system(
-        "/usr/bin/vagrant destroy -f"
-      )
-    end
+    if Dir.exists?(vm_directory)
+      Dir.chdir("#{vm_directory}") do
+        result = system(
+          "/usr/bin/vagrant destroy -f"
+        )
 
-    FileUtils.rm_rf("#{vm_directory}")
-    machine.destroy
+      end
+
+      FileUtils.rm_rf("#{vm_directory}")
+    end
+    if machine
+      machine.destroy
+    end
 
   end
 end
@@ -100,29 +104,22 @@ command :list do |c|
 
   # used for authentication of the user
 
-  c.option '--auth_user STRING',String, 'Specifies the authenticated user'
-  c.option '--auth_password STRING',String, 'Specifies the authenticated user\'s password'
-
   c.action do |args, options|
 
     # VARS
 
-    # enforce required arguments
-
-    valid_args!({
-      'auth_user' => options.auth_user, 
-      'auth_password' => options.auth_password
-    })
+    # validates credentials only
+    valid_args!(options)
 
     # validate user credentials
 
-    db_user = authenticated!(options.auth_user, options.auth_password)
+    db_user = authenticated!(options)
     machines = Machine.where(user_id: db_user.id)
     
     machines.each do |machine|
       $stdout.printf "#{machine.title} \t"
     end
-    # adds newline for good formatting
+    # adds newline for formatting
     $stdout.puts ""
   end
 end
@@ -131,12 +128,10 @@ command :new do |c|
   c.syntax = 'deploy new [options]'
   c.summary = 'Creates a new virtual machine'
   c.description = 'Deploys a new virtual machine, sets up user and allocates public ip'
-  c.example "Example", "deploy new --auth_user local@host.com --vm_user plamen --vm_password password --auth_password password --distribution ubuntu"
+  c.example "Example", "deploy new --auth_user local@host.com --auth_password password --vm_user plamen --vm_password password --distribution ubuntu"
+
 
   # used for authentication of the user
-
-  c.option '--auth_user STRING',      String, 'Specifies the authenticated user'
-  c.option '--auth_password STRING',  String, 'Specifies the authenticated user\'s password'
 
   # options for the actual virtual machine credentials, e.g. adduser foo with password bar
   c.option '--vm_user STRING',        String, "Username of the machine"
@@ -153,21 +148,19 @@ command :new do |c|
     options.vm_name = options.vm_name.slugify
 
     distribution = $distributions[options.distribution.to_s]
-    vm_directory = [Dir.pwd, "userspace",options.auth_user, options.vm_name].join('/')
-    vm_manifest_folder = vm_directory + '/manifests'
 
     # enforce required arguments
 
     valid_args!({
       'vm_user' => options.vm_user, 
       'vm_password' => options.vm_password,
-      'auth_user' => options.auth_user, 
-      'auth_password' => options.auth_password, 
       'distribution' => options.distribution
-    })
+    }, options)
 
 
-    db_user = authenticated!(options.auth_user, options.auth_password)
+    db_user = authenticated!(options)
+    vm_directory = [Dir.pwd, "userspace",db_user.email, options.vm_name].join('/')
+    vm_manifest_folder = vm_directory + '/manifests'
     
     if ! distribution
       $stderr.puts "Distribution '#{options.distribution.to_s}' is not a recognized option,\nOptions are: #{$distributions.keys}, aborting"
@@ -273,24 +266,29 @@ def compare_ips(first, second)
   return 0
 end
 
-def authenticated!(username, password)
-  db_user = User.where(email: username).take
+def authenticated!(options)
 
-    if (not db_user) or db_user.email != username
-      $stderr.puts "Unable to find user '#{username}' in the system"
+  # using username password requires validation
+  if options.auth_user and options.auth_password
+    db_user = User.where(email: options.auth_user).take
+    if (not db_user) or db_user.email != options.auth_user
+      $stderr.puts "Username or password incorrect"
       exit 1
     end
 
     # validate password match
 
     bcrypt   = ::BCrypt::Password.new(db_user.encrypted_password)
-    password = ::BCrypt::Engine.hash_secret(password, bcrypt.salt)
+    password = ::BCrypt::Engine.hash_secret(options.auth_password, bcrypt.salt)
 
     if password != db_user.encrypted_password
       $stderr.puts "Username or password incorrect"
       exit 1
     end
     return db_user
+  else
+    return User.where(token: options.auth_token).take
+  end
 end
 
 def puppet_conf(params = {})
@@ -328,7 +326,7 @@ def vagrant_conf(params = {})
   conf = <<VAGRANTCONF
     Vagrant.configure(2) do |config|
       config.vm.box = "#{params[:distribution]}"
-      config.vm.network "public_network", ip: "#{params[:ip]}"
+      config.vm.network "public_network", ip: "10.59.138.80", :bridge => '#{ENV['NETWORK_INTERFACE']}'
       config.vm.provision "shell", path: "manifests/setup.sh"
       config.vm.provision :puppet
 
@@ -351,11 +349,25 @@ SHELL
   return conf
 end
 
-def valid_args!(args={})
+def valid_args!(args={}, options)
+  
+  errors=0
+  # first, check if auth args are passed
+  
+  if !((options.auth_user and options.auth_password) or options.auth_token)
+    $stderr.puts "Missing authentication: \nUse --auth_user username --auth_password password\nOr --auth_token token,\n"
+    errors+=1
+  end
+  
   args.each do |key, value|
     if value.to_s.empty?
-      $stderr.puts "Missing argument: --#{key},\nuse --help for detailed instructions"
-      exit 1
+      $stderr.puts "Missing argument: --#{key},\n"
+      errors+=1
     end
+  end
+
+  if errors > 0
+    $stderr.puts "Use --help for more information"
+    exit 1 
   end
 end
