@@ -26,16 +26,6 @@ CONFIG
       def write(file="")
         super("#{@path}/Vagrantfile")
       end
-
-      def write_privileges()
-        hello = <<-HEREDOC
-        asdasdasdasd sad
-        asdasdasdasdasdsad
-HEREDOC
-        puts hello
-        exit 1
-      end
-
     end
   end
 end

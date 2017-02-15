@@ -43,25 +43,6 @@ CONF
       def write(file='')
         super("#{@path}/manifests/default.pp")
       end
-
-      def setup_privileges()
-#         FileUtils.mkdir_p("#{@path}/manifests")
-
-#         privileges = <<-HERE
-#           class privileges {
-
-#             sudo::conf { 'admins':
-#               ensure  => present,
-#               content => '%admin ALL=(ALL) ALL',
-#             }
-
-#           }
-# HERE
-
-#         File.open([@root, 'manifests', 'init.pp'].join('/'), 'w') { |file| 
-#           file.write(privileges)
-#         }
-      end
     end
   end
 end

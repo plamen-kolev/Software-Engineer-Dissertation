@@ -36,7 +36,6 @@ module Helper
     def writeall(args = {})
       @shell_config.write(args[:shell])
       @puppet_config.write(args[:puppet])
-      @puppet_config.setup_privileges()
       @vagrant_config.write(args[:vagrant])
     end
   end
