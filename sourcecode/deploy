@@ -92,7 +92,7 @@ command :destroy do |c|
     if Dir.exists?(vm_directory)
       Dir.chdir("#{vm_directory}") do
         result = system(
-          "/usr/bin/vagrant destroy -f"
+          "vagrant destroy -f"
         )
 
       end

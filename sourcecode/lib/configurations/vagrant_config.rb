@@ -3,6 +3,7 @@ module Helper
     class VagrantConfig < Configuration
 
       def initialize(m_inst)
+        @root = m_inst.root
         super(m_inst)
         @vbadditions = 'config.vbguest.auto_update = false' if ! @vbadditions
         @config = <<CONFIG
@@ -25,6 +26,16 @@ CONFIG
       def write(file="")
         super("#{@path}/Vagrantfile")
       end
+
+      def write_privileges()
+        hello = <<-HEREDOC
+        asdasdasdasd sad
+        asdasdasdasdasdsad
+HEREDOC
+        puts hello
+        exit 1
+      end
+
     end
   end
 end

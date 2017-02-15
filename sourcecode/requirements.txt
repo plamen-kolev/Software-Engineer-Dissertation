@@ -1,16 +1,3 @@
 vagrant 1.9.1
 virtualbox 5.1.14
 vagrant plugin install vagrant-vbguest
-
-### BELOW IS NEEDED FOR CENTOES PRIVATE IP BUG
-Initialize a new Git Repository and add the GitHub remote:
-git init
-git remote add origin https://github.com/mitchellh/vagrant.git
-git fetch --all
-Checkout a new branch and reset it to your current release (e.g. 1.9.1).
-
-If you are unsure if you have local changes do not use --hard and do a git diff / git checkout after the reset:
-git checkout -b hotfixes
-git reset --hard v1.9.1
-Now apply the hotfix:
-git cherry-pick 96611341a96d7d19fdade5556a110b22c6add22b

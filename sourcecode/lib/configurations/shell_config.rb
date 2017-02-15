@@ -10,6 +10,8 @@ module Helper
         @config = <<CONFIG
           #{@install_puppet}
           /usr/bin/puppet module install puppetlabs-stdlib
+          /usr/bin/puppet module install saz-sudo
+
           # puppet module install puppetlabs-mysql
           # puppet module install puppetlabs-vcsrepo
 CONFIG
