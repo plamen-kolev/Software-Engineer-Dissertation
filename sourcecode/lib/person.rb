@@ -7,17 +7,7 @@ module Helper
     attr_reader :user, :password, :auth_user,:auth_password, :auth_token, :machines, :vm_name
     def initialize(env)
       super()
-      @user
-      @password
-      @auth_user
-      @auth_password
-      @auth_token
-      @machines
-      @vm_name
-
     end
-
-
 
     def is_authenticated()
       return @user.to_s.empty?

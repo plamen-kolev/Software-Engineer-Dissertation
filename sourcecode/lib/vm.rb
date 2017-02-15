@@ -5,15 +5,7 @@ module Helper
   class VM < Configurable
     attr_reader :root, :manifest, :name, :distribution, :ip, :user, :password, :vm_user, :vm_password
     
-    @owner
-    @root
-    @manifest
-    @name
-    @conf
-    @user
-    @password
-    @ip
-    @db_instance
+    # @owner, @root, @manifest, @name, @conf, @user, @password, @ip, @db_instance
 
     def initialize(args = {})
       super()
@@ -29,7 +21,7 @@ module Helper
 
       @distribution = @distributions[args[:distribution]]
       if ! @distribution
-        $stderr.puts "Distribution '#{distro}' is not a recognized option,\nOptions are: #{@distributions.keys}, aborting"
+        $stderr.puts "Distribution '#{args[:distribution]}' is not a recognized option,\nOptions are: #{@distributions.keys}, aborting"
         exit 1
       end
 
@@ -119,6 +111,10 @@ HERE
 
       # grab netmask for the specified interface
       host_ip, netmask = sockips.first
+      if not host_ip or not netmask
+        $stderr.puts("Interface '#{ENV['NETWORK_INTERFACE']}' did not return an ip or mask for the host !\nPlease check if virtual network is setup properly.")
+        exit 1
+      end
 
       # map to string flatters the object array to strign array
       range = IPAddr.new("#{host_ip}/#{netmask}").to_range.map(&:to_s)

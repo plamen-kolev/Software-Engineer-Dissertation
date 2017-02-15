@@ -1,3 +1,8 @@
 vagrant 1.9.1
 virtualbox 5.1.14
 vagrant plugin install vagrant-vbguest
+
+# If issues arise, try delete vendor and rebuild it with bundle install
+
+# Make sure that there is a host only adapter setup for virtualbox, i use 172.28.[128/129].x
+# ensure adapter env is setup approparietly
