@@ -22,4 +22,8 @@ test:
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  adapter: <%= ENV['DATABASE_ADAPTER'] %>
+  database: <%= ENV['DATABASE_DB'] %>
+  username: <%= ENV['DATABASE_USER'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: <%= ENV['DATABASE_HOST'] %>

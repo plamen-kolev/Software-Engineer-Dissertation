@@ -10,6 +10,9 @@ gem 'dotenv-rails', groups: [:development, :test]
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.7'
 gem 'devise', '~> 4.2'
 gem 'faker', '~> 1.7', '>= 1.7.3'
+gem 'mysql2', '~> 0.4.5'
+gem 'unicorn', '~> 5.2'
+gem 'figaro', '~> 1.1', '>= 1.1.1'
 # end my packages
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

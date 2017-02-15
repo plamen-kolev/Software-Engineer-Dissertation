@@ -1,6 +1,9 @@
 require_relative 'person'
 require_relative 'confmanager'
 
+require 'ipaddr'
+
+
 module Helper
   class VM < Configurable
     attr_reader :root, :manifest, :name, :distribution, :ip, :user, :password, :vm_user, :vm_password
@@ -15,9 +18,7 @@ module Helper
         'ubuntu' => 'ubuntu/xenial64',
         'debian' => 'debian/jessie64',
         'centos' => 'bento/centos-7.2'
-      } 
-      
-      @owner = args[:owner]
+      }
 
       @distribution = @distributions[args[:distribution]]
       if ! @distribution
@@ -27,7 +28,7 @@ module Helper
 
       # human friendly virtual machine name
       @name = args[:name]
-      @ip = self.generate_ip
+      @ip = self.generate_ip()
 
       # set the folder path (absolute path on the os)
       @root = [Dir.pwd, "userspace", @owner.user.email, @name].join('/')

@@ -1,3 +1,27 @@
 <div class="col-md-12 container">
-    <%= ENV['HASHING_PEPPER'] %>
+    <h1>Personal</h1>
+    <hr>
+    <p>API Key: <%= current_user.token %></p>
+
+    <h1>Machines</h1>
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>IP</th> 
+                <th>Status</th> 
+                <th>Deployed</th>
+            </tr>
+            
+            <% @machines.each do |machine| %>
+                <tr>
+                    <td><%= machine.title %></td>
+                    <td><%= machine.ip %></td> 
+                    <td></td>
+                    <td><%= machine.deployed %></td>
+                </tr>
+            <% end %>
+        </table>
+    
+        
+
 </div>

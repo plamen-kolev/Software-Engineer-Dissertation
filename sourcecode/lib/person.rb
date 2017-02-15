@@ -32,7 +32,7 @@ module Helper
       # using username password requires validation
       if options.auth_user and options.auth_password
         db_user = User.where(email: options.auth_user).take
-        if (not db_user) or db_user.email != options.auth_user
+        if (not db_user) or (db_user.email != options.auth_user)
           $stderr.puts "Username or password incorrect"
           exit 1
         end
@@ -48,8 +48,14 @@ module Helper
         end
       else
         db_user = User.where(token: options.auth_token).take
-        @user = db_user if db_user
-        return 1
+        if db_user
+          @user = db_user 
+          return 1
+        else
+          $stderr.puts "Invalid token"
+          exit 1
+        end
+        
       end
 
       $stderr.puts "Username or password incorrect"

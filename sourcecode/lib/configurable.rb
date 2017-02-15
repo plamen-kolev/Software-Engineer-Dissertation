@@ -8,10 +8,20 @@ module Helper
     def initialize
       @webroot = [Dir.pwd, 'deepsky'].join('/')
 
-      ActiveRecord::Base.establish_connection(
-        adapter:  ENV['DATABASE_ADAPTER'], # or 'postgresql' or 'sqlite3' or 'oracle_enhanced'
-        database: [@webroot,'db','development.sqlite3'].join('/'),
-      )
+      if ENV['RAILS_ENV'] == 'development'
+        ActiveRecord::Base.establish_connection(
+          adapter:  ENV['DATABASE_ADAPTER'], # or 'postgresql' or 'sqlite3' or 'oracle_enhanced'
+          database: [@webroot,'db','development.sqlite3'].join('/'),
+        )
+      else
+        ActiveRecord::Base.establish_connection(
+          :adapter  => ENV['DATABASE_ADAPTER'],
+          :host     => ENV['DATABASE_HOST'],
+          :username => ENV['DATABASE_USER'],
+          :password => ENV['DATABASE_PASSWORD'],
+          :database => ENV['DATABASE_DB']
+        )
+      end
 
     end
 

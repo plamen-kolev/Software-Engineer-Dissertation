@@ -1,3 +1,10 @@
 .bundle
 vendor/
 .env
+
+deepsky/public/assets/*
+
+deepsky/shared/log/unicorn.stderr.log
+deepsky/shared/pids/unicorn.pid
+# Ignore application configuration
+/config/application.yml

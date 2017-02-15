@@ -7,20 +7,15 @@ require 'bundler/setup'
 require 'commander/import'
 require 'random-word' # used for vm name generation
 require 'fileutils'   # used for recursive folder creation
-require 'dotenv'      # reading .env files
-require 'bcrypt'
-
+require 'figaro'
 require 'slugify'
-require "ipaddr"      # used for incrementing ip addresses
-require "open3"       # used for vm password generation
-require 'socket'      # used for netmasks
-require 'resolv'      # use to check if generated ip is valid
 
 require_relative 'lib/person'
 require_relative 'lib/vm'
 
 # load .env file
-Dotenv.load
+Figaro.application = Figaro::Application.new(environment: "production", path: "config/application.yml")
+Figaro.load
 
 helper = Helper::Person.new(ENV)
 
