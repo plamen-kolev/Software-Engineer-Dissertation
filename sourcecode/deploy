@@ -17,7 +17,7 @@ require_relative 'lib/configurable'
 
 
 # load .env file
-Figaro.application = Figaro::Application.new(environment: "test", path: "#{File.expand_path("#{File.dirname(__FILE__)}")}/config/application.yml")
+Figaro.application = Figaro::Application.new(environment: "development", path: "#{File.expand_path("#{File.dirname(__FILE__)}")}/config/application.yml")
 Figaro.load
 
 # ensures that database connection is established
@@ -57,7 +57,6 @@ command :new do |c|
     }, options)
 
     # use username password or token
-
     owner = auth(options)
 
     machine = Helper::VM.create(distribution: options.distribution, title: options.vm_name, owner: owner, user: options.vm_user, password: options.vm_password)
@@ -142,10 +141,11 @@ def valid_args!(args={}, options)
         end
       end
 
-      if errors > 0
-        $stderr.puts "Use --help for more information"
-        exit 1 
-      end
+    end
+
+    if errors > 0
+      $stderr.puts "Use --help for more information"
+      exit 1 
     end
   end
 end
