@@ -97,6 +97,25 @@ module Helper
       vm.destroy if vm
     end
 
+    def down()
+      if Dir.exists?(@root)
+        Dir.chdir("#{@root}") do
+          result = system(
+            "vagrant halt"
+          )
+        end
+      end
+    end
+
+    def up()
+      if Dir.exists?(@root)
+        Dir.chdir("#{@root}") do
+          result = system(
+            "vagrant up"
+          )
+        end
+      end
+    end
     def build()
       FileUtils.mkdir_p(@manifest)
       @configuration.writeall(shell: "#{@manifest}/setup.sh", vagrant: "#{@root}/Vagrantfile", puppet: "#{@manifest}/default.pp")
