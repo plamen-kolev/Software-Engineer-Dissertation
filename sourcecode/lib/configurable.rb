@@ -4,24 +4,36 @@ require_relative 'configurable'
 module Helper
   class Configurable
     attr_reader :webroot
-    
+
+    # used to initialize db only once    
+    @@db_init=0
+
     def initialize
-      @webroot = [Dir.pwd, 'deepsky'].join('/')
+      
+      if @@db_init == 0
 
-      if ENV['RAILS_ENV'] == 'development'
-        ActiveRecord::Base.establish_connection(
-          adapter:  ENV['DATABASE_ADAPTER'], # or 'postgresql' or 'sqlite3' or 'oracle_enhanced'
-          database: [@webroot,'db','development.sqlite3'].join('/'),
-        )
+        @webroot = [Dir.pwd, 'deepsky'].join('/')
 
-      else
-        ActiveRecord::Base.establish_connection(
-          :adapter  => ENV['DATABASE_ADAPTER'],
-          :host     => ENV['DATABASE_HOST'],
-          :username => ENV['DATABASE_USER'],
-          :password => ENV['DATABASE_PASSWORD'],
-          :database => ENV['DATABASE_DB']
-        )
+        if ENV['RAILS_ENV'] == 'development'
+          ActiveRecord::Base.establish_connection(
+            adapter:  ENV['DATABASE_ADAPTER'], # or 'postgresql' or 'sqlite3' or 'oracle_enhanced'
+            database: [@webroot,'db','development.sqlite3'].join('/'),
+          )
+        elsif ENV['RAILS_ENV'] == 'test'
+          ActiveRecord::Base.establish_connection(
+            adapter:  ENV['DATABASE_ADAPTER'], # or 'postgresql' or 'sqlite3' or 'oracle_enhanced'
+            database: [@webroot,'db','test.sqlite3'].join('/'),
+          )
+        else
+          ActiveRecord::Base.establish_connection(
+            :adapter  => ENV['DATABASE_ADAPTER'],
+            :host     => ENV['DATABASE_HOST'],
+            :username => ENV['DATABASE_USER'],
+            :password => ENV['DATABASE_PASSWORD'],
+            :database => ENV['DATABASE_DB']
+          )
+        end
+        @@db_init = 1
       end
 
     end
