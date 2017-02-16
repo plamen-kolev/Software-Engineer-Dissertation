@@ -10,14 +10,14 @@ require 'fileutils'   # used for recursive folder creation
 require 'figaro'
 require 'slugify'
 
-require_relative 'lib/person'
+require_relative 'lib/user'
 require_relative 'lib/vm'
 
 # load .env file
 Figaro.application = Figaro::Application.new(environment: "production", path: "config/application.yml")
 Figaro.load
 
-helper = Helper::Person.new(ENV)
+helper = Helper::User.new(ENV)
 
 program :name, 'deploy'
 program :version, '0.0.1'

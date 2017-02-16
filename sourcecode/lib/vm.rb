@@ -1,4 +1,4 @@
-require_relative 'person'
+require_relative 'user'
 require_relative 'confmanager'
 
 require 'ipaddr'

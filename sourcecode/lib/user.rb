@@ -4,7 +4,7 @@ require_relative 'configurable'
 
 module Helper
 
-  class Person < Configurable
+  class User < Configurable
     attr_reader :user, :password, :auth_user,:auth_password, :auth_token, :machines, :vm_name
     def initialize(env)
       super()
@@ -32,7 +32,7 @@ module Helper
 
       # using username password requires validation
       if options.auth_user and options.auth_password
-        db_user = User.where(email: options.auth_user).take
+        db_user = DB::User.where(email: options.auth_user).take
         if (not db_user) or (db_user.email != options.auth_user)
           $stderr.puts "Username or password incorrect"
           exit 1
@@ -48,7 +48,7 @@ module Helper
           return 1
         end
       else
-        db_user = User.where(token: options.auth_token).take
+        db_user = DB::User.where(token: options.auth_token).take
         if db_user
           @user = db_user 
           return 1

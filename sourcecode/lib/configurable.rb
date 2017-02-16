@@ -13,6 +13,7 @@ module Helper
           adapter:  ENV['DATABASE_ADAPTER'], # or 'postgresql' or 'sqlite3' or 'oracle_enhanced'
           database: [@webroot,'db','development.sqlite3'].join('/'),
         )
+
       else
         ActiveRecord::Base.establish_connection(
           :adapter  => ENV['DATABASE_ADAPTER'],
@@ -51,10 +52,14 @@ module Helper
 
   end
 
-  class User < ActiveRecord::Base
-  end
+  
 
   class Machine < ActiveRecord::Base
+  end
+end
+
+module DB
+  class User < ActiveRecord::Base
   end
 end
 
