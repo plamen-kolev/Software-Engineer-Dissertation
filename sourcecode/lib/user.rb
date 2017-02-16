@@ -39,7 +39,7 @@ module Helper
         db_user = DB::User.where(email: options[:email]).take
         if (not db_user) or (db_user.email != options[:email])
           $stderr.puts "Username or password incorrect"
-          return 0
+          return false
         end
 
         # validate password match
@@ -61,7 +61,7 @@ module Helper
           return self.new(id: @user.id, email: @user.email, token: @user.token)
         else
           $stderr.puts "Invalid token"
-          return 0
+          return false
         end
         
       end
