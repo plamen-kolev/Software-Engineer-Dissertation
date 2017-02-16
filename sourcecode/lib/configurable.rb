@@ -12,17 +12,17 @@ module Helper
       
       if @@db_init == 0
 
-        @webroot = [Dir.pwd, 'deepsky'].join('/')
+        @sqlite_root = "#{File.expand_path("#{File.dirname(__FILE__)}")}/../db/"
 
         if ENV['RAILS_ENV'] == 'development'
           ActiveRecord::Base.establish_connection(
             adapter:  ENV['DATABASE_ADAPTER'], # or 'postgresql' or 'sqlite3' or 'oracle_enhanced'
-            database: [@webroot,'db','development.sqlite3'].join('/'),
+            database: [@sqlite_root,'development.sqlite3'].join('/'),
           )
         elsif ENV['RAILS_ENV'] == 'test'
           ActiveRecord::Base.establish_connection(
             adapter:  ENV['DATABASE_ADAPTER'], # or 'postgresql' or 'sqlite3' or 'oracle_enhanced'
-            database: [@webroot,'db','test.sqlite3'].join('/'),
+            database: [@sqlite_root,'test.sqlite3'].join('/'),
           )
         else
           ActiveRecord::Base.establish_connection(

@@ -14,7 +14,7 @@ require_relative 'lib/user'
 require_relative 'lib/vm'
 
 # load .env file
-Figaro.application = Figaro::Application.new(environment: "production", path: "config/application.yml")
+Figaro.application = Figaro::Application.new(environment: "development", path: "#{File.expand_path("#{File.dirname(__FILE__)}")}/config/application.yml")
 Figaro.load
 
 helper = Helper::User.new(ENV)
