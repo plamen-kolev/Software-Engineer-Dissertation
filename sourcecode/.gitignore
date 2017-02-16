@@ -1,7 +1,9 @@
 .bundle
+.byebug_history
 vendor/
 .env
 
+db/*.sqlite3
 deepsky/public/assets/*
 
 deepsky/shared/log/unicorn.stderr.log

@@ -3,11 +3,16 @@ require 'bcrypt'
 require_relative 'configurable'
 
 module Helper
-
+  
   class User < Configurable
-    attr_reader :user, :password, :auth_user,:auth_password, :auth_token, :machines, :vm_name
-    def initialize(env)
+    attr_reader :id, :email, :token
+
+    def initialize(args = {email: nil, token:nil})
       super()
+
+      @email = args[:email] if args[:email]
+      @id = args[:id]
+      @token = args[:token] if args[:token]
     end
 
     def is_authenticated()
@@ -15,7 +20,7 @@ module Helper
     end
 
     def fetch_machines
-      @machines = Helper::Machine.where(user_id: @user.id)
+      @machines = DB::Machine.where(user_id: @id)
     end
 
     def get_machine(name)
@@ -28,33 +33,35 @@ module Helper
       return
     end
 
-    def authenticate!(options)
-
+    def self.authenticate(options = {})
       # using username password requires validation
-      if options.auth_user and options.auth_password
-        db_user = DB::User.where(email: options.auth_user).take
-        if (not db_user) or (db_user.email != options.auth_user)
+      if options[:email] and options[:password]
+        db_user = DB::User.where(email: options[:email]).take
+        if (not db_user) or (db_user.email != options[:email])
           $stderr.puts "Username or password incorrect"
-          exit 1
+          return 0
         end
 
         # validate password match
 
         bcrypt   = ::BCrypt::Password.new(db_user.encrypted_password)
-        password = ::BCrypt::Engine.hash_secret(options.auth_password, bcrypt.salt)
+        password = ::BCrypt::Engine.hash_secret(options.password, bcrypt.salt)
 
         unless password != db_user.encrypted_password
           @user = db_user
-          return 1
+          return self.new(id: @user.id, email: @user.email, token: @user.token)
         end
+      
+      # otherwise fetch by token
       else
-        db_user = DB::User.where(token: options.auth_token).take
+        db_user = DB::User.where(token: options[:token]).take
+
         if db_user
-          @user = db_user 
-          return 1
+          @user = db_user
+          return self.new(id: @user.id, email: @user.email, token: @user.token)
         else
           $stderr.puts "Invalid token"
-          exit 1
+          return 0
         end
         
       end

@@ -12,12 +12,16 @@ require 'slugify'
 
 require_relative 'lib/user'
 require_relative 'lib/vm'
+require_relative 'lib/configurable'
+
+
 
 # load .env file
-Figaro.application = Figaro::Application.new(environment: "development", path: "#{File.expand_path("#{File.dirname(__FILE__)}")}/config/application.yml")
+Figaro.application = Figaro::Application.new(environment: "test", path: "#{File.expand_path("#{File.dirname(__FILE__)}")}/config/application.yml")
 Figaro.load
 
-helper = Helper::User.new(ENV)
+# ensures that database connection is established
+Helper::Configurable.new
 
 program :name, 'deploy'
 program :version, '0.0.1'
@@ -27,6 +31,39 @@ program :description, 'Create and destroy virtual machines'
 global_option '--auth_user STRING',String, 'Specifies the authenticated user'
 global_option '--auth_password STRING',String, 'Specifies the authenticated user\'s password'
 global_option '--auth_token STRING', String, 'Instead of using user/password, use token instead'
+
+command :new do |c|
+  c.syntax = 'deploy new [options]'
+  c.summary = 'Creates a new virtual machine'
+  c.description = 'Deploys a new virtual machine, sets up user and allocates public ip'
+  c.example "Example", "deploy new --auth_user local@host.com --auth_password password --vm_user plamen --vm_password password --distribution ubuntu"
+  # used for authentication of the user
+  # options for the actual virtual machine credentials, e.g. adduser foo with password bar
+  c.option '--vm_user STRING',        String, "Username of the machine"
+  c.option '--vm_password STRING',    String, "Password of the machine"
+  c.option '--distribution STRING',   String, 'The distribution flavour (ubuntu, debian, etc.)'
+  c.option '--vm_name STRING',        String, 'The name of the machine, generates a random name if left blank'
+  c.action do |args, options|
+
+    # VARS
+
+    options.default :vm_name => "#{RandomWord.adjs.next} #{RandomWord.adjs.next} #{RandomWord.nouns.next}"
+    options.vm_name = options.vm_name.slugify
+
+    valid_args!({
+      'vm_user' => options.vm_user, 
+      'vm_password' => options.vm_password,
+      'distribution' => options.distribution
+    }, options)
+
+    # use username password or token
+
+    owner = auth(options)
+
+    machine = Helper::VM.create(distribution: options.distribution, title: options.vm_name, owner: owner, user: options.vm_user, password: options.vm_password)
+    machine.build()
+  end
+end
 
 command :list do |c|
   c.syntax = 'deploy list [options]'
@@ -38,14 +75,11 @@ command :list do |c|
 
   c.action do |args, options|
 
-    helper.valid_args!(options)
+    valid_args!(options)
 
-    # validate user credentials
-
-    helper.authenticate!(options)
-    helper.fetch_machines()
-    
-    helper.machines.each do |machine|
+    owner = auth(options)
+    machines = owner.fetch_machines()
+    machines.each do |machine|
       $stdout.printf "#{machine.title} \t"
     end
 
@@ -64,95 +98,64 @@ command :destroy do |c|
   c.option '--vm_name STRING',String, 'The name of the machine, generates a random name if left blank'
   c.action do |args, options|
 
-
     # enforce required arguments
 
-    helper.valid_args!({
+    valid_args!({
       'vm_name' => options.vm_name
     }, options)
 
-    # validate user credentials
-
-    helper.authenticate!(options)
-
-    vm_directory = [Dir.pwd, "userspace",helper.user.email, options.vm_name].join('/')
-
-    # machine = Helper::Machine.where(title: options.vm_name, user_id: helper.user.id).take
-    machine = helper.get_machine(options.vm_name)
-
-    if ! machine
-      $stderr.puts "No virtual machine found with name '#{options.vm_name}'"
-    end
-
-    if Dir.exists?(vm_directory)
-      Dir.chdir("#{vm_directory}") do
-        result = system(
-          "vagrant destroy -f"
-        )
-
-      end
-
-      FileUtils.rm_rf("#{vm_directory}")
-    end
-    if machine
-      machine.destroy
-    end
-
+    Helper::VM.get(title: options.vm_name, owner: auth(options)).destroy
   end
 end
 
-command :new do |c|
-  c.syntax = 'deploy new [options]'
-  c.summary = 'Creates a new virtual machine'
-  c.description = 'Deploys a new virtual machine, sets up user and allocates public ip'
-  c.example "Example", "deploy new --auth_user local@host.com --auth_password password --vm_user plamen --vm_password password --distribution ubuntu"
-
-  # used for authentication of the user
-
-  # options for the actual virtual machine credentials, e.g. adduser foo with password bar
-  c.option '--vm_user STRING',        String, "Username of the machine"
-  c.option '--vm_password STRING',    String, "Password of the machine"
-
-  c.option '--distribution STRING',   String, 'The distribution flavour (ubuntu, debian, etc.)'
-  c.option '--vm_name STRING',        String, 'The name of the machine, generates a random name if left blank'
-
-  c.action do |args, options|
-
-    # VARS
-
-    options.default :vm_name => "#{RandomWord.adjs.next} #{RandomWord.adjs.next} #{RandomWord.nouns.next}"
-    options.vm_name = options.vm_name.slugify
-
-    helper.valid_args!({
-      'vm_user' => options.vm_user, 
-      'vm_password' => options.vm_password,
-      'distribution' => options.distribution
-    }, options)
-
-    helper.authenticate!(options)
-    machine = Helper::VM.new(distribution: options.distribution, name: options.vm_name, owner: helper, user: options.vm_user, password: options.vm_password)
-
-    # validate vmname not taken
-
-    if machine.in_db?
-      $stderr.puts "Name #{options.vm_name} taken.We require unique names for each virtual machine, please use --vm_name and specify name"
-      exit 1
-    end
-
-    # validate folder empty
-
-    if machine.in_dir?
-      $stderr.puts "Folder #{machine.root} contains a virtual machine, aborting"
-      exit 1      
-    end
-
-    $stdout.puts "Using address #{machine.ip}"
-    
-    if machine.build()
-      exit 0
-    else
-      exit 1
-    end
-
+def valid_args!(args={}, options)
+  errors=0
+  # first, check if auth args are passed
+  
+  if !((options.auth_user and options.auth_password) or options.auth_token)
+    $stderr.puts "Missing authentication: \nUse --auth_user username --auth_password password\nOr --auth_token token,\n"
+    errors+=1
   end
+  
+  args.each do |key, value|
+    if value.to_s.empty?
+      $stderr.puts "Missing argument: --#{key},\n"
+      errors+=1
+    else
+      errors=0
+      # first, check if auth args are passed
+      
+      if ! options.auth_user and ! options.auth_password and ! options.auth_token
+        $stderr.puts "No authentication parameters passed: \nUse --auth_user username --auth_password password\nOr --auth_token token,\n"
+        errors+=1
+      end
+
+      if !((options.auth_user and options.auth_password) or options.auth_token)
+        $stderr.puts "Missing authentication: \nUse --auth_user username --auth_password password\nOr --auth_token token,\n"
+        errors+=1
+      end
+      
+      args.each do |key, value|
+        if value.to_s.empty?
+          $stderr.puts "Missing argument: --#{key},\n"
+          errors+=1
+        end
+      end
+
+      if errors > 0
+        $stderr.puts "Use --help for more information"
+        exit 1 
+      end
+    end
+  end
+end
+
+def auth(options)
+  owner = nil
+  if options.auth_user && options.auth_password
+    owner = Helper::User::authenticate(email: options.auth_user, password: options.auth_password)
+  else
+    owner = Helper::User::authenticate(token: options.auth_token)
+  end
+  return owner
 end

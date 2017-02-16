@@ -17,7 +17,7 @@ module Helper
           #{@vbadditions}
           config.vm.provider "virtualbox" do |vb|
             vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
-             vb.name = "#{m_inst.name}"
+             vb.name = "#{m_inst.title}"
           end
         end
 CONFIG
