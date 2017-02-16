@@ -6,14 +6,32 @@ require 'ipaddr'
 
 module Helper
   class VM < Configurable
-    attr_reader :root, :manifest, :name, :distribution, :ip, :user, :password, :vm_user, :vm_password
+    attr_reader :root, :manifest, :name, :distribution, :ip, :user, :password, :vm_user, :vm_password, :valid
     
+
     # @owner, @root, @manifest, @name, @conf, @user, @password, @ip, @db_instance
+    @valid = true
 
     def initialize(args = {})
       super()
-
+      # validation
       @owner = args[:owner]
+      # check if user is valid and exists in database
+      
+      if @owner.class != Helper::User
+        $stderr.puts "Expecting Helper::User object, got #{@owner.class}"
+        # exit 1
+        @valid = false
+        return 0
+      else
+        if ! DB::User.find(@owner.user_id)
+          $stderr.puts "Invalid user"
+          @valid = false
+          return 0
+        end
+      end
+      
+
       # allowed list of distros
       @distributions = {
         'ubuntu' => 'ubuntu/xenial64',
@@ -24,7 +42,8 @@ module Helper
       @distribution = @distributions[args[:distribution]]
       if ! @distribution
         $stderr.puts "Distribution '#{args[:distribution]}' is not a recognized option,\nOptions are: #{@distributions.keys}, aborting"
-        exit 1
+        # exit 1
+        exit 0
       end
 
       # human friendly virtual machine name
