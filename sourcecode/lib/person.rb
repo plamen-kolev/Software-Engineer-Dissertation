@@ -1,4 +1,5 @@
 require 'active_record'
+require 'bcrypt'
 require_relative 'configurable'
 
 module Helper

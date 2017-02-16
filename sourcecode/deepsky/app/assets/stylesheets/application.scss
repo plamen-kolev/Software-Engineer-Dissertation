@@ -17,3 +17,11 @@
 // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+.machines td{
+    min-width: 120px;
+}
+
+.oddrow{
+    background: #e9e9e9;;
+}

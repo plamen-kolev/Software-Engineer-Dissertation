@@ -13,6 +13,7 @@ module Helper
     def initialize(args = {})
       super()
 
+      @owner = args[:owner]
       # allowed list of distros
       @distributions = {
         'ubuntu' => 'ubuntu/xenial64',

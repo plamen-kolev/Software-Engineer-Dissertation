@@ -132,7 +132,6 @@ command :new do |c|
     helper.authenticate!(options)
     machine = Helper::VM.new(distribution: options.distribution, name: options.vm_name, owner: helper, user: options.vm_user, password: options.vm_password)
 
-    
     # validate vmname not taken
 
     if machine.in_db?
