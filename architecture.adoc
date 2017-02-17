@@ -1,0 +1,50 @@
+[plantuml, diagram-classes, svg]
+....
+skinparam monochrome true
+
+class Helper::Configurable
+class Helper::Configuration
+class Helper::Confmanager
+class Helper::Config::PuppetConfig
+class Helper::Config::ShellConfig
+class Helper::Config::VagrantConfig
+
+class Helper::DISTRIBUTION::PuppetConfig
+class Helper::DISTRIBUTION::ShellConfig
+class Helper::DISTRIBUTION::VagrantConfig
+
+class Helper::User{
+    Integer id
+    String email
+    String token
+}
+
+class Helper::VM{
+    Helper::User owner
+    String distribution
+    String title
+    String ip
+    String root
+    String manifest
+    Helper::Configuration configuration
+}
+
+class Helper::Environment << (S,#FF7700) Singleton >>
+
+Helper::Configurable o-- Helper::Environment
+Helper::Configuration <|-- Helper::Configurable
+Helper::Confmanager <|-- Helper::Configurable
+Helper::User <|-- Helper::Configurable
+Helper::VM <|-- Helper::Configurable
+Helper::VM o-- Helper::User
+Helper::VM *-- Helper::Configuration
+Helper::Configuration *-- Helper::DISTRIBUTION::ShellConfig
+Helper::Configuration *-- Helper::DISTRIBUTION::VagrantConfig
+Helper::Configuration *-- Helper::DISTRIBUTION::PuppetConfig
+
+Helper::DISTRIBUTION::ShellConfig <|-- class Helper::Config::ShellConfig
+Helper::DISTRIBUTION::PuppetConfig <|-- class Helper::Config::PuppetConfig
+Helper::DISTRIBUTION::VagrantConfig <|-- class Helper::Config::VagrantConfig
+
+
+....
