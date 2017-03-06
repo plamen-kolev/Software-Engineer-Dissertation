@@ -1,5 +1,29 @@
-# CSC3095:Project and Dissertation in Computing Science
-Plamen Kolev
+# CSC3095:Web Platform for Digital Deployment of Virtual Servers
+BSc Computer Science
+by Plamen Kolev
+Project Supervisor: Dr. Neil Speirs
+
+## Abstract
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----
+GUTTER
+----
+
+// # CSC3095:Project and Dissertation in Computing Science
+// Plamen Kolev
 
 ## Virtualbox networking
 

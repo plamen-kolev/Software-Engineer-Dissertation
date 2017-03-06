@@ -75,6 +75,9 @@ Openshift
 | How to design your server virtualization infrastructure | Background | Design basic guide | Techtarget. How to design your server virtualization infrastructure. (n.d.). Retrieved November 19, 2016 from http://searchservervirtualization.techtarget.com/essentialguide/How-to-design-your-server-virtualization-infrastructure |
 | Five tips for building a VMware virtual infrastructure | Guide | tips | Davis D. (2013). Five tips for building a VMware virtual infrastructure. Retrieved November 19, 2016 from http://searchservervirtualization.techtarget.com/tip/Five-tips-for-building-a-VMware-virtual-infrastructure |
 | Virtual Infrastructure | Definition | word definition | https://www.techopedia.com/definition/30459/virtual-infrastructure |
+| Server consolidation | Definition | word definition | http://searchdatacenter.techtarget.com/definition/server-consolidation |
+| Server sprawl | Definition | word definition | http://searchdatacenter.techtarget.com/definition/server-sprawl |
+
 | Virtualization: Build an IT Lab for Virtual Machines | Guide |  | https://technet.microsoft.com/en-us/library/hh395484.aspx |
 | Hyperbox - Manage your VirtualBox infrastructure! | Management || https://forums.virtualbox.org/viewtopic.php?f=32&t=60069 |
 | Free Virtualization Monitoring. Unlimited. Forever. | Monitoring | | https://turbonomic.com/free-tool-vhm-fiber-optic/?utm_source=facebook&utm_medium=social-display&utm_campaign=vhm-fiber-optic&utm_content=custom-master-desktop&utm_term=23842524981040521 |
@@ -83,6 +86,9 @@ Openshift
 |The State of Public Infrastructure-as-a-Service Cloud Security| Concerns | | http://cloudcomputing.ieee.org/images/files/publications/articles/TheStateofPublicInfrastructureasaServiceCloudSecurity.pdf |
 |Understanding Cloud Computing Vulnerabilities | Concerns | | 6.	IEEE (2011). Understanding Cloud Computing Vulnerabilities. Retrieved November 27, 2016, from http://cloudcomputing.ieee.org/images/files/publications/articles/CC_Vulnerabilities.pdf |
 | Heterogeneous Cloud Computing: The Way Forward | Background | | https://s3.amazonaws.com/ieeecs.cdn.cci/documents/07030253.pdf |
+| Server Consolidation | Background | | http://www.vmware.com/solutions/consolidation.html |
+| Virtualization Overview | Background | | https://www.vmware.com/pdf/virtualization.pdf |
+| VMware Infrastructure Architecture Overview | Background | | https://www.vmware.com/pdf/vi_architecture_wp.pdf |
 | Intel invested $740 million to buy 18 percent of Cloudera | Background | | http://www.reuters.com/article/us-intel-cloudera-idUSBREA2U0ME20140331 |
 | Virtualization and Cloud Computing | Background | | http://www.intel.com/content/dam/www/public/us/en/documents/guides/cloud-computing-virtualization-building-private-iaas-guide.pdf |
 | What are the advantages of using Linux red hat? | UNIX integration | | https://www.quora.com/What-are-the-advantages-of-using-Linux-red-hat |
