@@ -1,5 +1,31 @@
+
+
+1. Environment
+
+ - production, development, testing
+ - different virtual machine interfaces for private networks
+ - using figaro load to determine current environment
+ - the deployment script and webserver share database
+
+2. The deployment script
+
+  - deploy new
+  - deploy list
+  - deploy up
+  - deploy down
+  - deploy destroy
+
+3. Webserver login
+4. Obtaining configuration for different distributions
+5. Testing with unittest
+6. File structure with configurations
+7. Different virtual interfaces, generating the netmask and obtianing new ip
+8. The command line interface
+9. Error checking
+
 [plantuml, diagram-classes, svg]
 ....
+
 skinparam monochrome true
 
 class Helper::Configurable
