@@ -109,7 +109,7 @@ Openshift
 # citation example
 `sunt in culpa qui officia deserunt mollit anim id est laborum (Menasc D. 2005).`
 | Shell provisioner for Test Kitchen | Testing vagrant| || https://www.morethanseven.net/2014/01/12/shell-provisioner-for-test-kitchen/ |
-
+| Book about virtualisation | | |  http://ac.els-cdn.com.libproxy.ncl.ac.uk/B9781597495929000026/3-s2.0-B9781597495929000026-main.pdf?_tid=f2676874-04ef-11e7-b28f-00000aab0f6b&acdnat=1489081606_0a7d482eb21fa80e894a65d537b3736f |
 ---
 # Needs further research
 
