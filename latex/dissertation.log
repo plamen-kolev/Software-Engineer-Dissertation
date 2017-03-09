@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.3.6)  9 MAR 2017 18:16
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.3.6)  9 MAR 2017 20:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -280,22 +280,11 @@ used, duplicate ignored
 <to be read again> 
                    \relax 
 l.46   \newpage
-                [2]
-
-Package natbib Warning: Author undefined for citation`SecuringtheCloud' 
-(natbib)                on page  on input line 51.
-
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no ú in font cmr10!
-Missing character: There is no ‚ in font cmr10!
-Missing character: There is no Ä in font cmr10!
-Missing character: There is no ù in font cmr10!
-pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
-een already used, duplicate ignored
+                [2]pdfTeX warning (ext4): destination with the same identifier 
+(name{page.}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.57   \newpage
+l.49   \newpage
                 [3] (./dissertation.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 6.
@@ -309,7 +298,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.59   \newpage
+l.51   \newpage
                 [4] (./dissertation.lof)
 \tf@lof=\write5
 \openout5 = `dissertation.lof'.
@@ -318,8 +307,27 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.61   \newpage
-                [5] [1] [2] [3] [4] [5] [6] [7] (./dissertation.bbl) [8]
+l.53   \newpage
+                [5]
+
+Package natbib Warning: Author undefined for citation`SecuringtheCloud' 
+(natbib)                on page 1 on input line 62.
+
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ú in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ù in font cmr10!
+[1]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 83.
+ (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 83.
+ [2] [3] [4]
+[5] [6] [7] (./dissertation.bbl) [8]
 
 LaTeX Warning: Overwriting file `./research.bib'.
 
@@ -327,27 +335,27 @@ LaTeX Warning: Overwriting file `./research.bib'.
 
 
 LaTeX Warning: Writing text ` ' before \end{filecontents*}
-               as last line of research.bib on input line 151.
+               as last line of research.bib on input line 180.
 
 
 LaTeX Warning: Tab has been converted to Blank Space.
 
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 154.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 183.
 [9]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 154.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 183.
  (./dissertation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 154.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 154.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 183.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 183.
 Package rerunfilecheck Info: File `dissertation.out' has not changed.
-(rerunfilecheck)             Checksum: EDA558C7D8CD58933789372311C5527C;1610.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 154.
+(rerunfilecheck)             Checksum: 960A4616D1702C49FBAC997A451C691D;1494.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 183.
  ) 
 Here is how much of TeX's memory you used:
- 6240 strings out of 494946
- 89112 string characters out of 6180982
- 183799 words of memory out of 5000000
- 9452 multiletter control sequences out of 15000+600000
+ 6263 strings out of 494946
+ 89445 string characters out of 6180982
+ 182814 words of memory out of 5000000
+ 9467 multiletter control sequences out of 15000+600000
  8241 words of font info for 29 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  29i,6n,35p,774b,332s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -356,11 +364,12 @@ r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on dissertation.pdf (14 pages, 106533 bytes).
+fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmti10.pfb>
+Output written on dissertation.pdf (14 pages, 114129 bytes).
 PDF statistics:
- 255 PDF objects out of 1000 (max. 8388607)
- 230 compressed objects within 3 object streams
- 46 named destinations out of 1000 (max. 500000)
- 233 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 258 PDF objects out of 1000 (max. 8388607)
+ 232 compressed objects within 3 object streams
+ 51 named destinations out of 1000 (max. 500000)
+ 217 words of extra memory for PDF output out of 10000 (max. 10000000)
 
