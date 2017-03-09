@@ -5,19 +5,25 @@
 \date{03.03.2017}
 \author{Plamen Kolev}
 
+% USERPACKAGES
 \usepackage{hyperref}
+\usepackage{color}
+\usepackage[english]{babel}
+\usepackage[dvipsnames]{xcolor}
+% ENDUSERPACKAGES
+
+\definecolor{Mycolor2}{HTML}{333333}
 \hypersetup{
     colorlinks,
     citecolor=blue,
     filecolor=blue,
-    linkcolor=blue,
+    linkcolor=Mycolor2,
     urlcolor=blue
 }
 
 \begin{document}
   \pagenumbering{gobble}
   \maketitle
-  \newpage
 
   \newpage
   \section{Declaration}
@@ -28,7 +34,11 @@
 
   \newpage
   \section{Abstract}
-
+  In 2016 there are currently three billion people that have access to the internet.The website google.com handles between two and three billion search queries per day (InternetLiveStats 2016). Handling so many requests on daily basis requires full usage of the available hardware. Part of Google's ability to scale and be performant is due to the emergence of cloud infrastructure. The topic of the paper is tightly connected with one of the building blocks of cloud computing, which is virtualisation.
+  
+  The term virtualisation is defined as the ability of one piece of hardware to run multiple operating systems (Techopedia Inc. 2014). In this paper, a virtual machine, or an instance, is an operating system that runs on top of a "physical" operating system. The “physical” operating system is often referred to as the “host” system. Creating a platform that uses such technology enables an organisation to quickly set up any environment (operating system) that can be used in a variety of cases. Virtualisation can help solve the following problems.
+	 
+  \newpage
   \tableofcontents
   \newpage
   \listoffigures
@@ -37,8 +47,25 @@
 
   \newpage
   \section{Introduction}
+  These days, it is a common place for a company to buy a high performing computer per employee which requires physical access to perform repairs and maintenance. Physical systems are also more difficult to manage due to their non-central distribution. Another downside is hardware utilisation, a case where one machine uses maximum resources but another one is idle. Virtualisation technology is integrated into modern Intel processor chips allows a server to run numerous operating systems concurrently. This helps with performance, as a virtual machine can be configured on the fly to use flexible amount of resources or even grab flexible resources from a shared pool. This technology also allows for easy server migration, a physical machine cannot be moved within couple of minutes to a different continent. Physical infrastructure is also prone to hardware-related bugs, as a distributed software solution might not have been tested on all possible computing nodes that run it.
+  
   \subsection{Purpouse}
+   The project aims to utilise open-source virtualisation technology and make the process of managing and creating virtual machines automated through a web interface. A system manager should be able to open a website, fill in a web form with enough information about the desired operating system, click a button and create it. The manager should also be able to obtain and generate credentials for that machine, as well as mark common packages for installation on it. The solution should also show performance statistics and allow for network port management. These features, alongside the benefits of virtualisation should create a strong and secure infrastructure for many applications, from virtual office workstation, to server testing and deployment.
   \subsection{Aim and Objectives}
+	  \subsection{Aim}
+	  Give developers a platform for easy deployment, management and monitoring of virtual servers
+	  \subsection{Objectives}
+	  Deploy a virtual machine of the user's choice through shell scripts The main feature of the solution is the deployment of the virtual machine instances. The
+	  following will be achieved by using Oracle's virtualisation documentation for Virtualbox and
+	  the shell scripting language and the automation tool chef.
+	  2. Configure firewall settings
+	  Will be achieved through the virtualisation technology's API. Will add extra security layer to
+	  the guest operating system.
+	  3. Allow console access and set up authentication credentials (SSH keys) for the instances
+	  The main usage of the application is to obtain a shell access to the virtual machine
+	  4. Monitor disk/CPU usage of the virtual instances
+	  5. Allow the user to install software from a predefined list
+	  6. Create a website that will manage and create the machines on the behalf of the user
   \subsection{Outline}
 
   \newpage
