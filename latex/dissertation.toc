@@ -26,6 +26,5 @@
 \contentsline {section}{\numberline {8}Evaluation}{6}{section.8}
 \contentsline {section}{\numberline {9}Conclusion}{7}{section.9}
 \contentsline {section}{\numberline {10}References}{8}{section.10}
-\contentsline {section}{\numberline {11}References}{9}{section.11}
-\contentsline {section}{\numberline {12}Glossary}{10}{section.12}
-\contentsline {section}{\numberline {13}Appendix}{11}{section.13}
+\contentsline {section}{\numberline {11}Glossary}{8}{section.11}
+\contentsline {section}{\numberline {12}Appendix}{9}{section.12}
