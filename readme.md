@@ -77,7 +77,6 @@ Openshift
 | Virtual Infrastructure | Definition | word definition | https://www.techopedia.com/definition/30459/virtual-infrastructure |
 | Server consolidation | Definition | word definition | http://searchdatacenter.techtarget.com/definition/server-consolidation |
 | Server sprawl | Definition | word definition | http://searchdatacenter.techtarget.com/definition/server-sprawl |
-
 | Virtualization: Build an IT Lab for Virtual Machines | Guide |  | https://technet.microsoft.com/en-us/library/hh395484.aspx |
 | Hyperbox - Manage your VirtualBox infrastructure! | Management || https://forums.virtualbox.org/viewtopic.php?f=32&t=60069 |
 | Free Virtualization Monitoring. Unlimited. Forever. | Monitoring | | https://turbonomic.com/free-tool-vhm-fiber-optic/?utm_source=facebook&utm_medium=social-display&utm_campaign=vhm-fiber-optic&utm_content=custom-master-desktop&utm_term=23842524981040521 |
@@ -106,10 +105,13 @@ Openshift
 | Virtualbox network configuration ||| https://www.virtualbox.org/manual/ch06.html |
 | Chef, setup virtualmachine to manage ||| https://learn.chef.io/tutorials/learn-the-basics/ubuntu/virtualbox/set-up-a-machine-to-manage/ |
 | Provision a New Linux Dev Environment in Nothing Flat with Puppet | | | https://www.linux.com/news/provision-new-Linux-dev-environment-nothing-flat-puppet |
-# citation example
-`sunt in culpa qui officia deserunt mollit anim id est laborum (Menasc D. 2005).`
 | Shell provisioner for Test Kitchen | Testing vagrant| || https://www.morethanseven.net/2014/01/12/shell-provisioner-for-test-kitchen/ |
 | Book about virtualisation | | |  http://ac.els-cdn.com.libproxy.ncl.ac.uk/B9781597495929000026/3-s2.0-B9781597495929000026-main.pdf?_tid=f2676874-04ef-11e7-b28f-00000aab0f6b&acdnat=1489081606_0a7d482eb21fa80e894a65d537b3736f |
+| IBM Virtualisation about hypervisors/supervisors | | | http://www.redbooks.ibm.com/redpapers/pdfs/redp4396.pdf |
+
+# citation example
+`sunt in culpa qui officia deserunt mollit anim id est laborum (Menasc D. 2005).`
+
 ---
 # Needs further research
 
