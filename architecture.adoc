@@ -58,19 +58,19 @@ class Helper::VM{
 class Helper::Environment << (S,#FF7700) Singleton >>
 
 Helper::Configurable o-- Helper::Environment
-Helper::Configuration <|-- Helper::Configurable
-Helper::Confmanager <|-- Helper::Configurable
-Helper::User <|-- Helper::Configurable
-Helper::VM <|-- Helper::Configurable
+Helper::Configurable <|-- Helper::Configuration
+Helper::Configurable <|-- Helper::Confmanager
+Helper::Configurable <|-- Helper::User
+Helper::Configurable <|-- Helper::VM
 Helper::VM o-- Helper::User
 Helper::VM *-- Helper::Configuration
 Helper::Configuration *-- Helper::DISTRIBUTION::ShellConfig
 Helper::Configuration *-- Helper::DISTRIBUTION::VagrantConfig
 Helper::Configuration *-- Helper::DISTRIBUTION::PuppetConfig
 
-Helper::DISTRIBUTION::ShellConfig <|-- class Helper::Config::ShellConfig
-Helper::DISTRIBUTION::PuppetConfig <|-- class Helper::Config::PuppetConfig
-Helper::DISTRIBUTION::VagrantConfig <|-- class Helper::Config::VagrantConfig
+class Helper::Config::ShellConfig  <|-- Helper::DISTRIBUTION::ShellConfig
+class Helper::Config::PuppetConfig <|-- Helper::DISTRIBUTION::PuppetConfig
+class Helper::Config::VagrantConfig <|-- Helper::DISTRIBUTION::VagrantConfig
 
 
 ....

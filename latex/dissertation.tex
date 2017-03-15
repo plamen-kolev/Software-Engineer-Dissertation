@@ -17,7 +17,8 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage{ifthen}
-\usepackage{tikz-uml}
+\usepackage{pgf-umlcd}
+
 % ENDUSERPACKAGES
 
 % CUSTOM MACROS
@@ -175,20 +176,48 @@ When considering the architecture of the system, a list of factors were the driv
 
 Because the Ruby language draws inspiraction and shares similar features with perl, it makes it a great modern and powerful language to use in this domain-specific problem.
 
+\begin{tikzpicture}
+\begin{package}{Helper}
+
+\begin{class}[text width = 3cm]{Configurable}{0,5}
+\end{class}
+
+\begin{class}[text width = 3cm]{VM}{0 ,15}
+\attribute{ owner : Helper::User }
+\inherit{Configurable}
+\attribute{ configuration : Helper::Configuration }
+\attribute{ distribution : String }
+\attribute{ title : String }			
+\attribute{ ip : String }
+\attribute{ root : String }
+\attribute{ manifest : String }
+\end{class}
+
+\begin{class}[text width = 3cm]{User}{0,10}
+\attribute{ id : String }		
+\inherit{Configurable}
+\attribute{ email : String }		
+\attribute{ token : String }		
+\end{class}
+
+\begin{class}[text width = 3cm]{Confmanager}{-5,10}
+\inherit{Configurable}
+\end{class}
+
+\begin{class}[text width = 3cm]{Configuration}{-3,10}
+\inherit{Configurable}
+\end{class}
 
 
-\begin { tikzpicture }
-\begin { class }[ text width =8 cm ]{ ClassName }{0 ,0}
-\attribute { name : attribute type }
-\attribute { name : attribute type = default value }
-\operation { name ( parameter list ) : type of value
-	returned }
-% virtual operation
-\operation [0]{ name ( parameters list ) : type of
-	value returned }
-\end { class }
-\end { tikzpicture }
 
+\begin{class}[text width = 3cm]{Environment}{0,0}
+\end{class}
+
+\aggregation{User}{owner}{1}{VM}
+\aggregation{Configurable}{environment}{1}{Environment}
+\end{package}
+
+\end{tikzpicture}
 
   \newpage
   \section{Testing}
