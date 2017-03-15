@@ -17,6 +17,7 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage{ifthen}
+\usepackage{tikz-uml}
 % ENDUSERPACKAGES
 
 % CUSTOM MACROS
@@ -168,6 +169,25 @@ The tool is called Vagrant by Hashicorp, a company specialising in easy virtual 
 		\item 
 			Allow \gls{ssh} access
 	\end{itemize}
+
+\subsection{Architecture}
+When considering the architecture of the system, a list of factors were the driving factor when building the solution. I wanted to ensure that The solution has as little moving parts as possible, which will allow it to be flexible and extensible. For that purpouse I chose the programming language ruby, as it is a suitable language for system automation. Its suitability comes from the available tools vagrant and puppet which allow end-to end integration when it comes to automation. The ruby programming language also draws inspiration from the Perl programming languge. One of the Perl's strengths is its ability to be a more powerfull shell scripting language. This is the case as it has quick syntax for executing shell scripts directly and get STDOUT, STDERR and exit-codes quickly. It does also has native implementation of common unix tools, like grep, wget and awk.
+
+Because the Ruby language draws inspiraction and shares similar features with perl, it makes it a great modern and powerful language to use in this domain-specific problem.
+
+
+
+\begin { tikzpicture }
+\begin { class }[ text width =8 cm ]{ ClassName }{0 ,0}
+\attribute { name : attribute type }
+\attribute { name : attribute type = default value }
+\operation { name ( parameter list ) : type of value
+	returned }
+% virtual operation
+\operation [0]{ name ( parameters list ) : type of
+	value returned }
+\end { class }
+\end { tikzpicture }
 
 
   \newpage

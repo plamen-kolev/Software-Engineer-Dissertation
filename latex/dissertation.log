@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9) (preloaded format=pdflatex 2017.3.6)  13 MAR 2017 12:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9) (preloaded format=pdflatex 2017.3.6)  15 MAR 2017 11:02
 entering extended mode
 **./dissertation.tex
 (dissertation.tex
@@ -476,171 +476,27 @@ LaTeX Info: Redefining \cite on input line 694.
 LaTeX Info: Redefining \citenum on input line 708.
 \c@NAT@ctr=\count139
 )
-\glswrite=\write3
-\glo@main@file=\write4
-\openout4 = `dissertation.glo'.
 
-Package glossaries Info: Writing glossary file dissertation.glo on input line 2
-4.
-Package hyperref Info: Option `colorlinks' set `true' on input line 36.
- (dissertation.aux)
-\openout1 = `dissertation.aux'.
+! LaTeX Error: File `tikz-uml.sty' not found.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 59.
-LaTeX Font Info:    ... okay on input line 59.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 59.
-LaTeX Font Info:    ... okay on input line 59.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 59.
-LaTeX Font Info:    ... okay on input line 59.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 59.
-LaTeX Font Info:    ... okay on input line 59.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 59.
-LaTeX Font Info:    ... okay on input line 59.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 59.
-LaTeX Font Info:    ... okay on input line 59.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 59.
-LaTeX Font Info:    ... okay on input line 59.
-\AtBeginShipoutBox=\box33
-Package hyperref Info: Link coloring ON on input line 59.
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
 
-("C:\Users\b3022196\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\namere
-f.sty"
-Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
+Enter file name: 
+! Emergency stop.
+<read *> 
+         
+l.22 
+      
+*** (cannot \read from terminal in nonstop modes)
 
-("C:\Users\b3022196\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\gett
-itlestring.sty"
-Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
-)
-\c@section@level=\count140
-)
-LaTeX Info: Redefining \ref on input line 59.
-LaTeX Info: Redefining \pageref on input line 59.
-LaTeX Info: Redefining \nameref on input line 59.
- (dissertation.out) (dissertation.out)
-\@outlinefile=\write5
-\openout5 = `dissertation.out'.
-
- (dissertation.glsdefs)
-("C:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
-[Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count141
-\scratchdimen=\dimen129
-\scratchbox=\box34
-\nofMPsegments=\count142
-\nofMParguments=\count143
-\everyMPshowfont=\toks31
-\MPscratchCnt=\count144
-\MPscratchDim=\dimen130
-\MPnumerator=\count145
-\makeMPintoPDFobject=\count146
-\everyMPtoPDFconversion=\toks32
-) [1
-
-\openout3 = `dissertation.ist'.
-
-{C:/Users/b3022196/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]pdfTeX wa
-rning (ext4): destination with the same identifier (name{page.}) has been alrea
-dy used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.70   \newpage
-                [2]pdfTeX warning (ext4): destination with the same identifier 
-(name{page.}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.73   \newpage
-                [3] (dissertation.toc)
-\tf@toc=\write6
-\openout6 = `dissertation.toc'.
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
-een already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.75   \newpage
-                [4] (dissertation.lof)
-\tf@lof=\write7
-\openout7 = `dissertation.lof'.
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
-een already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.77   \newpage
-                [5]
-
-Package natbib Warning: Author undefined for citation`SecuringtheCloud' 
-(natbib)                on page 1 on input line 86.
-
-Missing character: There is no Â in font cmr10!
-Missing character: There is no © in font cmr10!
-[1]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 112.
-
-
-("C:\Users\b3022196\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\omscmr.fd"
-File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 112.
- [2] [3] [4] [5] [6] [7] [8] [9] (dissertation.bbl)
-No file dissertation.gls.
-[10]
-
-LaTeX Warning: Overwriting file `./research.bib'.
-
-\openout15 = `research.bib'.
-
-
-LaTeX Warning: Writing text ` ' before \end{filecontents*}
-               as last line of research.bib on input line 233.
-
-
-LaTeX Warning: Tab has been converted to Blank Space.
-
-
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 236.
-[11]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 236.
- (dissertation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 236.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 236.
-Package rerunfilecheck Info: File `dissertation.out' has not changed.
-(rerunfilecheck)             Checksum: 0BD67A128E29F8E0CE8B3786B96E88D8;1632.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 236.
- ) 
+ 
 Here is how much of TeX's memory you used:
- 10758 strings out of 493333
- 158395 string characters out of 3128842
- 315194 words of memory out of 3000000
- 14057 multiletter control sequences out of 15000+200000
- 9369 words of font info for 34 fonts, out of 3000000 for 9000
+ 9970 strings out of 493333
+ 146975 string characters out of 3128842
+ 305817 words of memory out of 3000000
+ 13383 multiletter control sequences out of 15000+200000
+ 3640 words of font info for 14 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 45i,6n,35p,1945b,399s stack positions out of 5000i,500n,10000p,200000b,50000s
-pdfTeX warning (dest): name{glo:ssh} has been referenced but does not exist, 
-replaced by a fixed one
-
-pdfTeX warning (dest): name{glo:open-source} has been referenced but does not e
-xist, replaced by a fixed one
-
-pdfTeX warning (dest): name{glo:bash} has been referenced but does not exist, r
-eplaced by a fixed one
-
-pdfTeX warning (dest): name{glo:operating-system} has been referenced but does 
-not exist, replaced by a fixed one
-
-<C:/Users/b3022196/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfont
-s/cm/cmbx10.pfb><C:/Users/b3022196/AppData/Local/Programs/MiKTeX 2.9/fonts/type
-1/public/amsfonts/cm/cmbx12.pfb><C:/Users/b3022196/AppData/Local/Programs/MiKTe
-X 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/b3022196/AppData/Local
-/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/b302219
-6/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C
-:/Users/b3022196/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/
-cm/cmsy10.pfb><C:/Users/b3022196/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/
-public/amsfonts/cm/cmti10.pfb>
-Output written on dissertation.pdf (16 pages, 147929 bytes).
-PDF statistics:
- 283 PDF objects out of 1000 (max. 8388607)
- 60 named destinations out of 1000 (max. 500000)
- 233 words of extra memory for PDF output out of 10000 (max. 10000000)
-
+ 45i,0n,35p,1945b,36s stack positions out of 5000i,500n,10000p,200000b,50000s
+!  ==> Fatal error occurred, no output PDF file produced!
