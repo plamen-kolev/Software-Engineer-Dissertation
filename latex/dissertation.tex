@@ -179,6 +179,15 @@ When considering the architecture of the system, a list of factors were the driv
 
 Because the Ruby language draws inspiration and shares similar features with Perl, it makes it a great modern and powerful language to use in this domain-specific problem.
 
+The framework I created uses a virtual machine instance object and authenticated user that owns it. When the user fills the web form with the relevant information, it will pass the configuration values directly to a virtual machine class. This class contains a dynamic configuration, which ensures that the solution is distribution agnostic. Here, the term distribution references to the different versions of Linux (ubuntu, fedora, Centos, arch Linux). Separating dependency specific configuration by sub-classing a configuration object allows for a quick way for the project to be extended to accommodate for new distributions. 
+
+For the purpose of this work, I have decided to limit the scope of allowed linux distributions to Ubuntu, Centos and debian, but it is important to note that the architecture allows extending that list.
+
+To do so, folder with the name of the new distribution must be placed in lib/configurations that describes the configuration specific settings that include updating and installing common software packages.
+
+The framework also uses UNIX environmental variable to manage infrastructure state. For the  purpose of developing and testing, I have created two main isolated environments - testing and development.
+The main 
+
   \newpage
   \includepdf{architecture.pdf}
 
