@@ -19,8 +19,8 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage{ifthen}
-\usepackage{pgf-umlcd}
 \usepackage{pdfpages}
+\usepackage{listings}
 
 % ENDUSERPACKAGES
 
@@ -61,6 +61,20 @@
 	}
 }
 
+\newglossaryentry{natnetwork}{
+	name={Nat-network},
+	description={
+		A technique where one IP address is mapped to more internal ip addresses, used for security and reduced number of ips. \cite{whatisnat}
+	}
+}
+
+\newglossaryentry{ipaddress}{
+	name={IP address},
+	description={
+		An identifier that helps locating a resource on the network, usually represents a computer device connected to a network (local or )
+	}
+}
+
 \begin{document}
   \pagenumbering{gobble}
   \maketitle
@@ -88,7 +102,7 @@
     As of the year 2016, there are currently three billion people that have access to the internet \cite{ictonline}. Google handles between two and three billion search queries per day \cite{a}. Dealing with so many requests on daily basis requires full utilisation of the available hardware in terms of resources. Part of Google's ability to scale and be efficient is due to the emergence of cloud infrastructure. The topic of the paper deals  with one of the building blocks of cloud computing, which is virtualisation.
   
   \begin{quote}
-  	"The quickest and cheapest method to providing the necessary level of abstraction in terms of server resource is currently virtualization..." \par\raggedleft--- \textup{Paul Robinson}, Google Cloud Computing \citeauthor{SecuringtheCloud}
+  	"The quickest and cheapest method to providing the necessary level of abstraction in terms of server resource is currently virtualisation\ldots" \par\raggedleft--- \textup{Paul Robinson}, Google Cloud Computing \citeauthor{SecuringtheCloud}
   \end{quote}
   
   
@@ -181,12 +195,12 @@ Because the Ruby language draws inspiration and shares similar features with Per
 
 The framework I created uses a virtual machine instance object and authenticated user that owns it. When the user fills the web form with the relevant information, it will pass the configuration values directly to a virtual machine class. This class contains a dynamic configuration, which ensures that the solution is distribution agnostic. Here, the term distribution references to the different versions of Linux (ubuntu, fedora, Centos, arch Linux). Separating dependency specific configuration by sub-classing a configuration object allows for a quick way for the project to be extended to accommodate for new distributions. 
 
-For the purpose of this work, I have decided to limit the scope of allowed linux distributions to Ubuntu, Centos and debian, but it is important to note that the architecture allows extending that list.
+For the purpose of this work, I have decided to limit the scope of allowed Linux distributions to Ubuntu, Centos and debian, but it is important to note that the architecture allows extending that list.
 
 To do so, folder with the name of the new distribution must be placed in lib/configurations that describes the configuration specific settings that include updating and installing common software packages.
 
 The framework also uses UNIX environmental variable to manage infrastructure state. For the  purpose of developing and testing, I have created two main isolated environments - testing and development.
-The main 
+The most notable usage of such environment is the virtual host-only network that ensures that the virtual interfaces do not clash during testing and development. The two interfaces are \texttt{vboxnet0} and \texttt{vboxnet1}. One is for general purpose development, the another is for testing. A special host-only adapter is used to have an isolated ip range that is network agnostic, for example, on a \gls{natnetwork}, some IP addresses might be reserved or used, this case will cause a clash and the virtual machine will not be reachable.
 
   \newpage
   \includepdf{architecture.pdf}
@@ -248,6 +262,13 @@ The main
 			title     = {IBM Systems Virtualization: Servers, Storage, and Software},
 			year      = {April 2008},
 			publisher = {IBM},
+		}
+	
+	    @book{whatisnat,
+			author    = {Javvin Technologies Inc},
+			title     = {Network Protocols Handbook},
+			year      = {2005},
+			publisher = {Javvin Technologies},
 		}
 
 		
