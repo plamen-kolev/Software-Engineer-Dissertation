@@ -10,9 +10,10 @@ require 'fileutils'   # used for recursive folder creation
 require 'figaro'
 require 'slugify'
 
-require_relative 'lib/user'
-require_relative 'lib/vm'
-require_relative 'lib/configurable'
+# require_relative 'lib/user'
+# require_relative 'lib/vm'
+# require_relative 'lib/configurable'
+require 'deeploy'
 
 # load .env file
 Figaro.application = Figaro::Application.new(environment: "development", path: "#{File.expand_path("#{File.dirname(__FILE__)}")}/config/application.yml")
@@ -49,7 +50,7 @@ command :new do |c|
     options.vm_name = options.vm_name.slugify
 
     valid_args!({
-      'vm_user' => options.vm_user, 
+      'vm_user' => options.vm_user,
       'vm_password' => options.vm_password,
       'distribution' => options.distribution
     }, options)
@@ -59,7 +60,7 @@ command :new do |c|
 
     machine = Helper::VM.create(distribution: options.distribution, title: options.vm_name, owner: owner, user: options.vm_user, password: options.vm_password)
     if machine
-      machine.build() 
+      machine.build()
     else
       $stdout.puts("Unable to create machine")
     end
@@ -111,7 +112,7 @@ command :destroy do |c|
 
     m = Helper::VM.get(title: options.vm_name, owner: auth(options))
     if m
-      m.destroy 
+      m.destroy
     else
       $stderr.puts("Could not find machine")
     end
@@ -166,12 +167,12 @@ end
 def valid_args!(args={}, options)
   errors=0
   # first, check if auth args are passed
-  
+
   if !((options.auth_user and options.auth_password) or options.auth_token)
     $stderr.puts "Missing authentication: \nUse --auth_user username --auth_password password\nOr --auth_token token,\n"
     errors+=1
   end
-  
+
   args.each do |key, value|
     if value.to_s.empty?
       $stderr.puts "Missing argument: --#{key},\n"
@@ -179,7 +180,7 @@ def valid_args!(args={}, options)
     else
       errors=0
       # first, check if auth args are passed
-      
+
       if ! options.auth_user and ! options.auth_password and ! options.auth_token
         $stderr.puts "No authentication parameters passed: \nUse --auth_user username --auth_password password\nOr --auth_token token,\n"
         errors+=1
@@ -189,7 +190,7 @@ def valid_args!(args={}, options)
         $stderr.puts "Missing authentication: \nUse --auth_user username --auth_password password\nOr --auth_token token,\n"
         errors+=1
       end
-      
+
       args.each do |key, value|
         if value.to_s.empty?
           $stderr.puts "Missing argument: --#{key},\n"
@@ -201,7 +202,7 @@ def valid_args!(args={}, options)
 
     if errors > 0
       $stderr.puts "Use --help for more information"
-      exit 1 
+      exit 1
     end
   end
 end

@@ -12,6 +12,8 @@
                 <th>IP</th> 
                 <th>Status</th> 
                 <th>Deployed</th>
+                <th>Delete</th>
+
             </tr>
             
             <% @machines.each do |machine| %>
@@ -20,6 +22,8 @@
                     <td><%= machine.ip %></td> 
                     <td><span class="glyphicon glyphicon-ok success"></span></td>
                     <td><%= machine.deployed %></td>
+                    <td><%= link_to 'Destroy',  machine_path(machine),
+                                    data: { confirm: 'Are you sure?' }, method: :delete %></td>
                 </tr>
             <% end %>
         </table>
