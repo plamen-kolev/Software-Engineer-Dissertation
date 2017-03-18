@@ -2,7 +2,7 @@ require 'active_record'
 require 'bcrypt'
 require_relative 'configurable'
 
-module Helper
+module Deeploy
   
   class User < Configurable
     attr_reader :id, :email, :token

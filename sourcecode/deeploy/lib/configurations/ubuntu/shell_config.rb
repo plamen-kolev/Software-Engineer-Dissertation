@@ -1,9 +1,9 @@
 require_relative '../shell_config'
 
-module Helper
+module Deeploy
   module Config
     module Ubuntu
-      class ShellConfig < Helper::Config::ShellConfig
+      class ShellConfig < Deeploy::Config::ShellConfig
           
         def initialize(m_inst)
           super(m_inst)

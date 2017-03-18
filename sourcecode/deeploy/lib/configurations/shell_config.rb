@@ -1,4 +1,4 @@
-module Helper
+module Deeploy
   module Config
     class ShellConfig < Configuration
 

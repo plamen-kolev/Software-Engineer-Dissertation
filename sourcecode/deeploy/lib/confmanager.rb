@@ -3,25 +3,25 @@ require_relative 'configuration'
 # require_relative 'configurations/vagrant_config'
 # require_relative 'configurations/puppet_config'
 
-module Helper
+module Deeploy
   class Confmanager < Configurable
 
     def initialize(vm)
       @requires = {
         # name of the distribution => [path to files, namespace]
         'ubuntu/xenial64' => {
-          module: 'configurations/ubuntu', 
-          class: 'Helper::Config::Ubuntu'
+          module: 'configurations/ubuntu',
+          class: 'Deeploy::Config::Ubuntu'
         },
 
         'bento/centos-7.2' => {
           module: 'configurations/centos', 
-          class: 'Helper::Config::Centos'
+          class: 'Deeploy::Config::Centos'
         },
 
         config: {'puppet_config' => 'PuppetConfig', 'shell_config' => 'ShellConfig', 'vagrant_config' => 'VagrantConfig'}
       }
-      
+
       # dynamically resolve dependencies for each distribution
       dependencies = @requires[vm.distribution]
 

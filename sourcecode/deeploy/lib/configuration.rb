@@ -1,4 +1,4 @@
-module Helper
+module Deeploy
   module Config
     class Configuration < Configurable
       attr_reader :config

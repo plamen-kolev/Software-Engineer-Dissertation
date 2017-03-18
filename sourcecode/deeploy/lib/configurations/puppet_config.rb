@@ -1,7 +1,7 @@
-module Helper
+module Deeploy
   module Config
     class PuppetConfig < Configuration
-      
+
       def initialize(m_inst)
         @root = m_inst.root
         @update_dependencies = "/usr/bin/apt-get update"  if ! @update_dependencies

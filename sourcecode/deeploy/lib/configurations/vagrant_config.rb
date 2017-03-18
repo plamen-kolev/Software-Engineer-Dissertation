@@ -1,8 +1,10 @@
-module Helper
+module Deeploy
   module Config
     class VagrantConfig < Configuration
 
       def initialize(m_inst)
+        puts m_inst.inspect
+        exit 1
         @root = m_inst.root
         super(m_inst)
         @vbadditions = 'config.vbguest.auto_update = false' if ! @vbadditions
@@ -17,7 +19,8 @@ module Helper
           #{@vbadditions}
           config.vm.provider "virtualbox" do |vb|
             vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
-             vb.name = "#{m_inst.title}"
+            vb.name = "#{m_inst.title}"
+            vb.memory = "#{m_inst.ram}"
           end
         end
 CONFIG

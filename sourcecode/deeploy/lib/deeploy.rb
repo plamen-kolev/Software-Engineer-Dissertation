@@ -3,5 +3,8 @@ require "vm"
 require "user"
 
 module Deeploy
-  # Your code goes here...
+  def self.packages
+    modules = ['vim', 'nginx', 'apache', 'mocp', 'xclock', 'x11', 'cinnamon']
+    return modules
+  end
 end

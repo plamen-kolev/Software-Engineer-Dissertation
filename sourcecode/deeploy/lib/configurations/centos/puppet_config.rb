@@ -1,9 +1,9 @@
 require_relative '../puppet_config'
 
-module Helper
+module Deeploy
   module Config
     module Centos
-      class PuppetConfig < Helper::Config::PuppetConfig
+      class PuppetConfig < Deeploy::Config::PuppetConfig
 
         def initialize(m_inst)
           @update_dependencies = "/usr/bin/yum update -y"

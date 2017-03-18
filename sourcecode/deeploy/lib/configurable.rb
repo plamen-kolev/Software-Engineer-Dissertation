@@ -1,7 +1,7 @@
 require 'active_record'
 require_relative 'configurable'
 
-module Helper
+module Deeploy
   class Configurable
     attr_reader :webroot
 

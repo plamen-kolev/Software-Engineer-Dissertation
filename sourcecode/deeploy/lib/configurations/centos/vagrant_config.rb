@@ -1,9 +1,9 @@
 require_relative '../vagrant_config'
 
-module Helper
+module Deeplopy
   module Config
     module Centos
-      class VagrantConfig < Helper::Config::VagrantConfig
+      class VagrantConfig < Deeploy::Config::VagrantConfig
     
         def initialize(m_inst)
           @vbadditions = 'config.vbguest.auto_update = false'

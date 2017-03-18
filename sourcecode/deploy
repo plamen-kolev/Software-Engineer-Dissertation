@@ -20,7 +20,7 @@ Figaro.application = Figaro::Application.new(environment: "development", path: "
 Figaro.load
 
 # ensures that database connection is established
-Helper::Configurable.new
+Deeploy::Configurable.new
 
 program :name, 'deploy'
 program :version, '0.0.1'
@@ -42,6 +42,12 @@ command :new do |c|
   c.option '--vm_password STRING',    String, "Password of the machine"
   c.option '--distribution STRING',   String, 'The distribution flavour (ubuntu, debian, etc.)'
   c.option '--vm_name STRING',        String, 'The name of the machine, generates a random name if left blank'
+  c.option '--ports STRING',     String, 'Ports that need to be opened, comma seperated'
+  c.option '--packages STRING',String, 'List of software to be installed on the machine, comma seperated'
+  c.option '--disk STRING',String, 'Size in gigabytes for the machine'
+  c.option '--ram STRING',String, 'Size in gigabytes for the machine'
+
+
   c.action do |args, options|
 
     # VARS
@@ -58,7 +64,36 @@ command :new do |c|
     # use username password or token
     owner = auth(options)
 
-    machine = Helper::VM.create(distribution: options.distribution, title: options.vm_name, owner: owner, user: options.vm_user, password: options.vm_password)
+    # grab ports(optional)
+    ports = []
+    if options.ports
+      ports = options.ports.split(',').uniq
+    end
+
+    # grap packages(optional)
+    packages = []
+    if options.packages
+      packages = options.packages.split(',').uniq
+    end
+
+    ram = options.ram ||= 1
+    disk = options.disk ||= 5
+
+    puts "packages: #{packages.inspect} and ports: #{ports.inspect}"
+
+    machine = Deeploy::VM.create(
+      distribution: options.distribution,
+      title: options.vm_name,
+      owner: owner,
+      user: options.vm_user,
+      password: options.vm_password,
+      opts: {
+        'packages' => packages,
+        'disk' => disk,
+        'ports' => ports,
+        'ram' => ram
+      }
+    )
     if machine
       machine.build()
     else
@@ -110,7 +145,7 @@ command :destroy do |c|
       'vm_name' => options.vm_name
     }, options)
 
-    m = Helper::VM.get(title: options.vm_name, owner: auth(options))
+    m = Deeploy::VM.get(title: options.vm_name, owner: auth(options))
     if m
       m.destroy
     else
@@ -135,7 +170,7 @@ command :down do |c|
       'vm_name' => options.vm_name
     }, options)
 
-    m = Helper::VM.get(title: options.vm_name, owner: auth(options))
+    m = Deeploy::VM.get(title: options.vm_name, owner: auth(options))
     if m
       m.down
     else
@@ -160,7 +195,7 @@ command :up do |c|
       'vm_name' => options.vm_name
     }, options)
 
-    Helper::VM.get(title: options.vm_name, owner: auth(options)).up
+    Deeploy::VM.get(title: options.vm_name, owner: auth(options)).up
   end
 end
 
@@ -210,9 +245,9 @@ end
 def auth(options)
   owner = nil
   if options.auth_user && options.auth_password
-    owner = Helper::User::authenticate(email: options.auth_user, password: options.auth_password)
+    owner = Deeploy::User::authenticate(email: options.auth_user, password: options.auth_password)
   else
-    owner = Helper::User::authenticate(token: options.auth_token)
+    owner = Deeploy::User::authenticate(token: options.auth_token)
   end
   return owner
 end

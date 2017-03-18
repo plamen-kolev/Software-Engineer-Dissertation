@@ -3,15 +3,25 @@ require_relative 'confmanager'
 require 'ipaddr'
 
 
-module Helper
+module Deeploy
   class VM < Configurable
     # attr_reader :root, :manifest, :name, :distribution, :ip, :user, :password, :vm_user, :vm_password, :valid
-    attr_accessor :owner, :distribution, :root, :manifest, :user, :password, :ip, :title, :configuration, :id
+    attr_accessor :owner, :distribution, :root, :manifest, :user, :password, :ip, :title, :configuration, :id, :disk, :ram, :packages, :ports
 
     def self.create(args = {})
       # validation
 
-      instance = Helper::VM.new
+      instance = Deeploy::VM.new
+      # ram and disk
+      instance.disk = args[:opts][:disk] ||= 5
+      instance.ram = args[:opts][:ram] ||= 1
+
+      # additional packages
+      instance.packages = args[:opts][:packages] ||= []
+
+      # open ports
+      instance.ports = args[:opts][:ports] ||= []
+
       if ! instance._verify_owner(args[:owner])
         return false
       end
@@ -33,7 +43,7 @@ module Helper
 
       # human friendly virtual machine name
       instance.title = "#{args[:title]}_#{ENV['RAILS_ENV']}"
-      instance.ip = Helper::VM::generate_ip()
+      instance.ip = Deeploy::VM::generate_ip()
 
       vm_dir = ENV['MACHINE_PATH'] ||= "#{File.expand_path("#{File.dirname(__FILE__)}")}", "/../"
       # set the folder path (absolute path on the os)
@@ -42,7 +52,7 @@ module Helper
 
       instance.user = args[:user]
       instance.password = args[:password]
-      instance.configuration = Helper::Confmanager.new(instance)
+      instance.configuration = Deeploy::Confmanager.new(instance)
       return instance
 
     end
@@ -70,7 +80,7 @@ module Helper
     end
 
     def _verify_owner(owner)
-      if owner.class != Helper::User
+      if owner.class != Deeploy::User
         $stderr.puts "Expecting Helper::User object, got #{owner.class}"
         # exit 1
         return false
@@ -180,6 +190,19 @@ HERE
       # grab netmask for the specified interface
       host_ip, netmask = sockips.first
       if not host_ip or not netmask
+
+        # cleanup interfaces
+        ifaces = %x[VBoxManage list hostonlyifs].scan(/[^-]vboxnet\d+/)
+
+        for i in (0..ifaces.length - 1)
+          %x[VBoxManage hostonlyif remove #{ifaces[i]}]
+          %x[VBoxManage hostonlyif create]
+          %x[VBoxManage hostonlyif ipconfig #{ifaces[i]} --ip 17#{i}.168.1.1 --netmask 255.255.0.0]
+
+
+        end
+
+
         $stderr.puts("Interface '#{ENV['NETWORK_INTERFACE']}' did not return an ip or mask for the host !\nPlease check if virtual network is setup properly.")
         exit 1
       end

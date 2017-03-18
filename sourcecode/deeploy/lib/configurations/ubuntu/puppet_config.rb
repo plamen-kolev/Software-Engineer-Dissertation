@@ -1,9 +1,9 @@
 require_relative '../puppet_config'
 
-module Helper
+module Deeploy
   module Config
     module Ubuntu
-      class PuppetConfig < Helper::Config::PuppetConfig
+      class PuppetConfig < Deeploy::Config::PuppetConfig
 
         def initialize(m_inst)
           @last_block = <<HERE

@@ -1,7 +1,7 @@
 PATH
   remote: deeploy
   specs:
-    deeploy (0.1.1)
+    deeploy (0.1.16)
 
 GEM
   remote: https://rubygems.org/

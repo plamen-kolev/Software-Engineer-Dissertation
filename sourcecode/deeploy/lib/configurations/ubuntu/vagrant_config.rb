@@ -1,9 +1,9 @@
 require_relative '../vagrant_config'
 
-module Helper
+module Deeploy
   module Config
     module Ubuntu
-      class VagrantConfig < Helper::Config::VagrantConfig
+      class VagrantConfig < Deeploy::Config::VagrantConfig
     
 
         def initialize(m_inst)
