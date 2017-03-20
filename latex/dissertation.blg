@@ -1,6 +1,4 @@
-This is BibTeX, Version 0.99d (TeX Live 2016)
-Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
-The top-level auxiliary file: dissertation.aux
+This is BibTeX, Version 0.99dThe top-level auxiliary file: dissertation.aux
 The style file: plain.bst
 Database file #1: research.bib
 Warning--entry type for "a" isn't style-file defined
@@ -9,45 +7,4 @@ Warning--entry type for "b" isn't style-file defined
 --line 9 of file research.bib
 Warning--entry type for "ictonline" isn't style-file defined
 --line 17 of file research.bib
-You've used 6 entries,
-            2118 wiz_defined-function locations,
-            524 strings with 4456 characters,
-and the built_in function-call counts, 1271 in all, are:
-= -- 111
-> -- 42
-< -- 0
-+ -- 18
-- -- 12
-* -- 41
-:= -- 222
-add.period$ -- 18
-call.type$ -- 6
-change.case$ -- 21
-chr.to.int$ -- 0
-cite$ -- 6
-duplicate$ -- 57
-empty$ -- 133
-format.name$ -- 12
-if$ -- 271
-int.to.chr$ -- 0
-int.to.str$ -- 6
-missing$ -- 6
-newline$ -- 33
-num.names$ -- 12
-pop$ -- 57
-preamble$ -- 1
-purify$ -- 18
-quote$ -- 0
-skip$ -- 36
-stack$ -- 0
-substring$ -- 30
-swap$ -- 6
-text.length$ -- 0
-text.prefix$ -- 0
-top$ -- 0
-type$ -- 18
-warning$ -- 0
-while$ -- 12
-width$ -- 7
-write$ -- 59
 (There were 3 warnings)
