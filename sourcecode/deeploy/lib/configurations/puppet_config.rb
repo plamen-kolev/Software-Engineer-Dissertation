@@ -5,13 +5,28 @@ module Deeploy
       def initialize(m_inst)
         @root = m_inst.root
         @update_dependencies = "/usr/bin/apt-get update"  if ! @update_dependencies
-        
+
         super(m_inst)
         @config = <<CONF
           include 'stdlib'
 
           exec {"update_dependencies":
-            command => '#{@update_dependencies}'
+            command => '#{@update_dependencies}',
+          }
+
+          exec {"install_ufw":
+            command => "#{@install_command} ufw",
+            require => Exec['update_dependencies']
+          }
+
+          exec {"enable_firewall_rules":
+            command => "/usr/sbin/ufw allow ssh && /usr/sbin/ufw allow 2222",
+            require => Exec['install_ufw']
+          }
+
+          exec {"enable_ufw":
+            command => "/usr/sbin/ufw --force enable",
+            require => Exec["enable_firewall_rules"]
           }
 
           user { "#{m_inst.user}":

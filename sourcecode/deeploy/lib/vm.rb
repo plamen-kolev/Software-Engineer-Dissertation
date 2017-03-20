@@ -190,21 +190,17 @@ HERE
       # grab netmask for the specified interface
       host_ip, netmask = sockips.first
       if not host_ip or not netmask
-
-        # cleanup interfaces
-        ifaces = %x[VBoxManage list hostonlyifs].scan(/[^-]vboxnet\d+/)
-
-        for i in (0..ifaces.length - 1)
-          %x[VBoxManage hostonlyif remove #{ifaces[i]}]
-          %x[VBoxManage hostonlyif create]
-          %x[VBoxManage hostonlyif ipconfig #{ifaces[i]} --ip 17#{i}.168.1.1 --netmask 255.255.0.0]
-
-
-        end
-
-
-        $stderr.puts("Interface '#{ENV['NETWORK_INTERFACE']}' did not return an ip or mask for the host !\nPlease check if virtual network is setup properly.")
+        $stderr.puts("Interface '#{ENV['NETWORK_INTERFACE']}' did not return an ip or mask for the host !\n.") # Recreating virtual network.")
         exit 1
+        # cleanup interfaces
+        # ifaces = %x[VBoxManage list hostonlyifs].scan(/[^-]vboxnet\d+/)
+        #
+        # for i in (0..ifaces.length - 1)
+        #   %x[VBoxManage hostonlyif remove #{ifaces[i]}]
+        #   %x[VBoxManage hostonlyif create]
+        #   %x[VBoxManage hostonlyif ipconfig #{ifaces[i]} --ip 17#{i}.168.1.1 --netmask 255.255.0.0]
+        # end
+
       end
 
       # map to string flatters the object array to strign array

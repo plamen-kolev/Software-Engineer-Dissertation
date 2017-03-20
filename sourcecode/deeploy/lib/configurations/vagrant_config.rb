@@ -4,7 +4,6 @@ module Deeploy
 
       def initialize(m_inst)
         puts m_inst.inspect
-        exit 1
         @root = m_inst.root
         super(m_inst)
         @vbadditions = 'config.vbguest.auto_update = false' if ! @vbadditions
@@ -20,7 +19,7 @@ module Deeploy
           config.vm.provider "virtualbox" do |vb|
             vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
             vb.name = "#{m_inst.title}"
-            vb.memory = "#{m_inst.ram}"
+            vb.memory = "#{m_inst.ram * 1024}"
           end
         end
 CONFIG
