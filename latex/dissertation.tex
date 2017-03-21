@@ -75,6 +75,13 @@
 	}
 }
 
+\newglossaryentry{api}{
+	name={API},
+	description = {
+		Application Programmable interface, usually a way for exposing features of a certain program to the developer. Often used to automate a task.
+	}
+}
+
 \begin{document}
   \pagenumbering{gobble}
   \maketitle
@@ -115,7 +122,7 @@
   How does virtualisation allow for easy migrations? It achieves its task by abstracting away the available physical hard drives, on the virtualisation host, they appear as a large pool of partitions with the data ready for access. Having access to the virtualisation host allows the content of such system to be copied all at once to a different provider with the only requirement that it must have enough capacity to store the information. The alternative without using a virtualisation software would be to gain physical access to each hard drive individually and copying the data incrementally.
   
   \subsection{Purpouse}
-   The project aims to utilise open-source virtualisation technology and make the process of managing and creating virtual machines automated through a web interface. A system manager should be able to open a website, fill in a web form with enough information about the desired operating system, click a button and create it. 
+   The project aims to utilise open-source virtualisation technology and make the process of managing and creating virtual machines automated through a web interface. A system manager should be able to open a website, fill in a web form with enough information about the desired \gls{operating-system}, click a button and create it. 
    
    The manager should also be able to obtain and generate credentials for that machine, as well as mark common packages for installation on it. The solution should also show performance statistics and allow for network port management. These features, alongside the benefits of virtualisation should create a strong and secure infrastructure for many applications, from virtual office workstation, to server testing and deployment.
    
@@ -133,7 +140,7 @@
 
 	  	\item Configure firewall settings
 		  	\begin{itemize}
-		  		\item Will be achieved through the virtualisation technology's API. Will add extra security layer to the guest operating system.
+		  		\item Will be achieved through the virtualisation technology's API. Will add extra security layer to the guest \gls{operating-system}.
 		  	\end{itemize}
 
 	  	\item Allow console access and set up authentication credentials (SSH keys) for the instances
@@ -185,7 +192,27 @@
   This research helped when rationing about the features to implement, helped me understand the scope and challenges and gave me an insight into why this problem requires solving, and it gave a detailed overview of how to solve it.
   
   The first semester was not only about researching applications within the scope of what I was trying to achieve, but also about describing the constrains, limitations and infrastructure decisions I have to make in order to demonstrate a ready product on a production environment. 
+  
   \subsection{Constrains}
+  Because of the limited duriation of the disseration and the immence work that has to be carried throughout the implementation (testing, documentation, development, debugging, planning, etc.) certain constrains had to be put in place to ensure that the project will be completed withing the appropariate period.
+  
+  The initial constrain that I have defined is limiting the solution to a single host. This work is done as a proof-of-concept system that has the potential of being scaled up and extended to support "real-world" application. 
+  Creating a distributed and scalable implementation of this work goes beyond the scope. This is not to say that it is limited to single host, but testing and planning guarantee that it will be fully functional under such condition.
+  
+  As a future task, it would be possible to deploy multiple instances of the underlying infrastructure that are managed and synchronised with a technology like puppet or chef. Then, creating virtual machines can be done via a manager machine that picks a host based on a round-robin algorithm or based on load. Additional implementation steps must be carried out to ensure that the web platform and the manager understands the physical location of the virtual machine. Physical location references to the real hardware (the host) running the virtual machine.
+  
+  Another assumption and a constrain is the availability of a network interface. To simplify the development process and allow me to isolate different environments. A network environment is the space in which all the virtual machines have visibility of one another. It also makes it possible to allocate different network addresses dynamically and verify availability of resources. Another important bit is the fact that one must be connected to the network environment to communicate with the machines inside of it. I have taken advantage of VirtualBox's host-only networking interfaces, and have created multiple instances that allow me to create machines independent of each other when developing and testing.
+  
+  When further extending the solution, additional work has to be carried out to ensure integration with a public DNS server, and some adjustments ought to be made to allow the production DNS to allocate \textcolor{red}{DHCP} ip addresses to the virtual machines.
+  
+  The solution aims to orchestrate and automate generic virtual machine deployment, but creating a solution that enables every \gls{operating-system} to be deployable would require extensive amount of extra work. Future work can make it possible to deploy Windows, Mac OS and more linux variants as part of the infrastructure, but this is yet not the case. 
+  
+  Windows is not supported yet, as it has completely different architecture and has a separate interface for managing networking, users, installation and permissions. Doing windows deployment also requires licensing of their \gls{operating-system}. Another constrain in working with windows is that not many core components are configurable or accessable via a script making automation very difficult or impossible.
+  
+  Mac OSX virtual deployment was also something left for future. It also has similar issues to windows virtualisation (licensing, exposed \gls{api}).
+  
+  Finally, as it comes to linux virtual machine deployment, I have opted to cover 
+  
   \subsection{Functional requirements}
   \subsection{Non-functional requirements}
   \subsection{Tools}
