@@ -10,7 +10,7 @@ module Deeploy
         @config = <<CONFIG
         Vagrant.configure(2) do |config|
           config.vm.box = "#{m_inst.distribution}"
-          config.vm.network "private_network", ip: "#{m_inst.ip}", :bridge => '#{ENV['NETWORK_INTERFACE']}'
+          config.vm.network "private_network", ip: "#{m_inst.ip}", :bridge => '#{$CONFIGURATION.network_interface}'
           config.vm.provision "shell", path: "manifests/setup.sh"
           config.vm.provision :puppet
 

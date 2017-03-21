@@ -27,10 +27,9 @@ test:
   RAILS_ENV: test
 
 development:
-  DATABASE_HOST: localhost
-  DATABASE_ADAPTER: sqlite3
-  RAILS_ENV: test
-  NETWORK_INTERFACE: vboxnet0
-  RAILS_ENV: development
-  DB_PATH: '/home/hallagat/Projects/dissertation/sourcecode/db/'
-  MACHINE_PATH: "/home/hallagat/Projects/dissertation/sourcecode/"
+  database_host: localhost
+  database_adapter: sqlite3
+  network_interface: vboxnet0
+  rails_env: development
+  db_path: '/home/hallagat/Projects/dissertation/sourcecode/db/'
+  machine_path: "/home/hallagat/Projects/dissertation/sourcecode/"

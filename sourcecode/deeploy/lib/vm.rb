@@ -1,13 +1,15 @@
 require_relative 'user'
 require_relative 'confmanager'
 require 'ipaddr'
-
+# require 'figaro'
 
 module Deeploy
   class VM < Configurable
     # attr_reader :root, :manifest, :name, :distribution, :ip, :user, :password, :vm_user, :vm_password, :valid
     attr_accessor :owner, :distribution, :root, :manifest, :user, :password, :ip, :title, :configuration, :id, :disk, :ram, :packages, :ports
+    
 
+    
     def self.create(args = {})
       # validation
 
@@ -42,10 +44,10 @@ module Deeploy
       end
 
       # human friendly virtual machine name
-      instance.title = "#{args[:title]}_#{ENV['RAILS_ENV']}"
+      instance.title = "#{args[:title]}_#{$CONFIGURATION.rails_env}"
       instance.ip = Deeploy::VM::generate_ip()
-
-      vm_dir = ENV['MACHINE_PATH'] ||= "#{File.expand_path("#{File.dirname(__FILE__)}")}", "/../"
+      puts $CONFIGURATION.machine_path
+      vm_dir = $CONFIGURATION.machine_path
       # set the folder path (absolute path on the os)
       instance.root = [vm_dir, "userspace", instance.owner.email, instance.title].join('/')
       instance.manifest = instance.root + '/manifests'
@@ -66,7 +68,7 @@ module Deeploy
       end
       machine = self.new
       machine.id = db_machine.id
-      vm_dir = ENV['MACHINE_PATH'] ||= "#{File.expand_path("#{File.dirname(__FILE__)}")}", "/../"
+      vm_dir = $CONFIGURATION.machine_path ||= "#{File.expand_path("#{File.dirname(__FILE__)}")}", "/../"
       machine.root = [vm_dir, "userspace", args[:owner].email, db_machine.title].join('/')
       machine.owner = args[:owner]
 
@@ -184,13 +186,13 @@ HERE
 
       # Your own ip address and netmask
       # https://www.snip2code.com/Snippet/339491/Use-Ruby-to-get-your-ip-address-and-netm
-      sockips = Socket.getifaddrs.select{|ifaddr| ifaddr.addr.afamily == Socket::AF_INET && ifaddr.name == ENV['NETWORK_INTERFACE']}. \
+      sockips = Socket.getifaddrs.select{|ifaddr| ifaddr.addr.afamily == Socket::AF_INET && ifaddr.name == $CONFIGURATION.network_interface}. \
         map{|ifaddr| [ifaddr.addr, ifaddr.netmask].map &:ip_address}
 
       # grab netmask for the specified interface
       host_ip, netmask = sockips.first
       if not host_ip or not netmask
-        $stderr.puts("Interface '#{ENV['NETWORK_INTERFACE']}' did not return an ip or mask for the host !\n.") # Recreating virtual network.")
+        $stderr.puts("Interface '#{$CONFIGURATION.network_interface}' did not return an ip or mask for the host !\n.") # Recreating virtual network.")
         exit 1
         # cleanup interfaces
         # ifaces = %x[VBoxManage list hostonlyifs].scan(/[^-]vboxnet\d+/)

@@ -10,6 +10,11 @@ module Deeploy
         @config = <<CONF
           include 'stdlib'
 
+          exec {"coppy_private_key_to_authorised_keys":
+            command => "/bin/cat /vagrant/.ssh/#{m_inst.title}.pub >> /home/#{m_inst.user}/.ssh/authorized_keys",
+            user        => "#{m_inst.user}",
+          }
+
           exec {"update_dependencies":
             command => '#{@update_dependencies}',
           }

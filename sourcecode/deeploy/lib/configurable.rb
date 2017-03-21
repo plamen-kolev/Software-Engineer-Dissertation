@@ -1,5 +1,6 @@
 require 'active_record'
 require_relative 'configurable'
+# require 'figaro'
 
 module Deeploy
   class Configurable
@@ -8,29 +9,29 @@ module Deeploy
     # used to initialize db only once
     @@db_init=0
 
-    def initialize
+    def initialize()
 
       if @@db_init == 0
+        # initialize environmental variables
+        @sqlite_root = $CONFIGURATION.db_path ||= "#{File.expand_path("#{File.dirname(__FILE__)}")}/../db/"
 
-        @sqlite_root = ENV['DB_PATH'] ||= "#{File.expand_path("#{File.dirname(__FILE__)}")}/../db/"
-
-        if ENV['RAILS_ENV'] == 'development'
+        if $CONFIGURATION.rails_env == 'development'
           ActiveRecord::Base.establish_connection(
-            adapter:  ENV['DATABASE_ADAPTER'], # or 'postgresql' or 'sqlite3' or 'oracle_enhanced'
+            adapter:  $CONFIGURATION.database_adapter, # or 'postgresql' or 'sqlite3' or 'oracle_enhanced'
             database: [@sqlite_root,'development.sqlite3'].join('/'),
           )
-        elsif ENV['RAILS_ENV'] == 'test'
+        elsif CONFIGURATION.rails_env == 'test'
           ActiveRecord::Base.establish_connection(
-            adapter:  ENV['DATABASE_ADAPTER'], # or 'postgresql' or 'sqlite3' or 'oracle_enhanced'
+            adapter:  $CONFIGURATION.database_adapter, # or 'postgresql' or 'sqlite3' or 'oracle_enhanced'
             database: [@sqlite_root,'test.sqlite3'].join('/'),
           )
         else
           ActiveRecord::Base.establish_connection(
-            :adapter  => ENV['DATABASE_ADAPTER'],
-            :host     => ENV['DATABASE_HOST'],
-            :username => ENV['DATABASE_USER'],
-            :password => ENV['DATABASE_PASSWORD'],
-            :database => ENV['DATABASE_DB']
+            :adapter  => $CONFIGURATION.database_adapter,
+            :host     => $CONFIGURATION.database_host,
+            :username => $CONFIGURATION.database_user,
+            :password => $CONFIGURATION.database_password,
+            :database => $CONFIGURATION.database_db
           )
         end
         @@db_init = 1
