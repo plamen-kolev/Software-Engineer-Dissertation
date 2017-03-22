@@ -5,8 +5,7 @@ require 'ipaddr'
 
 module Deeploy
   class VM < Configurable
-    # attr_reader :root, :manifest, :name, :distribution, :ip, :user, :password, :vm_user, :vm_password, :valid
-    attr_accessor :owner, :distribution, :root, :manifest, :user, :password, :ip, :title, :configuration, :id, :disk, :ram, :packages, :ports
+    attr_accessor :owner, :distribution, :root, :manifest, :vm_user, :ip, :title, :configuration, :id, :disk, :ram, :packages, :ports
     
 
     
@@ -46,14 +45,13 @@ module Deeploy
       # human friendly virtual machine name
       instance.title = "#{args[:title]}_#{$CONFIGURATION.rails_env}"
       instance.ip = Deeploy::VM::generate_ip()
-      puts $CONFIGURATION.machine_path
+
       vm_dir = $CONFIGURATION.machine_path
       # set the folder path (absolute path on the os)
       instance.root = [vm_dir, "userspace", instance.owner.email, instance.title].join('/')
       instance.manifest = instance.root + '/manifests'
 
-      instance.user = args[:user]
-      instance.password = args[:password]
+      instance.vm_user = args[:vm_user]
       instance.configuration = Deeploy::Confmanager.new(instance)
       return instance
 
@@ -130,12 +128,27 @@ module Deeploy
         end
       end
     end
+    
     def build()
       FileUtils.mkdir_p(@manifest)
       @configuration.writeall(shell: "#{@manifest}/setup.sh", vagrant: "#{@root}/Vagrantfile", puppet: "#{@manifest}/default.pp")
 
-      new_machine = DB::Machine.create(title: @title, user_id: @owner.id, ip: @ip, deployed: false, distribution: @distribution, user: @owner.id)
-      self.id = new_machine.id
+
+      machine = DB::Machine.where(title: @title)
+      # create machine is not running as part of backend
+      if machine.first
+        puts "hello"
+        exit 1
+        machine = machine.first
+      else
+        machine = DB::Machine.create(title: @title, user_id: @owner.id, deployed: false, distribution: @distribution, vm_user: @vm_user)
+      end
+
+      machine.ip = @ip
+      machine.pem = File.open("#{@root}/.ssh/#{@title}.pem", "r").read 
+      machine.save()
+      
+      self.id = machine.id
       result = false
 
       Dir.chdir("#{@root}") do
@@ -144,8 +157,8 @@ module Deeploy
 
       if result
         self.success()
-        new_machine.deployed=true
-        new_machine.save
+        machine.deployed=true
+        machine.save
         return true
       else
         $stderr.puts("Errors were encountered: #{$?.inspect}")
@@ -175,7 +188,7 @@ module Deeploy
   #{"-"*50}
     VM NAME:\t\t|\t#{@title}
     IP:\t\t\t|\t#{@ip}
-    User:\t\t|\t#{@user}
+    User:\t\t|\t#{@vm_user}
 #{"-"*50}
     Distribution:\t|\t#{@distribution}
 #{"="*50}
@@ -193,7 +206,7 @@ HERE
       host_ip, netmask = sockips.first
       if not host_ip or not netmask
         $stderr.puts("Interface '#{$CONFIGURATION.network_interface}' did not return an ip or mask for the host !\n.") # Recreating virtual network.")
-        exit 1
+        raise "Interface '#{$CONFIGURATION.network_interface}' did not return an ip or mask for the host !\n."
         # cleanup interfaces
         # ifaces = %x[VBoxManage list hostonlyifs].scan(/[^-]vboxnet\d+/)
         #

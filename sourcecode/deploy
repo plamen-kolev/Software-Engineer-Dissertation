@@ -32,11 +32,10 @@ command :new do |c|
   c.syntax = 'deploy new [options]'
   c.summary = 'Creates a new virtual machine'
   c.description = 'Deploys a new virtual machine, sets up user and allocates public ip'
-  c.example "Example", "deploy new --auth_user usermail@website.com --auth_password password --vm_user nameofvm --vm_password password --distribution ubuntu"
+  c.example "Example", "deploy new --auth_user usermail@website.com --auth_password password --vm_user nameofvm --distribution ubuntu"
   # used for authentication of the user
   # options for the actual virtual machine credentials, e.g. adduser foo with password bar
   c.option '--vm_user STRING',        String, "Username of the machine"
-  c.option '--vm_password STRING',    String, "Password of the machine"
   c.option '--distribution STRING',   String, 'The distribution flavour (ubuntu, debian, etc.)'
   c.option '--vm_name STRING',        String, 'The name of the machine, generates a random name if left blank'
   c.option '--ports STRING',     String, 'Ports that need to be opened, comma seperated'
@@ -54,7 +53,6 @@ command :new do |c|
 
     valid_args!({
       'vm_user' => options.vm_user,
-      'vm_password' => options.vm_password,
       'distribution' => options.distribution
     }, options)
 
@@ -75,15 +73,12 @@ command :new do |c|
 
     ram = options.ram ||= 1
     disk = options.disk ||= 5
-
-    puts "packages: #{packages.inspect} and ports: #{ports.inspect}"
-    puts ENV.inspect
+    
     machine = Deeploy::VM.create(
       distribution: options.distribution,
       title: options.vm_name,
       owner: owner,
-      user: options.vm_user,
-      password: options.vm_password,
+      vm_user: options.vm_user,
       opts: {
         'packages' => packages,
         'disk' => disk,
@@ -114,6 +109,7 @@ command :list do |c|
     valid_args!(options)
 
     owner = auth(options)
+    
     machines = owner.fetch_machines()
     machines.each do |machine|
       $stdout.printf "#{machine.title} \t"

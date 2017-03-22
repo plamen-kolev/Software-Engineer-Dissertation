@@ -9,8 +9,8 @@ module Deeploy
           @install_command = '/usr/bin/apt-get install'
           @last_block = <<HERE
           exec{"add user to sudo":
-            command => '/usr/sbin/usermod -aG sudo #{m_inst.user}',
-            require => User["#{m_inst.user}"]
+            command => '/usr/sbin/usermod -aG sudo #{m_inst.vm_user}',
+            require => User["#{m_inst.vm_user}"]
           }
 
 HERE

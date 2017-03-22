@@ -3,6 +3,7 @@ module Deeploy
     class PuppetConfig < Configuration
 
       def initialize(m_inst)
+        @machine = m_inst
         @root = m_inst.root
         @update_dependencies = "/usr/bin/apt-get update"  if ! @update_dependencies
 
@@ -11,8 +12,12 @@ module Deeploy
           include 'stdlib'
 
           exec {"coppy_private_key_to_authorised_keys":
-            command => "/bin/cat /vagrant/.ssh/#{m_inst.title}.pub >> /home/#{m_inst.user}/.ssh/authorized_keys",
-            user        => "#{m_inst.user}",
+            command => "/bin/cat /vagrant/.ssh/#{@machine.title}.pub >> /home/#{@machine.vm_user}/.ssh/authorized_keys",
+            user        => "#{@machine.vm_user}",
+          }
+
+          exec {"current_user_will_not_require_password":
+            command => "/bin/echo '#{@machine.vm_user} ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers"
           }
 
           exec {"update_dependencies":
@@ -34,11 +39,11 @@ module Deeploy
             require => Exec["enable_firewall_rules"]
           }
 
-          user { "#{m_inst.user}":
+          user { "#{@machine.vm_user}":
             ensure           => 'present',
             # gid              => '501',
-            home             => "/home/#{m_inst.user}",
-            password         =>   pw_hash('#{m_inst.password}', 'SHA-512', 'mysalt'),
+            home             => "/home/#{@machine.vm_user}",
+
             # password_max_a ge => '99999',
             # password_min_age => '0',
             shell            => '/bin/bash',
@@ -49,10 +54,10 @@ module Deeploy
 
           # setup ssh keys for new user
           exec {"ssh-keygen":
-            command => "/usr/bin/ssh-keygen -t rsa -N '' -f /home/#{m_inst.user}/.ssh/id_rsa",
-            user        => "#{m_inst.user}",
+            command => "/usr/bin/ssh-keygen -t rsa -N '' -f /home/#{@machine.vm_user}/.ssh/id_rsa",
+            user        => "#{@machine.vm_user}",
             returns => [0,1],
-            require => User['#{m_inst.user}'],
+            require => User['#{@machine.vm_user}'],
 
           }
 

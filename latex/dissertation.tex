@@ -43,7 +43,7 @@
 \newglossaryentry{bash}
 {
 	name=bash,
-	description={Bourn again shell, a UNIX command line virtual shell language}
+	description={Bourne Again SHell, a UNIX command line virtual shell language}
 }
 
 \newglossaryentry{open-source}{name={open-source},description={Software that makes its code openly available, allows derived work without restrictions and its distribution is done freely}}
@@ -51,7 +51,7 @@
 \newglossaryentry{operating-system}
 {
 	name={operating system},
-	description={The platform on which all user and system software is running. Examples are Windows, Linux, OSX, Android, iOSx}
+	description={The platform on which all user and system software is running. Examples are Windows, Linux, OSX, Android, iOSX}
 }
 
 \newglossaryentry{ssh}{
@@ -62,7 +62,7 @@
 }
 
 \newglossaryentry{natnetwork}{
-	name={Nat-network},
+	name={NAT network},
 	description={
 		A technique where one IP address is mapped to more internal ip addresses, used for security and reduced number of ips. \cite{whatisnat}
 	}
@@ -121,7 +121,7 @@
   
   How does virtualisation allow for easy migrations? It achieves its task by abstracting away the available physical hard drives, on the virtualisation host, they appear as a large pool of partitions with the data ready for access. Having access to the virtualisation host allows the content of such system to be copied all at once to a different provider with the only requirement that it must have enough capacity to store the information. The alternative without using a virtualisation software would be to gain physical access to each hard drive individually and copying the data incrementally.
   
-  \subsection{Purpouse}
+  \subsection{Purpose}
    The project aims to utilise open-source virtualisation technology and make the process of managing and creating virtual machines automated through a web interface. A system manager should be able to open a website, fill in a web form with enough information about the desired \gls{operating-system}, click a button and create it. 
    
    The manager should also be able to obtain and generate credentials for that machine, as well as mark common packages for installation on it. The solution should also show performance statistics and allow for network port management. These features, alongside the benefits of virtualisation should create a strong and secure infrastructure for many applications, from virtual office workstation, to server testing and deployment.
@@ -194,7 +194,7 @@
   The first semester was not only about researching applications within the scope of what I was trying to achieve, but also about describing the constrains, limitations and infrastructure decisions I have to make in order to demonstrate a ready product on a production environment. 
   
   \subsection{Constrains}
-  Because of the limited duriation of the disseration and the immence work that has to be carried throughout the implementation (testing, documentation, development, debugging, planning, etc.) certain constrains had to be put in place to ensure that the project will be completed withing the appropariate period.
+  Because of the limited duration of the dissertation and the immense work that has to be carried throughout the implementation (testing, documentation, development, debugging, planning, etc.) certain constrains had to be put in place to ensure that the project will be completed within the appropriate period.
   
   The initial constrain that I have defined is limiting the solution to a single host. This work is done as a proof-of-concept system that has the potential of being scaled up and extended to support "real-world" application. 
   Creating a distributed and scalable implementation of this work goes beyond the scope. This is not to say that it is limited to single host, but testing and planning guarantee that it will be fully functional under such condition.
@@ -205,13 +205,13 @@
   
   When further extending the solution, additional work has to be carried out to ensure integration with a public DNS server, and some adjustments ought to be made to allow the production DNS to allocate \textcolor{red}{DHCP} ip addresses to the virtual machines.
   
-  The solution aims to orchestrate and automate generic virtual machine deployment, but creating a solution that enables every \gls{operating-system} to be deployable would require extensive amount of extra work. Future work can make it possible to deploy Windows, Mac OS and more linux variants as part of the infrastructure, but this is yet not the case. 
+  The solution aims to orchestrate and automate generic virtual machine deployment, but creating a solution that enables every \gls{operating-system} to be deployable would require extensive amount of extra work. Future work can make it possible to deploy Windows, Mac OS and more Linux variants as part of the infrastructure, but this is yet not the case. 
   
-  Windows is not supported yet, as it has completely different architecture and has a separate interface for managing networking, users, installation and permissions. Doing windows deployment also requires licensing of their \gls{operating-system}. Another constrain in working with windows is that not many core components are configurable or accessable via a script making automation very difficult or impossible.
+  Windows is not supported yet, as it has completely different architecture and has a separate interface for managing networking, users, installation and permissions. Doing windows deployment also requires licensing of their \gls{operating-system}. Another constrain in working with windows is that not many core components are configurable or accessible via a script making automation very difficult or impossible.
   
   Mac OSX virtual deployment was also something left for future. It also has similar issues to windows virtualisation (licensing, exposed \gls{api}).
   
-  Finally, as it comes to linux virtual machine deployment, I have opted to cover 
+  Finally, as it comes to Linux virtual machine deployment, I have opted to cover 
   
   \subsection{Functional requirements}
   \subsection{Non-functional requirements}

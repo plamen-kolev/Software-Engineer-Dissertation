@@ -19,9 +19,10 @@ ActiveRecord::Schema.define(version: 20170215232807) do
     t.datetime "updated_at",   null: false
     t.string   "ip"
     t.boolean  "deployed"
-    t.string   "user"
+    t.string   "vm_user"
     t.string   "distribution"
-    t.decimal  "filesize"
+    t.string   "ports"
+    t.string   "packages"
     t.decimal  "ram"
     t.boolean  "last_alive"
     t.text     "pem"
