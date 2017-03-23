@@ -4,9 +4,9 @@ class MachinesController < ApplicationController
     #
     owner = ::Deeploy::User::authenticate(token: current_user.token)
     # puts owner
-    m = ::Deeploy::VM.get(title: machine.title, owner: owner)
+    machine = ::Deeploy::VM.get(title: machine.title, owner: owner)
 
-    m.destroy()
+    machine.destroy()
     redirect_to root_path
   end
 
@@ -16,13 +16,16 @@ class MachinesController < ApplicationController
 
   def create
     @machine = Machine.new(vm_params)
+    packages = params[:machine][:packages]
     # pass packages, they are validated on model level
-    if params[:machine][:packages]
-      packages = params[:machine][:packages]
+    if packages
       validate_packages(packages, @machine)
     end
-
+    puts current_user.inspect
+    @machine.user_id = current_user.id
     if @machine.save()
+      ::DeployWorker::perform_async(@machine.id)
+      redirect_to root_path
     else
       render :new
     end

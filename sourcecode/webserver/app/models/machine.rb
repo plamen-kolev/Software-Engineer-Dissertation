@@ -1,7 +1,6 @@
 class Machine < ActiveRecord::Base
   attr_accessor :user
   before_validation :validate_custom_properties
-  after_save :create_vm
   validates :vm_user, :title, :presence => true
   validates :distribution, :inclusion=> { :in => Deeploy::distributions()}
   validates_uniqueness_of :title
@@ -22,30 +21,7 @@ class Machine < ActiveRecord::Base
   end
 
   private
-
-    def create_vm
-      begin
-        deeploy_user = Deeploy::User::authenticate({token: self.user.token})
-
-        machine = Deeploy::VM.create(
-          distribution: self.distribution,
-          title: self.title,
-          owner: deeploy_user,
-          user: self.vm_user,
-          opts: {
-            'packages' => self.packages,
-            'disk' => 0,
-            'ports' => self.ports,
-            'ram' => 1
-          }
-        )
-        machine.build()
-      rescue Exception => e
-        self.destroy
-        render e
-      end
-    end
-
+  
     def validate_custom_properties
       
       if self.ports

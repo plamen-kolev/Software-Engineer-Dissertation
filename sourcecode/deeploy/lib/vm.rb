@@ -206,6 +206,7 @@ HERE
       host_ip, netmask = sockips.first
       if not host_ip or not netmask
         $stderr.puts("Interface '#{$CONFIGURATION.network_interface}' did not return an ip or mask for the host !\n.") # Recreating virtual network.")
+        puts "Interface error"
         raise "Interface '#{$CONFIGURATION.network_interface}' did not return an ip or mask for the host !\n."
         # cleanup interfaces
         # ifaces = %x[VBoxManage list hostonlyifs].scan(/[^-]vboxnet\d+/)
