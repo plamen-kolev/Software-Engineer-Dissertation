@@ -43,7 +43,8 @@ module Deeploy
       end
 
       # human friendly virtual machine name
-      instance.title = "#{args[:title]}_#{$CONFIGURATION.rails_env}"
+      # instance.title = "#{args[:title]}_#{$CONFIGURATION.rails_env}"
+      instance.title = "#{args[:title]}"
       instance.ip = Deeploy::VM::generate_ip()
 
       vm_dir = $CONFIGURATION.machine_path
@@ -66,7 +67,7 @@ module Deeploy
       end
       machine = self.new
       machine.id = db_machine.id
-      vm_dir = $CONFIGURATION.machine_path ||= "#{File.expand_path("#{File.dirname(__FILE__)}")}", "/../"
+      vm_dir = $CONFIGURATION.machine_path
       machine.root = [vm_dir, "userspace", args[:owner].email, db_machine.title].join('/')
       machine.owner = args[:owner]
 
@@ -137,8 +138,6 @@ module Deeploy
       machine = DB::Machine.where(title: @title)
       # create machine is not running as part of backend
       if machine.first
-        puts "hello"
-        exit 1
         machine = machine.first
       else
         machine = DB::Machine.create(title: @title, user_id: @owner.id, deployed: false, distribution: @distribution, vm_user: @vm_user)

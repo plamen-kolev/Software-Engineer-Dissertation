@@ -1,3 +1,12 @@
 *.swp
 userspace/
 .vscode
+latex/dissertation.aux
+latex/dissertation.glo
+latex/dissertation.ist
+latex/dissertation.log
+latex/dissertation.out
+latex/dissertation.pdf
+latex/dissertation.synctex.gz
+latex/dissertation.toc
+

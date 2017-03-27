@@ -22,8 +22,17 @@
                     <td><%= machine.ip %></td> 
                     <td><span class="glyphicon glyphicon-ok success"></span></td>
                     <td><%= machine.deployed %></td>
-                    <td><%= link_to 'Destroy',  machine_path(machine),
-                                    data: { confirm: 'Are you sure?' }, method: :delete %></td>
+                    
+                    <td>
+                        <% if machine.deployed %>
+
+                            <%= link_to 'Destroy',  machine_path(machine),
+                                    data: { confirm: 'Are you sure?' }, method: :delete %>
+                        <% else %>
+                            <span class="alert-danger">still building</span>
+                        <% end %>
+                    </td>
+                    
                 </tr>
             <% end %>
         </table>

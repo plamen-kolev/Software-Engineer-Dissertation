@@ -2,10 +2,10 @@ class MachinesController < ApplicationController
   def destroy
     machine = Machine.find(params[:id])
     #
-    owner = ::Deeploy::User::authenticate(token: current_user.token)
+    logged_user = User.find(current_user.id)
+    owner = ::Deeploy::User::authenticate(token: logged_user.token)
     # puts owner
     machine = ::Deeploy::VM.get(title: machine.title, owner: owner)
-
     machine.destroy()
     redirect_to root_path
   end

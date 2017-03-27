@@ -10,7 +10,7 @@
 \usepackage{hyperref}
 
 \usepackage{graphicx}
-\graphicspath{ {images/} }
+\graphicspath{ {resources/images/} }
 \usepackage{glossaries}
 \usepackage{cite}
 \usepackage{color}
@@ -155,11 +155,43 @@
 
   \newpage
   \section{Background}
-  \subsection{Similar in the field}
-	For the duration of my dissertation, I have evaluated a variety of technologies, frameworks and utilities that will allow me to achieve the goal of automated system deployment. The trial and evaluation of these technologies allowed me to find the most suitable and relevant methodology for moving forward. I also experimented with different "cloud" virtual machine deployment services to understand and evaluate the key requirements that ought to be provided by the platform that I am building. 
-  \subsection{Virtualisation}
-  \subsection{Addoption}
-  \subsection{Application}
+   	\subsection{Virtualisation}
+	\subsection{Addoption}
+	\subsection{Application}
+  \newpage
+  \section{Planning}
+  \subsection{First Semester}
+  When creating the project plan, two core stages were in mind. The first stage was semester one. During that period, I laid the ground work on which I based all the work that went into developing and testing. This was also a critical moment into the building process, as it allowed me to find materials created by the leading experts in the field (Amazon, Intel, Oracle) and learn about the various aspects of building cloud-ready applications, infrastructure security and automation. 
+  
+  This research helped when rationing about the features to implement, helped me understand the scope and challenges and gave me an insight into why this problem requires solving, and it gave a detailed overview of how to solve it.
+  
+  The first semester was not only about researching applications within the scope of what I was trying to achieve, but also about describing the constrains, limitations and infrastructure decisions I have to make in order to demonstrate a  product that has real-world application. 
+  The materials helped me also to identify potential risks and issues that might arise, such as the security risk of running multiple virtual machines onto the same physical space where an attacker can read the private data of another machine. 
+  
+  Work also went into creating presentation and project proposal for the upcoming work, which will give an outline and highlight the features and needs that the work addresses.
+  When creating the presentation, I wanted to be as generic as possible as not to present information and ideas that the additional research might prove impossible to implement or not practical.
+  
+  \subsection{Second Semester}
+  
+  The tasks accomplished during the second semester are related to implementing, refining, iterating and evaluating. This is the time where all the main features, functional and non-functional requirements got developed, tested and documented. It must be noted that for the most part, each cycle was not incrementally tackled, but instead, numerous development-testing-documenting phases were used to achieve the final result. 
+  \begin{center}
+  	\includegraphics[width=12cm]{agile.jpg}
+  \end{center}
+  
+  
+  For the most part, the project was completed using the agile methodology, getting by-weekly feedback from my supervisor, raising concerns and showing progress in a stand-up fashion. Occasionally, the meetings were not about progress update, but about demoing the work done so far with the purpose of obtaining feedback.
+  
+  Each cycle that shaped the final product is described below.
+  \subsubsection{Developmen}
+  	As planned, I broke down the main objectives into subtasks and tackled them one-by-one. My initial plan is not to develop the whole system and assemble the parts together, but to build a minimum viable product (MVP) and increment onwards.
+  	
+  	This was done in order to assure that the platform can be built with the available tools and that the requirements can be met at the end of the project.
+  	
+  	Being able to create a virtual machine with a known \gls{ipaddress} from a script was the first thing that had to be accomplished, creating custom users, opening ports and creating the web interface was something that I built on top of the "core" product.
+  	
+  \subsubsection{Learning period}
+  	
+  	
 
   \newpage
   \section{Methodology}
@@ -186,13 +218,9 @@
 		Do sufficient testing to ensure that the platform behaves as expected.
 	\end{enumerate}
 
-  \subsection{Planning}
-  When creating the project plan, two core stages were in mind. The first stage was semester one. During that period, I laid the ground work on which I based all the work that went into developing and testing. This was also a critical moment into the building process, as it allowed me to find materials created by the leading experts in the field (Amazon, Intel, oracle) and learn about the various aspects of building cloud-ready applications, infrastructure security and automation. 
-  
-  This research helped when rationing about the features to implement, helped me understand the scope and challenges and gave me an insight into why this problem requires solving, and it gave a detailed overview of how to solve it.
-  
-  The first semester was not only about researching applications within the scope of what I was trying to achieve, but also about describing the constrains, limitations and infrastructure decisions I have to make in order to demonstrate a ready product on a production environment. 
-  
+  \subsection{Similar in the field}
+	For the duration of my dissertation, I have evaluated a variety of technologies, frameworks and utilities that will allow me to achieve the goal of automated system deployment. The trial and evaluation of these technologies allowed me to find the most suitable and relevant methodology for moving forward. I also experimented with different "cloud" virtual machine deployment services to understand and evaluate the key requirements that ought to be provided by the platform that I am building. 
+
   \subsection{Constrains}
   Because of the limited duration of the dissertation and the immense work that has to be carried throughout the implementation (testing, documentation, development, debugging, planning, etc.) certain constrains had to be put in place to ensure that the project will be completed within the appropriate period.
   

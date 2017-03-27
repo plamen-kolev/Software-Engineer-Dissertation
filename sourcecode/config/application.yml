@@ -31,5 +31,5 @@ development:
   database_adapter: sqlite3
   network_interface: vboxnet0
   rails_env: development
-  db_path: '/home/hallagat/Projects/dissertation/sourcecode/db/'
-  machine_path: "/home/hallagat/Projects/dissertation/sourcecode/"
+  db_path: '/home/hallagat/Projects/dissertation/sourcecode/db'
+  machine_path: "/home/hallagat/Projects/dissertation/sourcecode"
