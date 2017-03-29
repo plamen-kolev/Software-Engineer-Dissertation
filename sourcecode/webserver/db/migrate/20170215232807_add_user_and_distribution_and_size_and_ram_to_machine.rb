@@ -5,7 +5,7 @@ class AddUserAndDistributionAndSizeAndRamToMachine < ActiveRecord::Migration[5.0
     add_column :machines, :ports, :string
     add_column :machines, :packages, :string
     add_column :machines, :ram, :decimal
-    add_column :machines, :last_alive, :boolean
+    add_column :machines, :alive, :boolean
     add_column :machines, :pem, :text
   end
 end

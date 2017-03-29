@@ -10,6 +10,15 @@
 
   <body>
     <%= render 'layouts/header' %>
+    <% if not $has_network %>
+      <div class="col-md-12 container">
+        <div class="alert alert-danger">
+          <strong>Danger!</strong> Network interfaces not setup correctly, Netmask <%= $network_mask %>, IP address: <%= $network_host %>
+          <br/> Ensure that the IP is different to the local network.
+        </div>
+      </div>
+    <% end %>
+
     <%= yield %>
     <%= render 'layouts/footer' %>
   </body>

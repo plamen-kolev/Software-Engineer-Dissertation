@@ -33,12 +33,27 @@ module Deeploy
     )
   end
 
+  def self.network_interface
+      sockips = Socket.getifaddrs.select{|ifaddr| ifaddr.addr.afamily == Socket::AF_INET && ifaddr.name == $CONFIGURATION.network_interface}. \
+        map{|ifaddr| [ifaddr.addr, ifaddr.netmask].map &:ip_address}
+
+      # grab netmask for the specified interface
+      return sockips.first
+      
+  end
+
+  def update_machines_alive(current_user)
+    
+  end
+
+
   def self.distributions
     return ['ubuntu', 'centos']
   end
 
   def self.packages
-    modules = ['vim', 'nginx', 'apache', 'mocp', 'xclock', 'x11', 'cinnamon']
+    modules = ['vim', 'nginx', 'apache2', 'mysql-server', 'memcached']
+    # modules_unsupported = ["redis"]
     return modules
   end
 end

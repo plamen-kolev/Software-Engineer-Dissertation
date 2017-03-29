@@ -19,12 +19,13 @@ ActiveRecord::Schema.define(version: 20170215232807) do
     t.datetime "updated_at",   null: false
     t.string   "ip"
     t.boolean  "deployed"
+    t.boolean  "last_alive"
     t.string   "vm_user"
     t.string   "distribution"
     t.string   "ports"
     t.string   "packages"
     t.decimal  "ram"
-    t.boolean  "last_alive"
+    t.boolean  "alive"
     t.text     "pem"
     t.index ["ip"], name: "index_machines_on_ip", unique: true
     t.index ["title"], name: "index_machines_on_title", unique: true

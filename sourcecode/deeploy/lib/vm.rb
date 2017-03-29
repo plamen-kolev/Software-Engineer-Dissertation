@@ -6,22 +6,38 @@ require 'ipaddr'
 module Deeploy
   class VM < Configurable
     attr_accessor :owner, :distribution, :root, :manifest, :vm_user, :ip, :title, :configuration, :id, :disk, :ram, :packages, :ports
-    
-
-    
+        
     def self.create(args = {})
       # validation
 
       instance = Deeploy::VM.new
       # ram and disk
-      instance.disk = args[:opts][:disk] ||= 5
-      instance.ram = args[:opts][:ram] ||= 1
+      instance.disk = args[:opts][:disk]
+      instance.disk ||= 1
 
+      instance.ram = args[:opts][:ram]
+      instance.ram ||= 1
+      
       # additional packages
-      instance.packages = args[:opts][:packages] ||= []
+      instance.packages = args[:opts][:packages]
+      opts =  args[:opts]
+      instance.packages = opts["packages"] 
+
+      # if packages specified, trim the whitespace off
+      if instance.packages
+        for i in 0..instance.packages.length - 1
+          instance.packages[i] = instance.packages[i].strip
+        end
+      end
+
+      # now filter out the allowed packages
+      instance.packages = instance.packages & Deeploy::packages
+
+      instance.packages ||= []
 
       # open ports
-      instance.ports = args[:opts][:ports] ||= []
+      instance.ports = args[:opts]["ports"]
+      instance.ports ||= []
 
       if ! instance._verify_owner(args[:owner])
         return false
@@ -58,8 +74,29 @@ module Deeploy
 
     end
 
+    def alive
+      db_machine = DB::Machine.where(title: self.title).take
+
+      begin
+      Timeout::timeout(2) do
+          begin
+              TCPSocket.new(self.ip, 22).close
+              db_machine.alive = true
+          # rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
+              # db_machine.alive = false
+          end
+      end
+      rescue Timeout::Error, Errno::ECONNREFUSED, Errno::EHOSTUNREACH
+        db_machine.alive = false
+      end
+      db_machine.save()
+
+      # end trying here
+    end
+
     # takes machine name and owner object
     def self.get(args = {})
+
       db_machine = DB::Machine.where(user_id: args[:owner].id, title: args[:title]).take
       if ! db_machine
         $stderr.puts("Unable to find machine '#{args[:title]}' for user '#{args[:owner].email}'")
@@ -67,6 +104,8 @@ module Deeploy
       end
       machine = self.new
       machine.id = db_machine.id
+      machine.ip = db_machine.ip
+      machine.title = db_machine.title
       vm_dir = $CONFIGURATION.machine_path
       machine.root = [vm_dir, "userspace", args[:owner].email, db_machine.title].join('/')
       machine.owner = args[:owner]
@@ -81,15 +120,16 @@ module Deeploy
     end
 
     def _verify_owner(owner)
-      if owner.class != Deeploy::User
-        $stderr.puts "Expecting Helper::User object, got #{owner.class}"
+     
+      unless (owner.class == Deeploy::User or owner.class.to_s == "User")
+        $stderr.puts "Expecting Helper::User or User object, got #{owner.class}"
         # exit 1
         return false
       else
 
         if ! DB::User.find(owner.id)
-          $stderr.puts "Invalid user"
-          return false
+            $stderr.puts "Invalid user"
+            return false
         end
       end
       return true
@@ -160,7 +200,8 @@ module Deeploy
         machine.save
         return true
       else
-        $stderr.puts("Errors were encountered: #{$?.inspect}")
+        $stderr.puts("Errors were encountered, cleaning up: #{$?.inspect}")
+        self.destroy()
         return false
       end
     end
@@ -198,11 +239,11 @@ HERE
 
       # Your own ip address and netmask
       # https://www.snip2code.com/Snippet/339491/Use-Ruby-to-get-your-ip-address-and-netm
-      sockips = Socket.getifaddrs.select{|ifaddr| ifaddr.addr.afamily == Socket::AF_INET && ifaddr.name == $CONFIGURATION.network_interface}. \
-        map{|ifaddr| [ifaddr.addr, ifaddr.netmask].map &:ip_address}
+      # sockips = Socket.getifaddrs.select{|ifaddr| ifaddr.addr.afamily == Socket::AF_INET && ifaddr.name == $CONFIGURATION.network_interface}. \
+      #   map{|ifaddr| [ifaddr.addr, ifaddr.netmask].map &:ip_address}
 
       # grab netmask for the specified interface
-      host_ip, netmask = sockips.first
+      host_ip, netmask = Deeploy::network_interface()
       if not host_ip or not netmask
         $stderr.puts("Interface '#{$CONFIGURATION.network_interface}' did not return an ip or mask for the host !\n.") # Recreating virtual network.")
         puts "Interface error"

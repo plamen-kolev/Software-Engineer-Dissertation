@@ -40,7 +40,7 @@ command :new do |c|
   c.option '--vm_name STRING',        String, 'The name of the machine, generates a random name if left blank'
   c.option '--ports STRING',     String, 'Ports that need to be opened, comma seperated'
   c.option '--packages STRING',String, 'List of software to be installed on the machine, comma seperated'
-  c.option '--disk STRING',String, 'Size in gigabytes for the machine'
+  # c.option '--disk STRING',String, 'Size in gigabytes for the machine'
   c.option '--ram STRING',String, 'Size in gigabytes for the machine'
 
 
@@ -72,7 +72,6 @@ command :new do |c|
     end
 
     ram = options.ram ||= 1
-    disk = options.disk ||= 5
     
     machine = Deeploy::VM.create(
       distribution: options.distribution,
@@ -81,7 +80,7 @@ command :new do |c|
       vm_user: options.vm_user,
       opts: {
         'packages' => packages,
-        'disk' => disk,
+        # 'disk' => disk,
         'ports' => ports,
         'ram' => ram
       }

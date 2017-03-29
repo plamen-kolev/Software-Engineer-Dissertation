@@ -29,9 +29,10 @@
 \makeglossaries
 \let\oldcite=\cite
 \renewcommand\cite[1]{\ifthenelse{\equal{#1}{_NEEDED_}}{[citation~needed]}{\oldcite{#1}}}
+\renewcommand*{\glstextformat}[1]{\textcolor{blue}{#1}}
 % ENDCUSTOMMACROS
 
-\definecolor{Mycolor2}{HTML}{333333}
+\definecolor{Mycolor2}{HTML}{4a4a4a}
 \hypersetup{
     colorlinks,
     citecolor=blue,
@@ -197,6 +198,11 @@ Give developers a platform for easy deployment, management and monitoring of vir
 \subsection{Application}
 \newpage
 \section{Planning}
+
+\begin{center}
+	\includegraphics[width=12cm]{gantt.jpg}
+\end{center}
+
 \subsection{First Semester}
 When creating the project plan, two core stages were in mind. The first stage was semester one. During that period, I laid the ground work on which I based all the work that went into developing and testing. This was also a critical moment into the building process, as it allowed me to find materials created by the leading experts in the field (Amazon, Intel, Oracle) and learn about the various aspects of building cloud-ready applications, infrastructure security and automation.
 
@@ -236,6 +242,7 @@ Another part of the development strategy was to do a small web project using rub
 The task of learning \gls{puppet} was achieved by creating end-to-end automation scrip of the current set-up of my desktop machine. As puppet's power is to get a machine's configuration to a known state and ensure all software packages are present, this was overall a good practice that led to a faster implementation and integration.
 
 \subsubsection{Documentation}
+The initial plan as stated in the project proposal is to document the work during each stage of the process. 
 
 
 

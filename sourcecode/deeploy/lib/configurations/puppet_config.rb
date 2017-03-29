@@ -6,11 +6,14 @@ module Deeploy
         @machine = m_inst
         @root = m_inst.root
         @update_dependencies = "/usr/bin/apt-get update"  if ! @update_dependencies
+        @install_package_command = create_install_packages_config(m_inst.packages)
 
         super(m_inst)
         @config = <<CONF
           include 'stdlib'
 
+          #{@install_package_command}
+          
           exec {"coppy_private_key_to_authorised_keys":
             command => "/bin/cat /vagrant/.ssh/#{@machine.title}.pub >> /home/#{@machine.vm_user}/.ssh/authorized_keys",
             user        => "#{@machine.vm_user}",
@@ -58,11 +61,26 @@ module Deeploy
             user        => "#{@machine.vm_user}",
             returns => [0,1],
             require => User['#{@machine.vm_user}'],
-
           }
 
           #{@last_block}
 CONF
+
+      end
+      
+      def create_install_packages_config(packages)
+        config = ""
+
+        packages.each do |p|
+          config += <<HERE
+          package { "#{p}":
+            ensure => 'installed',#
+            require => Exec['update_dependencies']
+          }
+HERE
+        end
+
+        return config
       end
 
       def write(file='')
