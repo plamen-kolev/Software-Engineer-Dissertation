@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20170215232807) do
     t.string   "ip"
     t.boolean  "deployed"
     t.boolean  "last_alive"
+    t.text     "certificate"
     t.string   "vm_user"
     t.string   "distribution"
     t.string   "ports"

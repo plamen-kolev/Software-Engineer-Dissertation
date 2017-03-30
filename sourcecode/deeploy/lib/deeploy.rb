@@ -48,7 +48,11 @@ module Deeploy
 
 
   def self.distributions
-    return ['ubuntu', 'centos']
+    return {
+      ubuntu: 'ubuntu/xenial64', 
+      centos: "bento/centos-7.2",
+      debian: 'debian/jessie64'
+    }
   end
 
   def self.packages

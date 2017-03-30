@@ -5,7 +5,7 @@ require 'ipaddr'
 
 module Deeploy
   class VM < Configurable
-    attr_accessor :owner, :distribution, :root, :manifest, :vm_user, :ip, :title, :configuration, :id, :disk, :ram, :packages, :ports
+    attr_accessor :owner, :distribution, :root, :manifest, :vm_user, :ip, :title, :configuration, :id, :disk, :ram, :packages, :ports, :pem
         
     def self.create(args = {})
       # validation
@@ -45,13 +45,9 @@ module Deeploy
       instance.owner = args[:owner]
 
       # allowed list of distros
-      distributions = {
-        'ubuntu' => 'ubuntu/xenial64',
-        'debian' => 'debian/jessie64',
-        'centos' => 'bento/centos-7.2'
-      }
+      distributions = Deeploy::distributions()
 
-      instance.distribution = distributions[args[:distribution]]
+      instance.distribution = distributions[args[:distribution].to_sym]
       if ! instance.distribution
         $stderr.puts "Distribution '#{args[:distribution]}' is not a recognized option,\nOptions are: #{distributions.keys}, aborting"
         # exit 1
@@ -106,6 +102,7 @@ module Deeploy
       machine.id = db_machine.id
       machine.ip = db_machine.ip
       machine.title = db_machine.title
+      machine.pem = db_machine.pem
       vm_dir = $CONFIGURATION.machine_path
       machine.root = [vm_dir, "userspace", args[:owner].email, db_machine.title].join('/')
       machine.owner = args[:owner]
@@ -203,6 +200,12 @@ module Deeploy
         $stderr.puts("Errors were encountered, cleaning up: #{$?.inspect}")
         self.destroy()
         return false
+      end
+    end
+
+    def up
+      Dir.chdir("#{@root}") do
+        result = system("vagrant up")
       end
     end
 

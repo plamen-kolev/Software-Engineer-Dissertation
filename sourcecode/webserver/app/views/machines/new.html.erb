@@ -4,7 +4,7 @@
     <%= f.input :title %>
     <%= f.input :vm_user %>
     <%= f.input :ports %>
-    <%= f.input :distribution, collection: @machine.distributions, input_html: {value: @machine.distributions[0]} %>
+    <%= f.input :distribution, selected: "ubuntu", collection: @machine.distributions.keys %>
     <%= f.input :packages, {
         as: :check_boxes, 
         collection: @machine.get_packages { |p| [p, p]},

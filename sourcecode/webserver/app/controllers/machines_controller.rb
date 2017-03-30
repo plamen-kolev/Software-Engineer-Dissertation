@@ -1,5 +1,6 @@
 class MachinesController < ApplicationController
   before_action :authenticate_user!
+  before_action :get_machine, only: [:up, :down, :restart]
 
   def index 
     @machines = Machine.where(user_id: current_user.id)
@@ -11,19 +12,13 @@ class MachinesController < ApplicationController
       vm = Deeploy::VM.get(title: m.title, owner: current_user)
       vm.alive()
     end
-
-
   end
 
   def destroy
-    machine = Machine.find(params[:id])
-    #
-    logged_user = User.find(current_user.id)
-    owner = ::Deeploy::User::authenticate(token: logged_user.token)
-    # puts owner
-    machine = ::Deeploy::VM.get(title: machine.title, owner: current_user)
-    machine.destroy()
-    redirect_to root_path
+    params.require(:title)    
+    @machine = ::Deeploy::VM.get(title: params[:title], owner: current_user)
+    @machine.destroy()
+    redirect_to machines_path
   end
 
   def new
@@ -32,8 +27,8 @@ class MachinesController < ApplicationController
     words = [
       "crosswind","epigenous","twelve","thorstein","loping",
       "rumble","ptain","challenged","divot","temper","derringer","feudalising","fantastically","rootage","sopolitical","undonated","noncontending","oversaturating","phonating","quadrating","quirites","unmounted","talkativeness","incondensable","concreting","caryatic"
-
     ]
+    
     title = ""
     for i in 0..2
       title += "#{words.sample}-"
@@ -44,13 +39,15 @@ class MachinesController < ApplicationController
   end
 
   def create
-    @machine = Machine.new(vm_params)
+    @machine = Machine.new(vm_params())
     packages = params[:machine][:packages]
     # pass packages, they are validated on model level
     if packages
-      validate_packages(packages, @machine)
+      validate_packages(packages)
+      @machine.packages = packages.join(",")
     end
     @machine.user_id = current_user.id
+
     if @machine.save()
       ::DeployWorker::perform_async(@machine.id)
       redirect_to root_path
@@ -59,18 +56,58 @@ class MachinesController < ApplicationController
     end
   end
 
+  def download_certificate
+    params.require(:machine_title)    
+    @machine = ::Deeploy::VM.get(title: params[:machine_title], owner: current_user)
+    m = Machine.find(@machine.id)
+    if not m.pem
+      raise ActionController::RoutingError.new('Not Found')
+    end
+    m.pem = nil
+    m.save()
+
+    send_file [@machine.root, '.ssh', "#{@machine.title}.pem"].join('/')
+    # send_data pem,
+    #   :type => 'text/plain; charset=UTF-8;',
+    #   :disposition => "attachment; filename=#{@machine.title}.pem"
+
+  end
+
+  def down
+    @machine.down()
+    redirect_to machines_path
+  end
+
+  def up
+    @machine.up
+    redirect_to machines_path
+  end
+
+  def restart
+    @machine.down
+    @machine.up
+    redirect_to machines_path
+  end
+
+
   private
+
+    def get_machine
+      params.require(:machine_title)    
+      @machine = ::Deeploy::VM.get(title: params[:machine_title], owner: current_user)
+    end
+
     def vm_params
         params.require(:machine).permit(:title, :body, :ports, :vm_user, :distribution, :packages => [])
     end
 
-    def validate_packages(packages, machine)
-      
+    def validate_packages(packages)
+      allowed_packages = Deeploy::packages()
       return true if not packages
 
       packages.each do |p|
-        if machine.get_packages.include? p
-          machine.errors.add(:packages, "#{p} is not a supported package")
+        if allowed_packages.include? p
+          @machine.errors.add(:packages, "#{p} is not a supported package")
         end
       end
     end
