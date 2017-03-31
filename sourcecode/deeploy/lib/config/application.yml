@@ -19,12 +19,12 @@ production:
   RAILS_ENV: development
 
 test:
-  DATABASE_HOST: localhost
-  NETWORK_INTERFACE: vboxnet1
-  DATABASE_ADAPTER: sqlite3
-  RAILS_ENV: test
-  NETWORK_INTERFACE: vboxnet1
-  RAILS_ENV: test
+  database_host: localhost
+  database_adapter: sqlite3
+  network_interface: vboxnet1
+  rails_env: test
+  db_path: '/home/hallagat/Projects/dissertation/sourcecode/db'
+  machine_path: "/home/hallagat/Projects/dissertation/sourcecode"
 
 development:
   database_host: localhost

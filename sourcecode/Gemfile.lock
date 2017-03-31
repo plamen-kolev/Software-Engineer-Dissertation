@@ -1,7 +1,9 @@
 PATH
   remote: deeploy
   specs:
-    deeploy (0.1.39)
+    deeploy (0.1.41)
+      figaro (~> 1.1)
+      net-ssh (~> 4.1)
 
 GEM
   remote: https://rubygems.org/
@@ -31,6 +33,7 @@ GEM
     micromachine (2.0.0)
     minitest (5.10.1)
     mysql2 (0.4.5)
+    net-ssh (4.1.0)
     random-word (1.3.0)
     slugify (1.0.7)
     sqlite3 (1.3.13)
@@ -54,6 +57,7 @@ DEPENDENCIES
   deeploy!
   figaro (~> 1.1, >= 1.1.1)
   mysql2 (~> 0.4.5)
+  net-ssh (~> 4.1)
   random-word (~> 1.3)
   slugify (~> 1.0, >= 1.0.6)
   sqlite3 (~> 1.3, >= 1.3.13)

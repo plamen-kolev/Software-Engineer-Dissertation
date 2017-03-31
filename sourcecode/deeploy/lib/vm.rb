@@ -6,67 +6,63 @@ require 'ipaddr'
 module Deeploy
   class VM < Configurable
     attr_accessor :owner, :distribution, :root, :manifest, :vm_user, :ip, :title, :configuration, :id, :disk, :ram, :packages, :ports, :pem
-        
-    def self.create(args = {})
-      # validation
 
-      instance = Deeploy::VM.new
-      # ram and disk
-      instance.disk = args[:opts][:disk]
-      instance.disk ||= 1
+    def initialize(args = {})
+      opts = args[:opts]
 
-      instance.ram = args[:opts][:ram]
-      instance.ram ||= 1
-      
-      # additional packages
-      instance.packages = args[:opts][:packages]
-      opts =  args[:opts]
-      instance.packages = opts["packages"] 
+      if opts
+        self.disk = disk if disk = opts[:disk]
+        self.id = id.to_i if id = opts[:id]
+        self.ip = ip if ip = opts[:ip]
+        self.ram = ram if ram = opts[:ram]
 
-      # if packages specified, trim the whitespace off
-      if instance.packages
-        for i in 0..instance.packages.length - 1
-          instance.packages[i] = instance.packages[i].strip
+        if packages = opts[:packages]
+          self.packages = packages
+          self.packages.each do |package|
+            package = package.strip
+          end
+          # now filter out the allowed packages
+          self.packages = self.packages & Deeploy::packages.keys.collect{|el| el.to_s}
+        end
+
+        if ports = opts[:ports]
+          self.ports = ports
         end
       end
 
-      # now filter out the allowed packages
-      instance.packages = instance.packages & Deeploy::packages
-
-      instance.packages ||= []
+      self.disk ||= 1; self.ram ||= 1; self.packages ||= []; self.ports ||= []
 
       # open ports
-      instance.ports = args[:opts]["ports"]
-      instance.ports ||= []
 
-      if ! instance._verify_owner(args[:owner])
-        return false
-      end
-      instance.owner = args[:owner]
+      return false unless self._verify_owner(args[:owner])
+
+      self.owner = args[:owner]
 
       # allowed list of distros
       distributions = Deeploy::distributions()
 
-      instance.distribution = distributions[args[:distribution].to_sym]
-      if ! instance.distribution
+      # test to see if distribution lookup will work, otherwise error out
+      if distributions[args[:distribution].to_sym]
+        self.distribution = args[:distribution]
+      else
         $stderr.puts "Distribution '#{args[:distribution]}' is not a recognized option,\nOptions are: #{distributions.keys}, aborting"
         # exit 1
-        return false
+        raise ArgumentError
       end
 
       # human friendly virtual machine name
       # instance.title = "#{args[:title]}_#{$CONFIGURATION.rails_env}"
-      instance.title = "#{args[:title]}"
-      instance.ip = Deeploy::VM::generate_ip()
+      self.title ||= args[:title]
+      self.ip ||= self.generate_ip()
 
       vm_dir = $CONFIGURATION.machine_path
       # set the folder path (absolute path on the os)
-      instance.root = [vm_dir, "userspace", instance.owner.email, instance.title].join('/')
-      instance.manifest = instance.root + '/manifests'
+      self.root = [vm_dir, 'userspace', self.owner.email, self.title].join('/')
+      self.manifest = self.root + '/manifests'
 
-      instance.vm_user = args[:vm_user]
-      instance.configuration = Deeploy::Confmanager.new(instance)
-      return instance
+      self.vm_user = args[:vm_user]
+      self.configuration = Deeploy::Confmanager.new(self)
+      return self
 
     end
 
@@ -74,17 +70,18 @@ module Deeploy
       db_machine = DB::Machine.where(title: self.title).take
 
       begin
-      Timeout::timeout(2) do
+        Timeout::timeout(2) do
           begin
-              TCPSocket.new(self.ip, 22).close
-              db_machine.alive = true
-          # rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
-              # db_machine.alive = false
+            TCPSocket.new(self.ip, 22).close
+            db_machine.alive = true
+            # rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
+            # db_machine.alive = false
           end
-      end
+        end
       rescue Timeout::Error, Errno::ECONNREFUSED, Errno::EHOSTUNREACH
         db_machine.alive = false
       end
+
       db_machine.save()
 
       # end trying here
@@ -98,19 +95,35 @@ module Deeploy
         $stderr.puts("Unable to find machine '#{args[:title]}' for user '#{args[:owner].email}'")
         return false
       end
-      machine = self.new
-      machine.id = db_machine.id
-      machine.ip = db_machine.ip
-      machine.title = db_machine.title
-      machine.pem = db_machine.pem
       vm_dir = $CONFIGURATION.machine_path
-      machine.root = [vm_dir, "userspace", args[:owner].email, db_machine.title].join('/')
-      machine.owner = args[:owner]
+
+      machine = self.new(
+        title: db_machine.title,
+        distribution: db_machine.distribution,
+        root: [vm_dir, 'userspace', args[:owner].email, db_machine.title].join('/'),
+        owner: DB::User.find(db_machine.user_id),
+        vm_user: db_machine.vm_user,
+        opts: {
+          pem: db_machine.pem,
+          id: db_machine.id,
+          ip: db_machine.ip,
+          ports: db_machine.ports,
+          packages: db_machine.packages,
+          ram: db_machine.ram
+        }
+      )
+      # machine.id = db_machine.id
+      # machine.ip = db_machine.ip
+      # machine.title = db_machine.title
+      # machine.pem = db_machine.pem
+      
+      # machine.root = [vm_dir, "userspace", args[:owner].email, db_machine.title].join('/')
+      # machine.owner = args[:owner]
 
       machine._verify_owner(args[:owner])
       if db_machine.user_id != machine.owner.id
         $stderr.puts("The user does not own the virtual machine")
-        exit 1
+        raise AuthorizationException
       end
 
       return machine
@@ -118,8 +131,8 @@ module Deeploy
 
     def _verify_owner(owner)
      
-      unless (owner.class == Deeploy::User or owner.class.to_s == "User")
-        $stderr.puts "Expecting Helper::User or User object, got #{owner.class}"
+      unless (owner.class.to_s == "Deeploy::User" or owner.class.to_s == "User" or owner.class.to_s == "DB::User")
+        $stderr.puts "Expecting Deeploy::User or User object, got #{owner.class}"
         # exit 1
         return false
       else
@@ -132,7 +145,8 @@ module Deeploy
       return true
     end
 
-    def destroy()
+    # keep machine folder for debugging
+    def destroy(keep_folders=false)
       if Dir.exists?(@root)
         Dir.chdir("#{@root}") do
           result = system(
@@ -140,7 +154,9 @@ module Deeploy
           )
         end
 
-        FileUtils.rm_rf("#{@root}")
+        if not keep_folders
+          FileUtils.rm_rf("#{@root}")
+        end
       end
 
       vm = DB::Machine.find(@id)
@@ -177,7 +193,7 @@ module Deeploy
       if machine.first
         machine = machine.first
       else
-        machine = DB::Machine.create(title: @title, user_id: @owner.id, deployed: false, distribution: @distribution, vm_user: @vm_user)
+        machine = DB::Machine.new(title: @title, user_id: @owner.id, deployed: false, distribution: @distribution, vm_user: @vm_user)
       end
 
       machine.ip = @ip
@@ -187,8 +203,8 @@ module Deeploy
       self.id = machine.id
       result = false
 
-      Dir.chdir("#{@root}") do
-        result = system("vagrant up")
+      Dir.chdir(@root) do
+        result = system("vagrant up &> #{@root}/vagrant.log")
       end
 
       if result
@@ -198,7 +214,7 @@ module Deeploy
         return true
       else
         $stderr.puts("Errors were encountered, cleaning up: #{$?.inspect}")
-        self.destroy()
+        self.destroy(true)
         return false
       end
     end
@@ -238,12 +254,7 @@ module Deeploy
 HERE
     end
 
-    def self.generate_ip()
-
-      # Your own ip address and netmask
-      # https://www.snip2code.com/Snippet/339491/Use-Ruby-to-get-your-ip-address-and-netm
-      # sockips = Socket.getifaddrs.select{|ifaddr| ifaddr.addr.afamily == Socket::AF_INET && ifaddr.name == $CONFIGURATION.network_interface}. \
-      #   map{|ifaddr| [ifaddr.addr, ifaddr.netmask].map &:ip_address}
+    def generate_ip()
 
       # grab netmask for the specified interface
       host_ip, netmask = Deeploy::network_interface()

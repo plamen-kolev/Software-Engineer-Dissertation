@@ -3,13 +3,17 @@ module Deeploy
     class VagrantConfig < Configuration
 
       def initialize(m_inst)
-        puts m_inst.inspect
         @root = m_inst.root
         super(m_inst)
         @vbadditions = 'config.vbguest.auto_update = false' if ! @vbadditions
+        
+        distribution = Deeploy.distributions()
+        sym = m_inst.distribution.to_sym
+        distribution = distribution[sym]
+
         @config = <<CONFIG
         Vagrant.configure(2) do |config|
-          config.vm.box = "#{m_inst.distribution}"
+          config.vm.box = "#{distribution}"
           config.vm.network "private_network", ip: "#{m_inst.ip}", :bridge => '#{$CONFIGURATION.network_interface}'
           config.vm.provision "shell", path: "manifests/setup.sh"
           config.vm.provision :puppet

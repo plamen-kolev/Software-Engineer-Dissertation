@@ -8,6 +8,7 @@ gem 'slugify', '~> 1.0', '>= 1.0.6'
 gem 'vagrant-vbguest', '~> 0.13.0'
 gem 'figaro', '~> 1.1', '>= 1.1.1'
 gem "deeploy", :path => "deeploy"
+gem 'net-ssh', '~> 4.1'
 
 group :production do
   gem 'mysql2', '~> 0.4.5'

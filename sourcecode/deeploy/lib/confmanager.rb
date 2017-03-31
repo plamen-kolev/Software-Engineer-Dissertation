@@ -9,12 +9,12 @@ module Deeploy
     def initialize(vm)
       @requires = {
         # name of the distribution => [path to files, namespace]
-        'ubuntu/xenial64' => {
+        'ubuntu' => {
           module: 'configurations/ubuntu',
           class: 'Deeploy::Config::Ubuntu'
         },
 
-        'bento/centos-7.2' => {
+        'centos' => {
           module: 'configurations/centos', 
           class: 'Deeploy::Config::Centos'
         },
@@ -25,9 +25,11 @@ module Deeploy
       # dynamically resolve dependencies for each distribution
       dependencies = @requires[vm.distribution]
 
-      @requires[:config].each do | key, value |
-        require_relative "#{dependencies[:module]}/#{key}"
-        cls = Object.const_get("#{dependencies[:class]}::#{value}").new(vm)
+      @requires[:config].each do |key, value|
+        require = [dependencies[:module], key].join('/')
+        require_relative require
+        class_ref = "#{dependencies[:class]}::#{value}"
+        cls = Object.const_get(class_ref).new(vm)
         self.instance_variable_set("@#{key}", cls)
       end
 

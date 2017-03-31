@@ -7,6 +7,8 @@ class DeployWorker
       machine = Machine.find(vm_id)
       current_user = User.find(machine.user_id)
       packages = machine.packages.split(",").collect{|el| el.strip}
+      ports = machine.ports.split(',').collect{|el| el.strip.to_i}
+
       machine = Deeploy::VM.create(
         distribution: machine.distribution,
         title: machine.title,
@@ -15,7 +17,7 @@ class DeployWorker
         opts: {
           'packages' => packages,
           'disk' => 0,
-          'ports' => machine.ports,
+          'ports' => ports,
           'ram' => 1
         }
       )

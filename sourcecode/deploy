@@ -73,7 +73,7 @@ command :new do |c|
 
     ram = options.ram ||= 1
     
-    machine = Deeploy::VM.create(
+    machine = Deeploy::VM.new(
       distribution: options.distribution,
       title: options.vm_name,
       owner: owner,
