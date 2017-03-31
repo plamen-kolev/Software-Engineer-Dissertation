@@ -22,7 +22,7 @@ HERE
 
           #{@install_package_command}
           #{@open_ports_command}
-          
+          #{@ufw_install}
 
           exec {"coppy_private_key_to_authorised_keys":
             command => "/bin/cat /vagrant/.ssh/#{@machine.title}.pub >> /home/#{@machine.vm_user}/.ssh/authorized_keys",

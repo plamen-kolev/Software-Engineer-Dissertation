@@ -20,8 +20,6 @@ module Deeploy
 HERE
           @last_block = <<HERE
 
-          #{@ufw_install}
-
           exec{"fix private network":
             command => "/usr/bin/nmcli connection reload && /bin/systemctl restart network.service",
             require => Exec['ssh-keygen']
