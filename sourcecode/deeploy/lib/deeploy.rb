@@ -61,29 +61,33 @@ module Deeploy
   end
 
   def self.packages
-    # modules = ['vim', 'nginx', 'apache2', 'mysql-server', 'memcached']
-    packages = {
-        'vim': {
-            'ubuntu': 'vim',
-            'centos': 'vim-enhanced'
-        },
-        'nginx':{
-            'ubuntu': 'nginx',
-            'centos': 'nginx'
-        },
-        'apache2':{
-            'ubuntu': 'apache2',
-            'centos': 'apache2'
-        },
-        'mysql':{
-            'ubuntu': 'mysql-server',
-            'centos': 'mariadb-server'
-        },
-        'memcached':{
-            'ubuntu': 'memcached',
-            'centos': 'memcached'
-        }
-    }
-    return packages
+    modules = ['vim', 'nginx', 'apache2', 'mysql', 'memcached']
+    return modules
   end
+  # def self.packages
+  #   # modules = ['vim', 'nginx', 'apache2', 'mysql-server', 'memcached']
+  #   packages = {
+  #       'vim': {
+  #           'ubuntu': 'vim',
+  #           'centos': 'vim-enhanced'
+  #       },
+  #       'nginx':{
+  #           'ubuntu': 'nginx',
+  #           'centos': 'nginx'
+  #       },
+  #       'apache2':{
+  #           'ubuntu': 'apache2',
+  #           'centos': 'apache2'
+  #       },
+  #       'mysql':{
+  #           'ubuntu': 'mysql-server',
+  #           'centos': 'mariadb-server'
+  #       },
+  #       'memcached':{
+  #           'ubuntu': 'memcached',
+  #           'centos': 'memcached'
+  #       }
+  #   }
+  #   return packages
+  # end
 end

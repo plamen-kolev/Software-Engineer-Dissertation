@@ -12,7 +12,6 @@ module Deeploy
             command => '/usr/sbin/usermod -aG sudo #{m_inst.vm_user}',
             require => User["#{m_inst.vm_user}"]
           }
-
 HERE
           super(m_inst)
         end

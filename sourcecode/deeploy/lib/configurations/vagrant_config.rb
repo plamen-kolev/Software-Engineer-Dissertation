@@ -29,7 +29,7 @@ module Deeploy
 CONFIG
       end
 
-      def write(file="")
+      def write()
         super("#{@path}/Vagrantfile")
       end
     end

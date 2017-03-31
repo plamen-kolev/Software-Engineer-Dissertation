@@ -6,44 +6,48 @@ require 'ipaddr'
 module Deeploy
   class VM < Configurable
     attr_accessor :owner, :distribution, :root, :manifest, :vm_user, :ip, :title, :configuration, :id, :disk, :ram, :packages, :ports, :pem
+    @owner
+    @title
+    @root
 
     def initialize(args = {})
       opts = args[:opts]
 
       if opts
-        self.disk = disk if disk = opts[:disk]
-        self.id = id.to_i if id = opts[:id]
-        self.ip = ip if ip = opts[:ip]
-        self.ram = ram if ram = opts[:ram]
+        @disk = disk if disk = opts[:disk]
+        @id = id.to_i if id = opts[:id]
+        @ip = ip if ip = opts[:ip]
+        @ram = ram if ram = opts[:ram]
 
         if packages = opts[:packages]
-          self.packages = packages
-          self.packages.each do |package|
+          @packages = packages
+          @packages.each do |package|
             package = package.strip
           end
           # now filter out the allowed packages
-          self.packages = self.packages & Deeploy::packages.keys.collect{|el| el.to_s}
+          @packages = @packages & Deeploy::packages
         end
 
-        if ports = opts[:ports]
-          self.ports = ports
+        if opts[:ports]
+          @ports = opts[:ports]
         end
+
       end
 
-      self.disk ||= 1; self.ram ||= 1; self.packages ||= []; self.ports ||= []
+      @disk ||= 1; @ram ||= 1; @packages ||= []; @ports ||= []
 
       # open ports
 
       return false unless self._verify_owner(args[:owner])
 
-      self.owner = args[:owner]
+      @owner = args[:owner]
 
       # allowed list of distros
       distributions = Deeploy::distributions()
 
       # test to see if distribution lookup will work, otherwise error out
       if distributions[args[:distribution].to_sym]
-        self.distribution = args[:distribution]
+        @distribution = args[:distribution]
       else
         $stderr.puts "Distribution '#{args[:distribution]}' is not a recognized option,\nOptions are: #{distributions.keys}, aborting"
         # exit 1
@@ -52,16 +56,16 @@ module Deeploy
 
       # human friendly virtual machine name
       # instance.title = "#{args[:title]}_#{$CONFIGURATION.rails_env}"
-      self.title ||= args[:title]
-      self.ip ||= self.generate_ip()
+      @title ||= args[:title]
+      @ip ||= self.generate_ip()
 
       vm_dir = $CONFIGURATION.machine_path
       # set the folder path (absolute path on the os)
-      self.root = [vm_dir, 'userspace', self.owner.email, self.title].join('/')
-      self.manifest = self.root + '/manifests'
+      @root = [vm_dir, 'userspace', @owner.email, @title].join('/')
+      @manifest = @root + '/manifests'
 
-      self.vm_user = args[:vm_user]
-      self.configuration = Deeploy::Confmanager.new(self)
+      @vm_user = args[:vm_user]
+      @configuration = Deeploy::Confmanager.new(self)
       return self
 
     end
@@ -72,7 +76,7 @@ module Deeploy
       begin
         Timeout::timeout(2) do
           begin
-            TCPSocket.new(self.ip, 22).close
+            TCPSocket.new(@ip, 22).close
             db_machine.alive = true
             # rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
             # db_machine.alive = false
@@ -82,7 +86,7 @@ module Deeploy
         db_machine.alive = false
       end
 
-      db_machine.save()
+      db_machine.save
 
       # end trying here
     end
@@ -91,13 +95,13 @@ module Deeploy
     def self.get(args = {})
 
       db_machine = DB::Machine.where(user_id: args[:owner].id, title: args[:title]).take
-      if ! db_machine
+      unless db_machine
         $stderr.puts("Unable to find machine '#{args[:title]}' for user '#{args[:owner].email}'")
         return false
       end
       vm_dir = $CONFIGURATION.machine_path
 
-      machine = self.new(
+      machine = new(
         title: db_machine.title,
         distribution: db_machine.distribution,
         root: [vm_dir, 'userspace', args[:owner].email, db_machine.title].join('/'),
@@ -112,17 +116,10 @@ module Deeploy
           ram: db_machine.ram
         }
       )
-      # machine.id = db_machine.id
-      # machine.ip = db_machine.ip
-      # machine.title = db_machine.title
-      # machine.pem = db_machine.pem
-      
-      # machine.root = [vm_dir, "userspace", args[:owner].email, db_machine.title].join('/')
-      # machine.owner = args[:owner]
 
       machine._verify_owner(args[:owner])
       if db_machine.user_id != machine.owner.id
-        $stderr.puts("The user does not own the virtual machine")
+        $stderr.puts('The user does not own the virtual machine')
         raise AuthorizationException
       end
 
@@ -130,33 +127,26 @@ module Deeploy
     end
 
     def _verify_owner(owner)
-     
-      unless (owner.class.to_s == "Deeploy::User" or owner.class.to_s == "User" or owner.class.to_s == "DB::User")
-        $stderr.puts "Expecting Deeploy::User or User object, got #{owner.class}"
-        # exit 1
-        return false
+      if owner.class.to_s == 'Deeploy::User' or owner.class.to_s == 'User' or owner.class.to_s == 'DB::User'
+        user = DB::User.find(owner.id)
+        return user
       else
-
-        if ! DB::User.find(owner.id)
-            $stderr.puts "Invalid user"
-            return false
-        end
+        raise ArgumentError 'Parameter owner must be of type DB::User or Deeploy::User'
       end
-      return true
+
     end
 
     # keep machine folder for debugging
-    def destroy(keep_folders=false)
+    def destroy(keep_folders = false)
       if Dir.exists?(@root)
-        Dir.chdir("#{@root}") do
+        Dir.chdir(@root) do
           result = system(
-            "vagrant destroy -f"
+            'vagrant destroy -f'
           )
         end
 
-        if not keep_folders
-          FileUtils.rm_rf("#{@root}")
-        end
+        FileUtils.rm_rf(@root) unless keep_folders
+
       end
 
       vm = DB::Machine.find(@id)
@@ -165,28 +155,30 @@ module Deeploy
 
     def down()
       if Dir.exists?(@root)
-        Dir.chdir("#{@root}") do
+        Dir.chdir(@root) do
           result = system(
-            "vagrant halt"
+            'vagrant halt'
           )
         end
       end
     end
 
-    def up()
+    def up
       if Dir.exists?(@root)
-        Dir.chdir("#{@root}") do
+        Dir.chdir(@root) do
           result = system(
-            "vagrant up"
+            'vagrant up'
           )
         end
+      else
+        raise Exception, "#{root} was empty"
       end
     end
     
-    def build()
+    def build
       FileUtils.mkdir_p(@manifest)
-      @configuration.writeall(shell: "#{@manifest}/setup.sh", vagrant: "#{@root}/Vagrantfile", puppet: "#{@manifest}/default.pp")
-
+      # @configuration.writeall(shell: "#{@manifest}/setup.sh", vagrant: "#{@root}/Vagrantfile", puppet: "#{@manifest}/default.pp")
+      @configuration.writeall()
 
       machine = DB::Machine.where(title: @title)
       # create machine is not running as part of backend
@@ -197,9 +189,11 @@ module Deeploy
       end
 
       machine.ip = @ip
-      machine.pem = File.open("#{@root}/.ssh/#{@title}.pem", "r").read 
-      machine.save()
-      
+      machine.pem = File.open(
+          [@root, '.ssh', "#{@title}.pem"].join('/'), 'r'
+      ).read
+      machine.save
+
       self.id = machine.id
       result = false
 
@@ -209,7 +203,7 @@ module Deeploy
 
       if result
         self.success()
-        machine.deployed=true
+        machine.deployed = true
         machine.save
         return true
       else
@@ -220,20 +214,16 @@ module Deeploy
     end
 
     def up
-      Dir.chdir("#{@root}") do
-        result = system("vagrant up")
+      Dir.chdir(@root) do
+        system('vagrant up')
       end
     end
 
-    def in_db?()
-
-      if @owner.get_machine(@title)
-        return true
-      end
-      return false
+    def in_db?
+      return @owner.get_machine(@title)
     end
 
-    def in_dir?()
+    def in_dir?
       if File.directory?(@root)
         return true
       end
@@ -260,28 +250,20 @@ HERE
       host_ip, netmask = Deeploy::network_interface()
       if not host_ip or not netmask
         $stderr.puts("Interface '#{$CONFIGURATION.network_interface}' did not return an ip or mask for the host !\n.") # Recreating virtual network.")
-        puts "Interface error"
         raise "Interface '#{$CONFIGURATION.network_interface}' did not return an ip or mask for the host !\n."
-        # cleanup interfaces
-        # ifaces = %x[VBoxManage list hostonlyifs].scan(/[^-]vboxnet\d+/)
-        #
-        # for i in (0..ifaces.length - 1)
-        #   %x[VBoxManage hostonlyif remove #{ifaces[i]}]
-        #   %x[VBoxManage hostonlyif create]
-        #   %x[VBoxManage hostonlyif ipconfig #{ifaces[i]} --ip 17#{i}.168.1.1 --netmask 255.255.0.0]
-        # end
-
       end
 
       # map to string flatters the object array to strign array
-      range = IPAddr.new("#{host_ip}/#{netmask}").to_range.map(&:to_s)
+      range = IPAddr.new(
+          [host_ip, netmask].join('/')
+      ).to_range.map(&:to_s)
 
       # blacklist broadcast ips ranges based on the host's ip, e.g. if the host has ip of 12.200.30.20, 12.200.30.0 and 12.200.30.255 will be blacklisted
       tokenized_ip = host_ip.split('.')
       tokenized_ip.pop
       tokenized_ip = tokenized_ip.join('.')
 
-      blacklisted_ips = DB::Machine.all.collect { |obj| obj.ip }
+      blacklisted_ips = DB::Machine.all.collect{|obj| obj.ip}
       blacklisted_ips += ["#{tokenized_ip}.0", "#{tokenized_ip}.255", host_ip]
 
       # array difference of available ips and taken ips

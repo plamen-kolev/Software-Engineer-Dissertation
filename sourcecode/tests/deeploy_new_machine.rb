@@ -15,50 +15,48 @@ class DeeployTest < Minitest::Test
     @vm_user = "testuser"
     @title = "test_machine"
 
-    if ::DB::Machine.where(title: @title).take
-      puts "found"
-      m = Deeploy::VM.get(title: @title, owner: @user)
-      m.destroy()
-    end
+#    if ::DB::Machine.where(title: @title).take
+#      m = Deeploy::VM.get(title: @title, owner: @user)
+#      m.destroy()
+#    end
 
   end
 
-  def teardown()
-    if @machine
-      @machine.destroy(true)
-    end
-  end
+  # def teardown()
+  #   if @machine
+  #     @machine.destroy(true)
+  #   end
+  # end
 
-  # build a machine and execute commands on it
-  def test_deploy_machine
-    @machine = Deeploy::VM.new(
-      distribution: @distribution,
-      title: @title,
-      owner: @user,
-      vm_user: @vm_user,
-    )
-    @machine.build()
-    ssh_commands(['date'])
-
-  end
-
-  # def test_deeploy_ports_and_packages
-  #   packages = %w(nginx vim mysql-server memcached)
-  #   ports = [80, 3306, 11211]
+  # # build a machine and execute commands on it
+  # def test_deploy_machine
   #   @machine = Deeploy::VM.new(
   #     distribution: @distribution,
   #     title: @title,
   #     owner: @user,
   #     vm_user: @vm_user,
-  #     opts: {
-  #       packages: packages,
-  #       ports: ports
-  #     }
   #   )
-  #
   #   @machine.build()
-  #   all_packages_and_ports(ports, packages)
+  #   ssh_commands(['date'])
   # end
+
+  def test_deeploy_ports_and_packages
+    packages = %w(nginx vim mysql memcached)
+    ports = [80, 3306, 11211]
+    @machine = Deeploy::VM.new(
+      distribution: @distribution,
+      title: @title,
+      owner: @user,
+      vm_user: @vm_user,
+      opts: {
+        packages: packages,
+        ports: ports
+      }
+    )
+
+    @machine.build()
+    all_packages_and_ports(ports, packages)
+  end
 
   # def test_centos_ports_and_software
   #

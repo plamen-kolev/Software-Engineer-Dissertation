@@ -6,25 +6,15 @@ module Deeploy
         @distribution = m_inst.distribution
         @machine = m_inst
         @root = m_inst.root
-        @update_dependencies = "/usr/bin/apt-get update"  if ! @update_dependencies
-        @install_package_command = create_install_packages_config(m_inst.packages)
-        @ufw_install = <<HERE
-        package {"ufw":
-          ensure => 'installed',
-          require => Exec['update_dependencies']
-        }
-HERE
-        @open_ports_command = open_ports_config(m_inst.ports.collect{|el| el.to_i})
+        @update_dependencies = '/usr/bin/apt-get update'  unless @update_dependencies
 
         super(m_inst)
         @config = <<CONF
           include 'stdlib'
 
           #{@install_package_command}
-          #{@open_ports_command}
-          #{@ufw_install}
 
-          exec {"coppy_private_key_to_authorised_keys":
+          exec {"copy_private_key_to_authorised_keys":
             command => "/bin/cat /vagrant/.ssh/#{@machine.title}.pub >> /home/#{@machine.vm_user}/.ssh/authorized_keys",
             user        => "#{@machine.vm_user}",
           }
@@ -35,17 +25,6 @@ HERE
 
           exec {"update_dependencies":
             command => '#{@update_dependencies}',
-          }
-
-
-          exec {"enable_firewall_rules":
-            command => "/usr/sbin/ufw allow ssh && /usr/sbin/ufw allow 2222",
-            require => Package['ufw']
-          }
-
-          exec {"enable_ufw":
-            command => "/usr/sbin/ufw --force enable",
-            require => Package["ufw"]
           }
 
           user { "#{@machine.vm_user}":
@@ -73,79 +52,8 @@ HERE
 CONF
 
       end
-      
-      def create_install_packages_config(packages)
-        config = ""
 
-        packages.each do |p|
-          package = Deeploy.packages()[p.to_sym][@distribution.to_sym]
-          # make mysql listen on 0.0.0.0 if installed
-          if p == "mysql"
-            # mysql is called mariadb in centos
-
-            config += <<HERE
-
-              file_line { "#{package}":
-                path  => '/etc/mysql/mysql.conf.d/mysqld.cnf',
-                line  => 'bind-address           = 0.0.0.0',
-                match => '^bind-address',
-                notify  => Service["mysql"], 
-                require => Package["#{package}"]
-              }
-              
-              service { "mysql":
-                ensure  => 'running',
-                enable  => true,
-                require => Package["#{package}"],
-              }
-HERE
-          end
-
-          if p == "memcached"
-            config += <<HERE
-              file_line { "#{package}":
-                notify  => Service["#{p}"], 
-                path  => '/etc/memcached.conf',
-                line  => '-l 0.0.0.0',
-                match => '^-l 127.0.0.1',
-                require => Package["#{p}"]
-              }
-              service { "#{package}":
-                ensure  => 'running',
-                enable  => true,
-                require => Package["#{package}"],
-              }
-HERE
-          end
-
-          config += <<HERE
-            package { "#{package}":
-              ensure => 'installed',#
-              require => Exec['update_dependencies']
-            }
-HERE
-        end
-
-        return config
-      end
-
-      def open_ports_config(ports)
-        config = ""
-
-        ports.each do |p|
-          config += <<HERE
-          exec {"enable_firewall_port_#{p}":
-            command => "/usr/sbin/ufw allow #{p}",
-            require => Package['ufw']
-          }
-
-HERE
-        end
-
-        return config
-      end
-
-      def write(file='')
+      def write
         super("#{@path}/manifests/default.pp")
       end
     end
