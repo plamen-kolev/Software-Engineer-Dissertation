@@ -1,0 +1,57 @@
+[plantuml, diagram-classes, svg]
+....
+
+skinparam monochrome true
+
+class Deeploy::Configurable
+class Deeploy::Configuration
+class Deeploy::Confmanager
+class Deeploy::Config::PuppetConfig
+class Deeploy::Config::ShellConfig
+class Deeploy::Config::VagrantConfig
+
+class Deeploy::DISTRIBUTION::PuppetConfig
+class Deeploy::DISTRIBUTION::ShellConfig
+class Deeploy::DISTRIBUTION::VagrantConfig
+
+class Deeploy::User{
+    Integer id
+    String email
+    String token
+}
+
+class Deeploy::VM{
+    Deeploy::User owner
+    String distribution
+    String title
+    String ip
+    String root
+    String manifest
+    Deeploy::Configuration configuration
+}
+
+class Deeploy::Environment << (S,#FF7700) Singleton >>
+
+Deeploy::Configurable o-- Deeploy::Environment
+Deeploy::Configurable <|-- Deeploy::Configuration
+Deeploy::Configurable <|-- Deeploy::Confmanager
+Deeploy::Configurable <|-- Deeploy::User
+Deeploy::Configurable <|-- Deeploy::VM
+Deeploy::VM o-- Deeploy::User
+Deeploy::VM *-- Deeploy::Configuration
+Deeploy::Configuration *-- Deeploy::DISTRIBUTION::ShellConfig
+Deeploy::Configuration *-- Deeploy::DISTRIBUTION::VagrantConfig
+Deeploy::Configuration *-- Deeploy::DISTRIBUTION::PuppetConfig
+Deeploy::Configuration *-- Deeploy::DISTRIBUTION::FirewallConfig
+Deeploy::Configuration *-- Deeploy::DISTRIBUTION::PackagesConfig
+
+class Deeploy::Config::ShellConfig  <|-- Deeploy::DISTRIBUTION::ShellConfig
+class Deeploy::Config::PuppetConfig <|-- Deeploy::DISTRIBUTION::PuppetConfig
+class Deeploy::Config::VagrantConfig <|-- Deeploy::DISTRIBUTION::VagrantConfig
+class Deeploy::Config::PuppetConfig <|-- Deeploy::Config::FirewallConfig
+class Deeploy::Config::PuppetConfig <|-- Deeploy::Config::PackagesConfig
+class Deeploy::Config::FirewallConfig <|-- Deeploy::DISTRIBUTION::FirewallConfig
+class Deeploy::Config::PackagesConfig <|-- Deeploy::DISTRIBUTION::PackagesConfig
+
+
+....

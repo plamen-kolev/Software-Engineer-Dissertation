@@ -48,7 +48,11 @@
 	description={Bourne Again SHell, a UNIX command line virtual shell language}
 }
 
-\newglossaryentry{open-source}{name={open-source},description={Software that makes its code openly available, allows derived work without restrictions and its distribution is done freely}}
+\newglossaryentry{open-source}
+{
+	name={open-source},
+	description={Software that makes its code openly available, allows derived work without restrictions and its distribution is done freely}
+}
 
 \newglossaryentry{operating-system}
 {
@@ -155,16 +159,20 @@ The term virtualisation is defined as the ability of one piece of hardware to ru
 
 A company that wants to buy a high performing computer for each employee would requires physical access to perform repairs and maintenance and management. Physical systems are also more difficult to manage due to their non-central distribution. Another downside is non-scalable hardware utilisation, a case where one machine uses maximum resources but another one is idle. These are some problems that virtualisation technology can deal with.  It is now a core part of most new desktop Intel© processors and is integral part of all server-grade processors.
 
-This helps with performance, as a virtual machine can be configured on the fly to use flexible amount of resources or even use shared pool of computing. This technology also allows for easy server migration, a physical machine cannot be moved within couple of minutes to a different continent. Physical infrastructure is also prone to hardware-related bugs, as a distributed software solution might not have been tested on all possible computing nodes that run it.
+This helps with performance, as a virtual machine can be configured on the fly to use flexible amount of resources or even use shared pool of computational units. This technology also allows for easy server migration. A physical machine cannot be moved within couple of minutes to a different continent, whereas a virtualised operating system can be copy-pasted at will for very little cost. Physical infrastructure is also prone to hardware-related bugs. This is a case when a distributed software solution causes issues, because it was not tested on all the machines that run it.
 
-How does virtualisation allow for easy migrations? It achieves its task by abstracting away the available physical hard drives, on the virtualisation host, they appear as a large pool of partitions with the data ready for access. Having access to the virtualisation host allows the content of such system to be copied all at once to a different provider with the only requirement that it must have enough capacity to store the information. The alternative without using a virtualisation software would be to gain physical access to each hard drive individually and copying the data incrementally.
+How does virtualisation allow for easy \gls{migrations}? It achieves its task by abstracting away the available physical hard drives. On the virtualised host, they appear as a large pool of \gls{partitions} with the data ready for access. Having access to the virtualisation host allows the content of such system to be copied all at once to a different provider with the only requirement - have enough capacity to store the information. The alternative without using a virtualisation platform would be to gain physical access to each hard drive individually and copying the data incrementally.
+
+\texttt{add more domain specific information}
 
 \subsection{Purpose}
 The project aims to utilise open-source virtualisation technology and make the process of managing and creating virtual machines automated through a web interface. A system manager should be able to open a website, fill in a web form with enough information about the desired \gls{operating-system}, click a button and create it.
 
 The manager should also be able to obtain and generate credentials for that machine, as well as mark common packages for installation on it. The solution should also show performance statistics and allow for network port management. These features, alongside the benefits of virtualisation should create a strong and secure infrastructure for many applications, from virtual office workstation, to server testing and deployment.
 
-Strong cryptography, virtual guest isolation, firewall rules and best practice credential and authentication methodologies and practices will be explored and will be the pillars of the system's security.
+# Expand on each of the examples
+
+\texttt{Strong cryptography, virtual guest isolation, firewall rules, credential and authentication methodologies will be explored and will be the pillars of the system's security.}
 \subsection{Aim and Objectives}
 \subsubsection{Aim}
 Give developers a platform for easy deployment, management and monitoring of virtual servers
@@ -173,12 +181,12 @@ Give developers a platform for easy deployment, management and monitoring of vir
 \begin{enumerate}
 	\item Deploy a virtual machine of the user's choice through shell scripts
 	      \begin{itemize}
-		      \item The main feature of the solution is the deployment of the virtual machine instances. The following will be achieved by using Oracle's virtualisation documentation for Virtualbox and the shell scripting language and the automation tool chef.
+		      \item The main feature of the solution is the deployment of the virtual machine instances. The following will be achieved by using Oracle's virtualisation documentation for Virtualbox and the shell scripting language and the automation tool puppet.
 	      \end{itemize}
 
 	\item Configure firewall settings
 	      \begin{itemize}
-		      \item Will be achieved through the virtualisation technology's API. Will add extra security layer to the guest \gls{operating-system}.
+		      \item Will be achieved through the virtualisation technology's API. The purpouse is toadd extra security layer to the guest \gls{operating-system}. The firewall settings are managed by a software called ufw - Uncomplicated FireWall
 	      \end{itemize}
 
 	\item Allow console access and set up authentication credentials (SSH keys) for the instances
@@ -189,7 +197,6 @@ Give developers a platform for easy deployment, management and monitoring of vir
 	\item Allow the user to install software from a predefined list
 	\item Create a website that will manage and create the machines on the behalf of the user
 \end{enumerate}
-\subsection{Outline}
 
 \newpage
 \section{Background}
@@ -203,43 +210,42 @@ Give developers a platform for easy deployment, management and monitoring of vir
 	\includegraphics[width=12cm]{gantt.jpg}
 \end{center}
 
+As part of the development cycle, I have scheduled a meeting every fortnight with my supervisor to discuss work progress. During these meetings, I received feedback, raised concerns and showed progress in a \gls{standup} fashion. Occasionally, the meetings were not about progress update, but about demonstration of the work done so far with the purpose of obtaining feedback.
+
 \subsection{First Semester}
-When creating the project plan, two core stages were in mind. The first stage was semester one. During that period, I laid the ground work on which I based all the work that went into developing and testing. This was also a critical moment into the building process, as it allowed me to find materials created by the leading experts in the field (Amazon, Intel, Oracle) and learn about the various aspects of building cloud-ready applications, infrastructure security and automation.
+When creating the project plan, two core stages were taken into consideration. The first stage is semester one. During that period, the ground work was laid, on which all future development and testing work was based. This is a critical moment into the building process. It allowed for a more in-depth research using materials created by the leading experts in the field (Amazon, Intel, Oracle). These documents helped gaining more understanding in various aspects of building cloud-ready applications, infrastructure security and automation.
 
-This research helped when rationing about the features to implement, helped me understand the scope and challenges and gave me an insight into why this problem requires solving, and it gave a detailed overview of how to solve it.
+The research helped when rationing about the features that need implementing. It also illustrated the scope, and the challenges that need to be faced. The research gave an insight into why this problem requires solving, and pointed me to open-source projects that achieve parts of the work.
 
-The first semester was not only about researching applications within the scope of what I was trying to achieve, but also about describing the constrains, limitations and infrastructure decisions I have to make in order to demonstrate a  product that has real-world application.
-The materials helped me also to identify potential risks and issues that might arise, such as the security risk of running multiple virtual machines onto the same physical space where an attacker can read the private data of another machine.
+The first semester was not only about research, but also about describing the constrains, limitations and infrastructure decisions that need to be made in order to demonstrate a  product that has real-world applications.
+The materials helped me also to identify potential risks and issues that might arise, such as the security risk of running multiple virtual machines onto the same physical space. This is a potential risk situation, as an attacker can read the private data of another machine if the person gets access to the memory of the "host".
 
-Work also went into creating presentation and project proposal for the upcoming work, which will give an outline and highlight the features and needs that the work addresses.
+Work also went into creating presentation and project proposal for the upcoming work, which give an outline and highlighted the features that the work addresses.
 When creating the presentation, I wanted to be as generic as possible as not to present information and ideas that the additional research might prove impossible to implement or not practical.
 
 \subsection{Second Semester}
 
-The tasks accomplished during the second semester are related to implementing, refining, iterating and evaluating. This is the time where all the main features, functional and non-functional requirements got developed, tested and documented. It must be noted that for the most part, each cycle was not incrementally tackled, but instead, numerous development-testing-documenting phases were used to achieve the final result.
+The tasks accomplished during the second semester are related to implementing, refining, iterating, evaluating and documenting the solution. This is the time where all the main features, functional and non-functional requirements got developed, tested and documented. It must be noted that for the most part, each cycle was not incrementally tackled, but instead, numerous development-testing-documenting phases were used to achieve the final result.
 \begin{center}
 	\includegraphics[width=12cm]{agile.jpg}
 \end{center}
 
-
-For the most part, the project was completed using the agile methodology, getting by-weekly feedback from my supervisor, raising concerns and showing progress in a stand-up fashion. Occasionally, the meetings were not about progress update, but about demoing the work done so far with the purpose of obtaining feedback.
-
-Each cycle that shaped the final product is described below.
+For the most part, the project was completed using the agile methodology. Each cycle that shaped the final product is described below.
 \subsubsection{Developmen}
-As planned, I broke down the main objectives into subtasks and tackled them one-by-one. My initial plan is not to develop the whole system and assemble the parts together, but to build a minimum viable product (MVP) and increment onwards.
+As planned, I broke down the main objectives into subtasks and tackled them one-by-one. My initial plan is not to develop the whole system and assemble the parts together at the end, but to build a minimum viable product (MVP) and increment onwards.
 
 This was done in order to assure that the platform can be built with the available tools and that the requirements can be met at the end of the project.
 
-Being able to create a virtual machine with a known \gls{ipaddress} from a script was the first thing that had to be accomplished, creating custom users, opening ports and creating the web interface was something that I built on top of the "core" product.
+Being able to create a virtual machine with a known \gls{ipaddress} from a script was the first thing that had to be accomplished. Creating custom users, opening ports and creating the web interface was planned later as something that could be built on top of the "core" product.
 
 \subsubsection{Learning period}
 For the duration of this project, a variety of new technologies were tried and evaluated, such as \gls{vagrant}, \gls{puppet}, \gls{ruby-on-rails}, \gls{ruby}.
 
-As part of the learning cycle, the official ruby programming language manual was used to get proficient enough to understand the fundamental constructs that were used throughout the tutorials, articles and blogs, such as declaring variables, scopes, for loops and any extra syntax unlike other programming languages. To get up and running with \gls{ruby}, the period between first and second semester was planned and it was enough time to understand the fundamentals.
+As part of the learning cycle, the official ruby programming language manual was used. It helped gain proficiency to understand the fundamental constructs that were used throughout the tutorials, articles, blogs and other learning materials. The process taught me about declaring variables, scopes, for loops and any extra syntax unlike other programming languages. To get up and running with \gls{ruby}, the period between first and second semester was planned to build basic command line programs.
 
-Another part of the development strategy was to do a small web project using ruby on rails just to get a feeling of what is possible in terms of rapid development and ease of use. This small project included building forms, validation, manipulating database objects and creating \gls{html} pages.
+Another part of the development strategy was to do a small web project using ruby on rails just to get a feeling of what is possible in terms of rapid development and ease of use. This small project included building forms, validation, manipulating database objects and creating \gls{html} pages. This was done in February (the beginning of second semester), with the purpose of determining if this tool is right for the job
 
-The task of learning \gls{puppet} was achieved by creating end-to-end automation scrip of the current set-up of my desktop machine. As puppet's power is to get a machine's configuration to a known state and ensure all software packages are present, this was overall a good practice that led to a faster implementation and integration.
+The task of learning \gls{puppet} was achieved by creating end-to-end automation scrip of the current set-up of my desktop machine. Puppet's power is to get a machine's configuration to a known state and ensure all software packages are present. Doing this exercise was overall a good practice, as it led to a faster implementation and integration later on when working on the actual platform.
 
 \subsubsection{Documentation}
 The initial plan as stated in the project proposal is to document the work during each stage of the process. 
@@ -343,7 +349,7 @@ The most notable usage of such environment is the virtual host-only network that
 \newpage
 \section{Testing}
 
-http://guides.rubygems.org/make-your-own-gem/#writing-tests
+http://guides.rubygems.org/make-your-own-gem
 
 \newpage
 \section{Evaluation}
@@ -354,6 +360,7 @@ http://guides.rubygems.org/make-your-own-gem/#writing-tests
 \newpage
 \section{References}
 \bibliography{research}
+
 \renewcommand{\bibname}{}
 
 \newpage
