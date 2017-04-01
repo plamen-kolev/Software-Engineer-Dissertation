@@ -25,6 +25,7 @@ module Deeploy
 
           exec {"update_dependencies":
             command => '#{@update_dependencies}',
+            returns => [0,100]
           }
 
           user { "#{@machine.vm_user}":

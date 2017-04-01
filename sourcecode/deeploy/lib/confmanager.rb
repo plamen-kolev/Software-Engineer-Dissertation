@@ -20,7 +20,9 @@ module Deeploy
 
         'centos' => {
           module: 'configurations/centos',
-          class: 'Deeploy::Config::Centos'
+          class: 'Deeploy::Config::Centos',
+          firewall_config_class: 'Deeploy::Config::Centos::FirewallConfig',
+          packages_config_class: 'Deeploy::Config::Centos::PackagesConfig'
         },
 
         config: {'puppet_config' => 'PuppetConfig', 'shell_config' => 'ShellConfig', 'vagrant_config' => 'VagrantConfig'}

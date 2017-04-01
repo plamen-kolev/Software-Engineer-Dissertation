@@ -40,42 +40,42 @@ class DeeployTest < Minitest::Test
   #   ssh_commands(['date'])
   # end
 
-  def test_deeploy_ports_and_packages
-    packages = %w(nginx vim mysql memcached)
-    ports = [80, 3306, 11211]
-    @machine = Deeploy::VM.new(
-      distribution: @distribution,
-      title: @title,
-      owner: @user,
-      vm_user: @vm_user,
-      opts: {
-        packages: packages,
-        ports: ports
-      }
-    )
-
-    @machine.build()
-    all_packages_and_ports(ports, packages)
-  end
-
-  # def test_centos_ports_and_software
-  #
-  #   packages = %w(nginx vim mysql-server memcached)
+  # def test_deeploy_ports_and_packages
+  #   packages = %w(nginx vim mysql memcached)
   #   ports = [80, 3306, 11211]
   #   @machine = Deeploy::VM.new(
-  #     distribution: 'centos',
+  #     distribution: @distribution,
   #     title: @title,
   #     owner: @user,
   #     vm_user: @vm_user,
   #     opts: {
-  #         packages: packages,
-  #         ports: ports
+  #       packages: packages,
+  #       ports: ports
   #     }
   #   )
   #
   #   @machine.build()
   #   all_packages_and_ports(ports, packages)
   # end
+
+  def test_centos_ports_and_software
+
+    packages = %w(nginx vim mysql memcached)
+    ports = [80, 3306, 11211]
+    @machine = Deeploy::VM.new(
+      distribution: 'centos',
+      title: @title,
+      owner: @user,
+      vm_user: @vm_user,
+      opts: {
+          packages: packages,
+          ports: ports
+      }
+    )
+
+    @machine.build()
+    all_packages_and_ports(ports, packages)
+  end
 
   def test_debian_ports_and_software
   end
