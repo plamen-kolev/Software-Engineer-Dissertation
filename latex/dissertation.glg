@@ -1,7 +1,7 @@
-This is makeindex, version 2.15 [TeX Live 2016] (kpathsea + Thai support).
+This is makeindex, version 2.15 [TeX Live 2016/W32TeX] (kpathsea + Thai support).
 Scanning style file ./dissertation.ist.............................done (29 attributes redefined, 0 ignored).
-Scanning input file dissertation.glo....done (5 entries accepted, 0 rejected).
-Sorting entries....done (12 comparisons).
-Generating output file dissertation.gls....done (17 lines written, 0 warnings).
+Scanning input file dissertation.glo....done (26 entries accepted, 0 rejected).
+Sorting entries....done (120 comparisons).
+Generating output file dissertation.gls....done (48 lines written, 0 warnings).
 Output written in dissertation.gls.
 Transcript written in dissertation.glg.

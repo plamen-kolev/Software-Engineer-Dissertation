@@ -6,25 +6,32 @@
 \BOOKMARK [2][-]{subsection.4.2}{Aim and Objectives}{section.4}% 6
 \BOOKMARK [3][-]{subsubsection.4.2.1}{Aim}{subsection.4.2}% 7
 \BOOKMARK [3][-]{subsubsection.4.2.2}{Objectives}{subsection.4.2}% 8
-\BOOKMARK [2][-]{subsection.4.3}{Outline}{section.4}% 9
-\BOOKMARK [1][-]{section.5}{Background}{}% 10
-\BOOKMARK [2][-]{subsection.5.1}{Similar in the field}{section.5}% 11
-\BOOKMARK [2][-]{subsection.5.2}{Virtualisation}{section.5}% 12
-\BOOKMARK [2][-]{subsection.5.3}{Addoption}{section.5}% 13
-\BOOKMARK [2][-]{subsection.5.4}{Application}{section.5}% 14
-\BOOKMARK [1][-]{section.6}{Methodology}{}% 15
-\BOOKMARK [2][-]{subsection.6.1}{Overview}{section.6}% 16
-\BOOKMARK [2][-]{subsection.6.2}{Planning}{section.6}% 17
-\BOOKMARK [2][-]{subsection.6.3}{Constrains}{section.6}% 18
-\BOOKMARK [2][-]{subsection.6.4}{Functional requirements}{section.6}% 19
-\BOOKMARK [2][-]{subsection.6.5}{Non-functional requirements}{section.6}% 20
-\BOOKMARK [2][-]{subsection.6.6}{Tools}{section.6}% 21
-\BOOKMARK [1][-]{section.7}{Development}{}% 22
-\BOOKMARK [2][-]{subsection.7.1}{Vagrant}{section.7}% 23
-\BOOKMARK [2][-]{subsection.7.2}{Architecture}{section.7}% 24
-\BOOKMARK [1][-]{section.8}{Testing}{}% 25
-\BOOKMARK [1][-]{section.9}{Evaluation}{}% 26
-\BOOKMARK [1][-]{section.10}{Conclusion}{}% 27
-\BOOKMARK [1][-]{section.11}{References}{}% 28
-\BOOKMARK [1][-]{section.12}{Glossary}{}% 29
-\BOOKMARK [1][-]{section.13}{Appendix}{}% 30
+\BOOKMARK [1][-]{section.5}{Background}{}% 9
+\BOOKMARK [2][-]{subsection.5.1}{Virtualisation}{section.5}% 10
+\BOOKMARK [2][-]{subsection.5.2}{Addoption}{section.5}% 11
+\BOOKMARK [2][-]{subsection.5.3}{Application}{section.5}% 12
+\BOOKMARK [2][-]{subsection.5.4}{Similar in the field}{section.5}% 13
+\BOOKMARK [3][-]{subsubsection.5.4.1}{Amazon Web Services\222EC2}{subsection.5.4}% 14
+\BOOKMARK [3][-]{subsubsection.5.4.2}{Microsoft Azure}{subsection.5.4}% 15
+\BOOKMARK [3][-]{subsubsection.5.4.3}{Redhat Redshift}{subsection.5.4}% 16
+\BOOKMARK [1][-]{section.6}{Planning}{}% 17
+\BOOKMARK [2][-]{subsection.6.1}{First Semester}{section.6}% 18
+\BOOKMARK [2][-]{subsection.6.2}{Second Semester}{section.6}% 19
+\BOOKMARK [3][-]{subsubsection.6.2.1}{Developmen}{subsection.6.2}% 20
+\BOOKMARK [3][-]{subsubsection.6.2.2}{Learning period}{subsection.6.2}% 21
+\BOOKMARK [3][-]{subsubsection.6.2.3}{Documentation}{subsection.6.2}% 22
+\BOOKMARK [1][-]{section.7}{Methodology}{}% 23
+\BOOKMARK [2][-]{subsection.7.1}{Overview}{section.7}% 24
+\BOOKMARK [2][-]{subsection.7.2}{Constrains}{section.7}% 25
+\BOOKMARK [2][-]{subsection.7.3}{Functional requirements}{section.7}% 26
+\BOOKMARK [2][-]{subsection.7.4}{Non-functional requirements}{section.7}% 27
+\BOOKMARK [2][-]{subsection.7.5}{Tools}{section.7}% 28
+\BOOKMARK [1][-]{section.8}{Development}{}% 29
+\BOOKMARK [2][-]{subsection.8.1}{Vagrant}{section.8}% 30
+\BOOKMARK [2][-]{subsection.8.2}{Architecture}{section.8}% 31
+\BOOKMARK [1][-]{section.9}{Testing}{}% 32
+\BOOKMARK [1][-]{section.10}{Evaluation}{}% 33
+\BOOKMARK [1][-]{section.11}{Conclusion}{}% 34
+\BOOKMARK [1][-]{section.12}{References}{}% 35
+\BOOKMARK [1][-]{section.13}{Glossary}{}% 36
+\BOOKMARK [1][-]{section.14}{Appendix}{}% 37
