@@ -41,86 +41,97 @@
     urlcolor=blue
 }
 
+\newglossaryentry{migration}{
+    name={migration},
+    description={Migration is the ability to switch to a new version, platform, or physical location \cite{what-is-migration}. This term come from database management.
+    }
+}
 
-	\newglossaryentry{bash}
+\newglossaryentry{standup}
 {
-	name=bash,
-	description={Bourne Again SHell, a UNIX command line virtual shell language}
+    name=stand-up,
+    description={A daily team meeting where every team member gives an overview of done tasks, current tasks and any future work that needs to be done by that member. }
+}
+
+\newglossaryentry{bash}
+{
+    name=bash,
+    description={Bourne Again SHell, a UNIX command line virtual shell language}
 }
 
 \newglossaryentry{open-source}
 {
-	name={open-source},
-	description={Software that makes its code openly available, allows derived work without restrictions and its distribution is done freely}
+    name={open-source},
+    description={Software that makes its code openly available, allows derived work without restrictions and its distribution is done freely}
 }
 
 \newglossaryentry{operating-system}
 {
-	name={operating system},
-	description={The platform on which all user and system software is running. Examples are Windows, Linux, OSX, Android, iOSX}
+    name={operating system},
+    description={The platform on which all user and system software is running. Examples are Windows, Linux, OSX, Android, iOSX}
 }
 
 \newglossaryentry{ssh}{
-	name={ssh},
-	description={
-		SSH: secure shell, a network protocol that allows a remote connection to a terminal
-	}
+    name={ssh},
+    description={
+        SSH: secure shell, a network protocol that allows a remote connection to a terminal
+    }
 }
 
 \newglossaryentry{natnetwork}{
-	name={NAT network},
-	description={
-		A technique where one IP address is mapped to more internal ip addresses, used for security and reduced number of ips. \cite{whatisnat}
-	}
+    name={NAT network},
+    description={
+        A technique where one IP address is mapped to more internal ip addresses, used for security and reduced number of ips. \cite{whatisnat}
+    }
 }
 
 \newglossaryentry{ipaddress}{
-	name={IP address},
-	description={
-		An identifier that helps locating a resource on the network, usually represents a computer device connected to a network (local or )
-	}
+    name={IP address},
+    description={
+        An identifier that helps locating a resource on the network, usually represents a computer device connected to a network (local or )
+    }
 }
 
 \newglossaryentry{api}{
-	name={API},
-	description = {
-		Application Programmable interface, usually a way for exposing features of a certain program to the developer. Often used to automate a task.
-	}
+    name={API},
+    description = {
+        Application Programmable interface, usually a way for exposing features of a certain program to the developer. Often used to automate a task.
+    }
 }
 
 \newglossaryentry{vagrant}{
-	name={Vagrant},
-	description = {
-		Vagrant provides easy to configure, reproducible, and portable work environments built on top of industry-standard technology and controlled by a single consistent workflow to help maximize the productivity and flexibility of you and your team. \cite{vagrant-definition}
-	}
+    name={Vagrant},
+    description = {
+        Vagrant provides easy to configure, reproducible, and portable work environments built on top of industry-standard technology and controlled by a single consistent workflow to help maximize the productivity and flexibility of you and your team. \cite{vagrant-definition}
+    }
 }
 
 \newglossaryentry{puppet}{
-	name={puppet},
-	description={
-		Open source Puppet helps you describe machine configurations in a declarative language, bring machines to a desired state, and keep them there through automation.\cite{puppet-definition}
-	}
+    name={puppet},
+    description={
+        Open source Puppet helps you describe machine configurations in a declarative language, bring machines to a desired state, and keep them there through automation.\cite{puppet-definition}
+    }
 }
 
 \newglossaryentry{ruby-on-rails}{
-	name={Ruby On Rails},
-	description={
-		Rails is a web application development framework written in the Ruby language. It is designed to make programming web applications easier by making assumptions about what every developer needs to get started. It allows you to write less code while accomplishing more than many other languages and frameworks.\cite{ruby-on-rails-definition}
-	}
+    name={Ruby On Rails},
+    description={
+        Rails is a web application development framework written in the Ruby language. It is designed to make programming web applications easier by making assumptions about what every developer needs to get started. It allows you to write less code while accomplishing more than many other languages and frameworks.\cite{ruby-on-rails-definition}
+    }
 }
 
 \newglossaryentry{ruby}{
-	name={ruby},
-	description={
-		A dynamic, open source programming language with a focus on simplicity and productivity. It has an elegant syntax that is natural to read and easy to write.\cite{ruby-definition}
-	}
+    name={ruby},
+    description={
+        A dynamic, open source programming language with a focus on simplicity and productivity. It has an elegant syntax that is natural to read and easy to write.\cite{ruby-definition}
+    }
 }
 
 \newglossaryentry{html}{
-	name={html},
-	description={
-		Hypertext Markup Language, used for displaying web page
-	}
+    name={html},
+    description={
+        Hypertext Markup Language, used for displaying web page
+    }
 }
 
 
@@ -151,7 +162,7 @@ I declare that this dissertation represents my own work except where otherwise s
 As of the year 2016, there are currently three billion people that have access to the internet \cite{ictonline}. Google handles between two and three billion search queries per day \cite{a}. Dealing with so many requests on daily basis requires full utilisation of the available hardware in terms of resources. Part of Google's ability to scale and be efficient is due to the emergence of cloud infrastructure. The topic of the paper deals  with one of the building blocks of cloud computing, which is virtualisation.
 
 \begin{quote}
-	"The quickest and cheapest method to providing the necessary level of abstraction in terms of server resource is currently virtualisation\ldots" \par\raggedleft--- \textup{Paul Robinson}, Google Cloud Computing \cite{SecuringtheCloud}
+    "The quickest and cheapest method to providing the necessary level of abstraction in terms of server resource is currently virtualisation\ldots" \par\raggedleft--- \textup{Paul Robinson}, Google Cloud Computing \cite{SecuringtheCloud}
 \end{quote}
 
 
@@ -161,7 +172,7 @@ A company that wants to buy a high performing computer for each employee would r
 
 This helps with performance, as a virtual machine can be configured on the fly to use flexible amount of resources or even use shared pool of computational units. This technology also allows for easy server migration. A physical machine cannot be moved within couple of minutes to a different continent, whereas a virtualised operating system can be copy-pasted at will for very little cost. Physical infrastructure is also prone to hardware-related bugs. This is a case when a distributed software solution causes issues, because it was not tested on all the machines that run it.
 
-How does virtualisation allow for easy \gls{migrations}? It achieves its task by abstracting away the available physical hard drives. On the virtualised host, they appear as a large pool of \gls{partitions} with the data ready for access. Having access to the virtualisation host allows the content of such system to be copied all at once to a different provider with the only requirement - have enough capacity to store the information. The alternative without using a virtualisation platform would be to gain physical access to each hard drive individually and copying the data incrementally.
+How does virtualisation allow for easy \glspl{migration}? It achieves its task by abstracting away the available physical hard drives. On the virtualised host, they appear as a large pool of \glspl{partition} with the data ready for access. Having access to the virtualisation host allows the content of such system to be copied all at once to a different provider with the only requirement - have enough capacity to store the information. The alternative without using a virtualisation platform would be to gain physical access to each hard drive individually and copying the data incrementally.
 
 \texttt{add more domain specific information}
 
@@ -170,7 +181,7 @@ The project aims to utilise open-source virtualisation technology and make the p
 
 The manager should also be able to obtain and generate credentials for that machine, as well as mark common packages for installation on it. The solution should also show performance statistics and allow for network port management. These features, alongside the benefits of virtualisation should create a strong and secure infrastructure for many applications, from virtual office workstation, to server testing and deployment.
 
-# Expand on each of the examples
+\texttt{Expand  on each of the examples}
 
 \texttt{Strong cryptography, virtual guest isolation, firewall rules, credential and authentication methodologies will be explored and will be the pillars of the system's security.}
 \subsection{Aim and Objectives}
@@ -179,23 +190,23 @@ Give developers a platform for easy deployment, management and monitoring of vir
 \subsubsection{Objectives}
 
 \begin{enumerate}
-	\item Deploy a virtual machine of the user's choice through shell scripts
-	      \begin{itemize}
-		      \item The main feature of the solution is the deployment of the virtual machine instances. The following will be achieved by using Oracle's virtualisation documentation for Virtualbox and the shell scripting language and the automation tool puppet.
-	      \end{itemize}
+    \item Deploy a virtual machine of the user's choice through shell scripts
+          \begin{itemize}
+              \item The main feature of the solution is the deployment of the virtual machine instances. The following will be achieved by using Oracle's virtualisation documentation for Virtualbox and the shell scripting language and the automation tool puppet.
+          \end{itemize}
 
-	\item Configure firewall settings
-	      \begin{itemize}
-		      \item Will be achieved through the virtualisation technology's API. The purpouse is toadd extra security layer to the guest \gls{operating-system}. The firewall settings are managed by a software called ufw - Uncomplicated FireWall
-	      \end{itemize}
+    \item Configure firewall settings
+          \begin{itemize}
+              \item Will be achieved through the virtualisation technology's API. The purpouse is toadd extra security layer to the guest \gls{operating-system}. The firewall settings are managed by a software called ufw - Uncomplicated FireWall
+          \end{itemize}
 
-	\item Allow console access and set up authentication credentials (SSH keys) for the instances
-	      \begin{itemize}
-		      \item The main usage of the application is to obtain a shell access to the virtual machine
-	      \end{itemize}
-	\item Monitor disk/CPU usage of the virtual instances
-	\item Allow the user to install software from a predefined list
-	\item Create a website that will manage and create the machines on the behalf of the user
+    \item Allow console access and set up authentication credentials (SSH keys) for the instances
+          \begin{itemize}
+              \item The main usage of the application is to obtain a shell access to the virtual machine
+          \end{itemize}
+    \item Monitor disk/CPU usage of the virtual instances
+    \item Allow the user to install software from a predefined list
+    \item Create a website that will manage and create the machines on the behalf of the user
 \end{enumerate}
 
 \newpage
@@ -207,7 +218,7 @@ Give developers a platform for easy deployment, management and monitoring of vir
 \section{Planning}
 
 \begin{center}
-	\includegraphics[width=12cm]{gantt.jpg}
+    \includegraphics[width=12cm]{gantt.jpg}
 \end{center}
 
 As part of the development cycle, I have scheduled a meeting every fortnight with my supervisor to discuss work progress. During these meetings, I received feedback, raised concerns and showed progress in a \gls{standup} fashion. Occasionally, the meetings were not about progress update, but about demonstration of the work done so far with the purpose of obtaining feedback.
@@ -227,7 +238,7 @@ When creating the presentation, I wanted to be as generic as possible as not to 
 
 The tasks accomplished during the second semester are related to implementing, refining, iterating, evaluating and documenting the solution. This is the time where all the main features, functional and non-functional requirements got developed, tested and documented. It must be noted that for the most part, each cycle was not incrementally tackled, but instead, numerous development-testing-documenting phases were used to achieve the final result.
 \begin{center}
-	\includegraphics[width=12cm]{agile.jpg}
+    \includegraphics[width=12cm]{agile.jpg}
 \end{center}
 
 For the most part, the project was completed using the agile methodology. Each cycle that shaped the final product is described below.
@@ -248,8 +259,9 @@ Another part of the development strategy was to do a small web project using rub
 The task of learning \gls{puppet} was achieved by creating end-to-end automation scrip of the current set-up of my desktop machine. Puppet's power is to get a machine's configuration to a known state and ensure all software packages are present. Doing this exercise was overall a good practice, as it led to a faster implementation and integration later on when working on the actual platform.
 
 \subsubsection{Documentation}
-The initial plan as stated in the project proposal is to document the work during each stage of the process. 
+The initial plan as stated in the project proposal is to document the work during each stage of the process, like implementing a new feature. I later decided to not strictly follow that plan, as there were many components that changed drastically. For example, in the beginning, I planned to use chef for configuration automation and management. After evaluating and experimenting with it for 5 days, it was apparent that the set-up overhead was slowing down the actual development process. 
 
+Because of that experience, the dissertation write-up process was changed to documenting features only when they are established.
 
 
 \newpage
@@ -261,24 +273,30 @@ For the above reason, the initial research into building the right tool-chain wa
 
 The development methodology can be broken into the following steps:
 \begin{enumerate}
-	\item
-	      Research into virtualisation technology to understand the underlying architecture.
+    \item
+          Research into virtualisation technology to understand the underlying architecture.
 
-	\item
-	      Select free and open-source software components that can be coupled together to orchestrate and utilise above mentioned technology. The public libraries used also allowed me to extend, modify and build on top of during the development process.
+    \item
+          Select free and open-source software components that can be coupled together to orchestrate and utilise above mentioned technology. The public libraries used also allowed me to extend, modify and build on top of during the development process.
 
-	\item
-	      Build a set of core and advanced features. Core features are essential for a good operational and usable solution. Advanced features are the things that make this solution go above and beyond the scope of existing applications.
+    \item
+          Build a set of core and advanced features. Core features are essential for a good operational and usable solution. Advanced features are the things that make this solution go above and beyond the scope of existing applications.
 
-	\item
-	      Integrate components into one final solution
+    \item
+          Integrate components into one final solution
 
-	\item
-	      Do sufficient testing to ensure that the platform behaves as expected.
+    \item
+          Do sufficient testing to ensure that the platform behaves as expected.
 \end{enumerate}
 
 \subsection{Similar in the field}
 For the duration of my dissertation, I have evaluated a variety of technologies, frameworks and utilities that will allow me to achieve the goal of automated system deployment. The trial and evaluation of these technologies allowed me to find the most suitable and relevant methodology for moving forward. I also experimented with different "cloud" virtual machine deployment services to understand and evaluate the key requirements that ought to be provided by the platform that I am building.
+
+\subsubsection{Amazon Web Services}
+\begin{center}
+    \includegraphics[width=12cm]{2000px-AmazonWebservices_Logo.svg.png}
+\end{center}
+
 
 \subsection{Constrains}
 Because of the limited duration of the dissertation and the immense work that has to be carried throughout the implementation (testing, documentation, development, debugging, planning, etc.) certain constrains had to be put in place to ensure that the project will be completed within the appropriate period.
@@ -317,16 +335,16 @@ As part of my research, I went through the Virtualbox command-line API. In the p
 The tool is called Vagrant by Hashicorp, a company specialising in easy virtual machine configuration management and set-up Their API provides the following features.
 
 \begin{itemize}
-	\item
-	      Allow the administrator to create a \gls{vagrant} configuration file (called Vagrantfile), which describes end-to-end each operation that will be performed to the virtual machine instance (including the Linux distribution that will get installed on it).
-	\item
-	      Create a system compatible with their platform starting from a bare configuration and incrementally building a bespoke instance. These instances can be managed and shared on the internet.
-	\item
-	      Managing network interfaces
-	\item
-	      Configure ports
-	\item
-	      Allow \gls{ssh} access
+    \item
+          Allow the administrator to create a \gls{vagrant} configuration file (called Vagrantfile), which describes end-to-end each operation that will be performed to the virtual machine instance (including the Linux distribution that will get installed on it).
+    \item
+          Create a system compatible with their platform starting from a bare configuration and incrementally building a bespoke instance. These instances can be managed and shared on the internet.
+    \item
+          Managing network interfaces
+    \item
+          Configure ports
+    \item
+          Allow \gls{ssh} access
 \end{itemize}
 
 \subsection{Architecture}
@@ -371,79 +389,79 @@ http://guides.rubygems.org/make-your-own-gem
 
 
 \begin{filecontents*}{research.bib}
-	@online{a,
-		author = {Internet Live Stats},
-		title = {Google Search Statistics},
-		url = {http://www.internetlivestats.com/google-search-statistics},
-		urldate = {03.05.2014},
-		note = {Accessed: November 26, 2016}
-	},
+    @online{a,
+        author = {Internet Live Stats},
+        title = {Google Search Statistics},
+        url = {http://www.internetlivestats.com/google-search-statistics},
+        urldate = {03.05.2014},
+        note = {Accessed: November 26, 2016}
+    },
 
-	@online{b,
-		author = {Techopedia Inc},
-		title = {Definition of Virtualization},
-		url = {https://www.techopedia.com/definition/719/virtualization},
-		urldate = {2014},
-		note = {Accessed: November 26, 2016}
-	},
+    @online{b,
+        author = {Techopedia Inc},
+        title = {Definition of Virtualization},
+        url = {https://www.techopedia.com/definition/719/virtualization},
+        urldate = {2014},
+        note = {Accessed: November 26, 2016}
+    },
 
-	@online{vagrant-definition,
-		author = {Hashicorp},
-		title = {WHY VAGRANT?},
-		url = {https://www.vagrantup.com/docs/why-vagrant/},
-		note = {Accessed: 27.03.2017}
-	},
+    @online{vagrant-definition,
+        author = {Hashicorp},
+        title = {WHY VAGRANT?},
+        url = {https://www.vagrantup.com/docs/why-vagrant/},
+        note = {Accessed: 27.03.2017}
+    },
 
-	@online{puppet-definition,
-		author = {Puppet Labs},
-		title = {Puppet Documentation},
-		url = {https://docs.puppet.com/},
-		note = {Accessed: 27.03.2017}
-	},
+    @online{puppet-definition,
+        author = {Puppet Labs},
+        title = {Puppet Documentation},
+        url = {https://docs.puppet.com/},
+        note = {Accessed: 27.03.2017}
+    },
 
-	@online{ruby-on-rails-definition,
-		author = {Ruby On Rails team},
-		title = {Getting Started with Rails},
-		url = {http://guides.rubyonrails.org/getting_started.html},
-		note = {Accessed: 27.03.2017}
-	},
+    @online{ruby-on-rails-definition,
+        author = {Ruby On Rails team},
+        title = {Getting Started with Rails},
+        url = {http://guides.rubyonrails.org/getting_started.html},
+        note = {Accessed: 27.03.2017}
+    },
 
-	@online{ruby-definition,
-		author = {Ruby team},
-		title = {Ruby homepage},
-		url = https://www.ruby-lang.org/en/},
-	note = {Accessed: 27.03.2017}
-	},
+    @online{ruby-definition,
+        author = {Ruby team},
+        title = {Ruby homepage},
+        url = https://www.ruby-lang.org/en/},
+    note = {Accessed: 27.03.2017}
+    },
 
 
-	@online{ictonline,
-		author = {ITU ICT},
-		title = {ICT Facts and Figures 2016},
-		url = {http://www.itu.int/en/ITU-D/Statistics/Documents/facts/ICTFactsFigures2016.pdf},
-		note = {Accessed: March 08, 2017}
+    @online{ictonline,
+        author = {ITU ICT},
+        title = {ICT Facts and Figures 2016},
+        url = {http://www.itu.int/en/ITU-D/Statistics/Documents/facts/ICTFactsFigures2016.pdf},
+        note = {Accessed: March 08, 2017}
 
-	},
+    },
 
-	@book{SecuringtheCloud,
-		author    = {Vic (J.R.) Winkler},
-		title     = {Securing the Cloud},
-		year      = {2011},
-		publisher = {Elsevier/Syngress},
-	}
+    @book{SecuringtheCloud,
+        author    = {Vic (J.R.) Winkler},
+        title     = {Securing the Cloud},
+        year      = {2011},
+        publisher = {Elsevier/Syngress},
+    }
 
-	@book{ibmvirtualisation,
-		author    = {Shannon Meier},
-		title     = {IBM Systems Virtualization: Servers, Storage, and Software},
-		year      = {April 2008},
-		publisher = {IBM},
-	}
+    @book{ibmvirtualisation,
+        author    = {Shannon Meier},
+        title     = {IBM Systems Virtualization: Servers, Storage, and Software},
+        year      = {April 2008},
+        publisher = {IBM},
+    }
 
-	@book{whatisnat,
-		author    = {Javvin Technologies Inc},
-		title     = {Network Protocols Handbook},
-		year      = {2005},
-		publisher = {Javvin Technologies},
-	}
+    @book{whatisnat,
+        author    = {Javvin Technologies Inc},
+        title     = {Network Protocols Handbook},
+        year      = {2005},
+        publisher = {Javvin Technologies},
+    }
 
 
 \end{filecontents*}
