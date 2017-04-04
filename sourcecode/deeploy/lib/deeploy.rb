@@ -37,27 +37,35 @@ module Deeploy
   end
 
   def self.network_interface
-      %x[VBoxManage hostonlyif ipconfig vboxnet0 --ip 88.168.56.1]
-      %x[VBoxManage hostonlyif ipconfig vboxnet1 --ip 87.168.56.1]
+      %x(VBoxManage hostonlyif ipconfig vboxnet0 --ip 88.168.56.1)
+      %x(VBoxManage hostonlyif ipconfig vboxnet1 --ip 87.168.56.1)
       sockips = Socket.getifaddrs.select{|ifaddr| ifaddr.addr.afamily == Socket::AF_INET && ifaddr.name == $CONFIGURATION.network_interface}. \
-        map{|ifaddr| [ifaddr.addr, ifaddr.netmask].map &:ip_address}
+          map{|ifaddr| [ifaddr.addr, ifaddr.netmask].map &:ip_address}
 
       # grab netmask for the specified interface
       return sockips.first
-      
   end
-
-  def update_machines_alive(current_user)
-    
-  end
-
 
   def self.distributions
     return {
-      ubuntu: 'ubuntu/xenial64', 
-      centos: "bento/centos-7.2",
+      ubuntu: 'ubuntu/xenial64',
+      centos: 'bento/centos-7.2',
       debian: 'debian/jessie64'
     }
+  end
+
+  def self.slugify(string)
+    #lowercase string
+    string = string.downcase
+    # remove whitespace, then replace space with dashes
+    string = string.strip().tr(' ', '-')
+
+    # get rid of all characters that are not ascii chars or dashes
+    string = string.gsub(/[^\w-]/, '')
+    if string.empty?
+      raise ArgumentError, 'Expecting string output, slugification destroyed data'
+    end
+    return string
   end
 
   def self.packages

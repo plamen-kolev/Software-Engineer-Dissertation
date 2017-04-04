@@ -11,6 +11,12 @@ module Deeploy
     @root
 
     def initialize(args = {})
+
+      # check for required parameters
+      raise ArgumentError, 'pass argument symbol :owner' unless args[:owner]
+      raise ArgumentError, 'pass argument symbol :distribution' unless args[:distribution]
+      raise ArgumentError, 'pass argument symbol :title' unless  args[:title]
+      raise ArgumentError, 'pass argument symbol :vm_user' unless args[:vm_user]
       opts = args[:opts]
 
       if opts
@@ -49,14 +55,12 @@ module Deeploy
       if distributions[args[:distribution].to_sym]
         @distribution = args[:distribution]
       else
-        $stderr.puts "Distribution '#{args[:distribution]}' is not a recognized option,\nOptions are: #{distributions.keys}, aborting"
-        # exit 1
-        raise ArgumentError
+        raise ArgumentError.new("Distribution '#{args[:distribution]}' is not a recognized option,\nOptions are: #{distributions.keys}, aborting")
       end
 
-      # human friendly virtual machine name
-      # instance.title = "#{args[:title]}_#{$CONFIGURATION.rails_env}"
-      @title ||= args[:title]
+
+      # make sure that
+      @title ||= Deeploy::slugify(args[:title])
       @ip ||= self.generate_ip()
 
       vm_dir = $CONFIGURATION.machine_path
@@ -64,7 +68,7 @@ module Deeploy
       @root = [vm_dir, 'userspace', @owner.email, @title].join('/')
       @manifest = @root + '/manifests'
 
-      @vm_user = args[:vm_user]
+      @vm_user = Deeploy::slugify(args[:vm_user])
       @configuration = Deeploy::Confmanager.new(self)
       return self
 
