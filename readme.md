@@ -110,6 +110,9 @@ Openshift
 | Intel® Virtualization Technology (Intel® VT) | | | |http://www.intel.la/content/www/xl/es/virtualization/virtualization-technology/intel-virtualization-technology.html
 | IBM Virtualisation about hypervisors/supervisors | | | http://www.redbooks.ibm.com/redpapers/pdfs/redp4396.pdf |
 
+>>> http://ieeexplore.ieee.org/document/1430629/ defines virtualisation
+https://docs.oracle.com/cd/E20065_01/doc.30/e18549/oraclevm.htm#CACFJCFH
+
 # citation example
 `sunt in culpa qui officia deserunt mollit anim id est laborum (Menasc D. 2005).`
 

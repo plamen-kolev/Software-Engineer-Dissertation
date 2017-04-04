@@ -43,7 +43,22 @@
 
 \newglossaryentry{migration}{
     name={migration},
-    description={Migration is the ability to switch to a new version, platform, or physical location \cite{what-is-migration}. This term come from database management.
+    description={Migration is the ability to switch to a new version, platform, or physical location \cite{what-is-migration}. This term come from database management, but is also used in other computer science fields.
+    }
+}
+
+\newglossaryentry{dns}{
+    name={DNS},
+    description={Domain Name System, used to resolve internet addresses into human readable domain names}}
+
+\newglossaryentry{partition}{
+    name={partition},
+    description={Bill Calkins defines partition as "Disks are divided into regions called “disk slices” or “disk partitions.” A slice is composed of a single range of contiguous blocks. It is a physical subset of the disk (except for slice 2, which represents the entire disk)."\cite{what_is_partition} }
+}
+
+\newglossaryentry{virtual_machine}{
+    name={virtual machine},
+    description={Oracle Corporation defines it "as a virtualized operating system with its associated software and applications"\cite{what_is_virtual_machine}
     }
 }
 
@@ -88,7 +103,7 @@
 \newglossaryentry{ipaddress}{
     name={IP address},
     description={
-        An identifier that helps locating a resource on the network, usually represents a computer device connected to a network (local or )
+        An identifier that helps locating a resource on the network, usually represents a computer device connected to a network
     }
 }
 
@@ -134,6 +149,21 @@
     }
 }
 
+\newglossaryentry{ram}{
+    name={RAM},
+    description={Random Access Memory, also main memory, is a computer hardware component that stores information for fast retrieval.}
+}
+
+\newglossaryentry{cpu}{
+    name={CPU},
+    description={Central Processing Unit, the hardware component that is responsible for executing instructions, evaluate expressions and perform algebraic operations.}
+}
+
+\newglossaryentry{gpu}{
+    name={GPU},
+    description={Graphical Processing Unit, a computer hardware component that specialises in processing highly parallel instructions.}
+}
+
 
 \begin{document}
 \pagenumbering{gobble}
@@ -151,8 +181,8 @@ I declare that this dissertation represents my own work except where otherwise s
 
 \newpage
 \tableofcontents
-\newpage
-\listoffigures
+%\newpage
+%\listoffigures
 \newpage
 \pagenumbering{arabic}
 
@@ -214,6 +244,53 @@ Give developers a platform for easy deployment, management and monitoring of vir
 \subsection{Virtualisation}
 \subsection{Addoption}
 \subsection{Application}
+\subsection{Similar in the field}
+For the duration of my dissertation, I have evaluated a variety of technologies, frameworks and utilities that will allow me to achieve the goal of automated system deployment. The trial and evaluation of these technologies allowed me to find the most suitable and relevant methodology for moving forward. I also experimented with different "cloud" virtual machine deployment services to understand and evaluate the key requirements that ought to be provided by the platform.
+
+Something that all major platform providers have in common is scalability and price model. The reason is that the platform allow for the hardware configuration parameters to be tuned at will within minutes. This means that when the \gls{virtual_machine} is created, later on the "hardware" resources can be modified and changed easily.
+
+A commonality is the price model. All of the below mentioned platform providers use some form of pay-as-you-go. This means that companies requiring extra computation at time critical periods can take advantage of such feature. An example would be personal project of Harrison Kinsley for gene sequencing in his youtube learning series\cite{harrison-kinsley-tutorials}. He used 5 \glspl{gpu} for an hour to perform the necessary computation, then retrieved the results and then destroyed the machines. The result is that one can use sophisticated hardware for little cost with very little overhead. 
+
+\subsubsection{Amazon Web Services\texttrademark EC2}
+\begin{center}
+    \vspace{0.5cm}
+    \includegraphics[width=12cm]{2000px-AmazonWebservices_Logo.png}
+    \vspace{0.5cm}
+\end{center}
+
+Amazon are the leaders in cloud deployment with 30\% world market share\cite{amazon-marketshare}. Their services range from providing \gls{dns} to deploying their custom virtual machines. Because of the widespread usage of their service and the fact that I have experience with working on their platform for professional or personal reasons, this is the main platform that inspired the work.
+
+The main focus of the dissertation is not about the AWS platform, but about their service EC2 - virtual machine deployment.
+
+EC2 allows a user to do the following:
+\begin{itemize}
+    \item
+    Create scalable \gls{virtual_machine}. This includes selecting \gls{operating-system} type with a variety of options (Windows Server Ubuntu Linux, Red Hat Linux, Amazon Custom Images). They also offer machines for database only purposes (Amazon RDS).
+    \item
+    Select from a family of options that include general purpose machines, memory optimised, storage optimised, machines with dedicate \glspl{gpu} and storage optimised.
+    \item 
+    The amount of \glspl{cpu} to be used for the machine
+    \item
+    Amount of \gls{ram} in gigabytes to be used
+    \item
+    Storage capacity and storage type, e.g. how much and how fast it can be.
+    \item
+    Because they have their network load-balancers, it is also possible to configure the network performance of the machine.
+    \item
+    Configure IPV6 support. IPV6 is the updated internet protocol that allows for \begin{math} 3.4\times10^{38} \end{math}  network addresses to be allocated.
+\end{itemize}
+
+Some other benefits of EC2 is the ability to integrate with every other Amazon Web Service product. The service is also running on top of Amazon's network which ensures reliability and availability across many regions. 
+EC2's pricing model has application for hobbyists and corporations alike due to the provided hardware options and the flexible pricing. Prices range from \$0.044 to \$14.400 per hour \cite{amazon-ec2-prices}. The service also receives publicity from having Netflix and Airbnb  hosted on their platform.
+A downside to AWS is that they do not allow for custom \gls{kernels} to be used and virtualised, leaving users to rely on the predefined images provided by the platform.
+
+\subsubsection{Microsoft Azure}
+Microsoft Azure is also among the biggest virtual machine and cloud computing providers in the world and has 10\% of the global market\cite{amazon-marketshare}.
+
+
+
+\subsubsection{Heroku}
+
 \newpage
 \section{Planning}
 
@@ -289,15 +366,6 @@ The development methodology can be broken into the following steps:
           Do sufficient testing to ensure that the platform behaves as expected.
 \end{enumerate}
 
-\subsection{Similar in the field}
-For the duration of my dissertation, I have evaluated a variety of technologies, frameworks and utilities that will allow me to achieve the goal of automated system deployment. The trial and evaluation of these technologies allowed me to find the most suitable and relevant methodology for moving forward. I also experimented with different "cloud" virtual machine deployment services to understand and evaluate the key requirements that ought to be provided by the platform that I am building.
-
-\subsubsection{Amazon Web Services}
-\begin{center}
-    \includegraphics[width=12cm]{2000px-AmazonWebservices_Logo.svg.png}
-\end{center}
-
-
 \subsection{Constrains}
 Because of the limited duration of the dissertation and the immense work that has to be carried throughout the implementation (testing, documentation, development, debugging, planning, etc.) certain constrains had to be put in place to ensure that the project will be completed within the appropriate period.
 
@@ -308,7 +376,7 @@ As a future task, it would be possible to deploy multiple instances of the under
 
 Another assumption and a constrain is the availability of a network interface. To simplify the development process and allow me to isolate different environments. A network environment is the space in which all the virtual machines have visibility of one another. It also makes it possible to allocate different network addresses dynamically and verify availability of resources. Another important bit is the fact that one must be connected to the network environment to communicate with the machines inside of it. I have taken advantage of VirtualBox's host-only networking interfaces, and have created multiple instances that allow me to create machines independent of each other when developing and testing.
 
-When further extending the solution, additional work has to be carried out to ensure integration with a public DNS server, and some adjustments ought to be made to allow the production DNS to allocate \textcolor{red}{DHCP} ip addresses to the virtual machines.
+When further extending the solution, additional work has to be carried out to ensure integration with a public \gls{dns} server, and some adjustments ought to be made to allow the production \gls{dns} to allocate \textcolor{red}{DHCP} ip addresses to the virtual machines.
 
 The solution aims to orchestrate and automate generic virtual machine deployment, but creating a solution that enables every \gls{operating-system} to be deployable would require extensive amount of extra work. Future work can make it possible to deploy Windows, Mac OS and more Linux variants as part of the infrastructure, but this is yet not the case.
 
@@ -389,6 +457,20 @@ http://guides.rubygems.org/make-your-own-gem
 
 
 \begin{filecontents*}{research.bib}
+    
+    @online{amazon-marketshare,
+        author = {Synergy Research Group},
+        title = {Amazon Leads; Microsoft, IBM \& Google Chase; Others Trail},
+        url = {https://www.srgresearch.com/articles/amazon-leads-microsoft-ibm-google-chase-others-trail},
+        urldate = {01.08.2016},
+        note = {Accessed: April 02, 2017}
+    }
+
+    @online{harrison-kinsley-tutorials,
+        url = {https://www.youtube.com/user/sentdex/about},
+        note = {Accessed: April 03, 2017}
+    }
+    
     @online{a,
         author = {Internet Live Stats},
         title = {Google Search Statistics},
@@ -438,9 +520,34 @@ http://guides.rubygems.org/make-your-own-gem
         author = {ITU ICT},
         title = {ICT Facts and Figures 2016},
         url = {http://www.itu.int/en/ITU-D/Statistics/Documents/facts/ICTFactsFigures2016.pdf},
-        note = {Accessed: March 08, 2017}
+        note = {Accessed: March 08, 2017},
+        year = {2015}
 
     },
+
+    @book{what-is-migration,
+        author    = {Birgit Kreuz, Antony Higginson},
+        title     = {Migrating Oracle Databases},
+        year      = {June 2014},
+        publisher = {Oracle Corporation},
+    }
+
+
+    @book{what_is_partition,
+        author    = {Bill Calkins},
+        title     = {Oracle Solaris 11},
+        year      = {2013},
+        publisher = {Prentice Hall},
+        isbn      =  {978-0-13-300710-7},
+    }
+
+    @online{what_is_virtual_machine,
+        author    = {Oracle corporation},
+        title     = {Oracle\texttrademark VM User's Guide},
+        year      = {2015},
+        url = {https://docs.oracle.com/cd/E20065_01/doc.30/e18549/oraclevm.htm#CACFJCFH},
+        note = {Accessed: March 08, 2017},
+    }
 
     @book{SecuringtheCloud,
         author    = {Vic (J.R.) Winkler},
@@ -461,6 +568,11 @@ http://guides.rubygems.org/make-your-own-gem
         title     = {Network Protocols Handbook},
         year      = {2005},
         publisher = {Javvin Technologies},
+    }
+
+    @online{amazon-ec2-prices,
+        url = {http://www.ec2instances.info/},
+        note = {Accessed: April 04, 2017},
     }
 
 
