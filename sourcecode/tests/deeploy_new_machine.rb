@@ -77,18 +77,6 @@ class DeeployTest < Minitest::Test
     all_packages_and_ports(ports, packages)
   end
 
-  def test_debian_ports_and_software
-  end
-
-  def test_invalid_user
-  end
-
-  def test_invalid_packages
-  end
-
-  def test_invalid_distribution
-  end
-
   def all_packages_and_ports(ports, packages)
     session = ::Net::SSH.start(
       @machine.ip,

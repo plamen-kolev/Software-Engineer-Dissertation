@@ -75,6 +75,15 @@ module Deeploy
     return host.include?(IPAddr.new(ip))
   end
 
+  def self.owner_exists!(owner)
+    unless owner.class.to_s == 'Deeploy::User' or
+        owner.class.to_s == 'User' or
+        owner.class.to_s == 'DB::User'
+      raise ArgumentError, 'Parameter owner must be of type DB::User or Deeploy::User'
+    end
+    return DB::User.find(owner.id)
+  end
+
   def self.packages
     modules = ['vim', 'nginx', 'apache2', 'mysql', 'memcached']
     return modules

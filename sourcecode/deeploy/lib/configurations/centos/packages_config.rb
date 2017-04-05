@@ -30,6 +30,12 @@ HERE
             ensure => 'installed',#
             require => [Exec['update_dependencies'], Package['epel-release']]
           }
+          
+          service { "nginx":
+            ensure  => 'running',
+            enable  => true,
+            require => Package["nginx"],
+          }
 HERE
         end
 

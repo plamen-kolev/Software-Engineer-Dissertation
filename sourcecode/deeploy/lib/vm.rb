@@ -43,7 +43,7 @@ module Deeploy
         @ports = opts[:ports] if opts[:ports]
       end
 
-      return false unless self._verify_owner(args[:owner])
+      return false unless Deeploy::owner_exists!(args[:owner])
       @owner = args[:owner]
 
       # allowed list of distributions
@@ -97,11 +97,12 @@ module Deeploy
 
     # takes machine name and owner object
     def self.get(args = {})
-
+      raise ArgumentError, 'pass argument symbol :owner' unless args[:owner]
+      raise ArgumentError, 'pass argument symbol :title' unless args[:title]
+      return false unless Deeploy::owner_exists!(args[:owner])
       db_machine = DB::Machine.where(user_id: args[:owner].id, title: args[:title]).take
-      unless db_machine
-        return false
-      end
+      return false unless db_machine
+
       vm_dir = $CONFIGURATION.machine_path
 
       machine = new(
@@ -121,23 +122,12 @@ module Deeploy
         }
       )
 
-      machine._verify_owner(args[:owner])
       if db_machine.user_id != machine.owner.id
         $stderr.puts('The user does not own the virtual machine')
         raise AuthorizationException
       end
 
       return machine
-    end
-
-    def _verify_owner(owner)
-      if owner.class.to_s == 'Deeploy::User' or owner.class.to_s == 'User' or owner.class.to_s == 'DB::User'
-        user = DB::User.find(owner.id)
-        return user
-      else
-        raise ArgumentError 'Parameter owner must be of type DB::User or Deeploy::User'
-      end
-
     end
 
     # keep machine folder for debugging
@@ -268,7 +258,6 @@ HERE
 
       @ip = available_ips[-1]
       if Deeploy::valid_ip?(@ip)
-        puts "hello world"
         return @ip
       end
       raise IPAddr::InvalidAddressError, "Address #{ip} does not belong to the host range #{host_ip} or is invalid"
