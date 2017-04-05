@@ -52,6 +52,10 @@ module Deeploy
 
     end
 
+    def get_puppet_conf
+      return @puppet_config
+    end
+
     def writeall
       # child of configuration, can setup ssh and folders
       @shell_config.setup_ssh

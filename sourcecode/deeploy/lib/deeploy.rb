@@ -1,13 +1,14 @@
-require "deeploy/version"
-require "vm"
-require "user"
+require 'deeploy/version'
+require 'vm'
+require 'user'
 require 'figaro'
+require 'ipaddr'
 
 module Deeploy
-  config_path = [File.expand_path("#{File.dirname(__FILE__)}"), "config/application.yml"].join('/')
+  config_path = [File.expand_path(File.dirname(__FILE__)), 'config/application.yml'].join('/')
   # puts config_path
   environment = ENV['deeploy_env']
-  environment ||= "development"
+  environment ||= 'development'
   Figaro.application = Figaro::Application.new(environment: environment, path: config_path)
   Figaro.load
   $CONFIGURATION = Figaro.env
@@ -68,10 +69,17 @@ module Deeploy
     return string
   end
 
+  def self.valid_ip?(ip)
+    host_ip, netmask = network_interface()
+    host = IPAddr.new("#{host_ip}/24")
+    return host.include?(IPAddr.new(ip))
+  end
+
   def self.packages
     modules = ['vim', 'nginx', 'apache2', 'mysql', 'memcached']
     return modules
   end
+
   # def self.packages
   #   # modules = ['vim', 'nginx', 'apache2', 'mysql-server', 'memcached']
   #   packages = {

@@ -9,58 +9,59 @@ module Deeploy
     @owner
     @title
     @root
+    @disk
+    @ram
+    @packages
+    @ports
 
     def initialize(args = {})
-
+      @disk = 1; @ram = 1; @packages = []; @ports = []; @fetch = false
       # check for required parameters
       raise ArgumentError, 'pass argument symbol :owner' unless args[:owner]
       raise ArgumentError, 'pass argument symbol :distribution' unless args[:distribution]
-      raise ArgumentError, 'pass argument symbol :title' unless  args[:title]
+      raise ArgumentError, 'pass argument symbol :title' unless args[:title]
       raise ArgumentError, 'pass argument symbol :vm_user' unless args[:vm_user]
       opts = args[:opts]
 
       if opts
-        @disk = disk if disk = opts[:disk]
-        @id = id.to_i if id = opts[:id]
-        @ip = ip if ip = opts[:ip]
-        @ram = ram if ram = opts[:ram]
+        @disk = opts[:disk] if opts[:disk]
+        @id = opts[:id].to_i if opts[:id]
+        @ip = opts[:ip] if opts[:ip]
+        @ram = opts[:ram] if opts[:ram]
+        @fetch = opts[:fetch] if opts[:fetch]
 
-        if packages = opts[:packages]
-          @packages = packages
-          @packages.each do |package|
-            package = package.strip
+        if opts[:packages]
+
+          opts[:packages].each do |package|
+            @packages.push(package.strip)
           end
           # now filter out the allowed packages
-          @packages = @packages & Deeploy::packages
+          # set intersection
+          @packages &= Deeploy::packages
         end
 
-        if opts[:ports]
-          @ports = opts[:ports]
-        end
-
+        @ports = opts[:ports] if opts[:ports]
       end
 
-      @disk ||= 1; @ram ||= 1; @packages ||= []; @ports ||= []
-
-      # open ports
-
       return false unless self._verify_owner(args[:owner])
-
       @owner = args[:owner]
 
-      # allowed list of distros
+      # allowed list of distributions
       distributions = Deeploy::distributions()
 
       # test to see if distribution lookup will work, otherwise error out
       if distributions[args[:distribution].to_sym]
         @distribution = args[:distribution]
       else
-        raise ArgumentError.new("Distribution '#{args[:distribution]}' is not a recognized option,\nOptions are: #{distributions.keys}, aborting")
+        raise ArgumentError, "Distribution '#{args[:distribution]}' is not a recognized option,\nOptions are: #{distributions.keys}, aborting"
       end
 
-
-      # make sure that
       @title ||= Deeploy::slugify(args[:title])
+      unless @fetch
+        if DB::Machine.where(title: @title).count > 0
+          raise ActiveRecord::RecordNotUnique, "Machine #{@title} already exists !\nTry using VM.get instead of VM.new !"
+        end
+      end
       @ip ||= self.generate_ip()
 
       vm_dir = $CONFIGURATION.machine_path
@@ -71,7 +72,6 @@ module Deeploy
       @vm_user = Deeploy::slugify(args[:vm_user])
       @configuration = Deeploy::Confmanager.new(self)
       return self
-
     end
 
     def alive
@@ -100,7 +100,6 @@ module Deeploy
 
       db_machine = DB::Machine.where(user_id: args[:owner].id, title: args[:title]).take
       unless db_machine
-        $stderr.puts("Unable to find machine '#{args[:title]}' for user '#{args[:owner].email}'")
         return false
       end
       vm_dir = $CONFIGURATION.machine_path
@@ -117,7 +116,8 @@ module Deeploy
           ip: db_machine.ip,
           ports: db_machine.ports,
           packages: db_machine.packages,
-          ram: db_machine.ram
+          ram: db_machine.ram,
+          fetch: true
         }
       )
 
@@ -148,11 +148,8 @@ module Deeploy
             'vagrant destroy -f'
           )
         end
-
         FileUtils.rm_rf(@root) unless keep_folders
-
       end
-
       vm = DB::Machine.find(@id)
       vm.destroy if vm
     end
@@ -178,8 +175,9 @@ module Deeploy
         raise Exception, "#{root} was empty"
       end
     end
-    
-    def build
+
+    def build(dryrun=false)
+
       FileUtils.mkdir_p(@manifest)
       # @configuration.writeall(shell: "#{@manifest}/setup.sh", vagrant: "#{@root}/Vagrantfile", puppet: "#{@manifest}/default.pp")
       @configuration.writeall()
@@ -194,15 +192,19 @@ module Deeploy
 
       machine.ip = @ip
       machine.pem = File.open(
-          [@root, '.ssh', "#{@title}.pem"].join('/'), 'r'
+        [@root, '.ssh', "#{@title}.pem"].join('/'), 'r'
       ).read
       machine.save
 
       self.id = machine.id
       result = false
 
-      Dir.chdir(@root) do
-        result = system("vagrant up &> #{@root}/vagrant.log")
+      if dryrun
+        result = true
+      else
+        Dir.chdir(@root) do
+          result = system("vagrant up &> #{@root}/vagrant.log")
+        end
       end
 
       if result
@@ -217,63 +219,59 @@ module Deeploy
       end
     end
 
-    def up
-      Dir.chdir(@root) do
-        system('vagrant up')
-      end
-    end
-
     def in_db?
       return @owner.get_machine(@title)
     end
 
     def in_dir?
-      if File.directory?(@root)
-        return true
-      end
+      return true if File.directory?(@root)
       return false
     end
 
-    def success()
+    def success
       $stdout.puts <<-HERE
-#{"="*50}
+#{'=' * 50}
     Operation successfull:
-  #{"-"*50}
+  #{'-' * 50}
     VM NAME:\t\t|\t#{@title}
     IP:\t\t\t|\t#{@ip}
     User:\t\t|\t#{@vm_user}
-#{"-"*50}
+#{'-' * 50}
     Distribution:\t|\t#{@distribution}
-#{"="*50}
+#{'=' * 50}
 HERE
     end
 
-    def generate_ip()
-
+    def generate_ip
       # grab netmask for the specified interface
       host_ip, netmask = Deeploy::network_interface()
-      if not host_ip or not netmask
+      if !host_ip || !netmask
         $stderr.puts("Interface '#{$CONFIGURATION.network_interface}' did not return an ip or mask for the host !\n.") # Recreating virtual network.")
         raise "Interface '#{$CONFIGURATION.network_interface}' did not return an ip or mask for the host !\n."
       end
 
-      # map to string flatters the object array to strign array
+      # map to string flatters the object array to string array
       range = IPAddr.new(
-          [host_ip, netmask].join('/')
+        [host_ip, netmask].join('/')
       ).to_range.map(&:to_s)
 
       # blacklist broadcast ips ranges based on the host's ip, e.g. if the host has ip of 12.200.30.20, 12.200.30.0 and 12.200.30.255 will be blacklisted
-      tokenized_ip = host_ip.split('.')
-      tokenized_ip.pop
-      tokenized_ip = tokenized_ip.join('.')
+      tokenised_ip = host_ip.split('.')
+      tokenised_ip.pop
+      tokenised_ip = tokenised_ip.join('.')
 
-      blacklisted_ips = DB::Machine.all.collect{|obj| obj.ip}
-      blacklisted_ips += ["#{tokenized_ip}.0", "#{tokenized_ip}.255", host_ip]
+      blacklisted_ips = DB::Machine.all.collect{ |obj| obj.ip }
+      blacklisted_ips += ["#{tokenised_ip}.0", "#{tokenised_ip}.255", host_ip]
 
       # array difference of available ips and taken ips
       available_ips = range - blacklisted_ips
 
       @ip = available_ips[-1]
+      if Deeploy::valid_ip?(@ip)
+        puts "hello world"
+        return @ip
+      end
+      raise IPAddr::InvalidAddressError, "Address #{ip} does not belong to the host range #{host_ip} or is invalid"
     end
   end
 end

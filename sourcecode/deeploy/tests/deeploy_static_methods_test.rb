@@ -1,3 +1,5 @@
+ENV['deeploy_env'] = 'test'
+
 require 'rubygems'
 require 'bundler/setup'
 require 'minitest/autorun'
