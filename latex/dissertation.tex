@@ -62,6 +62,12 @@
     }
 }
 
+\newglossaryentry{IT}{
+    name={I.T.},
+    description={or Internet Technology is defined by Techopedia as use of computers, storage networking and other devices and a variety of other hardware with the purpose of exchanging digital information \cite{techopedia-it-definition}
+    }
+}
+
 \newglossaryentry{standup}
 {
     name=stand-up,
@@ -164,6 +170,11 @@
     description={Graphical Processing Unit, a computer hardware component that specialises in processing highly parallel instructions.}
 }
 
+\newglossaryentry{kernel}{
+    name={kernel},
+    description={Is the core component of an operating system that provides all the services necessary for every component of the system.}
+}
+
 
 \begin{document}
 \pagenumbering{gobble}
@@ -241,9 +252,37 @@ Give developers a platform for easy deployment, management and monitoring of vir
 
 \newpage
 \section{Background}
-\subsection{Virtualisation}
-\subsection{Addoption}
+\subsection{Virtualisation and "The Cloud"}
+The most important feature of virtualisation that enables its cloud capabilities is the level of abstraction it provides. The key feature is the ability to hide the underlying hardware architecture \cite{heterogenious-cloud-computing}[p.59]. The article Heterogeneous ... 
+
+"Virtualization abstracts compute
+resources—typically as virtual machines (VMs)—with
+associated storage and networking connectivity. The
+cloud determines how those virtualized resources are
+allocated, delivered, and presented. Virtualization is not
+necessary to create a cloud environment, but it enables
+rapid scaling of resources in a way that nonvirtualized
+environments find hard to achieve."\cite{intel-cloud-computing-guide}[p10]
+
+Virtualisation is the necessary abstraction that makes it possible to get data to and from the cloud. This technology is the basis for creating high availability services and applications that take advantage of the abstraction it provides.\cite{intel-cloud-computing-guide}[p10]. Intel's virtualisation and cloud computing guide talks about virtualisation as a way to provide corporate platform services in a more organised matter. They also talk about the effort making the infrastructure easier to organise from the standpoint of \gls{IT}. This is the case because these virtual servers are easier to diagnose and monitor as well as organise and automate \cite{intel-cloud-computing-guide}[p8].
+Virtual machine diagnostics and monitoring is a practice where the behaviour of the machine is monitored. This includes network traffic, memory usage, \gls{cpu} performance and utilisation. It also contains information about how much disk storage the machine is taking and information about the machine's running status. Additionally, Oracle advices collecting kernel statistics, also known as statistic counter \cite{oracle-stats-counter}. This data can be used to gain insights into why a machine is malfunctioning. The above mentioned kernel statistics can determine if the machine has recurring failures by observing its crash counter. 
+Network outages can be detected by analysing aggregated network statistics. Because each virtual machine has mapped virtual network interface that is bound to a real internet cable, high networking usage might indicate malicious behaviour or high demand. Ensuring proper monitoring makes sure that customer demands are met (scaling the network as a result of congestion or detecting and taking down malicious virtual machine members).
+
+Virtual machine organisation is the practice of managing a variety of parameters associated with the platform and its resources. The \gls{IT} department of an organisation is in charge of managing the physical storage on which the "virtual" platform is running. In the infrastructure the physical disks are partitioned and organised in pools and then mounted over the network. This configuration uses S.A.N, or storage area network. This is a network entirely dedicated to transferring data between computer systems and the storage drives \cite{ibm-san-storage}[p.11].
+Mapping physical hard drives to virtual ones over the network protocol is what enables any type of server infrastructure, including virtualised one to have enough capacity to grow and meet the customer's demands. It also ensures the right level of redundancy, as a large portion of the hard drives are put in place in case of a failure.
+
+A virtualised infrastructure requires high bandwidth network connection. The network throughput depends on the expected load of the network. These physical network connections are used by the virtualisation platform and allow for a fine grained tuning of the network internally. The benefits of such abstraction is the ability to create flexible and disposable internal networks per machine or cluster of machines, with the ability to share network, or be in a private network. 		
+This feature is important from the standpoint of security. For example, for a business logic application, one can set up a client-facing web server that is accessible to the global internet world. The machine on which this application is running will have a database connection to another machine running a dedicated database software (mysql, postgresql, mongodb,etc.). The connection between the two machine would be configured as a private network. It ensures that nobody from the outside world has access to that database machine.
+
+It is impossible to talk about such infrastructure without considering the most important component of operations, the \gls{cpu}. When providing the hardware resources for computing, providing enough calculation "horse power" is essential, otherwise each virtual machine would behave slow and unresponsive. It is a common practice \cite{_NEEDED_} to use many Intel\texttrademark \gls{xeon} processors that are running on top of the virtualsation technology such as \gls{virtualbox} or \gls{vmware}. All of the computing resources are then also abstracted away. For example, when using \gls{vmware} \gls{vSphere}, instead of seeing every single processor, you are given the option of allocating certain amount of megahertz for computation\cite{_NEEDED_}.
+
+Considering the fact that all of these hardware components have to be managed by a human to ensure smooth operation during high and low loads, automation plays very big role. Automation is the process of automatically creating \gls{virtual_machine} and dynamically allocating computing resources associated with it. Big cloud platforms such as \gls{amazon-web-serivces} and \gls{azure} have almost absolute automation \cite{_NEEDED_}. Computing resources are allocated based on usage, where a paying customer can use a lot of resources for the right price.
+
+\subsection{Security}
+\subsection{Adoption}
 \subsection{Application}
+\subsection{Web server technology}
+\subsection{Automation}
 \subsection{Similar in the field}
 For the duration of my dissertation, I have evaluated a variety of technologies, frameworks and utilities that will allow me to achieve the goal of automated system deployment. The trial and evaluation of these technologies allowed me to find the most suitable and relevant methodology for moving forward. I also experimented with different "cloud" virtual machine deployment services to understand and evaluate the key requirements that ought to be provided by the platform.
 
@@ -282,7 +321,7 @@ EC2 allows a user to do the following:
 
 Some other benefits of EC2 is the ability to integrate with every other Amazon Web Service product. The service is also running on top of Amazon's network which ensures reliability and availability across many regions. 
 EC2's pricing model has application for hobbyists and corporations alike due to the provided hardware options and the flexible pricing. Prices range from \$0.044 to \$14.400 per hour \cite{amazon-ec2-prices}. The service also receives publicity from having Netflix and Airbnb  hosted on their platform.
-A downside to AWS is that they do not allow for custom \gls{kernels} to be used and virtualised, leaving users to rely on the predefined images provided by the platform.
+A downside to AWS is that they do not allow for custom \glspl{kernel} to be used and virtualised, leaving users to rely on the predefined images provided by the platform.
 
 \subsubsection{Microsoft Azure}
 Microsoft Azure is also among the biggest virtual machine and cloud computing providers in the world and has 10\% of the global market\cite{amazon-marketshare}.
@@ -570,10 +609,47 @@ http://guides.rubygems.org/make-your-own-gem
         publisher = {Javvin Technologies},
     }
 
+    @online{intel-cloud-computing-guide,
+        author = {Intel Corporation},
+        title = {Virtualization and Cloud Computing},
+        year = {2013},
+        url = {http://www.intel.com/content/dam/www/public/us/en/documents/guides/cloud-computing-virtualization-building-private-iaas-guide.pdf},
+        note = {Accessed: April 04, 2017},
+        
+    }
+
     @online{amazon-ec2-prices,
         url = {http://www.ec2instances.info/},
         note = {Accessed: April 04, 2017},
     }
+
+    
+    @online{techopedia-it-definition,
+        url = {http://searchdatacenter.techtarget.com/definition/IT},
+        note = {Accessed: April 05, 2017},
+    }
+
+    @online{oracle-stats-counter,
+        url = {https://docs.oracle.com/cd/E19120-01/open.solaris/819-3196/gbvex/index.html},
+        note = {Accessed: April 05, 2017},
+    }
+
+    @book{ibm-san-storage,
+        author    = {Jon Tate},
+        title     = {Introduction to Storage Area Networks},
+        year      = {2016},
+        publisher = {IBM},
+        isbn      =  {073844233X},
+    }
+
+    @book{heterogenious-cloud-computing,
+        author    = {San Murugesan},
+        title     = {Introduction to Storage Area Networks},
+        year      = {2015},
+        publisher = {BRITE Proffesional Services},
+        isbn      =  {073844233X},
+    }
+
 
 
 \end{filecontents*}

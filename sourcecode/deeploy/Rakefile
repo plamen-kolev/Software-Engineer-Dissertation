@@ -7,5 +7,5 @@ Rake::TestTask.new do |t|
   t.libs << 'test'
 end
 
-desc "Run tests"
+desc "Run test"
 task :default => :test

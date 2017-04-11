@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170215232807) do
+ActiveRecord::Schema.define(version: 20170405124955) do
 
   create_table "machines", force: :cascade do |t|
-    t.string   "title",        null: false
+    t.string   "title",                        null: false
     t.integer  "user_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.string   "ip"
     t.boolean  "deployed"
     t.boolean  "last_alive"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20170215232807) do
     t.decimal  "ram"
     t.boolean  "alive"
     t.text     "pem"
+    t.decimal  "build_stage",  default: "0.0"
     t.index ["ip"], name: "index_machines_on_ip", unique: true
     t.index ["title"], name: "index_machines_on_title", unique: true
     t.index ["user_id"], name: "index_machines_on_user_id"

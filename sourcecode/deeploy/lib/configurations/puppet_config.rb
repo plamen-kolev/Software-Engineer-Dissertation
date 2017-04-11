@@ -3,10 +3,11 @@ module Deeploy
     class PuppetConfig < Configuration
 
       def initialize(m_inst)
-        @distribution = m_inst.distribution
-        @machine = m_inst
-        @root = m_inst.root
-        @update_dependencies = '/usr/bin/apt-get update'  unless @update_dependencies
+        @distribution         ||= m_inst.distribution
+        @machine              ||= m_inst
+        @root                 ||= m_inst.root
+        @update_dependencies  ||= '/usr/bin/apt-get update'
+        @install_package_command ||= ''
 
         super(m_inst)
         @config = <<CONF

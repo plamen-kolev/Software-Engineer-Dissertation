@@ -5,7 +5,7 @@ require 'bundler/setup'
 require 'minitest/autorun'
 require 'deeploy'
 
-class MachineNewTest < Minitest::Test
+class TestMachineNew < Minitest::Test
   def setup
     @unique_machine_name = 'unique_machine'
     @user = DB::User.find(1)

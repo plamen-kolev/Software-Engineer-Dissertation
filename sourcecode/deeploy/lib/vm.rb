@@ -6,13 +6,13 @@ require 'ipaddr'
 module Deeploy
   class VM < Configurable
     attr_accessor :owner, :distribution, :root, :manifest, :vm_user, :ip, :title, :configuration, :id, :disk, :ram, :packages, :ports, :pem
-    @owner
-    @title
-    @root
-    @disk
-    @ram
-    @packages
-    @ports
+    # @owner
+    # @title
+    # @root
+    # @disk
+    # @ram
+    # @packages
+    # @ports
 
     def initialize(args = {})
       @disk = 1; @ram = 1; @packages = []; @ports = []; @fetch = false
@@ -21,6 +21,10 @@ module Deeploy
       raise ArgumentError, 'pass argument symbol :distribution' unless args[:distribution]
       raise ArgumentError, 'pass argument symbol :title' unless args[:title]
       raise ArgumentError, 'pass argument symbol :vm_user' unless args[:vm_user]
+
+      @userspace = 'userspace'
+      @userspace = 'test_userspace' if $CONFIGURATION.deeploy_env == 'test'
+
       opts = args[:opts]
 
       if opts
@@ -66,7 +70,7 @@ module Deeploy
 
       vm_dir = $CONFIGURATION.machine_path
       # set the folder path (absolute path on the os)
-      @root = [vm_dir, 'userspace', @owner.email, @title].join('/')
+      @root = [vm_dir, @userspace, @owner.email, @title].join('/')
       @manifest = @root + '/manifests'
 
       @vm_user = Deeploy::slugify(args[:vm_user])
@@ -74,7 +78,7 @@ module Deeploy
       return self
     end
 
-    def alive
+    def alive?
       db_machine = DB::Machine.where(title: self.title).take
 
       begin
@@ -82,16 +86,18 @@ module Deeploy
           begin
             TCPSocket.new(@ip, 22).close
             db_machine.alive = true
+            return true
             # rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
             # db_machine.alive = false
           end
         end
       rescue Timeout::Error, Errno::ECONNREFUSED, Errno::EHOSTUNREACH
         db_machine.alive = false
+
       end
 
       db_machine.save
-
+      return false
       # end trying here
     end
 
@@ -105,10 +111,13 @@ module Deeploy
 
       vm_dir = $CONFIGURATION.machine_path
 
+      @userspace = 'userspace'
+      @userspace = 'test_userspace' if $CONFIGURATION.deeploy_env == 'test'
+
       machine = new(
         title: db_machine.title,
         distribution: db_machine.distribution,
-        root: [vm_dir, 'userspace', args[:owner].email, db_machine.title].join('/'),
+        root: [vm_dir, @userspace, args[:owner].email, db_machine.title].join('/'),
         owner: DB::User.find(db_machine.user_id),
         vm_user: db_machine.vm_user,
         opts: {
@@ -123,8 +132,7 @@ module Deeploy
       )
 
       if db_machine.user_id != machine.owner.id
-        $stderr.puts('The user does not own the virtual machine')
-        raise AuthorizationException
+        raise AuthorizationException, "The user #{machine.owner.email} does not own the virtual machine #{db_machine.title}"
       end
 
       return machine
@@ -132,11 +140,9 @@ module Deeploy
 
     # keep machine folder for debugging
     def destroy(keep_folders = false)
-      if Dir.exists?(@root)
+      if Dir.exist?(@root)
         Dir.chdir(@root) do
-          result = system(
-            'vagrant destroy -f'
-          )
+          system('vagrant destroy -f')
         end
         FileUtils.rm_rf(@root) unless keep_folders
       end
@@ -145,40 +151,47 @@ module Deeploy
     end
 
     def down()
-      if Dir.exists?(@root)
+      if Dir.exist?(@root)
         Dir.chdir(@root) do
-          result = system(
-            'vagrant halt'
-          )
+          system('vagrant halt')
         end
       end
     end
 
     def up
-      if Dir.exists?(@root)
+      if Dir.exist?(@root)
         Dir.chdir(@root) do
-          result = system(
-            'vagrant up'
-          )
+          system('vagrant up')
         end
       else
         raise Exception, "#{root} was empty"
       end
     end
 
-    def build(dryrun=false)
-
-      FileUtils.mkdir_p(@manifest)
-      # @configuration.writeall(shell: "#{@manifest}/setup.sh", vagrant: "#{@root}/Vagrantfile", puppet: "#{@manifest}/default.pp")
-      @configuration.writeall()
-
+    def _get_or_create_machine()
       machine = DB::Machine.where(title: @title)
       # create machine is not running as part of backend
       if machine.first
         machine = machine.first
       else
-        machine = DB::Machine.new(title: @title, user_id: @owner.id, deployed: false, distribution: @distribution, vm_user: @vm_user)
+        machine = DB::Machine.new(
+          title: @title,
+          user_id: @owner.id,
+          deployed: false,
+          distribution: @distribution,
+          vm_user: @vm_user
+        )
       end
+      return machine
+    end
+
+    def build(dryrun = false)
+      puts "Building VM '#{@title}'.\nPlease wait "
+      FileUtils.mkdir_p(@manifest)
+      # @configuration.writeall(shell: "#{@manifest}/setup.sh", vagrant: "#{@root}/Vagrantfile", puppet: "#{@manifest}/default.pp")
+      @configuration.writeall()
+
+      machine = self._get_or_create_machine
 
       machine.ip = @ip
       machine.pem = File.open(
@@ -193,7 +206,8 @@ module Deeploy
         result = true
       else
         Dir.chdir(@root) do
-          result = system("vagrant up &> #{@root}/vagrant.log")
+          # sub shell process and wait for it to exit
+          result = self.wait_on_build(machine)
         end
       end
 
@@ -203,19 +217,59 @@ module Deeploy
         machine.save
         return true
       else
-        $stderr.puts("Errors were encountered, cleaning up: #{$?.inspect}")
         self.destroy(true)
-        return false
+        raise Exception, "Errors were encountered, cleaning up: #{$?.inspect}"
       end
     end
 
-    def in_db?
-      return @owner.get_machine(@title)
-    end
+    def wait_on_build(machine)
 
-    def in_dir?
-      return true if File.directory?(@root)
-      return false
+      stages = [
+        'default: Configuring and enabling network interfaces',
+        'Running provisioner: puppet',
+        'Exec\[update_dependencies\].*executed successfully',
+        'default: Notice: Finished catalog run in'
+      ]
+      stages_length = stages.length - 1
+      current_stage = 0
+      # put command in background
+      pid = spawn("vagrant up &> #{@root}/vagrant.log")
+      Process.detach(pid)
+      counter = 0
+      # wait for process to finish, also display build process in the meanwhile
+      while counter < 600
+        begin
+          result = Process.kill 0, pid
+        rescue Errno::ESRCH
+          puts 'Build successfull !'
+          machine.build_stage = stages_length
+          machine.save()
+          return true
+        end
+
+        # now try to find key moments in the deployment of a machine
+        begin
+          break if stages.empty?
+          File.open([@root, 'vagrant.log'].join('/'), 'r') do |f|
+            stage = stages[0]
+            f.each_line do |line|
+              # check if the next stage is in the file
+              if line =~ %r{#{stage}}
+                current_stage += 1
+                machine.build_stage = current_stage
+                machine.save()
+                puts "Status: #{stage}"
+                stages.shift()
+              end
+            end
+          end
+        rescue Errno::ENOENT
+        end
+
+        sleep 10
+        counter += 10
+      end
+
     end
 
     def success

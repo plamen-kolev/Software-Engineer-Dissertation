@@ -7,7 +7,7 @@ require 'deeploy'
 require 'net/ssh'
 require 'timeout'
 
-class MachineBuildTest < Minitest::Test
+class TestMachineBuild < Minitest::Test
   def setup
     @title = 'unique_machine'
     @user = DB::User.find(1)
@@ -38,8 +38,8 @@ class MachineBuildTest < Minitest::Test
       }
     )
 
-    # give machine 3 minuutes to complete
-    Timeout::timeout(180) do
+    # give machine 4 minutes to complete
+    Timeout::timeout(240) do
       @machine.build()
     end
     session = get_ssh_session(@machine)
@@ -70,7 +70,7 @@ class MachineBuildTest < Minitest::Test
     )
 
     # give machine 6 minuutes to complete
-    Timeout::timeout(360) do
+    Timeout::timeout(500) do
       @machine.build()
     end
     session = get_ssh_session(@machine)

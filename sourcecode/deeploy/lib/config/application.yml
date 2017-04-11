@@ -17,6 +17,7 @@ production:
   DATABASE_PASSWORD: ''
   NETWORK_INTERFACE: vboxnet0
   RAILS_ENV: development
+  DEEPLOY_ENV: production
 
 test:
   database_host: localhost
@@ -25,6 +26,7 @@ test:
   rails_env: test
   db_path: '/home/hallagat/Projects/dissertation/sourcecode/db'
   machine_path: "/home/hallagat/Projects/dissertation/sourcecode"
+  DEEPLOY_ENV: test
 
 development:
   database_host: localhost
@@ -33,3 +35,4 @@ development:
   rails_env: development
   db_path: '/home/hallagat/Projects/dissertation/sourcecode/db'
   machine_path: "/home/hallagat/Projects/dissertation/sourcecode"
+  DEEPLOY_ENV: development

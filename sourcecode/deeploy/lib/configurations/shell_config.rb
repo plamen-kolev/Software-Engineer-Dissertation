@@ -2,10 +2,8 @@ module Deeploy
   module Config
     class ShellConfig < Configuration
 
-      
-
       def initialize(m_inst)
-        @install_puppet = "/usr/bin/apt-get install puppet -y" if ! @install_puppet  
+        @install_puppet ||= '/usr/bin/apt-get install puppet -y'
         super(m_inst)
         @config = <<CONFIG
           #{@install_puppet}

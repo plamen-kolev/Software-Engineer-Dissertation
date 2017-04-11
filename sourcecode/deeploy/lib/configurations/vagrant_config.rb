@@ -5,8 +5,8 @@ module Deeploy
       def initialize(m_inst)
         @root = m_inst.root
         super(m_inst)
-        @vbadditions = 'config.vbguest.auto_update = false' if ! @vbadditions
-        
+        @vbadditions ||= 'config.vbguest.auto_update = false'
+
         distribution = Deeploy.distributions()
         sym = m_inst.distribution.to_sym
         distribution = distribution[sym]
@@ -29,7 +29,7 @@ module Deeploy
 CONFIG
       end
 
-      def write()
+      def write
         super("#{@path}/Vagrantfile")
       end
     end
