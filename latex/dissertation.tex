@@ -175,6 +175,40 @@
     description={Is the core component of an operating system that provides all the services necessary for every component of the system.}
 }
 
+\newglossaryentry{vsphere}{
+    name={vSphere},
+    description={ Is a technology used to manage large collections of infrastructure (such as CPUs, storage, and networking) as a seamless and dynamic operating environment, and also manages the complexity of a datacenter\cite{vsphere-definition}
+    }
+}
+
+\newglossaryentry{xeon}{
+    name={Xeon},
+    description={ The Xeon processor family is Intel's server grade processors
+    }
+}
+
+\newglossaryentry{vmware}{
+    name={VmWare},
+    description={VMware is the leader in so-called virtual machine software, it is also the name of the product that the company produces \cite{vmware-definition}
+    }
+}
+
+\newglossaryentry{virtualbox}
+    {name={virtualbox},
+     description={Open-source virtualisation technology created by Oracle}
+ }
+
+\newglossaryentry{amazon-web-services}{
+    name={Amazon Web Services},
+    description={Amazon's cloud infrastructure as a service
+    }
+}
+
+\newglossaryentry{azure}{
+    name={Azure},
+    description={Microsoft's cloud infrastructure as a service
+    }
+}
 
 \begin{document}
 \pagenumbering{gobble}
@@ -238,7 +272,7 @@ Give developers a platform for easy deployment, management and monitoring of vir
 
     \item Configure firewall settings
           \begin{itemize}
-              \item Will be achieved through the virtualisation technology's API. The purpouse is toadd extra security layer to the guest \gls{operating-system}. The firewall settings are managed by a software called ufw - Uncomplicated FireWall
+              \item Will be achieved through the virtualisation technology's API. The purpouse is toadd extra security layer to the guest \gls{operating-system}. The firewall settings are managed by a software called ufw - Uncomplicated Fire Wall
           \end{itemize}
 
     \item Allow console access and set up authentication credentials (SSH keys) for the instances
@@ -252,8 +286,17 @@ Give developers a platform for easy deployment, management and monitoring of vir
 
 \newpage
 \section{Background}
-\subsection{Virtualisation and "The Cloud"}
-The most important feature of virtualisation that enables its cloud capabilities is the level of abstraction it provides. The key feature is the ability to hide the underlying hardware architecture \cite{heterogenious-cloud-computing}[p.59]. The article Heterogeneous ... 
+\subsection{Virtualisation and "The Cloud" }
+The most important feature of virtualisation that enables its cloud capabilities is the level of abstraction it provides. The key feature is the ability to hide the underlying hardware architecture \cite{heterogenious-cloud-computing}[p.59]. The article Heterogeneous Cloud Computing :The way forward considers an architecture that interleaves different hardware components together that enables utilisation of special components on-demand. For example, a cluster of graphic cards or processors that support different architectures (x86, ARM, ATOM) can be attached. Such set-up would allow the platform to be more flexible and less congested because these dedicated components would do the "heavy lifting" in the background, making the \glspl{cpu} less congested. It also has the benefit of doing special computations, such as rendering video much quicker and efficient. 
+
+
+\begin{figure}[h!]
+    \vspace{0.5cm}
+    \includegraphics[width=12cm]{heterogenious.png}
+    \vspace{0.5cm}
+    \caption[Heterogeneous server configuration]{Heterogeneous server configuration~\cite{heterogeneous-network-table}}
+    \label{fig:birds}
+\end{figure}
 
 "Virtualization abstracts compute
 resources—typically as virtual machines (VMs)—with
@@ -274,9 +317,9 @@ Mapping physical hard drives to virtual ones over the network protocol is what e
 A virtualised infrastructure requires high bandwidth network connection. The network throughput depends on the expected load of the network. These physical network connections are used by the virtualisation platform and allow for a fine grained tuning of the network internally. The benefits of such abstraction is the ability to create flexible and disposable internal networks per machine or cluster of machines, with the ability to share network, or be in a private network. 		
 This feature is important from the standpoint of security. For example, for a business logic application, one can set up a client-facing web server that is accessible to the global internet world. The machine on which this application is running will have a database connection to another machine running a dedicated database software (mysql, postgresql, mongodb,etc.). The connection between the two machine would be configured as a private network. It ensures that nobody from the outside world has access to that database machine.
 
-It is impossible to talk about such infrastructure without considering the most important component of operations, the \gls{cpu}. When providing the hardware resources for computing, providing enough calculation "horse power" is essential, otherwise each virtual machine would behave slow and unresponsive. It is a common practice \cite{_NEEDED_} to use many Intel\texttrademark \gls{xeon} processors that are running on top of the virtualsation technology such as \gls{virtualbox} or \gls{vmware}. All of the computing resources are then also abstracted away. For example, when using \gls{vmware} \gls{vSphere}, instead of seeing every single processor, you are given the option of allocating certain amount of megahertz for computation\cite{_NEEDED_}.
+It is impossible to talk about such infrastructure without considering the most important component of operations, the \gls{cpu}. When providing the hardware resources for computing, providing enough calculation "horse power" is essential, otherwise each virtual machine would behave slow and unresponsive. It is a common practice \cite{_NEEDED_} to use many Intel\texttrademark \gls{xeon} processors that are running on top of the virtualsation technology such as \gls{virtualbox} or \gls{vmware}. All of the computing resources are then also abstracted away. For example, when using \gls{vmware} \gls{vsphere}, instead of seeing every single processor, you are given the option of allocating certain amount of megahertz for computation\cite{_NEEDED_}.
 
-Considering the fact that all of these hardware components have to be managed by a human to ensure smooth operation during high and low loads, automation plays very big role. Automation is the process of automatically creating \gls{virtual_machine} and dynamically allocating computing resources associated with it. Big cloud platforms such as \gls{amazon-web-serivces} and \gls{azure} have almost absolute automation \cite{_NEEDED_}. Computing resources are allocated based on usage, where a paying customer can use a lot of resources for the right price.
+Considering the fact that all of these hardware components have to be managed by a human to ensure smooth operation during high and low loads, automation plays very big role. Automation is the process of automatically creating \gls{virtual_machine} and dynamically allocating computing resources associated with it. Big cloud platforms such as \gls{amazon-web-services} and \gls{azure} have almost absolute automation \cite{_NEEDED_}. Computing resources are allocated based on usage, where a paying customer can use a lot of resources for the right price.
 
 \subsection{Security}
 \subsection{Adoption}
@@ -550,7 +593,7 @@ http://guides.rubygems.org/make-your-own-gem
     @online{ruby-definition,
         author = {Ruby team},
         title = {Ruby homepage},
-        url = https://www.ruby-lang.org/en/},
+        url = {https://www.ruby-lang.org/en/},
     note = {Accessed: 27.03.2017}
     },
 
@@ -648,9 +691,27 @@ http://guides.rubygems.org/make-your-own-gem
         year      = {2015},
         publisher = {BRITE Proffesional Services},
         isbn      =  {073844233X},
+        url = {hhttp://www.isi.edu/sites/default/files/users/jwalters/papers/computer_2015.pdf}
     }
 
+    @book{vsphere-definition,
+        title = {VMware vSphere Introduction},
+        author = {VMware, Inc.},
+        year = {2009}
+    }
 
+    @online{vmware-definition,
+        url = {http://www.nytimes.com/2009/08/31/technology/business-computing/31virtual.html},
+        note = {Accessed: April 10, 2017},
+        author = {STEVE LOHR},
+        year = {AUG. 30, 2009}
+        title = {Challenging Microsoft With a New Technology}
+    }
+
+    @misc{heterogeneous-network-table,
+        url = {http://www.isi.edu/sites/default/files/users/jwalters/papers/computer_2015.pdf},
+        title = {}
+    }
 
 \end{filecontents*}
 

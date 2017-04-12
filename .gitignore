@@ -10,6 +10,6 @@ dissertation.pdf
 dissertation.synctex.gz
 dissertation.toc
 research.bib
-dissertation.bbl
-dissertation.blg
+*.bbl
+*.blg
 tags
