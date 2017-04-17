@@ -86,6 +86,7 @@ module Deeploy
           begin
             TCPSocket.new(@ip, 22).close
             db_machine.alive = true
+            db_machine.save()
             return true
             # rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
             # db_machine.alive = false
