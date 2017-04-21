@@ -13,3 +13,6 @@ research.bib
 *.bbl
 *.blg
 tags
+sourcecode/machines
+sourcecode/test_userspace/*
+latex/dissertation.lof

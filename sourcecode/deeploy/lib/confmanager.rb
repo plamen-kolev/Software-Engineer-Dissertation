@@ -25,6 +25,13 @@ module Deeploy
           packages_config_class: 'Deeploy::Config::Centos::PackagesConfig'
         },
 
+        'debian' => {
+            module: 'configurations/debian',
+            class: 'Deeploy::Config::Debian',
+            firewall_config_class: 'Deeploy::Config::Debian::FirewallConfig',
+            packages_config_class: 'Deeploy::Config::Debian::PackagesConfig'
+        },
+
         config: {'puppet_config' => 'PuppetConfig', 'shell_config' => 'ShellConfig', 'vagrant_config' => 'VagrantConfig'}
       }
 

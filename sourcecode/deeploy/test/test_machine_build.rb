@@ -40,6 +40,39 @@ class TestMachineBuild < Minitest::Test
 
     # give machine 4 minutes to complete
     Timeout::timeout(240) do
+      puts Time.now()
+      @machine.build()
+      puts Time.now()
+    end
+    session = get_ssh_session(@machine)
+    check_running('sudo service nginx status | grep running ; echo $?', session)
+    check_running('sudo service mysql status | grep running ; echo $?', session)
+    check_running('sudo service memcached status | grep running ; echo $?', session)
+    check_running('vim --version | grep "Vi IMproved" ; echo $?', session)
+    check_open_ports(@machine, @ports)
+  end
+
+  def test_build_debian_vm
+
+    # clean it up if it exists
+    m = Deeploy::VM.get(title: @title, owner: @user)
+    if m
+      m.destroy()
+    end
+
+    @machine = Deeploy::VM.new(
+        distribution: 'debian',
+        title: @title,
+        owner: @user,
+        vm_user: @vm_user,
+        opts: {
+            packages: @packages,
+            ports: @ports
+        }
+    )
+
+    # give machine 6 minuutes to complete
+    Timeout::timeout(250) do
       @machine.build()
     end
     session = get_ssh_session(@machine)
@@ -70,12 +103,12 @@ class TestMachineBuild < Minitest::Test
     )
 
     # give machine 6 minuutes to complete
-    Timeout::timeout(500) do
+    Timeout::timeout(250) do
       @machine.build()
     end
     session = get_ssh_session(@machine)
     check_running('sudo service nginx status | grep running ; echo $?', session)
-    check_running('sudo service mysql status | grep running ; echo $?', session)
+    check_running('sudo service mysqld status | grep running ; echo $?', session)
     check_running('sudo service memcached status | grep running ; echo $?', session)
     check_running('vim --version | grep "Vi IMproved" ; echo $?', session)
     check_open_ports(@machine, @ports)

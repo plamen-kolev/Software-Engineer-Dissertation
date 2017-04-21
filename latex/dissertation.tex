@@ -1,5 +1,3 @@
-
-
 \documentclass{article}
 \title{CSC3095:Web Platform for Digital Deployment of Virtual Servers}
 
@@ -19,8 +17,9 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage{ifthen}
-\usepackage{pdfpages}
+\usepackage{pdfpages} % used to include pdf of architecture, etc
 \usepackage{listings}
+\usepackage{float} % used for [H] in figures
 
 % ENDUSERPACKAGES
 
@@ -226,28 +225,50 @@ I declare that this dissertation represents my own work except where otherwise s
 
 \newpage
 \tableofcontents
-%\newpage
-%\listoffigures
+\newpage
+\listoffigures
 \newpage
 \pagenumbering{arabic}
 
 \newpage
 \section{Introduction}
 
-As of the year 2016, there are currently three billion people that have access to the internet \cite{ictonline}. Google handles between two and three billion search queries per day \cite{a}. Dealing with so many requests on daily basis requires full utilisation of the available hardware in terms of resources. Part of Google's ability to scale and be efficient is due to the emergence of cloud infrastructure. The topic of the paper deals  with one of the building blocks of cloud computing, which is virtualisation.
+As of the year 2016, there are currently three billion people that have access to the internet \cite{ictonline}. Google handles between two and three billion search queries per day \cite{a}. Dealing with so many requests on daily basis requires full utilisation of the available hardware resources. Part of Google's ability to scale and be efficient is due to the emergence of cloud infrastructure. The topic of this paper deals  with one of the building blocks of cloud computing - virtualisation.
 
 \begin{quote}
     "The quickest and cheapest method to providing the necessary level of abstraction in terms of server resource is currently virtualisation\ldots" \par\raggedleft--- \textup{Paul Robinson}, Google Cloud Computing \cite{SecuringtheCloud}
 \end{quote}
 
+The term virtualisation is defined as the ability of one piece of hardware to run multiple operating systems \cite{b}. In this paper, a virtual machine, or an instance, is an operating system that runs on top of a "physical" operating system. The "physical" \gls{operating-system} is referred to as the "host" system. Creating a platform that uses such technology enables an organisation to quickly set up any environment (operating system) that can be used in a variety of cases. It is important to note that there are two forms of virtualisation, bare-metal and hosted \cite{virtualisation-security-guidance}. This work uses the latter approach. The difference is illustrated in figure \ref{fig:types-of-virtualisation}.
 
-The term virtualisation is defined as the ability of one piece of hardware to run multiple operating systems \cite{b}. In this paper, a virtual machine, or an instance, is an operating system that runs on top of a "physical" operating system. The "physical" \gls{operating-system} is often referred to as the "host" system. Creating a platform that uses such technology enables an organisation to quickly set up any environment (operating system) that can be used in a variety of cases.
+\begin{figure}[H]
+	\vspace{1cm}
+	\centering          
+	\includegraphics[width=0.5\textwidth]{virtualisation.png}
+	\caption{The two types of virtualisation \protect\cite{virtualisation-security-guidance}}
+	\label{fig:types-of-virtualisation}
+	\vspace{3cm}
+\end{figure}
 
-A company that wants to buy a high performing computer for each employee would requires physical access to perform repairs and maintenance and management. Physical systems are also more difficult to manage due to their non-central distribution. Another downside is non-scalable hardware utilisation, a case where one machine uses maximum resources but another one is idle. These are some problems that virtualisation technology can deal with.  It is now a core part of most new desktop Intel© processors and is integral part of all server-grade processors.
+When a business wants to buy a high performing computer for each employee, that would requires physical access to perform repairs, maintenance and management. Physical systems are more difficult to manage because they are distributed across a large area, making quick access slow or impossible. Another downside of not using virtualisation is non-scalable hardware utilisation. This is the case where one machine uses maximum resources but another one is idle. A computer that has predefined hardware specification cannot use more processing power than initially installed. 
+Automating physical servers is also nearly impossible due to them lacking the necessary abstraction control layer.
 
-This helps with performance, as a virtual machine can be configured on the fly to use flexible amount of resources or even use shared pool of computational units. This technology also allows for easy server migration. A physical machine cannot be moved within couple of minutes to a different continent, whereas a virtualised operating system can be copy-pasted at will for very little cost. Physical infrastructure is also prone to hardware-related bugs. This is a case when a distributed software solution causes issues, because it was not tested on all the machines that run it.
+These are some problems that virtualisation technology can solve. It is now a core part of most new desktop Intel© chips and is integral part of all server-grade processors as listed in the manufacturer's page \cite{intel-virtualisation-chip-support}.
 
-How does virtualisation allow for easy \glspl{migration}? It achieves its task by abstracting away the available physical hard drives. On the virtualised host, they appear as a large pool of \glspl{partition} with the data ready for access. Having access to the virtualisation host allows the content of such system to be copied all at once to a different provider with the only requirement - have enough capacity to store the information. The alternative without using a virtualisation platform would be to gain physical access to each hard drive individually and copying the data incrementally.
+This helps with performance, as a virtual machine can be configured on the fly to use flexible amount of resources or a shared pool of computational units. This technology also allows for easy server migration. A physical machine cannot be moved in a couple of minutes to a different continent (physical location) but a virtualised operating system can be "copy-pasted" at will for very little cost. Physical infrastructure is also prone to hardware-related bugs. This is a case when a software solution causes issues, because it was not tested on all the machines that run it. These physical machines might have different network cards, processors, lack certain hardware components or have older hardware version. The virtual platform has the benefit of abstracting away these components, ensuring that once tested, the software running on top of it would exhibit predictable behaviour \cite{heterogenious-cloud-computing}[p.59].
+
+How does virtualisation allow for easy \glspl{migration}? It achieves the task by abstracting away the available physical storage medium. On the virtualised host, they would appear as a large pool of \glspl{partition} with the data ready for management. Figure \ref{fig:vmware-datastore-image} shows a real world application, where more storage device can be added and the current one can be assigned/managed.
+
+\begin{figure}[H]
+	\vspace{1cm}
+	\centering          
+	\includegraphics[width=1\textwidth]{datastore}
+	\caption{VSphere datastore manager screenshot. Source \protect\cite{vmware-storage-pool-screenshot}}
+	\label{fig:vmware-datastore-image}
+	\vspace{3cm}
+\end{figure}
+
+Having access to the virtualisation host allows the content of such system to be copied all at once to a different provider with the only requirement - have enough capacity to store the information. The alternative without using a virtualisation platform would be to gain physical access to each storage medium individually and copying the data incrementally.
 
 \texttt{add more domain specific information}
 
@@ -714,7 +735,7 @@ http://guides.rubygems.org/make-your-own-gem
         url = {http://www.nytimes.com/2009/08/31/technology/business-computing/31virtual.html},
         note = {Accessed: April 10, 2017},
         author = {STEVE LOHR},
-        year = {AUG. 30, 2009}
+        year = {August 30, 2009}
         title = {Challenging Microsoft With a New Technology}
     }
 
@@ -727,8 +748,33 @@ http://guides.rubygems.org/make-your-own-gem
         url = {http://blogs.perl.org/users/buddy_burden/2012/04/perl-vs-shell-scripts.html},
         title = {Perl vs Shell Scripts},
         author = {Buddy Burden},
-        year = {April 16, 2012}
+        year = {April 16, 2012},
+        note = {Accessed: April 10, 2017},
     }
+
+	@online{virtualisation-security-guidance,
+	    url = {https://www.ncsc.gov.uk/guidance/virtualisation-security-guidance},
+		title = {Virtualisation Security Guidance},
+		author = {National Technical Authority for Information Assurance},
+		year = {May 19, 2016},
+		note = {Accessed: April 10, 2017},
+	}
+
+	@online{intel-virtualisation-chip-support,
+		url = {http://www.intel.com/content/www/us/en/support/boards-and-kits/desktop-boards/000005758.html},
+		title = { Intel® Virtualization Technology Requirements},
+		author = {Intel Support},
+		year = {Feb 28, 2017},
+		note = {Accessed: April 10, 2017},
+	}
+
+	@online{vmware-storage-pool-screenshot,
+		author  = {Lee Smith Jr.},
+		title   = {vSphere 5.5 Storage Profiles Are Now Storage Policies},
+		year    = {October 28, 2013},
+		url     = {http://everythingshouldbevirtual.com/wp-content/uploads/2013/10/16-48-29.png},
+		note = {Accessed: April 15, 2017},
+	}
 
 \end{filecontents*}
 

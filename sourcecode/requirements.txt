@@ -1,6 +1,7 @@
 vagrant 1.9.1
 virtualbox 5.1.14
 vagrant plugin install vagrant-vbguest
+vagrant plugin install vagrant-rekey-ssh
 redis
 # If issues arise, try delete vendor and rebuild it with bundle install
 

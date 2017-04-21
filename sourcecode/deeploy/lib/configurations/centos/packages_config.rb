@@ -68,20 +68,20 @@ HERE
           #   command => "/usr/bin/wget -nc https://repo.mysql.com/mysql57-community-release-el7-9.noarch.rpm -O /root/mysql.rpm"
           # }
 
-          package { 'mysql-libs':
-            ensure => 'purged',
-          }
+          #package { 'mysql-libs':
+          #  ensure => 'purged',
+          #}
 
-          package {"mysql57-community-release":
-            source => "https://repo.mysql.com/mysql57-community-release-el7-9.noarch.rpm",
-            provider => 'rpm',
-            ensure => installed,
-            require => [Package['mysql-libs']],
-          }
+          #package {"mysql57-community-release":
+          #  source => "https://repo.mysql.com/mysql57-community-release-el7-9.noarch.rpm",
+          #  provider => 'rpm',
+          #  ensure => installed,
+          #  require => [Package['mysql-libs']],
+          #}
 
           package {"mysql-community-server":
             ensure => installed,
-            require => Package['mysql57-community-release']
+          #  require => Package['mysql57-community-release']
           }
 
           file_line { "mysql":
@@ -89,13 +89,13 @@ HERE
             line  => 'bind-address           = 0.0.0.0',
             # match => '^bind-address',
             notify  => Service["mysqld"],
-            require => [Package["mysql57-community-release"], Package['mysql-community-server']]
+            require =>Package['mysql-community-server']
           }
 
           service { "mysqld":
             ensure  => 'running',
             enable  => true,
-            require => [Package["mysql57-community-release"], Package['mysql-community-server']],
+            require => Package['mysql-community-server']
           }
 HERE
         end

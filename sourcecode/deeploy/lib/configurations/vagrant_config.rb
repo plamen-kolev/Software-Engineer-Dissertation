@@ -13,6 +13,7 @@ module Deeploy
 
         @config = <<CONFIG
         Vagrant.configure(2) do |config|
+          config.ssh.insert_key = false
           config.vm.box = "#{distribution}"
           config.vm.network "private_network", ip: "#{m_inst.ip}", :bridge => '#{$CONFIGURATION.network_interface}'
           config.vm.provision "shell", path: "manifests/setup.sh"

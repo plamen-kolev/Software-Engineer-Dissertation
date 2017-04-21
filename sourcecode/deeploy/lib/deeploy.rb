@@ -49,9 +49,9 @@ module Deeploy
 
   def self.distributions
     return {
-      ubuntu: 'ubuntu/xenial64',
-      centos: 'bento/centos-7.2',
-      debian: 'debian/jessie64'
+      ubuntu: '3095/ubuntu',
+      centos: '3095/centos',
+      debian: '3095/debian'
     }
   end
 

@@ -114,6 +114,7 @@ http://www.isi.edu/~mkkang/papers/PPAC2011.pdf
 >>> http://ieeexplore.ieee.org/document/1430629/ defines virtualisation
 https://docs.oracle.com/cd/E20065_01/doc.30/e18549/oraclevm.htm#CACFJCFH
 
+https://www.ncsc.gov.uk/guidance/virtualisation-security-guidance
 # citation example
 `sunt in culpa qui officia deserunt mollit anim id est laborum (Menasc D. 2005).`
 
