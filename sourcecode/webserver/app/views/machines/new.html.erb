@@ -3,7 +3,8 @@
   <%= simple_form_for @machine do |f| %>
     <%= f.input :title %>
     <%= f.input :vm_user %>
-    <%= f.input :ports %>
+
+    <%= f.input :ports, label: "Ports, comma separated" %>
     <%= f.input :distribution, selected: "ubuntu", collection: @machine.distributions.keys %>
     <%= f.input :packages, {
         as: :check_boxes, 

@@ -12,7 +12,16 @@ Bundler.require(*Rails.groups)
 
 $has_network = false
 if $network_host and $network_mask and $network_host.split(".")[0].to_i != 192
-  $has_network = true  
+  $has_network = true
+else
+  raise 'Network is not configured properly'
+end
+
+$sidekiq_running = false
+if system('ps aux | grep \'[s]idekiq\'')
+  $sidekiq_running = true
+else
+  raise 'Sidekiq is not running, turn it on with `bundle exec sidekiq`, no machines can be deployed - exiting'
 end
 
 module Deepsky

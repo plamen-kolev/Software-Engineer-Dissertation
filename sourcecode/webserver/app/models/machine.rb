@@ -39,6 +39,11 @@ class Machine < ActiveRecord::Base
   
     def validate_custom_properties
       
+      # check if apache and nginx are both selected
+      if self.packages.include? 'nginx' and self.packages.include? 'apache2'
+        errors.add(:packages, "Cannot install nginx and apache2, conflicting packages !")
+      end
+
       if self.ports
         ips = self.ports.split(',')
         

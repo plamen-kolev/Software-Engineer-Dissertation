@@ -239,7 +239,7 @@ As of the year 2016, there are currently three billion people that have access t
     "The quickest and cheapest method to providing the necessary level of abstraction in terms of server resource is currently virtualisation\ldots" \par\raggedleft--- \textup{Paul Robinson}, Google Cloud Computing \cite{SecuringtheCloud}
 \end{quote}
 
-The term virtualisation is defined as the ability of one piece of hardware to run multiple operating systems \cite{b}. In this paper, a virtual machine, or an instance, is an operating system that runs on top of a "physical" operating system. The "physical" \gls{operating-system} is referred to as the "host" system. Creating a platform that uses such technology enables an organisation to quickly set up any environment (operating system) that can be used in a variety of cases. It is important to note that there are two forms of virtualisation, bare-metal and hosted \cite{virtualisation-security-guidance}. This work uses the latter approach. The difference is illustrated in figure \ref{fig:types-of-virtualisation}.
+The term virtualisation is defined as the ability of one piece of hardware to run multiple operating systems \cite{b}. In this paper, a virtual machine, or an instance, is an operating system that runs on top of a "physical" operating system. The "physical" \gls{operating-system} is referred to as the "host" system. Creating a platform that uses such technology enables an organisation to quickly set up any environment (operating system) that can be used in a variety of cases. It is important to note that there are two forms of virtualisation, bare-metal and hosted \cite{virtualisation-security-guidance}. This work uses the latter approach. The difference is illustrated in  \ref{fig:types-of-virtualisation}.
 
 \begin{figure}[H]
 	\vspace{1cm}
@@ -255,7 +255,7 @@ Automating physical servers is also nearly impossible due to them lacking the ne
 
 These are some problems that virtualisation technology can solve. It is now a core part of most new desktop Intel© chips and is integral part of all server-grade processors as listed in the manufacturer's page \cite{intel-virtualisation-chip-support}.
 
-This helps with performance, as a virtual machine can be configured on the fly to use flexible amount of resources or a shared pool of computational units. This technology also allows for easy server migration. A physical machine cannot be moved in a couple of minutes to a different continent (physical location) but a virtualised operating system can be "copy-pasted" at will for very little cost. Physical infrastructure is also prone to hardware-related bugs. This is a case when a software solution causes issues, because it was not tested on all the machines that run it. These physical machines might have different network cards, processors, lack certain hardware components or have older hardware version. The virtual platform has the benefit of abstracting away these components, ensuring that once tested, the software running on top of it would exhibit predictable behaviour \cite{heterogenious-cloud-computing}[p.59].
+This helps with performance, as a virtual machine can be configured on the fly to use flexible amount of resources or a shared pool of computational units. This technology also allows for easy server migration. A physical machine cannot be moved in a couple of minutes to a different continent (physical location) but a virtualised operating system can be "copy-pasted" at will for very little cost. Physical infrastructure is also prone to hardware-related bugs. This is a case when a software solution causes issues, because it was not tested on all the machines that run it. These physical machines might have different network cards, processors, lack certain hardware components or have older hardware version. The virtual platform has the benefit of abstracting away these components, ensuring that once tested, the software running on top of it would exhibit predictable behaviour \cite{nious-cloud-computing}[p.59].
 
 How does virtualisation allow for easy \glspl{migration}? It achieves the task by abstracting away the available physical storage medium. On the virtualised host, they would appear as a large pool of \glspl{partition} with the data ready for management. Figure \ref{fig:vmware-datastore-image} shows a real world application, where more storage device can be added and the current one can be assigned/managed.
 
@@ -268,39 +268,35 @@ How does virtualisation allow for easy \glspl{migration}? It achieves the task b
 	\vspace{3cm}
 \end{figure}
 
-Having access to the virtualisation host allows the content of such system to be copied all at once to a different provider with the only requirement - have enough capacity to store the information. The alternative without using a virtualisation platform would be to gain physical access to each storage medium individually and copying the data incrementally.
-
-\texttt{add more domain specific information}
+Having access to the virtualisation host allows the data of such system to be copied all at once to a different provider with the only requirement - have enough capacity to store the information. The alternative without using a virtualisation platform would be to gain physical access to each storage medium individually and copying the data incrementally.
 
 \subsection{Purpose}
-The project aims to utilise open-source virtualisation technology and make the process of managing and creating virtual machines automated through a web interface. A system manager should be able to open a website, fill in a web form with enough information about the desired \gls{operating-system}, click a button and create it.
+The project aims to utilise open-source virtualisation technology and make the process of managing and creating virtual machines automated through a web interface. The solution should allow a system manager to open a website, fill in a web form with enough information about the desired \gls{operating-system}, click a button and create it. After that, the person should be able to securely download identity file and connect to the machine.
 
-The manager should also be able to obtain and generate credentials for that machine, as well as mark common packages for installation on it. The solution should also show performance statistics and allow for network port management. These features, alongside the benefits of virtualisation should create a strong and secure infrastructure for many applications, from virtual office workstation, to server testing and deployment.
+The management website should also allow for the selection of predefined software packages. The solution should also show if the virtual machine is alive and allow the user to shut it down and bring it up. Port management should also be possible when building the machine. These features, alongside the benefits of virtualisation should create a secure infrastructure for many applications, from virtual office workstation, to server testing and deployment.
 
-\texttt{Expand  on each of the examples}
-
-\texttt{Strong cryptography, virtual guest isolation, firewall rules, credential and authentication methodologies will be explored and will be the pillars of the system's security.}
 \subsection{Aim and Objectives}
 \subsubsection{Aim}
-Give developers a platform for easy deployment, management and monitoring of virtual servers
+Give developers a platform for easy deployment, management and monitoring of virtual servers.
 \subsubsection{Objectives}
 
 \begin{enumerate}
     \item Deploy a virtual machine of the user's choice through shell scripts
-          \begin{itemize}
-              \item The main feature of the solution is the deployment of the virtual machine instances. The following will be achieved by using Oracle's virtualisation documentation for Virtualbox and the shell scripting language and the automation tool puppet.
-          \end{itemize}
+          \begin{enumerate}
+              \item The main feature of the solution is the deployment of the virtual machine instances. The following will be achieved by using Oracle's virtualisation documentation for Virtualbox and the shell scripting language and the automation tool \gls{puppet}.
+              \item The above will be achieved through the custom ruby module written for this dissertation - \texttt{deeploy}
+          \end{enumerate}
 
     \item Configure firewall settings
           \begin{itemize}
-              \item Will be achieved through the virtualisation technology's API. The purpouse is toadd extra security layer to the guest \gls{operating-system}. The firewall settings are managed by a software called ufw - Uncomplicated Fire Wall
+              \item Will be achieved through the virtualisation technology's \gls{api}. The purpose is to add extra security layer to the guest \gls{operating-system}. Firewall settings are managed by a software called ufw - Uncomplicated Fire Wall
           \end{itemize}
 
     \item Allow console access and set up authentication credentials (SSH keys) for the instances
           \begin{itemize}
-              \item The main usage of the application is to obtain a shell access to the virtual machine
+              \item The solution will generate unique shell credentials for each machine individually. Upon creation, the user should be able to download the credentials and use them to connect to the instance.
           \end{itemize}
-    \item Monitor disk/CPU usage of the virtual instances
+    \item Monitor 'alive' status of the virtual instances
     \item Allow the user to install software from a predefined list
     \item Create a website that will manage and create the machines on the behalf of the user
 \end{enumerate}
@@ -308,14 +304,13 @@ Give developers a platform for easy deployment, management and monitoring of vir
 \newpage
 \section{Background}
 \subsection{Virtualisation and "The Cloud" }
-The most important feature of virtualisation that enables its cloud capabilities is the level of abstraction it provides. The key feature is the ability to hide the underlying hardware architecture \cite{heterogenious-cloud-computing}[p.59]. The article Heterogeneous Cloud Computing :The way forward considers an architecture that interleaves different hardware components together that enables utilisation of special components on-demand. For example, a cluster of graphic cards or processors that support different architectures (x86, ARM, ATOM) can be attached. Such set-up would allow the platform to be more flexible and less congested because these dedicated components would do the "heavy lifting" in the background, making the \glspl{cpu} less congested. It also has the benefit of doing special computations, such as rendering video much quicker and efficient. 
-
+"The most important feature of virtualisation that enables its cloud capabilities is the level of abstraction it provides. The key feature is the ability to hide the underlying hardware architecture." \cite{heterogenious-cloud-computing}[p.59]. The article Heterogeneous Cloud Computing: The way forward considers an architecture that interleaves different hardware components together, enabling their utilisation on-demand. For example, a cluster of graphic cards or processors that support different \gls{operating-system} architectures (x86, ARM, ATOM) can be attached in domain-specific tasks. Such set-up would allow the platform to be more flexible and less congested because these dedicated components would do the "heavy lifting. It also has the benefit of doing special computations, such as rendering video much quicker and efficient. 
 
 \begin{figure}[h!]
     \vspace{0.5cm}
-    \includegraphics[width=12cm]{heterogenious.png}
+    \includegraphics[width=12cm]{heterogenious}
     \vspace{0.5cm}
-    \caption[Heterogeneous server configuration]{Heterogeneous server configuration~\cite{heterogeneous-network-table}}
+    \caption{Heterogeneous server configuration. Source \protect\cite{heterogenious-cloud-computing}[p.59]}
     \label{fig:birds}
 \end{figure}
 
@@ -352,7 +347,7 @@ For the duration of my dissertation, I have evaluated a variety of technologies,
 
 Something that all major platform providers have in common is scalability and price model. The reason is that the platform allow for the hardware configuration parameters to be tuned at will within minutes. This means that when the \gls{virtual_machine} is created, later on the "hardware" resources can be modified and changed easily.
 
-A commonality is the price model. All of the below mentioned platform providers use some form of pay-as-you-go. This means that companies requiring extra computation at time critical periods can take advantage of such feature. An example would be personal project of Harrison Kinsley for gene sequencing in his youtube learning series\cite{harrison-kinsley-tutorials}. He used 5 \glspl{gpu} for an hour to perform the necessary computation, then retrieved the results and then destroyed the machines. The result is that one can use sophisticated hardware for little cost with very little overhead. 
+A commonality is the price model. All of the below mentioned platform providers use some form of pay-as-you-go. This means that companies requiring extra computation at time critical periods can take advantage of such feature. An example would be personal project of Harrison Kinsley for gene sequencing in his online learning series\cite{harrison-kinsley-tutorials}. He used 5 \glspl{gpu} for an hour to perform the necessary computation, then retrieved the results and then destroyed the machines. The result is that one can use sophisticated hardware for little cost with very little overhead. 
 
 \subsubsection{Amazon Web Services\texttrademark EC2}
 \begin{center}
@@ -546,13 +541,8 @@ The framework also uses UNIX environmental variable to manage infrastructure sta
 The most notable usage of such environment is the virtual host-only network that ensures that the virtual interfaces do not clash during testing and development. The two interfaces are \texttt{vboxnet0} and \texttt{vboxnet1}. One is for general purpose development, the another is for testing. A special host-only adapter is used to have an isolated ip range that is network agnostic, for example, on a \gls{natnetwork}, some IP addresses might be reserved or used, this case will cause a clash and the virtual machine will not be reachable.
 
 \newpage
-\section{Testing}
-
+\section{Evaluation and Testing}
 http://guides.rubygems.org/make-your-own-gem
-
-\newpage
-\section{Evaluation}
-
 \newpage
 \section{Conclusion}
 
@@ -581,7 +571,9 @@ http://guides.rubygems.org/make-your-own-gem
 
     @online{harrison-kinsley-tutorials,
         url = {https://www.youtube.com/user/sentdex/about},
-        note = {Accessed: April 03, 2017}
+        note = {Accessed: April 03, 2017},
+        title = {Python Programming tutorials},
+        author = {Harrison Kinsley}
     }
     
     @online{a,
@@ -694,17 +686,24 @@ http://guides.rubygems.org/make-your-own-gem
 
     @online{amazon-ec2-prices,
         url = {http://www.ec2instances.info/},
+        title = {Amazon EC2 Instance Comparison},
+        author = {Garret Heaton},
         note = {Accessed: April 04, 2017},
     }
 
     
     @online{techopedia-it-definition,
         url = {http://searchdatacenter.techtarget.com/definition/IT},
+        author = {Margaret Rouse},
+        title = {Information Technology (IT) }
+        year = {April, 2015},
         note = {Accessed: April 05, 2017},
     }
 
     @online{oracle-stats-counter,
         url = {https://docs.oracle.com/cd/E19120-01/open.solaris/819-3196/gbvex/index.html},
+        title = {Writing Device Drivers},
+        author = {Oracle Corporation},
         note = {Accessed: April 05, 2017},
     }
 
@@ -718,7 +717,7 @@ http://guides.rubygems.org/make-your-own-gem
 
     @book{heterogenious-cloud-computing,
         author    = {San Murugesan},
-        title     = {Introduction to Storage Area Networks},
+        title     = {Heterogeneous Cloud Computing: The Way Forward},
         year      = {2015},
         publisher = {BRITE Proffesional Services},
         isbn      =  {073844233X},

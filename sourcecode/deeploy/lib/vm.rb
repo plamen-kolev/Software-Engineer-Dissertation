@@ -15,7 +15,15 @@ module Deeploy
     # @ports
 
     def initialize(args = {})
-      @disk = 1; @ram = 1; @packages = []; @ports = []; @fetch = false
+      # stages is used when reporting current build status
+      @stages = [
+        {'default: Configuring and enabling network interfaces' => 'Configuring network interfaces'},
+        {'Running provisioner: puppet' => 'Setting up rules and software'},
+        {'Exec\[update_dependencies\].*executed successfully' => 'Packages Repository updated'},
+        {'default: Notice: Finished catalog run in' => 'Setting up machine completed'}
+      ]
+
+      @disk = 1; @ram = 1; @packages = []; @ports = []; @fetch = false; @build_stage = 0
       # check for required parameters
       raise ArgumentError, 'pass argument symbol :owner' unless args[:owner]
       raise ArgumentError, 'pass argument symbol :distribution' unless args[:distribution]
@@ -24,6 +32,7 @@ module Deeploy
 
       @userspace = 'userspace'
       @userspace = 'test_userspace' if $CONFIGURATION.deeploy_env == 'test'
+      @build_stage = args[:build_stage] if args[:build_stage]
 
       opts = args[:opts]
 
@@ -35,6 +44,11 @@ module Deeploy
         @fetch = opts[:fetch] if opts[:fetch]
 
         if opts[:packages]
+          
+          # if arg is a string and comes from the database, tokenise it
+          if opts[:packages].is_a? String
+            opts[:packages] = opts[:packages].split(',')  
+          end
 
           opts[:packages].each do |package|
             @packages.push(package.strip)
@@ -44,7 +58,13 @@ module Deeploy
           @packages &= Deeploy::packages
         end
 
-        @ports = opts[:ports] if opts[:ports]
+        if opts[:ports]
+          # tokenise if string
+          if opts[:ports].is_a? String
+            opts[:ports] = opts[:ports].split(',')
+          end
+          @ports = opts[:ports] 
+        end
       end
 
       return false unless Deeploy::owner_exists!(args[:owner])
@@ -102,6 +122,10 @@ module Deeploy
       # end trying here
     end
 
+    def stage
+      return [@stages[@build_stage], @build_stage, @stages.length - 1] 
+    end
+
     # takes machine name and owner object
     def self.get(args = {})
       raise ArgumentError, 'pass argument symbol :owner' unless args[:owner]
@@ -121,6 +145,7 @@ module Deeploy
         root: [vm_dir, @userspace, args[:owner].email, db_machine.title].join('/'),
         owner: DB::User.find(db_machine.user_id),
         vm_user: db_machine.vm_user,
+        build_stage: db_machine.build_stage.to_i,
         opts: {
           pem: db_machine.pem,
           id: db_machine.id,
@@ -131,7 +156,6 @@ module Deeploy
           fetch: true
         }
       )
-
       if db_machine.user_id != machine.owner.id
         raise AuthorizationException, "The user #{machine.owner.email} does not own the virtual machine #{db_machine.title}"
       end
@@ -225,13 +249,7 @@ module Deeploy
 
     def wait_on_build(machine)
 
-      stages = [
-        'default: Configuring and enabling network interfaces',
-        'Running provisioner: puppet',
-        'Exec\[update_dependencies\].*executed successfully',
-        'default: Notice: Finished catalog run in'
-      ]
-      stages_length = stages.length - 1
+      stages_length = @stages.length - 1
       current_stage = 0
       # put command in background
       pid = spawn("vagrant up &> #{@root}/vagrant.log")
@@ -249,10 +267,11 @@ module Deeploy
         end
 
         # now try to find key moments in the deployment of a machine
+        # move on everytime you see that change
         begin
-          break if stages.empty?
+          break if @stages.empty?
           File.open([@root, 'vagrant.log'].join('/'), 'r') do |f|
-            stage = stages[0]
+            stage = @stages[0].keys[0]
             f.each_line do |line|
               # check if the next stage is in the file
               if line =~ %r{#{stage}}
@@ -260,7 +279,7 @@ module Deeploy
                 machine.build_stage = current_stage
                 machine.save()
                 puts "Status: #{stage}"
-                stages.shift()
+                #@stages.shift()
               end
             end
           end

@@ -1,6 +1,6 @@
 class MachinesController < ApplicationController
   before_action :authenticate_user!
-  before_action :get_machine, only: [:up, :down, :restart]
+  before_action :get_machine, only: [:up, :down, :restart, :status]
 
   def index 
     @machines = Machine.where(user_id: current_user.id)
@@ -10,7 +10,7 @@ class MachinesController < ApplicationController
       # alive checks the status of the machine and updates it
       # the end user will see the status
       vm = Deeploy::VM.get(title: m.title, owner: current_user)
-      vm.alive()
+      vm.alive?()
     end
   end
 
@@ -28,8 +28,8 @@ class MachinesController < ApplicationController
       "crosswind","epigenous","twelve","thorstein","loping",
       "rumble","ptain","challenged","divot","temper","derringer","feudalising","fantastically","rootage","sopolitical","undonated","noncontending","oversaturating","phonating","quadrating","quirites","unmounted","talkativeness","incondensable","concreting","caryatic"
     ]
-    
-    title = ""
+
+    title = ''
     for i in 0..2
       title += "#{words.sample}-"
     end
@@ -54,6 +54,10 @@ class MachinesController < ApplicationController
     else
       render :new
     end
+  end
+
+  def status
+
   end
 
   def download_certificate

@@ -18,6 +18,15 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+.center{
+  text-align: center;
+}
+
+.center-container{
+    max-width:600px;
+    margin:auto;
+}
+
 .machines td{
    min-width: 130px;
     padding: 10px;

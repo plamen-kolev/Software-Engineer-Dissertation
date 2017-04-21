@@ -1,0 +1,23 @@
+<div class="col-md-12 container">
+  <div class='center-container' style="margin-top:30px;">
+    <div class="center">
+      <%= image_tag 'spiffygif_92x92.gif', alt: 'taken from http://spiffygif.com/', style: 'margin-bottom:20px' %>
+
+      <pre><strong>Building machine <%= @machine.title %>:</strong><br/><%= @machine.stage()[0].values[0] %></pre>
+      <div class="progress">
+        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="<%= (@machine.stage()[1] * 100 / @machine.stage()[2]) %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= (@machine.stage()[1] * 100/ @machine.stage()[2])  %>%">
+          <span class="sr-only"><%= (@machine.stage()[1] * 100 / @machine.stage()[2]) %>% Complete (success)</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+    setTimeout(function () {
+        console.log("hello")
+    }, 500);
+</script>
+
