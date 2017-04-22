@@ -36,7 +36,7 @@
                               <span class="glyphicon glyphicon-repeat disabled_button"></span>
                               <% if machine.created_at.utc + 3.minutes < (Time.now).utc  %>
                                   <%= link_to '',  machine_path(machine.title),
-                                      data: { confirm: 'Are you sure?' }, method: :delete,id: "destroy_machine_#{machine.title}", class: "glyphicon glyphicon-remove-sign" %>
+                                      data: { confirm: 'Are you sure?' }, method: :delete, id: "destroy_machine_#{machine.title}", class: 'glyphicon glyphicon-remove-sign' %>
                               <% else %>
                                   <span class="glyphicon glyphicon-remove disabled_button"></span>
                               <% end %>

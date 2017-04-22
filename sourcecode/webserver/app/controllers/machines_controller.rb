@@ -1,6 +1,6 @@
 class MachinesController < ApplicationController
   before_action :authenticate_user!
-  before_action :get_machine, only: [:up, :down, :restart, :status]
+  before_action :get_machine, only: [:show, :up, :down, :restart, :status]
 
   def index 
     @machines = Machine.where(user_id: current_user.id)
@@ -14,15 +14,21 @@ class MachinesController < ApplicationController
     end
   end
 
+  def show
+
+  end
+
   def destroy
-    params.require(:title)    
-    @machine = ::Deeploy::VM.get(title: params[:title], owner: current_user)
+    params.require(:machine_title)
+    @machine = ::Deeploy::VM.get(title: params[:machine_title], owner: current_user)
     @machine.destroy()
     redirect_to machines_path
   end
 
   def new
     @machine = Machine.new
+    @machine.vm_user = 'user'
+    @machine.ram = 500
     # generate recommended name
     words = [
       "crosswind","epigenous","twelve","thorstein","loping",
@@ -102,7 +108,7 @@ class MachinesController < ApplicationController
     end
 
     def vm_params
-        params.require(:machine).permit(:title, :body, :ports, :vm_user, :distribution, :packages => [])
+        params.require(:machine).permit(:title, :body, :ports, :vm_user, :distribution, :ram, :packages => [])
     end
 
     def validate_packages(packages)

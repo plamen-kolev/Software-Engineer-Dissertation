@@ -24,7 +24,7 @@ module Deeploy
           config.vm.provider "virtualbox" do |vb|
             vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
             vb.name = "#{m_inst.title}"
-            vb.memory = "#{m_inst.ram * 1024}"
+            vb.memory = "#{m_inst.ram}"
           end
         end
 CONFIG

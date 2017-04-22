@@ -1,7 +1,7 @@
 module Deeploy
   module Config
     # firewall manager will write the puppet instructions for
-    # opening ports and installing the appropariate software
+    # opening ports and installing the appropriate software
     class PackagesConfig < Deeploy::Config::PuppetConfig
       def initialize(m_inst)
         @puppet_conf = [m_inst.manifest, 'default.pp'].join('/')

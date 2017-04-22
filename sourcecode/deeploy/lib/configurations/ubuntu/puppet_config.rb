@@ -12,6 +12,10 @@ module Deeploy
             command => '/usr/sbin/usermod -aG sudo #{m_inst.vm_user}',
             require => User["#{m_inst.vm_user}"]
           }
+
+          exec {'enable_monitorix_for_host':
+            command => "/usr/sbin/ufw allow from #{Deeploy.network_interface[0]} proto tcp to any port 8080"
+          }
 HERE
           super(m_inst)
         end

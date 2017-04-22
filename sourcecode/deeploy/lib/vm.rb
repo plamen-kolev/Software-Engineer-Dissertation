@@ -23,7 +23,7 @@ module Deeploy
         {'default: Notice: Finished catalog run in' => 'Setting up machine completed'}
       ]
 
-      @disk = 1; @ram = 1; @packages = []; @ports = []; @fetch = false; @build_stage = 0
+      @disk = 1; @ram = 1024; @packages = []; @ports = []; @fetch = false; @build_stage = 0
       # check for required parameters
       raise ArgumentError, 'pass argument symbol :owner' unless args[:owner]
       raise ArgumentError, 'pass argument symbol :distribution' unless args[:distribution]
@@ -40,7 +40,9 @@ module Deeploy
         @disk = opts[:disk] if opts[:disk]
         @id = opts[:id].to_i if opts[:id]
         @ip = opts[:ip] if opts[:ip]
-        @ram = opts[:ram] if opts[:ram]
+        
+        @ram = get_ram!(opts[:ram])
+
         @fetch = opts[:fetch] if opts[:fetch]
 
         if opts[:packages]
@@ -96,6 +98,13 @@ module Deeploy
       @vm_user = Deeploy::slugify(args[:vm_user])
       @configuration = Deeploy::Confmanager.new(self)
       return self
+    end
+
+    def get_ram!(ram)
+      return @ram if not ram
+      ram = ram.to_i
+      return ram if ram.is_a? Integer and ram >= 256 and ram <= 1024
+      raise ArgumentError, 'RAM must be between 256 and 1024 MB'
     end
 
     def alive?
@@ -235,8 +244,8 @@ module Deeploy
           result = self.wait_on_build(machine)
         end
       end
-
-      if result
+      
+      if result && self.alive?
         self.success()
         machine.deployed = true
         machine.save
@@ -268,6 +277,7 @@ module Deeploy
 
         # now try to find key moments in the deployment of a machine
         # move on everytime you see that change
+
         begin
           break if @stages.empty?
           File.open([@root, 'vagrant.log'].join('/'), 'r') do |f|
@@ -278,8 +288,8 @@ module Deeploy
                 current_stage += 1
                 machine.build_stage = current_stage
                 machine.save()
-                puts "Status: #{stage}"
-                #@stages.shift()
+                puts "Status: #{@stages[0].values[0]}"
+                @stages.shift()
               end
             end
           end

@@ -49,9 +49,9 @@ module Deeploy
 
   def self.distributions
     return {
-      ubuntu: '3095/ubuntu',
-      centos: '3095/centos',
-      debian: '3095/debian'
+      ubuntu: 'plamen-kolev/ubuntu',
+      centos: 'plamen-kolev/centos',
+      debian: 'plamen-kolev/debian'
     }
   end
 

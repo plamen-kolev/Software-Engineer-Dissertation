@@ -4,8 +4,9 @@
     <%= f.input :title %>
     <%= f.input :vm_user %>
 
-    <%= f.input :ports, label: "Ports, comma separated" %>
-    <%= f.input :distribution, selected: "ubuntu", collection: @machine.distributions.keys %>
+    <%= f.input :ports, label: 'Ports, comma separated' %>
+    <%= f.input :distribution, selected: 'ubuntu', collection: @machine.distributions.keys %>
+    <%= f.input :ram, label: 'RAM in Megabytes (Random Access Memory)', placeholder: 'Between 256 and 1024 MB' %>
     <%= f.input :packages, {
         as: :check_boxes, 
         collection: @machine.get_packages { |p| [p, p]},

@@ -36,17 +36,23 @@ class Machine < ActiveRecord::Base
   end
 
   private
-  
+
     def validate_custom_properties
-      
+      if self.ram
+        if self.ram < 256 or self.ram > 1024
+          self.ram = self.ram.to_i # truncate
+          errors.add(:ram, 'Random Access Memory must be between 256 and 1024 MB')
+        end
+      end
       # check if apache and nginx are both selected
-      if self.packages.include? 'nginx' and self.packages.include? 'apache2'
-        errors.add(:packages, "Cannot install nginx and apache2, conflicting packages !")
+      if self.packages
+        if self.packages.include? 'nginx' and self.packages.include? 'apache2'
+          errors.add(:packages, 'Cannot install nginx and apache2, conflicting packages !')
+        end
       end
 
       if self.ports
         ips = self.ports.split(',')
-        
         ips.each do |ip|
           begin
             ip = Integer(ip) 
@@ -54,7 +60,6 @@ class Machine < ActiveRecord::Base
             errors.add(:ports, "Ports must be numbers")
             return
           end
-          
           if ip > 65535 || ip < 1
             errors.add(:ports, "Ports can range from 1 through 65535")
           end

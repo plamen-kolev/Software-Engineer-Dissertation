@@ -5,11 +5,10 @@ Rails.application.routes.draw do
 
   get "machines/:machine_title/certificate", to: "machines#download_certificate", as: 'machine_certificate'
 
-  resources 'machines', param: :title do
+  resources 'machines', param: :machine_title do
     get 'down', to: 'machines#down'
     get 'up', to: 'machines#up'
     get 'restart', to: 'machines#restart'
     get 'status', to: 'machines#status'
   end
-  
 end
