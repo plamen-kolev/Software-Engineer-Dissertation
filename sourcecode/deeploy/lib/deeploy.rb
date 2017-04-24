@@ -89,6 +89,21 @@ module Deeploy
     return modules
   end
 
+  def self.alive(ip)
+    begin
+      Timeout::timeout(2) do
+        begin
+          TCPSocket.new(ip, 22).close
+          return true
+          # rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
+          # db_machine.alive = false
+        end
+      end
+    rescue Timeout::Error, Errno::ECONNREFUSED, Errno::EHOSTUNREACH
+      return false
+    end
+  end
+
   # def self.packages
   #   # modules = ['vim', 'nginx', 'apache2', 'mysql-server', 'memcached']
   #   packages = {

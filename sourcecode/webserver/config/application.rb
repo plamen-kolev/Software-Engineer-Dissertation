@@ -1,5 +1,4 @@
 require_relative 'boot'
-
 require 'rails/all'
 require_relative '../app/workers/deploy_worker'
 
@@ -17,12 +16,12 @@ else
   raise 'Network is not configured properly'
 end
 
-$sidekiq_running = false
-if system('ps aux | grep \'[s]idekiq\'')
-  $sidekiq_running = true
-else
-  raise 'Sidekiq is not running, turn it on with `bundle exec sidekiq`, no machines can be deployed - exiting'
-end
+# $sidekiq_running = false
+# if system('ps aux | grep \'[s]idekiq\'')
+#   $sidekiq_running = true
+# else
+#   raise 'Sidekiq is not running, turn it on with `bundle exec sidekiq`, no machines can be deployed - exiting'
+# end
 
 module Deepsky
   class Application < Rails::Application

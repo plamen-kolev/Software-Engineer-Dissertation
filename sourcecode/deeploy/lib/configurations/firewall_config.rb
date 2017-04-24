@@ -16,15 +16,20 @@ module Deeploy
             require => Exec['update_dependencies']
         }
 
-        exec {"enable_firewall_rules":
-          command => "/usr/sbin/ufw allow ssh && /usr/sbin/ufw allow 2222",
+        exec {'enable_monitorix_for_host':
+          command => "/usr/sbin/ufw allow from #{Deeploy.network_interface[0]} proto tcp to any port 8080",
           require => Package['ufw']
         }
 
-        exec {"enable_ufw":
-          command => "/usr/sbin/ufw --force enable",
-          require => Package["ufw"]
-        }
+        # exec {"enable_firewall_rules":
+        #   command => "/usr/sbin/ufw allow ssh && /usr/sbin/ufw allow 2222",
+        #   require => Package['ufw']
+        # }
+
+        # exec {"enable_ufw":
+        #   command => "/usr/sbin/ufw --force enable",
+        #   require => Package["ufw"]
+        # }
 HERE
 
         if @ports

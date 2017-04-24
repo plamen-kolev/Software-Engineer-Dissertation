@@ -2,9 +2,8 @@
     
     <% if user_signed_in? %>
         <div class="col-md-12">
-
-                <h1>Personal</h1>
-                <p>API Key: <%= current_user.token %></p>    
+          <h1>Personal</h1>
+          <p>API Key: <%= current_user.token %></p>
         <hr>
 
         </div>
@@ -19,6 +18,7 @@
           <table class="col-md-12">
               <tr>
                   <th>Title</th>
+                  <th>Distribution</th>
                   <th>Address</th>
                   <th>Action</th>
 
@@ -26,7 +26,8 @@
 
               <% @machines.each do |machine| %>
                   <tr class="machines <%= cycle('oddrow', 'evenrow') -%>">
-                      <td><%= machine.title %></td>
+                      <td><%= link_to machine.title, machine_path(machine.title) %></td>
+                      <td><%= machine.distribution %></td>
                       <td><%= machine.vm_user %>@<%= machine.ip %></td>
                       <td id="machine_actions_container">
 

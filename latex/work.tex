@@ -241,6 +241,8 @@ The virtual machine is built only when an instance is initialised properly by ca
 During the invocation of the \texttt{build} method, a \gls{bash} shell is forked and it executes the \gls{vagrant} command that brings it on-line and installs all dependencies. The shell command also tells the script to write all output to a text file in the machine directory, the file is called \texttt{vagrant.log}. Because the process takes a long time to finish, an axillary function \texttt{_wait_on_build} is used. This function constantly goes through the contents of the log file and checks what is the current building state of the instance. Typical states are building the base, installing puppet, setting up dependencies, installing packages and the state everything has finished.
 
 
+TALK ABOUT CHDIR ISSUE THREAD SAFE AND ABOUT HEALTH MONITORING DEAMON INSTEAD OF CHECKING EVERYTIME DUE TO THE SLOWDOWN
+
 \bibliography{work}
 \renewcommand{\bibname}{}
 

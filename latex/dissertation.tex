@@ -209,6 +209,11 @@
     }
 }
 
+\newglossaryentry{chef}{
+	name={chef},
+	description={Tool for automating, deployment and configuring software}
+}
+
 \begin{document}
 \pagenumbering{gobble}
 \maketitle
@@ -263,7 +268,7 @@ How does virtualisation allow for easy \glspl{migration}? It achieves the task b
 	\vspace{1cm}
 	\centering          
 	\includegraphics[width=1\textwidth]{datastore}
-	\caption{VSphere datastore manager screenshot. Source \protect\cite{vmware-storage-pool-screenshot}}
+	\caption{VSphere data-store manager screen-shot. Source \protect\cite{vmware-storage-pool-screenshot}}
 	\label{fig:vmware-datastore-image}
 	\vspace{3cm}
 \end{figure}
@@ -304,7 +309,7 @@ Give developers a platform for easy deployment, management and monitoring of vir
 \newpage
 \section{Background}
 \subsection{Virtualisation and "The Cloud" }
-"The most important feature of virtualisation that enables its cloud capabilities is the level of abstraction it provides. The key feature is the ability to hide the underlying hardware architecture." \cite{heterogenious-cloud-computing}[p.59]. The article Heterogeneous Cloud Computing: The way forward considers an architecture that interleaves different hardware components together, enabling their utilisation on-demand. For example, a cluster of graphic cards or processors that support different \gls{operating-system} architectures (x86, ARM, ATOM) can be attached in domain-specific tasks. Such set-up would allow the platform to be more flexible and less congested because these dedicated components would do the "heavy lifting. It also has the benefit of doing special computations, such as rendering video much quicker and efficient. 
+"The most important feature of virtualisation that enables its cloud capabilities is the level of abstraction it provides. The key feature is the ability to hide the underlying hardware architecture." \cite{heterogenious-cloud-computing}[p.59]. The article Heterogeneous Cloud Computing: The way forward considers an architecture that interleaves different hardware components together, enabling their utilisation on-demand. For example, a cluster of graphic cards or processors that support different \gls{operating-system} architectures (x86, ARM, ATOM) can be attached in domain-specific tasks. Such set-up would allow the platform to be more flexible and less congested because these dedicated components would do the "heavy lifting. It also has the benefit of doing special computations - like rendering video much quicker and efficient. 
 
 \begin{figure}[h!]
     \vspace{0.5cm}
@@ -323,31 +328,47 @@ necessary to create a cloud environment, but it enables
 rapid scaling of resources in a way that nonvirtualized
 environments find hard to achieve."\cite{intel-cloud-computing-guide}[p10]
 
-Virtualisation is the necessary abstraction that makes it possible to get data to and from the cloud. This technology is the basis for creating high availability services and applications that take advantage of the abstraction it provides.\cite{intel-cloud-computing-guide}[p10]. Intel's virtualisation and cloud computing guide talks about virtualisation as a way to provide corporate platform services in a more organised matter. They also talk about the effort making the infrastructure easier to organise from the standpoint of \gls{IT}. This is the case because these virtual servers are easier to diagnose and monitor as well as organise and automate \cite{intel-cloud-computing-guide}[p8].
-Virtual machine diagnostics and monitoring is a practice where the behaviour of the machine is monitored. This includes network traffic, memory usage, \gls{cpu} performance and utilisation. It also contains information about how much disk storage the machine is taking and information about the machine's running status. Additionally, Oracle advices collecting kernel statistics, also known as statistic counter \cite{oracle-stats-counter}. This data can be used to gain insights into why a machine is malfunctioning. The above mentioned kernel statistics can determine if the machine has recurring failures by observing its crash counter. 
-Network outages can be detected by analysing aggregated network statistics. Because each virtual machine has mapped virtual network interface that is bound to a real internet cable, high networking usage might indicate malicious behaviour or high demand. Ensuring proper monitoring makes sure that customer demands are met (scaling the network as a result of congestion or detecting and taking down malicious virtual machine members).
+Virtualisation provides the abstraction that makes it much easier to get data to and from the cloud. This technology is the basis for creating high availability services and applications when implemented properly.\cite{intel-cloud-computing-guide}[p10]. Intel's virtualisation and cloud computing guide talks about it as a way to provide corporate platform services in a more organised matter. The guide also covers making the infrastructure easier to organise from the standpoint of \gls{IT}. This is the case because these virtual servers are easier to diagnose and monitor as well as organise and automate \cite{intel-cloud-computing-guide}[p8].
+Virtual machine diagnostics and monitoring is a practice where the behaviour of the machine is observed over a period of time. This includes network traffic, memory usage, \gls{cpu} performance and utilisation. It also contains information about how much disk storage the machine is taking and information about the machine's running status. Additionally, x86 computer architecture support hardware statistics counters. Performance counters are part of the kernel's sub-system and are the basis for providing reliable hardware information for monitoring and reporting \cite{rhel-performance-counters}.
+This data can be used to gain insights into why a machine is malfunctioning. These counters can be vital in determining the type of issue with the machine (network related issue, hard-drive read-write failure, defecting processor, etc.). 
+Network outages can be detected and accommodated for by analysing aggregated network statistics. This is useful in an event of denial of service attacks (DoS). High networking usage might indicate malicious behaviour such as artificial congestion - an attacker making numerious requests to slow down the service.
+On the other hand, this type of monitoring can ensure on-demand scaling in critical moments. Legitimate customer demands must be met by allocating more hardware and network bandwidth as a result of increased demand.
 
-Virtual machine organisation is the practice of managing a variety of parameters associated with the platform and its resources. The \gls{IT} department of an organisation is in charge of managing the physical storage on which the "virtual" platform is running. In the infrastructure the physical disks are partitioned and organised in pools and then mounted over the network. This configuration uses S.A.N, or storage area network. This is a network entirely dedicated to transferring data between computer systems and the storage drives \cite{ibm-san-storage}[p.11].
-Mapping physical hard drives to virtual ones over the network protocol is what enables any type of server infrastructure, including virtualised one to have enough capacity to grow and meet the customer's demands. It also ensures the right level of redundancy, as a large portion of the hard drives are put in place in case of a failure.
+Virtual machine organisation is the practice of managing a variety of components associated with the platform and its resources. The \gls{IT} department of an organisation is in charge of managing the physical storage on which the "virtual" platform is running. In the infrastructure disks are partitioned and organised in pools - then mounted over the network. This configuration uses S.A.N, or storage area network. This is a network entirely dedicated to transferring data between computer systems and the storage drives \cite{ibm-san-storage}[p.11].
+Mapping physical drives to virtual ones over the network is a stepping stone in enabling any type of server infrastructure, including virtualised one, to have enough capacity to grow and meet the customer's demands. It also ensures the right level of redundancy, as a large portion of the hard drives can be put in place in case of a failure. Storing virtual machine on network drives makes it possible to copy machine instance from one cluster to another, or change data centres.
 
-A virtualised infrastructure requires high bandwidth network connection. The network throughput depends on the expected load of the network. These physical network connections are used by the virtualisation platform and allow for a fine grained tuning of the network internally. The benefits of such abstraction is the ability to create flexible and disposable internal networks per machine or cluster of machines, with the ability to share network, or be in a private network. 		
-This feature is important from the standpoint of security. For example, for a business logic application, one can set up a client-facing web server that is accessible to the global internet world. The machine on which this application is running will have a database connection to another machine running a dedicated database software (mysql, postgresql, mongodb,etc.). The connection between the two machine would be configured as a private network. It ensures that nobody from the outside world has access to that database machine.
+Any server infrastructure requires high bandwidth network connection, virtual networks are no exception. The network throughput of the platform depends on the internet service provider (ISP) physical connection speed. That network is used by the virtualisation platform and is converted to numerous private and public networks internally. The benefits of such abstraction is the ability to create flexible and disposable internal/external networks per machine or cluster of machines. The ability to share a network, or be in a private network is a security consideration. 		
+This feature is important from the standpoint of security. For example, for a business logic application, one can set up a client-facing web server that is accessible from the global internet. The machine on which this application is running will have a database connection to another machine running a dedicated database software (mysql, postgresql, mongodb,etc.). The connection between the two machine would be configured as a private network. It ensures that nobody from the outside world has access to that database machine. This configuration is explored in Amazon's accessing database instance in a virtual cloud\cite{amazon-scenarios-for-accessing-db-instance-in-vpc}. The setup is shown in figure \ref{fig:amazon-scenarios-for-accessing-db-instance-in-vpc-figure}.
 
-It is impossible to talk about such infrastructure without considering the most important component of operations, the \gls{cpu}. When providing the hardware resources for computing, providing enough calculation "horse power" is essential, otherwise each virtual machine would behave slow and unresponsive. It is a common practice \cite{_NEEDED_} to use many Intel\texttrademark \gls{xeon} processors that are running on top of the virtualsation technology such as \gls{virtualbox} or \gls{vmware}. All of the computing resources are then also abstracted away. For example, when using \gls{vmware} \gls{vsphere}, instead of seeing every single processor, you are given the option of allocating certain amount of megahertz for computation\cite{_NEEDED_}.
+\begin{figure}[h!]
+	\vspace{0.5cm}
+	\includegraphics[width=12cm]{con-VPC-sec-grp}
+	\vspace{0.5cm}
+	\caption{Public facing gateway and internal network database. Source \protect\cite{amazon-scenarios-for-accessing-db-instance-in-vpc}}
+	\label{fig:amazon-scenarios-for-accessing-db-instance-in-vpc-figure}
+\end{figure}
 
-Considering the fact that all of these hardware components have to be managed by a human to ensure smooth operation during high and low loads, automation plays very big role. Automation is the process of automatically creating \gls{virtual_machine} and dynamically allocating computing resources associated with it. Big cloud platforms such as \gls{amazon-web-services} and \gls{azure} have almost absolute automation \cite{_NEEDED_}. Computing resources are allocated based on usage, where a paying customer can use a lot of resources for the right price.
+It is impossible to talk about such infrastructure without considering the most important component of operations, the \gls{cpu}. When providing the hardware resources for computing, having enough calculation power is essential, otherwise each virtual machine would be slow and unresponsive. A server rack with many Intel\texttrademark \gls{xeon} or other server-grade chip are set to run on top of the virtualisation technology (\gls{virtualbox}, \gls{vmware} \ref{fig:types-of-virtualisation}. All of the computing resources are then also abstracted away. For example, when using \gls{vmware} \gls{vsphere}, instead of seeing every single processor, you are given the option of allocating certain amount of megahertz per instance. A guide on configuring \gls{cpu} usage is covered in VMware Cookbook \cite{vmware-cookbook}. CPU allocation screen is shown in figure \ref{fig:cpu-allocation}
+
+\begin{figure}[h!]
+	\vspace{0.5cm}
+	\includegraphics[width=12cm]{httpatomoreillycomsourceoreillyimages329633}
+	\vspace{0.5cm}
+	\caption{Resource and vCenter Management, allocating \gls{cpu} resources. Source \protect\cite{vmware-cookbook}}
+	\label{fig:cpu-allocation}
+\end{figure}
+
+Considering the fact that all of these hardware components have to be managed by a human to ensure smooth operation during heavy and light loads, automation plays very big role in the process. Automation is the process of automatically creating \gls{virtual_machine} and dynamically allocating computing resources associated with it. Big cloud platforms such as \gls{amazon-web-services} and \gls{azure} have almost absolute automation. Azure even provide their tool as a service - Azure Automation \cite{azure-automation-overview}, Amazon use tools like \gls{chef} and in-house tools \cite{the-case-for-investing-cloud-automation}. Computing resources are allocated based on usage, where a paying customer can use a lot of resources for a certain price.
 
 \subsection{Security}
-\subsection{Adoption}
-\subsection{Application}
-\subsection{Web server technology}
-\subsection{Automation}
+
+
 \subsection{Similar in the field}
 For the duration of my dissertation, I have evaluated a variety of technologies, frameworks and utilities that will allow me to achieve the goal of automated system deployment. The trial and evaluation of these technologies allowed me to find the most suitable and relevant methodology for moving forward. I also experimented with different "cloud" virtual machine deployment services to understand and evaluate the key requirements that ought to be provided by the platform.
 
 Something that all major platform providers have in common is scalability and price model. The reason is that the platform allow for the hardware configuration parameters to be tuned at will within minutes. This means that when the \gls{virtual_machine} is created, later on the "hardware" resources can be modified and changed easily.
 
-A commonality is the price model. All of the below mentioned platform providers use some form of pay-as-you-go. This means that companies requiring extra computation at time critical periods can take advantage of such feature. An example would be personal project of Harrison Kinsley for gene sequencing in his online learning series\cite{harrison-kinsley-tutorials}. He used 5 \glspl{gpu} for an hour to perform the necessary computation, then retrieved the results and then destroyed the machines. The result is that one can use sophisticated hardware for little cost with very little overhead. 
+A commonality is the price model. All of the above mentioned platform providers use some form of pay-as-you-go. This means that companies requiring extra computation at time critical periods can take advantage of more computation. An example would be personal project of Harrison Kinsley for gene sequencing in his online learning series\cite{harrison-kinsley-tutorials}. He used 5 \glspl{gpu} for an hour to perform the necessary computation, then retrieved the results and then destroyed the machines. As a result, one can use sophisticated hardware for a fee with very little set-up overhead. 
 
 \subsubsection{Amazon Web Services\texttrademark EC2}
 \begin{center}
@@ -700,10 +721,10 @@ http://guides.rubygems.org/make-your-own-gem
         note = {Accessed: April 05, 2017},
     }
 
-    @online{oracle-stats-counter,
-        url = {https://docs.oracle.com/cd/E19120-01/open.solaris/819-3196/gbvex/index.html},
-        title = {Writing Device Drivers},
-        author = {Oracle Corporation},
+    @online{rhel-performance-counters,
+        url = {https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Developer_Guide/perf.html},
+        title = {Performance Counters for Linux (PCL) Tools and perf},
+        author = {Red Hat, Inc.},
         note = {Accessed: April 05, 2017},
     }
 
@@ -773,6 +794,35 @@ http://guides.rubygems.org/make-your-own-gem
 		year    = {October 28, 2013},
 		url     = {http://everythingshouldbevirtual.com/wp-content/uploads/2013/10/16-48-29.png},
 		note = {Accessed: April 15, 2017},
+	}
+
+	@online{amazon-scenarios-for-accessing-db-instance-in-vpc,
+		author = {Amazon Web Services},
+		title = {Scenarios for Accessing a DB Instance in a VPC},
+		year = {September 27, 2015},
+		url = {http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.Scenarios.html},
+		note = {Accessed: April 20, 2017}
+	}
+
+	@book{vmware-cookbook,
+		title = {VMware cookbook},
+		author = {Ryan Troy},
+		year = {2012},
+		publisher = {Oreilly Media}
+	}
+
+	@online{azure-automation-overview,
+		author = {Matt Goedtel et .al},
+		year = {October 5, 2010},
+		title = {Azure Automation overview},
+		note = {Accessed: April 20, 2017}
+	}
+
+	@online{the-case-for-investing-cloud-automation,
+		author = {The Case for Investing in Cloud Automation},
+		author = {Kate Miller},
+		year = {October 7, 2016},
+		title = {The Case for Investing in Cloud Automation}
 	}
 
 \end{filecontents*}

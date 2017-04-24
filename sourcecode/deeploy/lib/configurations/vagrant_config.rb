@@ -5,7 +5,7 @@ module Deeploy
       def initialize(m_inst)
         @root = m_inst.root
         super(m_inst)
-        @vbadditions ||= 'config.vbguest.auto_update = false'
+        @vbadditions ||= '# config.vbguest.auto_update = false'
 
         distribution = Deeploy.distributions()
         sym = m_inst.distribution.to_sym
@@ -13,7 +13,7 @@ module Deeploy
 
         @config = <<CONFIG
         Vagrant.configure(2) do |config|
-          config.ssh.insert_key = false
+          config.ssh.insert_key = true
           config.vm.box = "#{distribution}"
           config.vm.network "private_network", ip: "#{m_inst.ip}", :bridge => '#{$CONFIGURATION.network_interface}'
           config.vm.provision "shell", path: "manifests/setup.sh"

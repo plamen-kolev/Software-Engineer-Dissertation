@@ -5,7 +5,7 @@ module Deeploy
     module Centos
       class VagrantConfig < Deeploy::Config::VagrantConfig
         def initialize(m_inst)
-          @vbadditions = 'config.vbguest.auto_update = false'
+          @vbadditions = '# config.vbguest.auto_update = false'
           super(m_inst)
         end
 

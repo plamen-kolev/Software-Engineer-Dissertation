@@ -1,5 +1,6 @@
 require_relative 'user'
 require_relative 'confmanager'
+require 'open3'
 require 'ipaddr'
 # require 'figaro'
 
@@ -175,9 +176,7 @@ module Deeploy
     # keep machine folder for debugging
     def destroy(keep_folders = false)
       if Dir.exist?(@root)
-        Dir.chdir(@root) do
-          system('vagrant destroy -f')
-        end
+        system("VAGRANT_CWD=#{@root} vagrant destroy -f")
         FileUtils.rm_rf(@root) unless keep_folders
       end
       vm = DB::Machine.find(@id)
@@ -186,16 +185,14 @@ module Deeploy
 
     def down()
       if Dir.exist?(@root)
-        Dir.chdir(@root) do
-          system('vagrant halt')
-        end
+        system("VAGRANT_CWD=#{@root} vagrant halt")
       end
     end
 
     def up
       if Dir.exist?(@root)
         Dir.chdir(@root) do
-          system('vagrant up')
+          system("VAGRANT_CWD=#{@root} vagrant up")
         end
       else
         raise Exception, "#{root} was empty"
@@ -239,12 +236,10 @@ module Deeploy
       if dryrun
         result = true
       else
-        Dir.chdir(@root) do
           # sub shell process and wait for it to exit
-          result = self.wait_on_build(machine)
-        end
+        result = self.wait_on_build(machine)
       end
-      
+
       if result && self.alive?
         self.success()
         machine.deployed = true
@@ -261,18 +256,35 @@ module Deeploy
       stages_length = @stages.length - 1
       current_stage = 0
       # put command in background
-      pid = spawn("vagrant up &> #{@root}/vagrant.log")
+      command = <<HERE
+      echo 'building' > build.log
+      if VAGRANT_CWD=#{@root} vagrant up &> #{@root}/vagrant.log ; then
+          echo 'success' > #{@root}/build.log
+      else
+          echo 'failure' > #{@root}/build.log
+      fi
+
+HERE
+      pid = spawn(command)
       Process.detach(pid)
       counter = 0
       # wait for process to finish, also display build process in the meanwhile
       while counter < 600
         begin
           result = Process.kill 0, pid
-        rescue Errno::ESRCH
-          puts 'Build successfull !'
-          machine.build_stage = stages_length
-          machine.save()
-          return true
+        rescue Errno::ESRCH # if process exits, this error will get thrown
+          # get build status message
+          File.open([@root, 'build.log'].join('/'), 'r') do |f|
+            if f.read =~ %r{success}
+              puts 'Build successfull !'
+              machine.build_stage = stages_length
+              machine.save()
+              return true
+            else
+              return false
+            end
+          end
+
         end
 
         # now try to find key moments in the deployment of a machine

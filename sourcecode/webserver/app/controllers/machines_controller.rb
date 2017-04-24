@@ -4,13 +4,8 @@ class MachinesController < ApplicationController
 
   def index 
     @machines = Machine.where(user_id: current_user.id)
-    # do a ping test to see if machines alive
-
     @machines.each do |m|
-      # alive checks the status of the machine and updates it
-      # the end user will see the status
       vm = Deeploy::VM.get(title: m.title, owner: current_user)
-      vm.alive?()
     end
   end
 
