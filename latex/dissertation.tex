@@ -415,17 +415,17 @@ As the platform is provided by Microsoft, the creators of Windows, it can provid
     \includegraphics[width=12cm]{gantt.jpg}
 \end{center}
 
-As part of the development cycle, I have scheduled a meeting every fortnight with my supervisor to discuss work progress. During these meetings, I received feedback, raised concerns and showed progress in a \gls{standup} fashion. Occasionally, the meetings were not about progress update, but about demonstration of the work done so far with the purpose of obtaining feedback.
+As part of the development cycle, I had a supervisor meeting every fortnight. The goal was to discuss work progress and ensure things are moving forward. During these meetings, I received feedback, raised concerns and showed progress in a \gls{standup} fashion. Occasionally, the meetings were not about progress update, but about demonstration of the work done so far with the purpose of obtaining feedback and presentation practice.
 
 \subsection{First Semester}
-When creating the project plan, two core stages were taken into consideration. The first stage is semester one. During that period, the ground work was laid, on which all future development and testing work was based. This is a critical moment into the building process. It allowed for a more in-depth research using materials created by the leading experts in the field (Amazon, Intel, Oracle). These documents helped gaining more understanding in various aspects of building cloud-ready applications, infrastructure security and automation.
+When creating the project plan, two core stages were taken into consideration. The first stage is semester one. During that period, the ground work was laid, on which all future development and testing was based. This was a critical moment into the building process. It allowed for a more in-depth research using materials created by the leading experts in the field (Amazon, Intel, Oracle). Their guides and documents helped gaining more understanding in various aspects of building cloud-ready applications, infrastructure security and automation.
 
 The research helped when rationing about the features that need implementing. It also illustrated the scope, and the challenges that need to be faced. The research gave an insight into why this problem requires solving, and pointed me to open-source projects that achieve parts of the work.
 
 The first semester was not only about research, but also about describing the constrains, limitations and infrastructure decisions that need to be made in order to demonstrate a  product that has real-world applications.
 The materials helped me also to identify potential risks and issues that might arise, such as the security risk of running multiple virtual machines onto the same physical space. This is a potential risk situation, as an attacker can read the private data of another machine if the person gets access to the memory of the "host".
 
-Work also went into creating presentation and project proposal for the upcoming work, which give an outline and highlighted the features that the work addresses.
+Work also went into creating presentation and project proposal for the upcoming work, which gave an outline and highlighted the features that the work addresses.
 When creating the presentation, I wanted to be as generic as possible as not to present information and ideas that the additional research might prove impossible to implement or not practical.
 
 \subsection{Second Semester}
@@ -435,9 +435,9 @@ The tasks accomplished during the second semester are related to implementing, r
     \includegraphics[width=12cm]{agile.jpg}
 \end{center}
 
-For the most part, the project was completed using the agile methodology. Each cycle that shaped the final product is described below.
+For the most part, the project was completed using agile principles. Each cycle that shaped the final product is described below.
 \subsubsection{Developmen}
-As planned, I broke down the main objectives into subtasks and tackled them one-by-one. My initial plan is not to develop the whole system and assemble the parts together at the end, but to build a minimum viable product (MVP) and increment onwards.
+As planned, the work was broke down to subtasks. The initial plan is not to develop the whole system and assemble the parts together at the end, but to build a minimum viable product (MVP) and increment and improve onwards.
 
 This was done in order to assure that the platform can be built with the available tools and that the requirements can be met at the end of the project.
 
@@ -446,29 +446,28 @@ Being able to create a virtual machine with a known \gls{ipaddress} from a scrip
 \subsubsection{Learning period}
 For the duration of this project, a variety of new technologies were tried and evaluated, such as \gls{vagrant}, \gls{puppet}, \gls{ruby-on-rails}, \gls{ruby}.
 
-As part of the learning cycle, the official ruby programming language manual was used. It helped gain proficiency to understand the fundamental constructs that were used throughout the tutorials, articles, blogs and other learning materials. The process taught me about declaring variables, scopes, for loops and any extra syntax unlike other programming languages. To get up and running with \gls{ruby}, the period between first and second semester was planned to build basic command line programs.
+As part of the learning cycle, the official ruby programming language manual was used. It helped gain proficiency and to understand the fundamental constructs that were used throughout the tutorials, articles, blogs and other learning materials. The process taught me about declaring variables, scopes, for loops and any extra syntax unlike other programming languages. To get up and running with \gls{ruby}, the period between first and second semester was planned to build basic command line programs.
 
-Another part of the development strategy was to do a small web project using ruby on rails just to get a feeling of what is possible in terms of rapid development and ease of use. This small project included building forms, validation, manipulating database objects and creating \gls{html} pages. This was done in February (the beginning of second semester), with the purpose of determining if this tool is right for the job
+Another part of the development strategy was to do a small web project using ruby on rails just to get a feeling of what is possible in terms of rapid development and ease of use. This small project included building forms, validation, manipulating database objects and creating \gls{html} pages. This was done in February (the beginning of second semester), with the purpose of determining if this tool is right for the job.
 
-The task of learning \gls{puppet} was achieved by creating end-to-end automation scrip of the current set-up of my desktop machine. Puppet's power is to get a machine's configuration to a known state and ensure all software packages are present. Doing this exercise was overall a good practice, as it led to a faster implementation and integration later on when working on the actual platform.
+The task of learning \gls{puppet} was achieved by creating end-to-end automation scrip of an apache server doing various tasks. Puppet's power is to get a machine's configuration to a known state and ensure all software packages are present. Doing this exercise was overall a good practice, as it led to a faster implementation and integration later on when working on the actual platform.
 
 \subsubsection{Documentation}
-The initial plan as stated in the project proposal is to document the work during each stage of the process, like implementing a new feature. I later decided to not strictly follow that plan, as there were many components that changed drastically. For example, in the beginning, I planned to use chef for configuration automation and management. After evaluating and experimenting with it for 5 days, it was apparent that the set-up overhead was slowing down the actual development process. 
+The initial plan as stated in the project proposal is to document the work during each stage of the process, like implementing a new feature. Later, the decision was made to not strictly follow that plan, as there were few components that changed drastically. For example, in the beginning, using chef was planned for configuration automation and management instead of puppet. After evaluating and experimenting with it for 5 days, it was apparent that the set-up overhead was slowing down the actual development process. 
 
-Because of that experience, the dissertation write-up process was changed to documenting features only when they are established.
-
+Because of that experience, the dissertation write-up process was changed to documenting features only when they are established. And reasonably stable. The document paper is written using the latex language.
 
 \newpage
 \section{Methodology}
 \subsection{Overview}
-This chapter aims to give a more in-depth view into the process of scoping, developing, planning and building the application. This ranges from picking the tools to limiting the scope, making assumptions, as well as the scheduling of each task. Creating such a platform from nothing is a daunting task even for an experienced senior software engineer.
+This chapter aims to give a more in-depth view into the process of scoping, developing, planning and building the application. This ranges from picking the tools to limiting the scope, making assumptions, as well as the scheduling of each task. Creating such a platform from scratch is a daunting task even for an experienced software engineer. 
 
 For the above reason, the initial research into building the right tool-chain was essential to the success of the project.
 
 The development methodology can be broken into the following steps:
 \begin{enumerate}
     \item
-          Research into virtualisation technology to understand the underlying architecture.
+          Research into virtualisation technology to understand the underlying components.
 
     \item
           Select free and open-source software components that can be coupled together to orchestrate and utilise above mentioned technology. The public libraries used also allowed me to extend, modify and build on top of during the development process.
@@ -481,29 +480,31 @@ The development methodology can be broken into the following steps:
 
     \item
           Do sufficient testing to ensure that the platform behaves as expected.
+    \item 
+    	Build a web interface that ties the creation process into a web form
+    \item 
+    	Allow for health-monitoring per machine instance
 \end{enumerate}
 
 \subsection{Constrains}
-Because of the limited duration of the dissertation and the immense work that has to be carried throughout the implementation (testing, documentation, development, debugging, planning, etc.) certain constrains had to be put in place to ensure that the project will be completed within the appropriate period.
+Because of the limited duration of the dissertation and the immense work that has to be carried throughout the implementation (testing, documentation, development, debugging, planning, architecture, external tools, hardware constrains, etc.) certain limitations had to be put in place to ensure that the project will be completed within the appropriate period.
 
-The initial constrain that I have defined is limiting the solution to a single host. This work is done as a proof-of-concept system that has the potential of being scaled up and extended to support "real-world" application.
+The initial constrain that has been defined is limiting the solution to a single host. This work is done as a proof-of-concept system that has the potential of being scaled up and extended to support a cluster deployment in the near future.
 Creating a distributed and scalable implementation of this work goes beyond the scope. This is not to say that it is limited to single host, but testing and planning guarantee that it will be fully functional under such condition.
 
-As a future task, it would be possible to deploy multiple instances of the underlying infrastructure that are managed and synchronised with a technology like puppet or chef. Then, creating virtual machines can be done via a manager machine that picks a host based on a round-robin algorithm or based on load. Additional implementation steps must be carried out to ensure that the web platform and the manager understands the physical location of the virtual machine. Physical location references to the real hardware (the host) running the virtual machine.
+As a future task, it would be possible to deploy multiple instances of the underlying infrastructure that are managed and synchronised with a technology like puppet or chef. Then, creating virtual machines can be done via a manager machine that picks a host based on a round-robin algorithm or on load. Additional implementation steps must be carried out to ensure that the web platform and the manager understands the physical location of the virtual machine. Physical location references to the real hardware (the host) running the virtual machine.
 
-Another assumption and a constrain is the availability of a network interface. To simplify the development process and allow me to isolate different environments. A network environment is the space in which all the virtual machines have visibility of one another. It also makes it possible to allocate different network addresses dynamically and verify availability of resources. Another important bit is the fact that one must be connected to the network environment to communicate with the machines inside of it. I have taken advantage of VirtualBox's host-only networking interfaces, and have created multiple instances that allow me to create machines independent of each other when developing and testing.
+Another assumption and a constrain is the availability of a network interface. To simplify the development process and allow for  different isolated environments, virtual networks were used. A network environment is the space in which all the virtual machines have visibility of one another. It also makes it possible to allocate different network addresses dynamically and verify availability of resources. Another important bit is the fact that one must be connected to the network environment to communicate with the machines inside of it. VirtualBox's host-only networking interfaces have been used to create multiple network instances that allow for the creation of machines that are independent of each other when developing and testing.
 
-When further extending the solution, additional work has to be carried out to ensure integration with a public \gls{dns} server, and some adjustments ought to be made to allow the production \gls{dns} to allocate \textcolor{red}{DHCP} ip addresses to the virtual machines.
+When further extending the solution, additional work has to be carried out to ensure integration with a public \gls{dns} server, and some adjustments ought to be made to allow the production \gls{dns} to allocate \gls{dhcp} \gls{ipaddress} to the virtual machines.
 
 The solution aims to orchestrate and automate generic virtual machine deployment, but creating a solution that enables every \gls{operating-system} to be deployable would require extensive amount of extra work. Future work can make it possible to deploy Windows, Mac OS and more Linux variants as part of the infrastructure, but this is yet not the case.
 
-Windows is not supported yet, as it has completely different architecture and has a separate interface for managing networking, users, installation and permissions. Doing windows deployment also requires licensing of their \gls{operating-system}. Another constrain in working with windows is that not many core components are configurable or accessible via a script making automation very difficult or impossible.
+Windows is not supported yet, as it has completely different architecture and has a separate interface for managing networking, users, installation and permissions. Doing windows deployment also requires licensing of their \gls{operating-system}. Another constrain in working with windows is that not many core components are configurable or accessible via a script making automation very difficult or impossible, or are not freely available.
 
-Mac OSX virtual deployment was also something left for future. It also has similar issues to windows virtualisation (licensing, exposed \gls{api}).
+Mac OSX virtual deployment was also something left for future. It also has similar issues to windows virtualisation (licensing, exposed \gls{api}), as well as it is a platform that I have no experience with.
 
-Finally, as it comes to Linux virtual machine deployment, I have opted to cover
-
-For the purpose of this work, I have decided to limit the scope of allowed Linux distributions to Ubuntu, Centos and debian, but it is important to note that the architecture allows extending that list.
+For the purpose of this work, the decision to have limited scope of allowed Linux distributions to Ubuntu, Centos and debian, but it is important to note that the architecture allows extending that list and development was done with that in mind.
 
 \subsection{Functional requirements}
 \subsection{Non-functional requirements}
