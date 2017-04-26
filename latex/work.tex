@@ -215,6 +215,62 @@
 
 \begin{document}
 \section{Work}
+
+A hypervisor is a computer software or hardware that creates the platform layer to a virtual machine and makes it possible to host multiple instances with different configurations \cite{ibmvirtualisation}.
+
+Initially, the plan was to use a hypervisor virtualisation solution such as \gls{virtualbox} and \gls{vmware} just by themselves, and use the \gls{bash} shell scripting language to interface directly with them. A decision was made to use Virtualbox, as it is an \gls{open-source} software solution, has strong community, allows third party plug-ins and is a solution build by Oracle - a large software corporation. There are other alternatives (gnome boxes, CHROOT), but what influenced the choice is that virtualbox is configurable and can be controlled from the command-line straight out of the box. Another deciding factor was also the extensibility that it offers with third party modules developed by the community and the core team (guest additions, virtualbox standard development kit).
+
+Another reason for not choosing a more unpopular technology is due to the willingness of an adopter to switch their entire virtual infrastructure to it. The Virtualbox software is very popular \cite{_NEEDED_}, and as such, it would make the transition to the platform easier.
+
+During the period when researching Virtualbox, the command-line \gls{api} documentation was used extensively. In the process, a variety of customisable parameters when building a virtual machine were discovered, like the different possibilities in setting up networks (private, network shared, host only, etc.), exposing ports, as well as different hardware configurations (RAM, hard drive, CPU count). After using the command line tools and writing a simple shell scripts for managing creation of different resources, a decision was made to use a tool that manages the different technical details of each virtual machine. Instead of building the manager from scratch, an open-source hypervisor provisioner software was used instead. The tools is called \gls{vagrant}.
+
+\subsection{Vagrant}
+Vagrant by Hashicorp, is a tool built by a company specialising in easy virtual machine configuration management and set-up Their \gls{api} provides the following features.
+
+\begin{itemize}
+	\item
+	Allow the administrator to create a \gls{vagrant} configuration file (called Vagrantfile), which describes end-to-end each operation that will be performed to the virtual machine instance (including the Linux distribution that will get installed on it).
+	\item
+	Create a system compatible with their platform starting from a bare configuration and incrementally building a bespoke instance. These instances can be managed and shared on the internet.
+	\item
+	Managing network interfaces
+	\item
+	Configure ports
+	\item
+	Allow port access to adapter network (in private networks)
+	\item
+	Create a custom machine compatable with the platform
+	\item 
+	Kick-start automation by running one of the supported automation frameworks (chef, puppet)
+\end{itemize}
+
+\subsection{Workflow}
+The framework that was created uses a \gls{virtual_machine} instance object and authenticated user that owns it. When the user fills the web form with the relevant information, it will pass the configuration values directly to a virtual machine class. This class contains a dynamic configuration, which ensures that the solution is distribution agnostic. Here, the term distribution references to the different versions of Linux (Ubuntu, fedora, Centos, arch Linux). Separating dependency specific configuration by sub-classing a configuration object allows for a quick way for the project to be extended to accommodate for new distributions.
+
+To do so, folder with the name of the new distribution must be placed in lib/configurations that describes the configuration specific settings that include updating and installing common software packages.
+
+The framework also uses UNIX environmental variable to manage infrastructure state. For the  purpose of developing and testing, I have created two main isolated environments - testing and development.
+The most notable usage of such environment is the virtual host-only network that ensures that the virtual interfaces do not clash during testing and development. The two interfaces are \texttt{vboxnet0} and \texttt{vboxnet1}. One is for general purpose development, the another is for testing. A special host-only adapter is used to have an isolated ip range that is network agnostic, for example, on a \gls{natnetwork}, some IP addresses might be reserved or used, this case will cause a clash and the virtual machine will not be reachable.
+
+\subsection{Architecture}
+When considering the architecture of the system, a list of factors were evaluated when building the solution. One is having few well consolidated moving parts, ensuring flexibility and extensibility. For that purpose the programming language \gls{ruby} was chosen. It is a suitable for system automation as it is very expressive and is for the most part platform independent (interpreted). Its suitability comes also from the available tools \gls{vagrant} and \gls{puppet} which allow end-to end integration when developing and testing. The \gls{ruby} programming language also draws inspiration from the Perl programming language. One of the Perl's strengths is its ability to be a more powerful shell scripting language as well as a general purpose language. This is the case as it has quick syntax for executing shell scripts directly and get STDOUT, STDERR and exit-codes quickly. It does also has native implementation of common UNIX tools, like grep, wget and awk (core GNU utilities).\cite{perl-programming-language-shell-scripting}
+
+\begin{figure}
+	\vspace{1cm}
+	\centering          
+	\includepdf[width=1\textwidth]{architecture.pdf}      
+	\caption{Diagram of the architecture of deeploy module}
+	\label{fig:Test}
+	\vspace{3cm}
+\end{figure}
+
+%\newpage
+%\includepdf{architecture.pdf}
+
+Because the Ruby language draws inspiration and shares similar features with Perl, it makes it a great modern and powerful language to use in this domain-specific problem. The language benefits from it bein written in 1995, and being very mature. For that reason, there is a great amount of online help and third party library of great quality.
+
+\subsection{The deeploy module}
+
 The first component of the work is a ruby module designed specially to act as a back-end for the entire solution. A module is a collection of programming functions and libraries that are bundled together to achieve a particular task. In \gls{ruby}, modules are called gems. For writing my first \gls{gem}, the official ruby guide was used as guide \cite{ruby-official-guide}. 
 
 The file \texttt{lib/deeploy.rb} is what sets up the database connection and bootstraps the whole module by auto-loading every component. To ease integration, the file loads configuration properties from the file \texttt{lib/config/application.yml}. \texttt{Application.yml} contains configuration for production, development and testing, this is to allow separation and configuration of different parameters. The file specifies location of the database file when in development, or it has the database drivers in production with information about connection parameters. The file also describes the network interfaces to be used in each environment.

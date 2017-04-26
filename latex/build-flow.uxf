@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>500</x>
+      <y>30</y>
+      <w>100</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Start</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>540</x>
+      <y>60</y>
+      <w>320</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Parameters (packages, ports, distribution)
+lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>170</x>
+      <y>130</y>
+      <w>80</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>raise error</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>490</x>
+      <y>120</y>
+      <w>120</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Are valid?</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>240</x>
+      <y>120</y>
+      <w>270</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>No
+lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;20.0;250.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>540</x>
+      <y>150</y>
+      <w>50</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Yes
+lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>470</x>
+      <y>210</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Virtual Machine name 
+sanitised</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>480</x>
+      <y>300</y>
+      <w>140</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>In production 
+or testing?</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>450</x>
+      <y>350</y>
+      <w>120</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Production
+lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;50.0;50.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>590</x>
+      <y>350</y>
+      <w>80</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Testing
+
+lt=&lt;-</panel_attributes>
+    <additional_attributes>60.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>540</x>
+      <y>260</y>
+      <w>50</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Yes
+lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>370</x>
+      <y>400</y>
+      <w>170</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Use prod. database
+use prod directory
+for config</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>580</x>
+      <y>400</y>
+      <w>170</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Use test. database
+use test directory
+for config</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>420</x>
+      <y>520</y>
+      <w>290</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Dynamic load
+configuration manager
+Build instance based on distribution</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>460</x>
+      <y>460</y>
+      <w>50</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>
+lt=&lt;-</panel_attributes>
+    <additional_attributes>30.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>610</x>
+      <y>450</y>
+      <w>60</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>
+lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;70.0;40.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>540</x>
+      <y>610</y>
+      <w>30</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>470</x>
+      <y>800</y>
+      <w>160</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Write configuration
+in memory</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>620</x>
+      <y>810</y>
+      <w>170</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Call Build
+lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>150.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>100</x>
+      <y>800</y>
+      <w>100</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Finish</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>340</x>
+      <y>810</y>
+      <w>150</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>No Build call
+lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;20.0;130.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>230</x>
+      <y>810</y>
+      <w>120</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Garbage 
+collection</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>190</x>
+      <y>810</y>
+      <w>60</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>
+lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;20.0;40.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>480</x>
+      <y>670</y>
+      <w>160</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Generate ip
+from available pool</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>550</x>
+      <y>720</y>
+      <w>30</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>770</x>
+      <y>800</y>
+      <w>160</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Create conf folder
+on physical storage</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>770</x>
+      <y>700</y>
+      <w>170</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Flush config
+to physical storage
+(confmanager)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>750</x>
+      <y>480</y>
+      <w>200</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Issue provisioner 
+buld command in a 
+detached process, 
+output progress to file</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>750</x>
+      <y>260</y>
+      <w>210</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Listed for build stages 
+in output file within timeout</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>50</x>
+      <y>140</y>
+      <w>970</w>
+      <h>760</h>
+    </coordinates>
+    <panel_attributes>Timeout expired
+lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;10.0;20.0;740.0;950.0;740.0;950.0;170.0;910.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>120</x>
+      <y>230</y>
+      <w>190</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Rollback, leave 
+configuration and logs</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>200</x>
+      <y>150</y>
+      <w>30</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>
+lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>890</x>
+      <y>250</y>
+      <w>200</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+Update build stage</panel_attributes>
+    <additional_attributes>20.0;30.0;50.0;30.0;50.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>160</x>
+      <y>280</y>
+      <w>30</w>
+      <h>540</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;520.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>850</x>
+      <y>210</y>
+      <w>130</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+Process exited</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>760</x>
+      <y>370</y>
+      <w>200</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Provisioner picks 
+custom linux virtualised
+instance</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>770</x>
+      <y>140</y>
+      <w>210</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Instance is accessible 
+via SSH using the generated
+certificate auth ?</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>770</x>
+      <y>590</y>
+      <w>170</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Generate certificate
+for authentication,
+save to db</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>40</x>
+      <y>130</y>
+      <w>1040</w>
+      <h>790</h>
+    </coordinates>
+    <panel_attributes>No
+lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>130.0;10.0;10.0;10.0;10.0;770.0;1020.0;770.0;1020.0;50.0;940.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>860</x>
+      <y>80</y>
+      <w>50</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+Yes</panel_attributes>
+    <additional_attributes>12.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>840</x>
+      <y>760</y>
+      <w>30</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>840</x>
+      <y>670</y>
+      <w>30</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>840</x>
+      <y>560</y>
+      <w>30</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>840</x>
+      <y>450</y>
+      <w>30</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>840</x>
+      <y>340</y>
+      <w>30</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>820</x>
+      <y>40</y>
+      <w>130</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Update db 
+build status</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>150</x>
+      <y>50</y>
+      <w>960</w>
+      <h>900</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>12.0;800.0;10.0;880.0;940.0;880.0;940.0;10.0;800.0;10.0</additional_attributes>
+  </element>
+</diagram>
