@@ -227,6 +227,10 @@
 	}
 }
 
+\newglossaryentry{dhcp}{name={DHCP},
+	description={Dynamic Host Configuration Protocol}
+}
+
 \newglossaryentry{netmask}{name={network mask},
 	description={A netmask is a 32 bits field whose p high order bits are set to 1 and the low order bits are set to 0. The number of high order bits set 1 indicates the length of the subnet identifier. Netmasks are usually represented in the same dotted decimal format as IPv4 addresses. \cite[p.143]{netmask-definition}
 	}
@@ -242,11 +246,15 @@
 I declare that this dissertation represents my own work except where otherwise stated.
 
 \section{Acknowledgements}
-
+{\color{red} 
+	pending
+}
 
 \newpage
 \section{Abstract}
-
+{\color{red} 
+	pending
+}
 \newpage
 \tableofcontents
 \newpage
@@ -614,16 +622,32 @@ The process of building a virtual machine by the \texttt{deeploy} module is also
 	\label{fig:deeploy-build-flow}
 \end{figure}
 
+{\color{red} 
+Discuss the web interface
+}
+
+\subsection{Security}
+{\color{red} 
+	Vagrant ssh insecure keys, pem certificate authentication, packages from official sources, no password storage, cleaning certificates after download.
+}
 
 \subsection{Issues}
-TALK ABOUT CHDIR ISSUE THREAD SAFE AND ABOUT HEALTH MONITORING DEAMON INSTEAD OF CHECKING EVERYTIME DUE TO THE SLOWDOWN
+{\color{red} 
+To be discussed CHDIR ISSUE THREAD SAFE AND ABOUT HEALTH MONITORING DEAMON INSTEAD OF CHECKING EVERYTIME DUE TO THE SLOWDOWN, choosing directories between testing and development, increasing deployment speed with bundling software, decoupling firewall rules,  
+}
 
 \newpage
 \section{Evaluation and Testing}
 http://guides.rubygems.org/make-your-own-gem
+{\color{red} 
+	To be filled
+}
+
 \newpage
 \section{Conclusion}
-
+{\color{red} 
+	To be filled
+}
 \newpage
 \section{References}
 \bibliography{research}
@@ -635,7 +659,9 @@ http://guides.rubygems.org/make-your-own-gem
 \printglossary
 \newpage
 \section{Appendix}
-
+{\color{red} 
+	To be filled
+}
 
 \begin{filecontents*}{research.bib}
     
