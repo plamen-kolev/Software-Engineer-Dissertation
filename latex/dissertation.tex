@@ -307,6 +307,10 @@ The project aims to utilise open-source virtualisation technology and make the p
 
 The management website should also allow for the selection of predefined software packages. The solution should also show if the virtual machine is alive and allow the user to shut it down and bring it up. Port management should also be possible when building the machine. These features, alongside the benefits of virtualisation should create a secure infrastructure for many applications, from virtual office workstation, to server testing and deployment.
 
+\subsection{Demographic}
+This solution is aimed at small companies who want to get the benefits of virtualisation, as well as easier machine management. It does so by giving the user common Linux versions, simple credential management and instructions during operations. The target demographic is also businesses who have low budget for automation and system management and cannot afford to have a dedicated team member for the task.
+Another use case is individuals who want to perform calculations on a machine and then power it off, who do not have resources or the time to set up their own environment.
+
 \subsection{Aim and Objectives}
 \subsubsection{Aim}
 Give developers a platform for easy deployment, management and monitoring of virtual servers.
@@ -367,14 +371,6 @@ Mapping physical drives to virtual ones over the network is a stepping stone in 
 Any server infrastructure requires high bandwidth network connection, virtual networks are no exception. The network throughput of the platform depends on the internet service provider (ISP) physical connection speed. That network is used by the virtualisation platform and is converted to numerous private and public networks internally. The benefits of such abstraction is the ability to create flexible and disposable internal/external networks per machine or cluster of machines. The ability to share a network, or be in a private network is a security consideration. 		
 This feature is important from the standpoint of security. For example, for a business logic application, one can set up a client-facing web server that is accessible from the global internet. The machine on which this application is running will have a database connection to another machine running a dedicated database software (mysql, postgresql, mongodb,etc.). The connection between the two machine would be configured as a private network. It ensures that nobody from the outside world has access to that database machine. This configuration is explored in Amazon's accessing database instance in a virtual cloud\cite{amazon-scenarios-for-accessing-db-instance-in-vpc}. The setup is shown in figure \ref{fig:amazon-scenarios-for-accessing-db-instance-in-vpc-figure}.
 
-\begin{figure}[h!]
-	\vspace{0.5cm}
-	\includegraphics[width=12cm]{con-VPC-sec-grp}
-	\vspace{0.5cm}
-	\caption{Public facing gateway and internal network database. Source \protect\cite{amazon-scenarios-for-accessing-db-instance-in-vpc}}
-	\label{fig:amazon-scenarios-for-accessing-db-instance-in-vpc-figure}
-\end{figure}
-
 It is impossible to talk about such infrastructure without considering the most important component of operations, the \gls{cpu}. When providing the hardware resources for computing, having enough calculation power is essential, otherwise each virtual machine would be slow and unresponsive. A server rack with many Intel\texttrademark \gls{xeon} or other server-grade chip are set to run on top of the virtualisation technology (\gls{virtualbox}, \gls{vmware} \ref{fig:types-of-virtualisation}. All of the computing resources are then also abstracted away. For example, when using \gls{vmware} \gls{vsphere}, instead of seeing every single processor, you are given the option of allocating certain amount of megahertz per instance. A guide on configuring \gls{cpu} usage is covered in VMware Cookbook \cite{vmware-cookbook}. CPU allocation screen is shown in figure \ref{fig:cpu-allocation}
 
 \begin{figure}[h!]
@@ -386,8 +382,6 @@ It is impossible to talk about such infrastructure without considering the most 
 \end{figure}
 
 Considering the fact that all of these hardware components have to be managed by a human to ensure smooth operation during heavy and light loads, automation plays very big role in the process. Automation is the process of automatically creating \gls{virtual_machine} and dynamically allocating computing resources associated with it. Big cloud platforms such as \gls{amazon-web-services} and \gls{azure} have almost absolute automation. Azure even provide their tool as a service - Azure Automation \cite{azure-automation-overview}, Amazon use tools like \gls{chef} and in-house tools \cite{the-case-for-investing-cloud-automation}. Computing resources are allocated based on usage, where a paying customer can use a lot of resources for a certain price (scaling on demand).
-
-\subsection{Security}
 
 \subsection{Similar in the field}
 For the duration of this work, a variety of technologies, frameworks and utilities have been evaluated, that will achieve the goal of automated system deployment. Part of the work was experimenting with different "cloud" virtual machine deployment services. This has given insight into the key requirements that ought to be provided by the platform.
@@ -435,56 +429,8 @@ Microsoft Azure is also among the biggest virtual machine and cloud computing pr
 As the platform is provided by Microsoft, the creators of Windows, it can provide \gls{operating-system} specific features to its customers, such as integration with their products and services. This makes it ideal form Windows compliant companies that have bought licensed corporate software. Similar support would be difficult from a different provider, as they are not the maintainers of the software provided. Users of \gls{azure} also have the benefits of Microsoft Windows features coming first to their platform.
 
 \newpage
-\section{Planning}
 
-\begin{center}
-    \includegraphics[width=12cm]{gantt.jpg}
-\end{center}
-
-As part of the development cycle, I had a supervisor meeting every fortnight. The goal was to discuss work progress and ensure things are moving forward. During these meetings, I received feedback, raised concerns and showed progress in a \gls{standup} fashion. Occasionally, the meetings were not about progress update, but about demonstration of the work done so far with the purpose of obtaining feedback and presentation practice.
-
-\subsection{First Semester}
-When creating the project plan, two core stages were taken into consideration. The first stage is semester one. During that period, the ground work was laid, on which all future development and testing was based. This was a critical moment into the building process. It allowed for a more in-depth research using materials created by the leading experts in the field (Amazon, Intel, Oracle). Their guides and documents helped gaining more understanding in various aspects of building cloud-ready applications, infrastructure security and automation.
-
-The research helped when rationing about the features that need implementing. It also illustrated the scope, and the challenges that need to be faced. The research gave an insight into why this problem requires solving, and pointed me to open-source projects that achieve parts of the work.
-
-The first semester was not only about research, but also about describing the constrains, limitations and infrastructure decisions that need to be made in order to demonstrate a  product that has real-world applications.
-The materials helped me also to identify potential risks and issues that might arise, such as the security risk of running multiple virtual machines onto the same physical space. This is a potential risk situation, as an attacker can read the private data of another machine if the person gets access to the memory of the "host".
-
-Work also went into creating presentation and project proposal for the upcoming work, which gave an outline and highlighted the features that the work addresses.
-When creating the presentation, I wanted to be as generic as possible as not to present information and ideas that the additional research might prove impossible to implement or not practical.
-
-\subsection{Second Semester}
-
-The tasks accomplished during the second semester are related to implementing, refining, iterating, evaluating and documenting the solution. This is the time where all the main features, functional and non-functional requirements got developed, tested and documented. It must be noted that for the most part, each cycle was not incrementally tackled, but instead, numerous development-testing-documenting phases were used to achieve the final result.
-\begin{center}
-    \includegraphics[width=12cm]{agile.jpg}
-\end{center}
-
-For the most part, the project was completed using agile principles. Each cycle that shaped the final product is described below.
-\subsubsection{Developmen}
-As planned, the work was broke down to subtasks. The initial plan is not to develop the whole system and assemble the parts together at the end, but to build a minimum viable product (MVP) and increment and improve onwards.
-
-This was done in order to assure that the platform can be built with the available tools and that the requirements can be met at the end of the project.
-
-Being able to create a virtual machine with a known \gls{ipaddress} from a script was the first thing that had to be accomplished. Creating custom users, opening ports and creating the web interface was planned later as something that could be built on top of the "core" product.
-
-\subsubsection{Learning period}
-For the duration of this project, a variety of new technologies were tried and evaluated, such as \gls{vagrant}, \gls{puppet}, \gls{ruby-on-rails}, \gls{ruby}.
-
-As part of the learning cycle, the official ruby programming language manual was used. It helped gain proficiency and to understand the fundamental constructs that were used throughout the tutorials, articles, blogs and other learning materials. The process taught me about declaring variables, scopes, for loops and any extra syntax unlike other programming languages. To get up and running with \gls{ruby}, the period between first and second semester was planned to build basic command line programs.
-
-Another part of the development strategy was to do a small web project using ruby on rails just to get a feeling of what is possible in terms of rapid development and ease of use. This small project included building forms, validation, manipulating database objects and creating \gls{html} pages. This was done in February (the beginning of second semester), with the purpose of determining if this tool is right for the job.
-
-The task of learning \gls{puppet} was achieved by creating end-to-end automation scrip of an apache server doing various tasks. Puppet's power is to get a machine's configuration to a known state and ensure all software packages are present. Doing this exercise was overall a good practice, as it led to a faster implementation and integration later on when working on the actual platform.
-
-\subsubsection{Documentation}
-The initial plan as stated in the project proposal is to document the work during each stage of the process, like implementing a new feature. Later, the decision was made to not strictly follow that plan, as there were few components that changed drastically. For example, in the beginning, using chef was planned for configuration automation and management instead of puppet. After evaluating and experimenting with it for 5 days, it was apparent that the set-up overhead was slowing down the actual development process. 
-
-Because of that experience, the dissertation write-up process was changed to documenting features only when they are established. And reasonably stable. The document paper is written using the latex language.
-
-\newpage
-\section{Methodology}
+\section{Work}
 \subsection{Overview}
 This chapter aims to give a more in-depth view into the process of scoping, developing, planning and building the application. This ranges from picking the tools to limiting the scope, making assumptions, as well as the scheduling of each task. Creating such a platform from scratch is a daunting task even for an experienced software engineer. 
 
@@ -492,53 +438,31 @@ For the above reason, the initial research into building the right tool-chain wa
 
 The development methodology can be broken into the following steps:
 \begin{enumerate}
-    \item
-          Research into virtualisation technology to understand the underlying components.
-
-    \item
-          Select free and open-source software components that can be coupled together to orchestrate and utilise above mentioned technology. The public libraries used also allowed me to extend, modify and build on top of during the development process.
-
-    \item
-          Build a set of core and advanced features. Core features are essential for a good operational and usable solution. Advanced features are the things that make this solution go above and beyond the scope of existing applications.
-
-    \item
-          Integrate components into one final solution
-
-    \item
-          Do sufficient testing to ensure that the platform behaves as expected.
-    \item 
-    	Build a web interface that ties the creation process into a web form
-    \item 
-    	Allow for health-monitoring per machine instance
+	\item
+	Research into virtualisation technology to understand the underlying components.
+	
+	\item
+	Select free and open-source software components that can be coupled together to orchestrate and utilise above mentioned technology. The public libraries used also allowed me to extend, modify and build on top of during the development process.
+	
+	\item
+	Build a set of core and advanced features. Core features are essential for a good operational and usable solution. Advanced features are the things that make this solution go above and beyond the scope of existing applications.
+	
+	\item
+	Integrate components into one final solution
+	
+	\item
+	Do sufficient testing to ensure that the platform behaves as expected.
+	\item 
+	Build a web interface that ties the creation process into a web form
+	\item 
+	Allow for health-monitoring per machine instance
 \end{enumerate}
-
-\subsection{Constrains}
-Because of the limited duration of the dissertation and the immense work that has to be carried throughout the implementation (testing, documentation, development, debugging, planning, architecture, external tools, hardware constrains, etc.) certain limitations had to be put in place to ensure that the project will be completed within the appropriate period.
-
-The initial constrain that has been defined is limiting the solution to a single host. This work is done as a proof-of-concept system that has the potential of being scaled up and extended to support a cluster deployment in the near future.
-Creating a distributed and scalable implementation of this work goes beyond the scope. This is not to say that it is limited to single host, but testing and planning guarantee that it will be fully functional under such condition.
-
-As a future task, it would be possible to deploy multiple instances of the underlying infrastructure that are managed and synchronised with a technology like puppet or chef. Then, creating virtual machines can be done via a manager machine that picks a host based on a round-robin algorithm or on load. Additional implementation steps must be carried out to ensure that the web platform and the manager understands the physical location of the virtual machine. Physical location references to the real hardware (the host) running the virtual machine.
-
-Another assumption and a constrain is the availability of a network interface. To simplify the development process and allow for  different isolated environments, virtual networks were used. A network environment is the space in which all the virtual machines have visibility of one another. It also makes it possible to allocate different network addresses dynamically and verify availability of resources. Another important bit is the fact that one must be connected to the network environment to communicate with the machines inside of it. VirtualBox's host-only networking interfaces have been used to create multiple network instances that allow for the creation of machines that are independent of each other when developing and testing.
-
-When further extending the solution, additional work has to be carried out to ensure integration with a public \gls{dns} server, and some adjustments ought to be made to allow the production \gls{dns} to allocate \gls{dhcp} \gls{ipaddress} to the virtual machines.
-
-The solution aims to orchestrate and automate generic virtual machine deployment, but creating a solution that enables every \gls{operating-system} to be deployable would require extensive amount of extra work. Future work can make it possible to deploy Windows, Mac OS and more Linux variants as part of the infrastructure, but this is yet not the case.
-
-Windows is not supported yet, as it has completely different architecture and has a separate interface for managing networking, users, installation and permissions. Doing windows deployment also requires licensing of their \gls{operating-system}. Another constrain in working with windows is that not many core components are configurable or accessible via a script making automation very difficult or impossible, or are not freely available.
-
-Mac OSX virtual deployment was also something left for future. It also has similar issues to windows virtualisation (licensing, exposed \gls{api}), as well as it is a platform that I have no experience with.
-
-For the purpose of this work, the decision to have limited scope of allowed Linux distributions to Ubuntu, Centos and debian, but it is important to note that the architecture allows extending that list and development was done with that in mind.
-
-\section{Work}
 
 A hypervisor is a computer software or hardware that creates the platform layer to a virtual machine and makes it possible to host multiple instances with different configurations \cite{ibmvirtualisation}.
 
 Initially, the plan was to use a hypervisor virtualisation solution such as \gls{virtualbox} and \gls{vmware} just by themselves, and use the \gls{bash} shell scripting language to interface directly with them. A decision was made to use Virtualbox, as it is an \gls{open-source} software solution, has strong community, allows third party plug-ins and is a solution build by Oracle - a large software corporation. There are other alternatives (gnome boxes, CHROOT), but what influenced the choice is that virtualbox is configurable and can be controlled from the command-line straight out of the box. Another deciding factor was also the extensibility that it offers with third party modules developed by the community and the core team (guest additions, virtualbox standard development kit).
 
-Another reason for not choosing a more unpopular technology is due to the willingness of an adopter to switch their entire virtual infrastructure to it. The Virtualbox software is very popular \cite{_NEEDED_}, and as such, it would make the transition to the platform easier.
+Another reason for not choosing a more unpopular technology is due to the willingness of an adopter to switch their entire virtual infrastructure to it. The Virtualbox software is well supported by Oracle, and as such, it would make the transition to the platform easier.
 
 During the period when researching Virtualbox, the command-line \gls{api} documentation was used extensively. In the process, a variety of customisable parameters when building a virtual machine were discovered, like the different possibilities in setting up networks (private, network shared, host only, etc.), exposing ports, as well as different hardware configurations (RAM, hard drive, CPU count). After using the command line tools and writing a simple shell scripts for managing creation of different resources, a decision was made to use a tool that manages the different technical details of each virtual machine. Instead of building the manager from scratch, an open-source hypervisor provisioner software was used instead. The tools is called \gls{vagrant}.
 
@@ -567,8 +491,10 @@ The framework that was created uses a \gls{virtual_machine} instance object and 
 
 To do so, folder with the name of the new distribution must be placed in lib/configurations that describes the configuration specific settings that include updating and installing common software packages.
 
-The framework also uses UNIX environmental variable to manage infrastructure state. For the  purpose of developing and testing, I have created two main isolated environments - testing and development.
-The most notable usage of such environment is the virtual host-only network that ensures that the virtual interfaces do not clash during testing and development. The two interfaces are \texttt{vboxnet0} and \texttt{vboxnet1}. One is for general purpose development, the another is for testing. A special host-only adapter is used to have an isolated ip range that is network agnostic, for example, on a \gls{natnetwork}, some IP addresses might be reserved or used, this case will cause a clash and the virtual machine will not be reachable.
+The framework also uses UNIX environmental variable to manage infrastructure state. For the  purpose of continuous integration, two main isolated environments are used - testing and development/production.
+The most notable usage of such environment is the virtual host-only network that ensures that network interfaces do not clash during testing and development. The two interfaces are \texttt{vboxnet0} and \texttt{vboxnet1}. One is for general purpose development, the another is for testing. A special host-only adapter is used to have an isolated ip range that is network agnostic, for example, on a \gls{natnetwork}, some IP addresses might be reserved or used, this case will cause a clash and the virtual machine will not be reachable.
+
+Continuous integration is a new software development practice where versions of the product are merged and available after testing/building phase. It also enables features to be developed separately from the production environment. This has the benefit of ensuring production code performs as expected without interruptions.
 
 \subsection{Architecture}
 When considering the architecture of the system, a list of factors were evaluated when building the solution. One is having few well consolidated moving parts, ensuring flexibility and extensibility. For that purpose the programming language \gls{ruby} was chosen. It is a suitable for system automation as it is very expressive and is for the most part platform independent (interpreted). Its suitability comes also from the available tools \gls{vagrant} and \gls{puppet} which allow end-to end integration when developing and testing. The \gls{ruby} programming language also draws inspiration from the Perl programming language. One of the Perl's strengths is its ability to be a more powerful shell scripting language as well as a general purpose language. This is the case as it has quick syntax for executing shell scripts directly and get STDOUT, STDERR and exit-codes quickly. It does also has native implementation of common UNIX tools, like grep, wget and awk (core GNU utilities).\cite{perl-programming-language-shell-scripting}
@@ -631,17 +557,48 @@ Discuss the web interface
 	Vagrant ssh insecure keys, pem certificate authentication, packages from official sources, no password storage, cleaning certificates after download.
 }
 
-\subsection{Issues}
-{\color{red} 
-To be discussed CHDIR ISSUE THREAD SAFE AND ABOUT HEALTH MONITORING DEAMON INSTEAD OF CHECKING EVERYTIME DUE TO THE SLOWDOWN, choosing directories between testing and development, increasing deployment speed with bundling software, decoupling firewall rules,  
-}
+Virtual machine instance isolation, privacy and authorisation is one of the most important security concerns. This section describes the decisions and considerations made during the development process.
 
-\newpage
-\section{Evaluation and Testing}
+{\color{red} Hashing}
+{\color{red} SSH Credentials without password}
+{\color{red} Potential for adding own keys}
+{\color{red} PS AUX}
+{\color{red} guest isolation benefits/drawbacks}
+
+\subsection{Constrains}
+Because of the limited duration of the dissertation and the immense work that has to be carried throughout the implementation (testing, documentation, development, debugging, planning, architecture, external tools, hardware constrains, etc.) certain limitations had to be put in place to ensure that the project will be completed within the appropriate period.
+
+The initial constrain that has been defined is limiting the solution to a single host. This work is done as a proof-of-concept system that has the potential of being scaled up and extended to support a cluster deployment in the near future.
+Creating a distributed and scalable implementation of this work goes beyond the scope. This is not to say that it is limited to single host, but testing and planning guarantee that it will be fully functional under such condition.
+
+As a future task, it would be possible to deploy multiple instances of the underlying infrastructure that are managed and synchronised with a technology like puppet or chef. Then, creating virtual machines can be done via a manager machine that picks a host based on a round-robin algorithm or on load. Additional implementation steps must be carried out to ensure that the web platform and the manager understands the physical location of the virtual machine. Physical location references to the real hardware (the host) running the virtual machine.
+
+Another assumption and a constrain is the availability of a network interface. To simplify the development process and allow for  different isolated environments, virtual networks were used. A network environment is the space in which all the virtual machines have visibility of one another. It also makes it possible to allocate different network addresses dynamically and verify availability of resources. Another important bit is the fact that one must be connected to the network environment to communicate with the machines inside of it. VirtualBox's host-only networking interfaces have been used to create multiple network instances that allow for the creation of machines that are independent of each other when developing and testing.
+
+When further extending the solution, additional work has to be carried out to ensure integration with a public \gls{dns} server, and some adjustments ought to be made to allow the production \gls{dns} to allocate \gls{dhcp} \gls{ipaddress} to the virtual machines.
+
+The solution aims to orchestrate and automate generic virtual machine deployment, but creating a solution that enables every \gls{operating-system} to be deployable would require extensive amount of extra work. Future work can make it possible to deploy Windows, Mac OS and more Linux variants as part of the infrastructure, but this is yet not the case.
+
+Windows is not supported yet, as it has completely different architecture and has a separate interface for managing networking, users, installation and permissions. Doing windows deployment also requires licensing of their \gls{operating-system}. Another constrain in working with windows is that not many core components are configurable or accessible via a script making automation very difficult or impossible, or are not freely available.
+
+Mac OSX virtual deployment was also something left for future. It also has similar issues to windows virtualisation (licensing, exposed \gls{api}), as well as it is a platform that I have no experience with.
+
+For the purpose of this work, the decision to have limited scope of allowed Linux distributions to Ubuntu, Centos and debian, but it is important to note that the architecture allows extending that list and development was done with that in mind.
+
+\section{Testing}
 http://guides.rubygems.org/make-your-own-gem
 {\color{red} 
 	To be filled
 }
+
+
+\subsection{Issues}
+{\color{red} 
+	To be discussed CHDIR ISSUE THREAD SAFE AND ABOUT HEALTH MONITORING DEAMON INSTEAD OF CHECKING EVERYTIME DUE TO THE SLOWDOWN, choosing directories between testing and development, increasing deployment speed with bundling software, decoupling firewall rules,  
+}
+
+\newpage
+\section{Evaluation}
 
 \newpage
 \section{Conclusion}
@@ -659,9 +616,54 @@ http://guides.rubygems.org/make-your-own-gem
 \printglossary
 \newpage
 \section{Appendix}
-{\color{red} 
-	To be filled
-}
+
+\section{Planning}
+
+\begin{center}
+	\includegraphics[width=12cm]{gantt.jpg}
+\end{center}
+
+As part of the development cycle, I had a supervisor meeting every fortnight. The goal was to discuss work progress and ensure things are moving forward. During these meetings, I received feedback, raised concerns and showed progress in a \gls{standup} fashion. Occasionally, the meetings were not about progress update, but about demonstration of the work done so far with the purpose of obtaining feedback and presentation practice.
+
+\subsection{First Semester}
+When creating the project plan, two core stages were taken into consideration. The first stage is semester one. During that period, the ground work was laid, on which all future development and testing was based. This was a critical moment into the building process. It allowed for a more in-depth research using materials created by the leading experts in the field (Amazon, Intel, Oracle). Their guides and documents helped gaining more understanding in various aspects of building cloud-ready applications, infrastructure security and automation.
+
+The research helped when rationing about the features that need implementing. It also illustrated the scope, and the challenges that need to be faced. The research gave an insight into why this problem requires solving, and pointed me to open-source projects that achieve parts of the work.
+
+The first semester was not only about research, but also about describing the constrains, limitations and infrastructure decisions that need to be made in order to demonstrate a  product that has real-world applications.
+The materials helped me also to identify potential risks and issues that might arise, such as the security risk of running multiple virtual machines onto the same physical space. This is a potential risk situation, as an attacker can read the private data of another machine if the person gets access to the memory of the "host".
+
+Work also went into creating presentation and project proposal for the upcoming work, which gave an outline and highlighted the features that the work addresses.
+When creating the presentation, I wanted to be as generic as possible as not to present information and ideas that the additional research might prove impossible to implement or not practical.
+
+\subsection{Second Semester}
+
+The tasks accomplished during the second semester are related to implementing, refining, iterating, evaluating and documenting the solution. This is the time where all the main features, functional and non-functional requirements got developed, tested and documented. It must be noted that for the most part, each cycle was not incrementally tackled, but instead, numerous development-testing-documenting phases were used to achieve the final result.
+\begin{center}
+	\includegraphics[width=12cm]{agile.jpg}
+\end{center}
+
+For the most part, the project was completed using agile principles. Each cycle that shaped the final product is described below.
+\subsubsection{Developmen}
+As planned, the work was broke down to subtasks. The initial plan is not to develop the whole system and assemble the parts together at the end, but to build a minimum viable product (MVP) and increment and improve onwards.
+
+This was done in order to assure that the platform can be built with the available tools and that the requirements can be met at the end of the project.
+
+Being able to create a virtual machine with a known \gls{ipaddress} from a script was the first thing that had to be accomplished. Creating custom users, opening ports and creating the web interface was planned later as something that could be built on top of the "core" product.
+
+\subsubsection{Learning period}
+For the duration of this project, a variety of new technologies were tried and evaluated, such as \gls{vagrant}, \gls{puppet}, \gls{ruby-on-rails}, \gls{ruby}.
+
+As part of the learning cycle, the official ruby programming language manual was used. It helped gain proficiency and to understand the fundamental constructs that were used throughout the tutorials, articles, blogs and other learning materials. The process taught me about declaring variables, scopes, for loops and any extra syntax unlike other programming languages. To get up and running with \gls{ruby}, the period between first and second semester was planned to build basic command line programs.
+
+Another part of the development strategy was to do a small web project using ruby on rails just to get a feeling of what is possible in terms of rapid development and ease of use. This small project included building forms, validation, manipulating database objects and creating \gls{html} pages. This was done in February (the beginning of second semester), with the purpose of determining if this tool is right for the job.
+
+The task of learning \gls{puppet} was achieved by creating end-to-end automation scrip of an apache server doing various tasks. Puppet's power is to get a machine's configuration to a known state and ensure all software packages are present. Doing this exercise was overall a good practice, as it led to a faster implementation and integration later on when working on the actual platform.
+
+\subsubsection{Documentation}
+The initial plan as stated in the project proposal is to document the work during each stage of the process, like implementing a new feature. Later, the decision was made to not strictly follow that plan, as there were few components that changed drastically. For example, in the beginning, using chef was planned for configuration automation and management instead of puppet. After evaluating and experimenting with it for 5 days, it was apparent that the set-up overhead was slowing down the actual development process. 
+
+Because of that experience, the dissertation write-up process was changed to documenting features only when they are established. And reasonably stable. The document paper is written using the latex language.
 
 \begin{filecontents*}{research.bib}
     

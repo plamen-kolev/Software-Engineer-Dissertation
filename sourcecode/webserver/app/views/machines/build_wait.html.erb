@@ -1,7 +1,7 @@
 <div class="col-md-12 container">
   <div class='center-container' style="margin-top:30px;">
     <div class="center">
-      <%= image_tag 'spiffygif_92x92.gif', alt: 'taken from http://spiffygif.com/', style: 'margin-bottom:20px' %>
+      <%= image_tag 'spiffygif_92x92.gif', class: "image_spinner", alt: 'taken from http://spiffygif.com/', style: 'margin-bottom:20px' %>
 
       <pre><strong>Building machine <%= @machine.title %>:</strong><br/>
         <span id="build_stage"><%= @machine.stage()[0].values[0] %></span>
@@ -14,25 +14,42 @@
           </span>
         </div>
       </div>
-      <div class="go_to_index"></div>
+      <div class="go_to_index">
+
+      </div>
     </div>
 
   </div>
 </div>
 
 
-<script>
+<script type="text/javascript">
+    console.log("i am here");
     var interval = setInterval(function () {
         $.ajax({
             url: 'http://localhost:3000/machines/<%= @machine.title %>/status',
             success: function(result){
-
+                // if build status is failure, notify the user and give exist screen
+                if (result.build_status === 'failure'){
+                    console.log("failure");
+                    $('.image_spinner').hide();
+                    $('#build_stage').html('Machine failed, view <%= link_to 'logs', machine_log_path(@machine.title), target: :_blank %>');
+                    // set progress bar to red
+                    var progress_percentage = 100;
+                    $(".progress-bar-striped").removeClass("progress-bar-success");
+                    $(".progress-bar-striped").addClass("progress-bar-danger");
+                    $('#percentage').css('width', progress_percentage+'%').attr('aria-valuenow', progress_percentage);
+                    $('.progress-bar').css('width', progress_percentage+'%').attr('aria-valuenow', progress_percentage);
+                    $('#percentage').html(progress_percentage);
+                    $('.go_to_index').html("<a href='/' class='btn btn-danger btn-lg' role='button'>Continue</a>");
+                    clearInterval(interval);
+                    return
+                }
                 // get build status
                 var status = $.map(result.build[0], function(value, index) {
                     return value;
                 });
                 var progress_percentage = result.build[1] * 100 / result.build[2];
-
                 $('#percentage').css('width', progress_percentage+'%').attr('aria-valuenow', progress_percentage);
                 $('.progress-bar').css('width', progress_percentage+'%').attr('aria-valuenow', progress_percentage);
                 $('#percentage').html(progress_percentage);

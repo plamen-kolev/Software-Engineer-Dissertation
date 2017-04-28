@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'machines/:machine_title/up', to: 'machines#up', as: 'machine_up'
   get 'machines/:machine_title/restart', to: 'machines#restart', as: 'machine_restart'
   get 'machines/:machine_title/status', to: 'machines#status', as: 'machine_status'
+  get 'machines/:machine_title/log', to: 'machines#log', as: 'machine_log'
 
   # Wait
   get 'machines/:machine_title/build/wait', to: 'machines#build_wait', as: 'machine_build_wait'

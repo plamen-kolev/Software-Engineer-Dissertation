@@ -2,7 +2,7 @@
 
 class MachinesController < ApplicationController
   before_action :authenticate_user!
-  before_action :get_machine, only: [:show, :up, :down, :restart, :destroy, :down_wait, :up_wait, :destroy_wait, :restart_wait, :build_wait, :status]
+  before_action :get_machine, only: [:show, :up, :down, :restart, :destroy, :down_wait, :up_wait, :destroy_wait, :restart_wait, :build_wait, :status, :log]
 
   def index
     @machines = Machine.where(user_id: current_user.id)
@@ -60,17 +60,20 @@ class MachinesController < ApplicationController
     end
   end
 
-  def build_wait;
-    puts "blunthell"
-    puts @machine.inspect
+  def log
+    logfile = File.open([@machine.root, 'vagrant.log'].join('/'), 'rb')
+    contents = logfile.read
+    send_data contents, :filename => 'some.txt', :disposition => 'inline'
   end
+
+  def build_wait; end
 
   def status
     if not @machine
       render json: {status: false, exists: false}
     else
-      m = Deeploy::VM.get(title: @machine.title, owner: current_user)
-      render json: {status: @machine.alive?, exists: true, build: m.stage}
+      # m = Deeploy::VM.get(title: @machine.title, owner: current_user)
+      render json: {status: @machine.alive?, exists: true, build: @machine.stage, build_status: @machine.build_status}
     end
   end
 

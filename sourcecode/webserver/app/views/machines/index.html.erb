@@ -26,7 +26,7 @@
 
               <% @machines.each do |machine| %>
                   <tr class="machines <%= cycle('oddrow', 'evenrow') -%>">
-                      <td><%= link_to machine.title, machine_path(machine.title) %></td>
+                      <td><%= link_to machine.title, machine_path(machine.title) %> (<%= link_to 'Logs', machine_log_path(machine.title), target: :_blank %>) </td>
                       <td><%= machine.distribution %></td>
                       <td><%= machine.vm_user %>@<%= machine.ip %></td>
                       <td id="machine_actions_container">
@@ -58,7 +58,7 @@
                   <tr class="machines">
                       <td colspan="3">
 
-                          <% if machine.deployed %>
+                          <% if machine.deployed && machine.build_status != 'failure' %>
                               <% if machine.alive %>
                                   <div class="alert alert-info inline-block" role="alert">
                                       <strong>Status:</strong>
@@ -70,6 +70,11 @@
                                       Down
                                   </div>
                               <% end %>
+                          <% elsif machine.build_status == 'failure' %>
+                              <div class="alert alert-danger inline-block" role="alert">
+                                <strong>Status:</strong>
+                                Machine failed to deploy: <%= link_to 'Logs', machine_log_path(machine.title), target: :_blank %>
+                              </div>
                           <% else %>
                               <div class="alert alert-warning inline-block" role="alert">
                                   <strong>Status:</strong>
@@ -79,6 +84,10 @@
                       </td>
 
                   </tr>
+                  <% if  machine.build_status == 'failure' %>
+                    <tr></tr>
+                    <tr></tr>
+                  <% else %>
                   <tr id="<%= machine.title %>_download_certificate_tr" class="machines <%= cycle('oddrow', 'evenrow') -%>">
                       <% if machine.pem %>
                           <td colspan="3">
@@ -114,6 +123,7 @@
                           <code>sudo chmod 400 <%= machine.title %>.pem && ssh -i <%= machine.title %>.pem <%= machine.vm_user %>@<%= machine.ip %> </code>
                       </td>
                   </tr>
+                  <% end %>
               <% end %>
           </table>
       <% end %>

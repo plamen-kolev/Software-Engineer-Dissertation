@@ -1,7 +1,7 @@
 PATH
   remote: ../deeploy
   specs:
-    deeploy (0.1.45)
+    deeploy (0.1.46)
       figaro (~> 1.1)
       net-ssh (~> 4.1)
 

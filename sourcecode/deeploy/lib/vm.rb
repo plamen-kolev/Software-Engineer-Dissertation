@@ -6,14 +6,7 @@ require 'ipaddr'
 
 module Deeploy
   class VM < Configurable
-    attr_accessor :owner, :distribution, :root, :manifest, :vm_user, :ip, :title, :configuration, :id, :disk, :ram, :packages, :ports, :pem
-    # @owner
-    # @title
-    # @root
-    # @disk
-    # @ram
-    # @packages
-    # @ports
+    attr_accessor :owner, :distribution, :root, :manifest, :vm_user, :ip, :title, :configuration, :id, :disk, :ram, :packages, :ports, :pem, :build_status
 
     def initialize(args = {})
       # stages is used when reporting current build status
@@ -24,7 +17,7 @@ module Deeploy
         {'default: Notice: Finished catalog run in' => 'Setting up machine completed'}
       ]
 
-      @disk = 1; @ram = 1024; @packages = []; @ports = []; @fetch = false; @build_stage = 0
+      @disk = 1; @ram = 1024; @packages = []; @ports = []; @fetch = false; @build_stage = 0; @build_status = 'pending'
       # check for required parameters
       raise ArgumentError, 'pass argument symbol :owner' unless args[:owner]
       raise ArgumentError, 'pass argument symbol :distribution' unless args[:distribution]
@@ -34,6 +27,7 @@ module Deeploy
       @userspace = 'userspace'
       @userspace = 'test_userspace' if $CONFIGURATION.deeploy_env == 'test'
       @build_stage = args[:build_stage] if args[:build_stage]
+      @build_status = args[:build_status] if args[:build_status]
 
       opts = args[:opts]
 
@@ -156,6 +150,7 @@ module Deeploy
         owner: DB::User.find(db_machine.user_id),
         vm_user: db_machine.vm_user,
         build_stage: db_machine.build_stage.to_i,
+        build_status: db_machine.build_status,
         opts: {
           pem: db_machine.pem,
           id: db_machine.id,
@@ -174,13 +169,18 @@ module Deeploy
     end
 
     # keep machine folder for debugging
-    def destroy(keep_folders = false)
+    def destroy(keep_folders = false, keep_vm = false)
       if Dir.exist?(@root)
         system("VAGRANT_CWD=#{@root} vagrant destroy -f")
         FileUtils.rm_rf(@root) unless keep_folders
       end
       vm = DB::Machine.find(@id)
-      vm.destroy if vm
+      if vm && ! keep_vm
+        vm.destroy 
+      else
+        vm.build_status = 'failure'
+        vm.save()
+      end
     end
 
     def down()
@@ -243,10 +243,12 @@ module Deeploy
       if result && self.alive?
         self.success()
         machine.deployed = true
+        machine.build_status = 'success'
         machine.save
         return true
       else
-        self.destroy(true)
+        # keep machine in db and keep log files for debugging and error reporting
+        self.destroy(true, true)
         raise Exception, "Errors were encountered, cleaning up: #{$?.inspect}"
       end
     end
@@ -311,7 +313,7 @@ HERE
         sleep 10
         counter += 10
       end
-
+      return
     end
 
     def success
