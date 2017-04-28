@@ -2,7 +2,7 @@ require 'sidekiq'
 class HealthmonitorWorker
   include Sidekiq::Worker
 
-  def perform()
+  def perform
     machines = Machine.all
     machines.each do |m|
       m.alive = Deeploy.alive(m.ip)

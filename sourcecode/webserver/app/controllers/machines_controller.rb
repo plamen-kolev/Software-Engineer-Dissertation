@@ -1,8 +1,10 @@
+
+
 class MachinesController < ApplicationController
   before_action :authenticate_user!
-  before_action :get_machine, only: [:show, :up, :down, :restart, :status]
+  before_action :get_machine, only: [:show, :up, :down, :restart, :destroy, :down_wait, :up_wait, :destroy_wait, :restart_wait, :build_wait, :status]
 
-  def index 
+  def index
     @machines = Machine.where(user_id: current_user.id)
     @machines.each do |m|
       vm = Deeploy::VM.get(title: m.title, owner: current_user)
@@ -10,15 +12,16 @@ class MachinesController < ApplicationController
   end
 
   def show
-
   end
 
   def destroy
-    params.require(:machine_title)
-    @machine = ::Deeploy::VM.get(title: params[:machine_title], owner: current_user)
-    @machine.destroy()
-    redirect_to machines_path
+    # params.require(:machine_title)
+    ::DeployDestroyWorker.perform_async(@machine.id)
+    redirect_to machine_destroy_wait_path
   end
+
+  def destroy_wait; end
+
 
   def new
     @machine = Machine.new
@@ -51,14 +54,24 @@ class MachinesController < ApplicationController
 
     if @machine.save()
       ::DeployWorker::perform_async(@machine.id)
-      redirect_to root_path
+      redirect_to machine_build_wait_path(@machine.title)
     else
       render :new
     end
   end
 
-  def status
+  def build_wait;
+    puts "blunthell"
+    puts @machine.inspect
+  end
 
+  def status
+    if not @machine
+      render json: {status: false, exists: false}
+    else
+      m = Deeploy::VM.get(title: @machine.title, owner: current_user)
+      render json: {status: @machine.alive?, exists: true, build: m.stage}
+    end
   end
 
   def download_certificate
@@ -79,31 +92,35 @@ class MachinesController < ApplicationController
   end
 
   def down
-    @machine.down()
-    redirect_to machines_path
+    ::DeployHaltWorker::perform_async(@machine.id)
+    redirect_to machine_down_wait_path
   end
+
+  def down_wait; end
 
   def up
-    @machine.up
-    redirect_to machines_path
+    ::DeployUpWorker::perform_async(@machine.id)
+    redirect_to machine_up_wait_path
   end
+
+  def up_wait; end
 
   def restart
-    @machine.down
-    @machine.up
-    redirect_to machines_path
+    ::DeployRestartWorker::perform_async(@machine.id)
+    redirect_to machine_restart_wait_path
   end
 
+  def restart_wait; end
 
   private
 
     def get_machine
-      params.require(:machine_title)    
+      params.require(:machine_title)
       @machine = ::Deeploy::VM.get(title: params[:machine_title], owner: current_user)
     end
 
     def vm_params
-        params.require(:machine).permit(:title, :body, :ports, :vm_user, :distribution, :ram, :packages => [])
+      params.require(:machine).permit(:title, :body, :ports, :vm_user, :distribution, :ram, :packages => [])
     end
 
     def validate_packages(packages)
