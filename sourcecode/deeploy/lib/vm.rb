@@ -353,6 +353,12 @@ HERE
 
       # array difference of available ips and taken ips
       available_ips = range - blacklisted_ips
+      
+      if available_ips.length == 0
+        # write error to log file
+        open([@root, 'vagrant.log'].join('/'), 'a') { |f| f << "Unable to allocate IP, all reserved\n"}
+        raise IPAddr::InvalidAddressError, "All available ip addresses are reserved"
+      end
 
       @ip = available_ips[-1]
       if Deeploy::valid_ip?(@ip)

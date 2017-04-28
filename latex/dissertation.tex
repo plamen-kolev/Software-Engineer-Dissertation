@@ -496,12 +496,12 @@ The most notable usage of such environment is the virtual host-only network that
 
 Continuous integration is a new software development practice where versions of the product are merged and available after testing/building phase. It also enables features to be developed separately from the production environment. This has the benefit of ensuring production code performs as expected without interruptions.
 
-\subsection{Architecture}
+\subsection{Languages and frameworks}
 When considering the architecture of the system, a list of factors were evaluated when building the solution. One is having few well consolidated moving parts, ensuring flexibility and extensibility. For that purpose the programming language \gls{ruby} was chosen. It is a suitable for system automation as it is very expressive and is for the most part platform independent (interpreted). Its suitability comes also from the available tools \gls{vagrant} and \gls{puppet} which allow end-to end integration when developing and testing. The \gls{ruby} programming language also draws inspiration from the Perl programming language. One of the Perl's strengths is its ability to be a more powerful shell scripting language as well as a general purpose language. This is the case as it has quick syntax for executing shell scripts directly and get STDOUT, STDERR and exit-codes quickly. It does also has native implementation of common UNIX tools, like grep, wget and awk (core GNU utilities).\cite{perl-programming-language-shell-scripting}
 
 Because the Ruby language draws inspiration and shares similar features with Perl, it makes it a great modern and powerful language to use in this domain-specific problem. The language benefits from it bein written in 1995, and being very mature. For that reason, there is a great amount of online help and third party library of great quality.
 
-\subsection{The deeploy module}
+\subsection{The deeploy module - architecture}
 
 \begin{figure}[h!]
 	\vspace{0.5cm}
@@ -534,11 +534,15 @@ The method \texttt{VM.alive()} verifies if the machine is alive by trying to lis
 
 The virtual machine is built only when an instance is initialised properly by calling \texttt{VM.new} with the correct arguments and then invoke \texttt{VM.build()}. The design decision to have a separate functionality of bootstrapping instances was mainly for cleaner testing by compartmentalising the components into smaller elements. The \texttt{build} method also accepts a boolean argument. This argument tells the current build if it is in "dry-run" mode. The mode, the machine will create directories and configuration without actually bringing the instance up and running. This is again, done for testing reasons - they verify that different \glspl{distribution} have appropriate configurations.
 
-During the invocation of the \texttt{build} method, a \gls{bash} shell is forked and it executes the \gls{vagrant} command that brings it on-line and installs all dependencies. The shell command also tells the script to write all output to a text file in the machine directory, the file is called \texttt{vagrant.log}. Because the process takes a long time to finish, an axillary function \texttt{\_wait\_on\_build} is used. This function constantly goes through the contents of the log file and checks what is the current building state of the instance. Typical states are building the base, installing puppet, setting up dependencies, installing packages and the state everything has finished.
+During the invocation of the \texttt{build} method, a \gls{bash} shell is forked and it executes the \gls{vagrant} command that brings it on-line and installs all dependencies. The shell command also tells the script to write all output to a text file in the machine directory, the file is called \texttt{vagrant.log}. Because the process takes a long time to finish, an axillary function \texttt{\_wait\_on\_build} is used. This function constantly goes through the contents of the log file and checks what is the current building state of the instance. Typical states are building the base, installing puppet, setting up dependencies, installing packages and the state everything has finished. 
+Upon a successful build, the sub-shell executable will create a file called \texttt{build.log}. The file will contain a build status. Reason for doing so is that otherwise successful run is determined by exit-code of vagrant, which is not a reliable method of determining success.
 
-Additionally, the process of creating a virtual instance is using a custom image that has a variety of pre-installed software and firewall rules specially created for the dissertation. The purpose is to increase deployment time and allow for a more controlled package list.
+The module also partitions the file structure in two parts - \texttt{userspace} and  \texttt{test\_userspace}. The concept of userspace is used to contain virtual machine configurations in a hierarchical structure. Inside, there is a folder representing each user registered through the web interface. Inside the user folder, virtual machine folders with their respective names can be found. Each virtual machine folder contains \texttt{Vagrantfile} - file that describes network configuration, machine type, available hardware resources, etc. The folder also contains \texttt{vagrant.log}. This contains detailed information of what happened during the machine build process, and is the file that a user can view through the web interface.
 
-The process of building a virtual machine by the \texttt{deeploy} module is also illustrated in figure \ref{fig:deeploy-build-flow}
+In \texttt{manifests}, two very important files can be found. One is in charge of automating firewall rules, packages, users and permissions. This automation is done once the machine has been brought to live. The file is created by the configuration manager depending on which Linux distribution has been used. This folder also contain a shell script that can be used when automation script is lacking. This file has been left there for integrity.
+As mentioned, there is also a top-level folder called \texttt{test\_userspace}, it is used for separation of concerns and is where testing machines are deployed to keep production machines intact.
+
+The process of building a virtual machine by the \texttt{deeploy} module is also illustrated in figure \cite{deeploy-build-flow}.
 
 \begin{figure}[h!]
 	\vspace{0.5cm}
@@ -547,6 +551,18 @@ The process of building a virtual machine by the \texttt{deeploy} module is also
 	\caption{Deeploy build flow}
 	\label{fig:deeploy-build-flow}
 \end{figure}
+
+\subsection{Virtual networks}
+Because each machine has to be connected to the outside world, network \gls{ipaddress} has to be allocated to each instance. This task is achieved using \gls{virtualbox}'s host-only adapter. The gateway address of the adapter and its \gls{netmask} are obtained and a list of possible \gls{ipaddress} addresses are generated. Out of that list, all reserved ones are blacklisted. Additionally, the database gets queried for a list of already allocated addresses. After the process, the machine picks the first address from a stack and the value gets used.
+The reason for allocating them sequentially starting from the top is to avoid collisions. Other methods caused issues where the algorithm had to be run multiple times to obtain reliable results.
+
+After generating the address, it gets blacklisted for further use, ensuring uniqueness on the network. When a machine is destroyed, its address becomes available again.
+
+\subsection{Extending virtual machines}
+Additionally, the process of creating a virtual instance is using a custom image that has a variety of pre-installed software and firewall rules specially created for the dissertation. The purpose is to increase deployment time and allow for a more controlled package list.
+
+Then a friendly name to virtual machine instance name map entry has to be added to the \texttt{deeploy.rb}. Then a folder with the name of the new distribution must be placed in configurations containing files who subclass \texttt{firewall\_config.rb packages\_config.rb puppet\_config.rb shell\_config.rb vagrant\_config.rb}. These files might be left blank if the distribution uses the default commands. Any deviations should be extended via the child modules.
+
 
 {\color{red} 
 Discuss the web interface
@@ -583,7 +599,9 @@ Windows is not supported yet, as it has completely different architecture and ha
 
 Mac OSX virtual deployment was also something left for future. It also has similar issues to windows virtualisation (licensing, exposed \gls{api}), as well as it is a platform that I have no experience with.
 
-For the purpose of this work, the decision to have limited scope of allowed Linux distributions to Ubuntu, Centos and debian, but it is important to note that the architecture allows extending that list and development was done with that in mind.
+For the purpose of this work, the decision to have limited scope of allowed Linux distributions to Ubuntu, Centos and Debian was made, but it is important to note that the architecture allows extending that list. Development was done with that in mind.
+
+What enables this flexibility is the configuration set-up in \texttt{deeploy} module. If one is to add a custom linux distribution, it's image must be created from a virtual machine provider (virtualbox). Doing so consists of creating a base virtual machine, supply necessary vagrant components to it. Then the machine is exported to an image, this image is then imported as a vagrant machine. The following process is explained more in-depth in the official \gls{vagrant} documentation \cite{vagrant-create-base-box}.
 
 \section{Testing}
 http://guides.rubygems.org/make-your-own-gem
@@ -937,6 +955,13 @@ Because of that experience, the dissertation write-up process was changed to doc
 		author = {Microsoft Corporation},
 		year = {2017},
 		note = {Accessed: April 20, 2017}
+	}
+
+	@online{vagrant-create-base-box,
+		title = {Creating a Base Box },
+		author = {Hashicorp},
+		year = {2017},
+		note = {Accessed: April 28, 2017}
 	}
 
 \end{filecontents*}
