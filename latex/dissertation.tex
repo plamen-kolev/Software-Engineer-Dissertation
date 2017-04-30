@@ -604,10 +604,10 @@ The solution does not provide modified version of any software - the reason is t
 This work has been developed using the official documentation for every framework or language. The goal is to minimise exploitation vector by following the instruction of organisations, as they have greater insight into best practices. This makes the solution easier to maintain.
 
 \section{Testing}
-http://guides.rubygems.org/make-your-own-gem
-{\color{red} 
-	To be filled
-}
+
+One of the concerns when developing the platform is testing interoperability. Due to the many moving parts, a subtle change might break the whole system. For that reason, a variety of automated, manual and build in tests are ran periodically.
+
+Most notable, the core \gls{gem} \texttt{deeploy} contains unit tests covering every element of the machine process. The official best practices guide was used to bootstrap the process \cite{ruby-unit-test-guide}. The \gls{ruby} unit test framework is called \texttt{minitest} and is the recommended solution by the official guide.
 
 \newpage
 \section{Evaluation}
@@ -950,7 +950,7 @@ Because of that experience, the dissertation write-up process was changed to doc
 		author = {RubyGem Team},
 		title = {Make your own gem},
 		url = {http://guides.rubygems.org/make-your-own-gem/},
-		urldate = {2011},
+		year = {2011},
 		note = {Accessed: April 13, 2017}
 	}
 
@@ -958,7 +958,15 @@ Because of that experience, the dissertation write-up process was changed to doc
 		author = {Olivier Bonaventure},
 		title = {Computer Networking : Principles, Protocols and Practice},
 		url = {https://www.saylor.org/site/wp-content/uploads/2012/02/Computer-Networking-Principles-Bonaventure-1-30-31-OTC1.pdf},
-		urldate = {2011},
+		year = {2011},
+		note = {Accessed: April 13, 2017}
+	}
+
+	@online{ruby-unit-test-guide,
+		author = {Gem Sawyer},
+		title = {Ruby Guides},
+		url = {http://guides.rubygems.org/make-your-own-gem/},
+		year = {2017},
 		note = {Accessed: April 13, 2017}
 	}
 
