@@ -74,6 +74,12 @@
     description={A daily team meeting where every team member gives an overview of done tasks, current tasks and any future work that needs to be done by that member. }
 }
 
+\newglossaryentry{cron}
+{
+	name={CRON},
+	description={In Linux systems, CRON is a software for scheduling execution of commands periodically}
+}
+
 \newglossaryentry{bash}
 {
     name=bash,
@@ -612,7 +618,10 @@ Most notable, the core \gls{gem} \texttt{deeploy} contains unit tests covering e
 \newpage
 \section{Evaluation}
 
-\subsection{Meeting Requirements}
+\subsection{Introduction}
+The evaluation of the work has been done with the help of Newcastle University \gls{it} department. They helped with identifying potential security and usability issues as well as give general feedback. This chapter contains a detailed overview of their evaluation and also personal remarks about the achieved tasks.
+
+\subsection{Deployment Overview}
 The objective of deploying a virtual machine has been achieved by giving the user the opportunity to deploy 3 distinctive distributions. The process takes between 1-5 minutes and requires an authenticated user.
 
 When using the back-end tool, it is possible to do everything that the web interface can. Issuing \texttt{deploy --help} and \texttt{deploy new --help} brings up a help menu that gives a detailed command line manual page. Figure \ref{fig:deeploy-help} and \ref{fig:deeploy-new-help} show the output.
@@ -635,7 +644,8 @@ When using the back-end tool, it is possible to do everything that the web inter
 
 The interface thoroughly gives information about how to achieve a task with examples. This way, manual deployment can be done with minimal knowledge and lack of documentation by someone unfamiliar with the system. Creating this feature costed large amount of time that could have been allocated to a different feature. The reason is that the tool would rarely be used manually and all the work would end up unnoticed.
 
-efThe time it takes for a machine to build is critical, the project aimed to allow the user to quickly create a machine and be notified upon completion within sensible time. The deployment time of Ubuntu and Debian takes 1 minute (figure \ref{fig:deeploy-ubuntu-output}), Centos takes between 1 and 2 minutes (figure \ref{fig:deeploy-centos-output} and  \ref{fig:deeploy-debian-output}). 
+\subsection{Deployment Time Results}
+The time it takes for a machine to build is critical, the project aimed to allow the user to quickly create a machine and be notified upon completion within sensible time. The deployment time of Ubuntu and Debian takes 1 minute (figure \ref{fig:deeploy-ubuntu-output}), Centos takes between 1 and 2 minutes (figure \ref{fig:deeploy-centos-output} and  \ref{fig:deeploy-debian-output}). 
 
 \begin{figure}[h!]
 \begin{lstlisting}[frame=single, language=Bash]
@@ -663,7 +673,7 @@ Sun 30 Apr 18:46:41 BST 2017
 \label{fig:deeploy-ubuntu-output}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}
 \begin{lstlisting}[frame=single, language=Bash]
 deploy new --distribution centos --vm_user=plamen 
 --auth_token *******
@@ -691,7 +701,7 @@ Sun 30 Apr 19:48:25 BST 2017
 \label{fig:deeploy-centos-output}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}
 \begin{lstlisting}[frame=single, language=Bash]
 deploy new --distribution debian --vm_user=plamen --auth_token *******
 
@@ -716,11 +726,50 @@ Sun 30 Apr 19:50:32 BST 2017
 \label{fig:deeploy-debian-output}
 \end{figure}
 
-A deployment of a machine took more than 5 minutes initially, but work went into reducing that time by packaging common applications together. This approach was successful and reduced client's wait time, making the tool convenient enough to use.
+A deployment of a machine took more than 5 minutes initially, but work went into reducing that time by packaging common applications together. This approach was successful and reduced client's wait time significantly, making the tool more usable.
 
+\subsection{Deployment Progress}
 During build time, the deployment script outputs progress messages when key stages are detected. The system would become more user-friendly if more stages are added. Increasing response time adds to usability and perceived reliability.
 
-Part of allowing users to use any machine they want is the ability to extend the framework to accommodate for more distributions. 
+\subsection{Investigating Failure}
+Deploying a machine successful is not always the case. Large chunk of the code ensures that errors are detected, reported and deployment is rolled back (cleanup). This is important, as the user of the system must always be aware of any progress or failure.
+Detecting and reporting unsuccessful builds is done via providing failure status in the web interface. The failed machine's logs are also accessible, making it possible to report issues via emailing such files to a system maintainer. The platform detects network failures, \gls{ipaddress} allocation errors, bad arguments or build taking too much time as well as deployment script crashes. 
+An issue with this process as of now is that detection happens, but detailed report of what went wrong is lacking. An extension to the system should allow the user to go to a dedicated error page. It will give a description of what exactly caused the failure and give the ability to report it.
+
+  
+\subsection{Extensibility of solution}
+Part of allowing users to use any machine they want is due to the platform being extensible. As described in the work section of this paper, the solution achieves this extensibility - evident by the supported multiple machines. 
+The issue with this feature as of now is lack of documentation. An article that describes the process of adding a new supported distribution with pictures and examples would  improve adoption and ease of use for future development.
+
+\subsection{Monitoring Health}
+Part of the specification is about monitoring virtual instance's health. This topic includes detecting machine crashes, sending log reports, restarting the \gls{kernel} upon failure, monitor available resources and much more. Because creating a complete health monitoring solution would have been outside of the scope of this dissertation and would have taken large amount of time, a compromise solution has been provided. What has been implemented is a balance between effort and usability. 
+
+The current solution uses \gls{cron} job to check the status of each virtual machine every minute. The result updates the web interface and a user can notice that a machine is running or not. The process involves checking if the \gls{ssh} port is responding to packet alive messages. This port has been selected, as it is the gateway to the machine. If no response is given back, the machine is assumed to be dead or unusable.
+
+Other than alive information, the solution provides detailed statistics about resource usage over time. It can show processor load over a large time period, disk writes, network traffic usage and many more parameters. This information is available in the web interface under each machine's own section. The implementation is shown in figure \ref{fig:healthmonitoring-page} .
+
+\begin{figure}[ht]
+	\vspace{0.5cm}
+	\begin{center}
+	\includegraphics[width=7.5cm]{monitorix_screenshot}
+	\end{center}
+	\vspace{0.5cm}
+	\caption{Monitorix view from the web interface}
+	\label{fig:healthmonitoring-page}
+\end{figure}
+
+\subsection{User Interface}
+Large portion of the work went into creating an intuitive web interface through which a machine is being deployed. During the demonstration, positive feedback was provided for the overall experience and feeling throughout the process.
+
+\subsection{Authentication and Credential management}
+
+\subsection{Web interface testing}
+
+\subsection{Documentation}
+
+\subsection{Firewall and package management}
+
+\subsection{System resource validation}
 
 
 \subsection{Feedback}
