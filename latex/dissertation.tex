@@ -575,7 +575,7 @@ Virtual machine instance isolation, privacy and authorisation is one of the most
 The system makes the assumption that the management software is not compromised, as this is where all user credentials and data is stored.
 Access control is done via relational database and every machine command is authenticated against it. 
 
-For password disclosure mitigation, the passwords in the database are not stored as plain-text. Instead, the bcrypt hashing algorithm is used with salt and pepper. In production, the operation is done for 11 rounds. The number of round is a configurable parameter.
+For password disclosure mitigation, the passwords in the database are not stored as plain-text. Instead, the \texttt{bcrypt} hashing algorithm is used with salt and pepper. In production, the operation is done for 11 rounds. The number of round is a configurable parameter.
 
 \subsubsection{\gls{ssh} Credentials without password}
 A decision about access to the machine was made in favour of public-private key cryptography instead of using password. This improves security, as it generates unique pair per instance, and eliminates the risk of forgetting the password or having someone steal or guess it.
@@ -613,7 +613,115 @@ Most notable, the core \gls{gem} \texttt{deeploy} contains unit tests covering e
 \section{Evaluation}
 
 \subsection{Meeting Requirements}
-The objective of deploying a virtual machine has been achieved by giving the user the opportunity to deploy 3 distinctive distributions. The process takes between 1-5 minutes and requires authenticated user.
+The objective of deploying a virtual machine has been achieved by giving the user the opportunity to deploy 3 distinctive distributions. The process takes between 1-5 minutes and requires an authenticated user.
+
+When using the back-end tool, it is possible to do everything that the web interface can. Issuing \texttt{deploy --help} and \texttt{deploy new --help} brings up a help menu that gives a detailed command line manual page. Figure \ref{fig:deeploy-help} and \ref{fig:deeploy-new-help} show the output.
+
+\begin{figure}[h!]
+	\vspace{0.5cm}
+	\includegraphics[width=12cm]{deeploy_help_cli}
+	\vspace{0.5cm}
+	\caption{\texttt{Deeploy} command-line back-end interface for help}
+	\label{fig:deeploy-help}
+\end{figure}
+
+\begin{figure}[h!]
+\vspace{0.5cm}
+\includegraphics[width=12cm]{deeploy_new_help_cli}
+\vspace{0.5cm}
+\caption{\texttt{Deeploy} command-line back-end interface for new machine - help}
+\label{fig:deeploy-new-help}
+\end{figure}
+
+The interface thoroughly gives information about how to achieve a task with examples. This way, manual deployment can be done with minimal knowledge and lack of documentation by someone unfamiliar with the system. Creating this feature costed large amount of time that could have been allocated to a different feature. The reason is that the tool would rarely be used manually and all the work would end up unnoticed.
+
+efThe time it takes for a machine to build is critical, the project aimed to allow the user to quickly create a machine and be notified upon completion within sensible time. The deployment time of Ubuntu and Debian takes 1 minute (figure \ref{fig:deeploy-ubuntu-output}), Centos takes between 1 and 2 minutes (figure \ref{fig:deeploy-centos-output} and  \ref{fig:deeploy-debian-output}). 
+
+\begin{figure}[h!]
+\begin{lstlisting}[frame=single, language=Bash]
+deploy new --distribution ubuntu --vm_user=plamen 
+--auth_token *******
+
+Sun 30 Apr 18:45:50 BST 2017
+Building VM 'callipygian-engaging-reposition'.
+Please wait 
+Status: Configuring network interfaces
+Status: Setting up rules and software
+Build successfull !
+==================================================
+Operation successfull:
+--------------------------------------------------
+VM NAME:	|	callipygian-engaging-reposition
+IP:			|	88.168.56.254
+User:		|	plamen
+--------------------------------------------------
+Distribution:	|	ubuntu
+==================================================
+Sun 30 Apr 18:46:41 BST 2017
+\end{lstlisting}
+\caption{Deploying Ubuntu through back-end interface, time taken before and after}
+\label{fig:deeploy-ubuntu-output}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{lstlisting}[frame=single, language=Bash]
+deploy new --distribution centos --vm_user=plamen 
+--auth_token *******
+
+Sun 30 Apr 19:46:54 BST 2017
+Building VM 'thyroidal-corporate-break-of-the-day'.
+Please wait 
+Status: Configuring network interfaces
+Status: Setting up rules and software
+Status: Packages Repository updated
+Build successfull !
+==================================================
+Operation successfull:
+--------------------------------------------------
+VM NAME:    |	thyroidal-corporate
+IP:			|	88.168.56.251
+User:		|	plamen
+--------------------------------------------------
+Distribution:	|	centos
+==================================================
+Sun 30 Apr 19:48:25 BST 2017
+
+\end{lstlisting}
+\caption{Deploying Centos through back-end interface, time taken before and after}
+\label{fig:deeploy-centos-output}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{lstlisting}[frame=single, language=Bash]
+deploy new --distribution debian --vm_user=plamen --auth_token *******
+
+Sun 30 Apr 19:49:41 BST 2017
+Building VM 'unflurried-sparing-czech'.
+Please wait 
+Status: Configuring network interfaces
+Status: Setting up rules and software
+Build successfull !
+==================================================
+Operation successfull:
+--------------------------------------------------
+VM NAME:		|	unflurried-sparing-czech
+IP:			|	88.168.56.250
+User:		|	plamen
+--------------------------------------------------
+Distribution:	|	debian
+==================================================
+Sun 30 Apr 19:50:32 BST 2017
+\end{lstlisting}
+\caption{Deploying Debian through back-end interface, time taken before and after.}
+\label{fig:deeploy-debian-output}
+\end{figure}
+
+A deployment of a machine took more than 5 minutes initially, but work went into reducing that time by packaging common applications together. This approach was successful and reduced client's wait time, making the tool convenient enough to use.
+
+During build time, the deployment script outputs progress messages when key stages are detected. The system would become more user-friendly if more stages are added. Increasing response time adds to usability and perceived reliability.
+
+Part of allowing users to use any machine they want is the ability to extend the framework to accommodate for more distributions. 
+
 
 \subsection{Feedback}
 
