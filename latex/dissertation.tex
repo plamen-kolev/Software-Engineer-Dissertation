@@ -606,7 +606,7 @@ Furthermore, once the \gls{ssh} keys are downloaded by the client, they are clea
 \subsubsection{Source of packages}
 The solution does not provide modified version of any software - the reason is to reduce overhead of maintenance cost. Even though the machines have pre-installed applications, they have not been modified. This approach makes it possible to easily update any package from its official maintainer instead of by the platform vendor who would not necessary be expert in package management.
 
-\subsubsection{Development practice}
+\subsubsection{Development practices}
 This work has been developed using the official documentation for every framework or language. The goal is to minimise exploitation vector by following the instruction of organisations, as they have greater insight into best practices. This makes the solution easier to maintain.
 
 \section{Testing}
@@ -619,7 +619,7 @@ Most notable, the core \gls{gem} \texttt{deeploy} contains unit tests covering e
 \section{Evaluation}
 
 \subsection{Introduction}
-The evaluation of the work has been done with the help of Newcastle University \gls{it} department. They helped with identifying potential security and usability issues as well as give general feedback. This chapter contains a detailed overview of their evaluation and also personal remarks about the achieved tasks.
+The evaluation of the work has been done with the help of Newcastle University \gls{IT} department. They helped with identifying potential security and usability issues as well as give general feedback. This chapter contains a detailed overview of their evaluation and also personal remarks about the achieved tasks.
 
 \subsection{Deployment Overview}
 The objective of deploying a virtual machine has been achieved by giving the user the opportunity to deploy 3 distinctive distributions. The process takes between 1-5 minutes and requires an authenticated user.
@@ -635,7 +635,7 @@ When using the back-end tool, it is possible to do everything that the web inter
 \end{figure}
 
 \begin{figure}[h!]
-\vspace{0.5cm}
+d Pr\vspace{0.5cm}
 \includegraphics[width=12cm]{deeploy_new_help_cli}
 \vspace{0.5cm}
 \caption{\texttt{Deeploy} command-line back-end interface for new machine - help}
@@ -647,7 +647,7 @@ The interface thoroughly gives information about how to achieve a task with exam
 \subsection{Deployment Time Results}
 The time it takes for a machine to build is critical, the project aimed to allow the user to quickly create a machine and be notified upon completion within sensible time. The deployment time of Ubuntu and Debian takes 1 minute (figure \ref{fig:deeploy-ubuntu-output}), Centos takes between 1 and 2 minutes (figure \ref{fig:deeploy-centos-output} and  \ref{fig:deeploy-debian-output}). 
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \begin{lstlisting}[frame=single, language=Bash]
 deploy new --distribution ubuntu --vm_user=plamen 
 --auth_token *******
@@ -703,7 +703,8 @@ Sun 30 Apr 19:48:25 BST 2017
 
 \begin{figure}
 \begin{lstlisting}[frame=single, language=Bash]
-deploy new --distribution debian --vm_user=plamen --auth_token *******
+deploy new --distribution debian --vm_user=plamen 
+--auth_token *******
 
 Sun 30 Apr 19:49:41 BST 2017
 Building VM 'unflurried-sparing-czech'.
@@ -731,22 +732,21 @@ A deployment of a machine took more than 5 minutes initially, but work went into
 \subsection{Deployment Progress}
 During build time, the deployment script outputs progress messages when key stages are detected. The system would become more user-friendly if more stages are added. Increasing response time adds to usability and perceived reliability.
 
-\subsection{Investigating Failure}
+\subsection{Investigating Failures}
 Deploying a machine successful is not always the case. Large chunk of the code ensures that errors are detected, reported and deployment is rolled back (cleanup). This is important, as the user of the system must always be aware of any progress or failure.
 Detecting and reporting unsuccessful builds is done via providing failure status in the web interface. The failed machine's logs are also accessible, making it possible to report issues via emailing such files to a system maintainer. The platform detects network failures, \gls{ipaddress} allocation errors, bad arguments or build taking too much time as well as deployment script crashes. 
 An issue with this process as of now is that detection happens, but detailed report of what went wrong is lacking. An extension to the system should allow the user to go to a dedicated error page. It will give a description of what exactly caused the failure and give the ability to report it.
-
   
 \subsection{Extensibility of solution}
 Part of allowing users to use any machine they want is due to the platform being extensible. As described in the work section of this paper, the solution achieves this extensibility - evident by the supported multiple machines. 
 The issue with this feature as of now is lack of documentation. An article that describes the process of adding a new supported distribution with pictures and examples would  improve adoption and ease of use for future development.
 
-\subsection{Monitoring Health}
+\subsection{Health monitor}
 Part of the specification is about monitoring virtual instance's health. This topic includes detecting machine crashes, sending log reports, restarting the \gls{kernel} upon failure, monitor available resources and much more. Because creating a complete health monitoring solution would have been outside of the scope of this dissertation and would have taken large amount of time, a compromise solution has been provided. What has been implemented is a balance between effort and usability. 
 
 The current solution uses \gls{cron} job to check the status of each virtual machine every minute. The result updates the web interface and a user can notice that a machine is running or not. The process involves checking if the \gls{ssh} port is responding to packet alive messages. This port has been selected, as it is the gateway to the machine. If no response is given back, the machine is assumed to be dead or unusable.
 
-Other than alive information, the solution provides detailed statistics about resource usage over time. It can show processor load over a large time period, disk writes, network traffic usage and many more parameters. This information is available in the web interface under each machine's own section. The implementation is shown in figure \ref{fig:healthmonitoring-page} .
+Other than alive information, the solution provides detailed statistics about resource usage over time. It can show processor load over a large time period, disk writes, network traffic usage and many more parameters. This information is available in the web interface under each machine's own section. The implementation is shown in figure \ref{fig:healthmonitoring-page}.
 
 \begin{figure}[ht]
 	\vspace{0.5cm}
@@ -758,21 +758,47 @@ Other than alive information, the solution provides detailed statistics about re
 	\label{fig:healthmonitoring-page}
 \end{figure}
 
+Checking the 'alive' status of a machine can be implemented more efficiently. The current implementation is prone to scalability issues, where numerous instances linearly slow down the process. The check also has a large overhead due to making requests to every possible machine (even ones that are known to be in good state). Future work can improve the process by adding a ping service on each machine, which periodically contacts the server to update 'alive' status. This approach would help with scalability and would reflect a machine's state more accurately. 
+Furthermore, the \texttt{Nagios} software can be installed on each instance for even richer status information. Nagios is the industry standard in \gls{IT} infrastructure monitoring \cite{nagios-website}.
+
 \subsection{User Interface}
-Large portion of the work went into creating an intuitive web interface through which a machine is being deployed. During the demonstration, positive feedback was provided for the overall experience and feeling throughout the process.
+Large portion of the work went into creating an intuitive web interface through which a machine is being deployed. During the demonstration, positive feedback was provided for the overall experience and feeling throughout the process. 
+Once the user logs to the web interface, the option to create a new machine becomes available. The pages are shown in figure \ref{fig:welcome_screen_deeploy}.
+
+\begin{figure}[H]
+	\vspace{0.5cm}
+	\includegraphics[width=10cm]{build_form}
+	\vspace{0.5cm}
+	\caption{Home screen and creation form}
+	\label{fig:welcome_screen_deeploy}
+\end{figure}
+
+When submitting the form, few validation passes are made before the machine is build. Validating parameters is essential, or the build process will fail when receiving incorrect arguments. The form provides clues about failed validation, making it convenient to fill in the correct details. 
+Validators check uniqueness of machine name, presence of virtual machine owner, distribution, \gls{ram} within range and conflicting packages.
+
+When the correct parameters are passed and the form is successfully submited, the user receives a progress bar indicating the build status with two possible outcomes - success or failure. The various stages are shown in figure \ref{fig:build_stages}.
+Upon failed build, the logs can be checked to gain insights into what went wrong. 
+
+From the web dashboard, it is possible to view the running state of all machines. Extra information about \gls{ipaddress} of the machine, user name and distribution is also displayed. The interface also allows for the machine to be powered off, turned back on or destroyed. The dashboard allows the user to download authentication certificate and gives instruction commands on how to access the machine.
+
+This window makes it easy for a new user who has not used certificate based authentication to quickly access the machine. User experience techniques are also used to illustrate commands, failures, and important information. The dashboard is shown in figure \ref{fig:web-interface-dashboard}. The page is also responsive, ensuring proper presentation across different screen resolutions.
+
+\begin{figure}[H]
+	\vspace{0.5cm}
+	\includegraphics[width=10cm]{dashboard}
+	\vspace{0.5cm}
+	\caption{Dashboard sample screen}
+	\label{fig:web-interface-dashboard}
+\end{figure}
+
 
 \subsection{Authentication and Credential management}
-
-\subsection{Web interface testing}
 
 \subsection{Documentation}
 
 \subsection{Firewall and package management}
 
 \subsection{System resource validation}
-
-
-\subsection{Feedback}
 
 \subsection{Results}
 
@@ -1160,6 +1186,13 @@ Because of that experience, the dissertation write-up process was changed to doc
 		author = {Core Security},
 		year = {17 March, 2010},
 		note = {Accessed: April 28, 2017}
+	}
+	
+	@online{nagios-website,
+		title = {Nagios Official Website},
+		author = {Nagios Enterprises.},
+		year = {2017},
+		note = {Accessed: May 1, 2017}
 	}
 
 \end{filecontents*}

@@ -1,5 +1,5 @@
 <div class="col-md-12 container">
-    
+
     <% if user_signed_in? %>
         <div class="col-md-12">
           <h1>Personal</h1>
@@ -7,7 +7,7 @@
         <hr>
 
         </div>
-        
+
         <p><%= link_to "Create new virtual machine", new_machine_path, class: 'btn btn-primary dropdown-toggle' %></p>
         <% if @machines.length == 0 %>
           <div class="alert alert-info" role="alert">
@@ -25,7 +25,7 @@
               </tr>
 
               <% @machines.each do |machine| %>
-                  <tr class="machines <%= cycle('oddrow', 'evenrow') -%>">
+                  <tr class="machines <%= cycle('oddrow', 'evenrow') -%> <% if  machine.build_status == 'failure' %> oddrow <% end %>">
                       <td><%= link_to machine.title, machine_path(machine.title) %> (<%= link_to 'Logs', machine_log_path(machine.title), target: :_blank %>) </td>
                       <td><%= machine.distribution %></td>
                       <td><%= machine.vm_user %>@<%= machine.ip %></td>
@@ -56,8 +56,7 @@
                       </td>
 
                   <tr class="machines">
-                      <td colspan="3">
-
+                      <td colspan="4">
                           <% if machine.deployed && machine.build_status != 'failure' %>
                               <% if machine.alive %>
                                   <div class="alert alert-info inline-block" role="alert">
@@ -90,7 +89,7 @@
                   <% else %>
                   <tr id="<%= machine.title %>_download_certificate_tr" class="machines <%= cycle('oddrow', 'evenrow') -%>">
                       <% if machine.pem %>
-                          <td colspan="3">
+                          <td colspan="4">
                               <p class="alert-warning">
                                   To securely connect to your machine, you have to use .pem certificate file to prove your identity.<br/>
                                   Download file now and store it securely, we will not store this file on our servers. If you download the file and lose it, that will make it impossible to connect to that machine.
@@ -118,9 +117,9 @@
                   </tr>
 
                   <tr class="machines">
-                      <td colspan="3">
+                      <td colspan="4">
                           To connect to this machine, navigate to the directory of the certificate and issue the following commands<br/>
-                          <code>sudo chmod 400 <%= machine.title %>.pem && ssh -i <%= machine.title %>.pem <%= machine.vm_user %>@<%= machine.ip %> </code>
+                          <code>chmod 400 <%= machine.title %>.pem && ssh -i <%= machine.title %>.pem <%= machine.vm_user %>@<%= machine.ip %> </code>
                       </td>
                   </tr>
                   <% end %>
