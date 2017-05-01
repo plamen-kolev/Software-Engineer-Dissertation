@@ -759,7 +759,7 @@ Other than alive information, the solution provides detailed statistics about re
 \end{figure}
 
 Checking the 'alive' status of a machine can be implemented more efficiently. The current implementation is prone to scalability issues, where numerous instances linearly slow down the process. The check also has a large overhead due to making requests to every possible machine (even ones that are known to be in good state). Future work can improve the process by adding a ping service on each machine, which periodically contacts the server to update 'alive' status. This approach would help with scalability and would reflect a machine's state more accurately. 
-Furthermore, the \texttt{Nagios} software can be installed on each instance for even richer status information. Nagios is the industry standard in \gls{IT} infrastructure monitoring \cite{nagios-website}.
+Furthermore, the \texttt{Nagios} software can be installed on each instance for even richer status information. Nagios is the industry standard in \gls{IT} infrastructure monitoring \cite{nagios-website}. Having this open-source professional grade  software would also benefit the platform when it comes to adoption and reliability.
 
 \subsection{User Interface}
 Large portion of the work went into creating an intuitive web interface through which a machine is being deployed. During the demonstration, positive feedback was provided for the overall experience and feeling throughout the process. 
@@ -791,8 +791,8 @@ This window makes it easy for a new user who has not used certificate based auth
 	\label{fig:web-interface-dashboard}
 \end{figure}
 
-
 \subsection{Authentication and Credential management}
+The feedback \gls{nuit} for using certificate files for authentication instead of passwords was positive from .
 
 \subsection{Documentation}
 
