@@ -1,0 +1,55 @@
+\BOOKMARK [1][-]{section.1}{Declaration}{}% 1
+\BOOKMARK [1][-]{section.2}{Acknowledgements}{}% 2
+\BOOKMARK [1][-]{section.3}{Abstract}{}% 3
+\BOOKMARK [1][-]{section.4}{Introduction}{}% 4
+\BOOKMARK [2][-]{subsection.4.1}{Purpose}{section.4}% 5
+\BOOKMARK [2][-]{subsection.4.2}{Demographic}{section.4}% 6
+\BOOKMARK [2][-]{subsection.4.3}{Aim and Objectives}{section.4}% 7
+\BOOKMARK [3][-]{subsubsection.4.3.1}{Aim}{subsection.4.3}% 8
+\BOOKMARK [3][-]{subsubsection.4.3.2}{Objectives}{subsection.4.3}% 9
+\BOOKMARK [1][-]{section.5}{Background}{}% 10
+\BOOKMARK [2][-]{subsection.5.1}{Virtualisation and "The Cloud" }{section.5}% 11
+\BOOKMARK [2][-]{subsection.5.2}{Similar in the field}{section.5}% 12
+\BOOKMARK [3][-]{subsubsection.5.2.1}{Amazon Web Services\222EC2}{subsection.5.2}% 13
+\BOOKMARK [3][-]{subsubsection.5.2.2}{Microsoft Azure}{subsection.5.2}% 14
+\BOOKMARK [1][-]{section.6}{Work}{}% 15
+\BOOKMARK [2][-]{subsection.6.1}{Overview}{section.6}% 16
+\BOOKMARK [2][-]{subsection.6.2}{Vagrant}{section.6}% 17
+\BOOKMARK [2][-]{subsection.6.3}{Workflow}{section.6}% 18
+\BOOKMARK [2][-]{subsection.6.4}{Languages and frameworks}{section.6}% 19
+\BOOKMARK [2][-]{subsection.6.5}{The deeploy module - architecture}{section.6}% 20
+\BOOKMARK [2][-]{subsection.6.6}{Virtual networks}{section.6}% 21
+\BOOKMARK [2][-]{subsection.6.7}{Extending virtual machines}{section.6}% 22
+\BOOKMARK [2][-]{subsection.6.8}{Security}{section.6}% 23
+\BOOKMARK [3][-]{subsubsection.6.8.1}{Passwords and authentication}{subsection.6.8}% 24
+\BOOKMARK [3][-]{subsubsection.6.8.2}{ssh Credentials without password}{subsection.6.8}% 25
+\BOOKMARK [3][-]{subsubsection.6.8.3}{Leaking passwords}{subsection.6.8}% 26
+\BOOKMARK [3][-]{subsubsection.6.8.4}{Guest Isolation}{subsection.6.8}% 27
+\BOOKMARK [3][-]{subsubsection.6.8.5}{ssh Keys}{subsection.6.8}% 28
+\BOOKMARK [3][-]{subsubsection.6.8.6}{Source of packages}{subsection.6.8}% 29
+\BOOKMARK [3][-]{subsubsection.6.8.7}{Development practices}{subsection.6.8}% 30
+\BOOKMARK [1][-]{section.7}{Testing}{}% 31
+\BOOKMARK [1][-]{section.8}{Evaluation}{}% 32
+\BOOKMARK [2][-]{subsection.8.1}{Introduction}{section.8}% 33
+\BOOKMARK [2][-]{subsection.8.2}{Deployment Overview}{section.8}% 34
+\BOOKMARK [2][-]{subsection.8.3}{Deployment Time Results}{section.8}% 35
+\BOOKMARK [2][-]{subsection.8.4}{Deployment Progress}{section.8}% 36
+\BOOKMARK [2][-]{subsection.8.5}{Investigating Failures}{section.8}% 37
+\BOOKMARK [2][-]{subsection.8.6}{Extensibility of solution}{section.8}% 38
+\BOOKMARK [2][-]{subsection.8.7}{Health monitor}{section.8}% 39
+\BOOKMARK [2][-]{subsection.8.8}{Web Interface - requirement}{section.8}% 40
+\BOOKMARK [2][-]{subsection.8.9}{Authentication and Credential management}{section.8}% 41
+\BOOKMARK [2][-]{subsection.8.10}{Documentation}{section.8}% 42
+\BOOKMARK [2][-]{subsection.8.11}{Firewall and package management}{section.8}% 43
+\BOOKMARK [2][-]{subsection.8.12}{System resource validation}{section.8}% 44
+\BOOKMARK [1][-]{section.9}{Conclusion}{}% 45
+\BOOKMARK [2][-]{subsection.9.1}{Constrains}{section.9}% 46
+\BOOKMARK [1][-]{section.10}{References}{}% 47
+\BOOKMARK [1][-]{section.11}{Glossary}{}% 48
+\BOOKMARK [1][-]{section.12}{Appendix}{}% 49
+\BOOKMARK [1][-]{section.13}{Planning}{}% 50
+\BOOKMARK [2][-]{subsection.13.1}{First Semester}{section.13}% 51
+\BOOKMARK [2][-]{subsection.13.2}{Second Semester}{section.13}% 52
+\BOOKMARK [3][-]{subsubsection.13.2.1}{Developmen}{subsection.13.2}% 53
+\BOOKMARK [3][-]{subsubsection.13.2.2}{Learning period}{subsection.13.2}% 54
+\BOOKMARK [3][-]{subsubsection.13.2.3}{Documentation}{subsection.13.2}% 55

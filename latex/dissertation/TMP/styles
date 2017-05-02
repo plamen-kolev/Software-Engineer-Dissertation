@@ -1,0 +1,14 @@
+article
+hyperref 
+graphicx 
+glossaries 
+cite 
+color 
+babel english
+filecontents 
+xcolor dvipsnames
+natbib numbers,sort&compress
+ifthen 
+pdfpages 
+listings 
+float 

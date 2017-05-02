@@ -17,9 +17,9 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage{ifthen}
-\usepackage{pdfpages} % used to include pdf of architecture, etc
+\usepackage{pdfpages} 
 \usepackage{listings}
-\usepackage{float} % used for [H] in figures
+\usepackage{float} 
 
 % ENDUSERPACKAGES
 
@@ -263,13 +263,15 @@
 I declare that this dissertation represents my own work except where otherwise stated.
 
 \section{Acknowledgements}
-I would like to thank to Dr. Neil Speirs for the valuable support, feedback and resources he provided during the project, without which this work would be impossible. I would also like to thank  Helen Griffiths and Chris Ritson from Newcastle University IT for finding time to help me with project evaluation.  And finally, I want to thank to the open-source communities of Oracle, Ruby On Rails and Puppet for contributing with great examples, references and materials. 
+{\color{red}
+	pending
+}
 
 \newpage
 \section{Abstract}
-
-This paper describes the process of building a platform for deployment of virtual servers. The methodology for creating the final product includes a research into virtualisation from leading vendors such as Oracle, Intel, Amazon and Microsoft. It covers creating the initial architecture, building and testing the core features and provides insights into the decisions made during the process. The document goes through the development, testing and evaluation process and describes the software patterns and practices of building such platform. These patterns include managing source-code with version control, having multiple development environments, writing unit tests and building software incrementally and using best practice guides from leading experts in the field.
-
+{\color{red}
+	pending
+}
 \newpage
 \tableofcontents
 \newpage
@@ -286,7 +288,7 @@ As of the year 2016, there are currently three billion people that have access t
     "The quickest and cheapest method to providing the necessary level of abstraction in terms of server resource is currently virtualisation\ldots" \par\raggedleft--- \textup{Paul Robinson}, Google Cloud Computing \cite{SecuringtheCloud}
 \end{quote}
 
-The term virtualisation is defined as the ability of one piece of hardware to run multiple operating systems \cite{b}. In this paper, a virtual machine, or an instance, is an operating system that runs on top of a "physical" operating system. The "physical" \gls{operating-system} is referred to as the "host" system. Creating a platform that uses such technology enables an organisation to quickly set up any environment (operating system) that can be used in a variety of cases. It is important to note that there are two forms of virtualisation, bare-metal and hosted \cite{virtualisation-security-guidance}. This work uses the latter approach. The difference is illustrated in figure  \ref{fig:types-of-virtualisation}.
+The term virtualisation is defined as the ability of one piece of hardware to run multiple operating systems \cite{b}. In this paper, a virtual machine, or an instance, is an operating system that runs on top of a "physical" operating system. The "physical" \gls{operating-system} is referred to as the "host" system. Creating a platform that uses such technology enables an organisation to quickly set up any environment (operating system) that can be used in a variety of cases. It is important to note that there are two forms of virtualisation, bare-metal and hosted \cite{virtualisation-security-guidance}. This work uses the latter approach. The difference is illustrated in  \ref{fig:types-of-virtualisation}.
 
 \begin{figure}[H]
 	\vspace{1cm}
@@ -302,14 +304,14 @@ Automating physical servers is also nearly impossible due to them lacking the ne
 
 These are some problems that virtualisation technology can solve. It is now a core part of most new desktop Intel© chips and is integral part of all server-grade processors as listed in the manufacturer's page \cite{intel-virtualisation-chip-support}.
 
-This helps with performance, as a virtual machine can be configured on the fly to use flexible amount of resources or a shared pool of computational units. This technology also allows for easy server migration. A physical machine cannot be moved in a couple of minutes to a different continent (physical location) but a virtualised operating system can be "copy-pasted" at will for very little cost. Physical infrastructure is also prone to hardware-related bugs. This is a case when a software solution causes issues, because it was not tested on all the machines that run it. These physical machines might have different network cards, processors, lack certain hardware components or have older hardware version. The virtual platform has the benefit of abstracting away these components, ensuring that once tested, the software running on top of it would exhibit predictable behaviour \cite{heterogenious-cloud-computing}[p.59].
+This helps with performance, as a virtual machine can be configured on the fly to use flexible amount of resources or a shared pool of computational units. This technology also allows for easy server migration. A physical machine cannot be moved in a couple of minutes to a different continent (physical location) but a virtualised operating system can be "copy-pasted" at will for very little cost. Physical infrastructure is also prone to hardware-related bugs. This is a case when a software solution causes issues, because it was not tested on all the machines that run it. These physical machines might have different network cards, processors, lack certain hardware components or have older hardware version. The virtual platform has the benefit of abstracting away these components, ensuring that once tested, the software running on top of it would exhibit predictable behaviour \cite{nious-cloud-computing}[p.59].
 
 How does virtualisation allow for easy \glspl{migration}? It achieves the task by abstracting away the available physical storage medium. On the virtualised host, they would appear as a large pool of \glspl{partition} with the data ready for management. Figure \ref{fig:vmware-datastore-image} shows a real world application, where more storage device can be added and the current one can be assigned/managed.
 
 \begin{figure}[H]
 	\vspace{1cm}
 	\centering
-	\includegraphics[width=1\textwidth]{datastore.png}
+	\includegraphics[width=1\textwidth]{datastore}
 	\caption{VSphere data-store manager screen-shot. Source \protect\cite{vmware-storage-pool-screenshot}}
 	\label{fig:vmware-datastore-image}
 	\vspace{3cm}
@@ -359,7 +361,7 @@ Give developers a platform for easy deployment, management and monitoring of vir
 
 \begin{figure}[h!]
     \vspace{0.5cm}
-    \includegraphics[width=12cm]{heterogenious.png}
+    \includegraphics[width=12cm]{heterogenious}
     \vspace{0.5cm}
     \caption{Heterogeneous server configuration. Source \protect\cite{heterogenious-cloud-computing}[p.59]}
     \label{fig:birds}
@@ -390,7 +392,7 @@ It is impossible to talk about such infrastructure without considering the most 
 
 \begin{figure}[h!]
 	\vspace{0.5cm}
-	\includegraphics[width=12cm]{httpatomoreillycomsourceoreillyimages329633.png}
+	\includegraphics[width=12cm]{httpatomoreillycomsourceoreillyimages329633}
 	\vspace{0.5cm}
 	\caption{Resource and vCenter Management, allocating \gls{cpu} resources. Source \protect\cite{vmware-cookbook}}
 	\label{fig:cpu-allocation}
@@ -515,7 +517,7 @@ Because the Ruby language draws inspiration and shares similar features with Per
 
 \begin{figure}[h!]
 	\vspace{0.5cm}
-	\includegraphics[width=12cm]{architecture.png}
+	\includegraphics[width=12cm]{architecture}
 	\vspace{0.5cm}
 	\caption{Architecture of the deeploy module}
 	\label{fig:deeploy-architecture}
@@ -552,11 +554,11 @@ The module also partitions the file structure in two parts - \texttt{userspace} 
 In \texttt{manifests}, two very important files can be found. One is in charge of automating firewall rules, packages, users and permissions. This automation is done once the machine has been brought to live. The file is created by the configuration manager depending on which Linux distribution has been used. This folder also contain a shell script that can be used when automation script is lacking. This file has been left there for integrity.
 As mentioned, there is also a top-level folder called \texttt{test\_userspace}, it is used for separation of concerns and is where testing machines are deployed to keep production machines intact.
 
-The process of building a virtual machine by the \texttt{deeploy} module is also illustrated in figure \ref{fig:deeploy-build-flow}.
+The process of building a virtual machine by the \texttt{deeploy} module is also illustrated in figure \cite{deeploy-build-flow}.
 
 \begin{figure}[h!]
 	\vspace{0.5cm}
-	\includegraphics[width=12cm]{build-flow.png}
+	\includegraphics[width=12cm]{build-flow}
 	\vspace{0.5cm}
 	\caption{Deeploy build flow}
 	\label{fig:deeploy-build-flow}
@@ -573,49 +575,32 @@ Additionally, the process of creating a virtual instance is using a custom image
 
 Then a friendly name to virtual machine instance name map entry has to be added to the \texttt{deeploy.rb}. Then a folder with the name of the new distribution must be placed in configurations containing files who subclass \texttt{firewall\_config.rb packages\_config.rb puppet\_config.rb shell\_config.rb vagrant\_config.rb}. These files might be left blank if the distribution uses the default commands. Any deviations should be extended via the child modules.
 
-\subsection{The Web Server}
-The core module \texttt{deeploy} is natively integrated into a \gls{ruby-on-rails} web-server. Ruby on Rails has been chosen as it is one of the most popular web frameworks and is used by big online companies like Twitter \cite{twitter-uses-rails}. Other reasons are that during the evaluation process, the documentation and support was extensive and provided enough information to quickly start building application with little overhead. Being written in \gls{ruby} made it an easy choice when integrating.
 
-First part of building the web server was creating relational database model for different machine states and building a credential system for user authentication and authorisation. Password concerns are described in section ~\nameref{Passwords and authentication}.
-
-The web interface has a web form where machines can be build. Every filed in this form is validated on the back-end to ensure proper arguments. The validation happens transparently through the \texttt{deeploy}'s helper functions. Upon detected issues, such as open ports outside of available ranges, conflicting instance name, invalid packages, logged user and supported distribution. Upon detection of invalid arguments, the web form gives hints of what went wrong. The form also validates compatible packages, for example package nginx and apache2 cannot be installed simultaneously as they work on the same port. The process is illustrated in figure \ref{fig:valid-invalid-form}. 
-
-\begin{figure}[h!]
-	\vspace{0.5cm}
-	\includegraphics[width=12cm]{valid_invalid_form.png}
-	\vspace{0.5cm}
-	\caption{Web Interface form for deployment of an instance}
-	\label{fig:valid-invalid-form}
-\end{figure}
-
-Initially, the interface had an issue with instance build responsiveness. It took the command to build a machine and it waited until the whole process was completed (1 to 2 minutes) before the success screen was shown. This is the case, as the web request was not completed until the \texttt{deeploy} module returned an exit code to the web server. 
-
-Sidekiq module
-
-Healthmonitor cronjob
-
-Asynchronous build
-
-Providing logs
-
-Providing management interface
+{\color{red}
+Discuss the web interface
+}
 
 \subsection{Security}
 
 Virtual machine instance isolation, privacy and authorisation is one of the most important security concerns. This section describes the decisions and considerations made during the development process. A variety of architectural and operational choices were also made to ensure that upon security breach, little or no data gets leaked.
 
 \subsubsection{Passwords and authentication}
-\label{Passwords and authentication}
 The system makes the assumption that the management software is not compromised, as this is where all user credentials and data is stored.
 Access control is done via relational database and every machine command is authenticated against it.
 
 For password disclosure mitigation, the passwords in the database are not stored as plain-text. Instead, the \texttt{bcrypt} hashing algorithm is used with salt and pepper. In production, the operation is done for 11 rounds. The number of round is a configurable parameter.
 
 \subsubsection{\gls{ssh} Credentials without password}
-A decision about access to the machine is made in favour of public-private key cryptography instead of using password. This improves security, as it generates unique pair per instance, and eliminates the risk of forgetting the password or having someone steal or guess it.
-Two strategies were considered - allowing users to import mandatory public key they initially generated, or generate key that the user can later download. The second approach was selected, as it would make it much more convenient and intuitive for the demographic of the platform. Future work should allow privacy concerned system administrators to generate their own keys and disable any keys generated by the system.
+A decision about access to the machine was made in favour of public-private key cryptography instead of using password. This improves security, as it generates unique pair per instance, and eliminates the risk of forgetting the password or having someone steal or guess it.
+Two strategies were considered - allowing users to import mandatory public key they initially generated, or generate key that the user can later download. The second approach was selected, as it would make it much more convenient and intuitive for the target demographic of the platform. Future work should allow paranoid system administrators to generate their own keys and disable any keys generated by the system.
 
-\subsubsection{Guest Isolation concerns}
+\subsubsection{Leaking passwords}
+When using the command line tool on the server platform, \gls{unix} command \texttt{ps} can be used to see all arguments passed to the build tool. When using the --password flag, this will disclose it.
+For this exploit to happen, the platform owner must invoke the tool manually.
+
+In the most common case, this command would leak the \gls{api} key of a user. Future work might opt for using a hash of the \gls{api} key and have the option of regenerating it. This would significantly reduce chances f further exploitation upon system breach.
+
+\subsubsection{Guest Isolation}
 This is one of the greatest benefits of running in a virtual environment. All the machine operating on top of the platform are isolated from one another and one \gls{operating-system}'s calls cannot interfere with another. In terms of architecture, this is a good design, but there are some drawbacks.
 
 One of the most severe issues with guest isolation is exploiting a vulnerability in virtualisation memory and reading another machine's memory. This attack is known as "Virtual PC Hypervisor - Memory Protection" \cite{virtual-pc-hypervisor-memory-protection}.  An exploit can cause passwords leak and disclosure of sensitive information.
@@ -629,15 +614,8 @@ Furthermore, once the \gls{ssh} keys are downloaded by the client, they are clea
 The solution does not provide modified version of any software - the reason is to reduce overhead of maintenance cost. Even though the machines have pre-installed applications, they have not been modified. This approach makes it possible to easily update any package from its official maintainer instead of by the platform vendor who would not necessary be expert in package management.
 
 \subsubsection{Development practices}
-This work has been developed using the official documentation for every framework or language. The goal is to minimise exploitation vector by following the instruction of organisations, as they have greater insight into best practices. This makes the solution easier to maintain. 
+This work has been developed using the official documentation for every framework or language. The goal is to minimise exploitation vector by following the instruction of organisations, as they have greater insight into best practices. This makes the solution easier to maintain.
 
-The work-flow is supported with the version control tool Git, which is an industry standard in managing software. Using the tool allowed for a main branch where all stable features were merged. Each new feature was developed in a branch, a term that references to having an isolated copy of the source code containing the new bits of functionality.
-
-Continuous integration methodologies were adopted, and the solution benefits from having two separate environments for testing and deployment, ensuring normal operation during new features (lack environment conflicts due to isolation).
-
-The object-oriented pattern for building modular software was used. This approach ensured separation of concerns - each file does one function and it does it well. This approach makes it possible to extend the functionality of the platform easily.
-
-\newpage
 \section{Testing}
 
 One of the concerns when developing the platform is testing interoperability. Due to the many moving parts, a subtle change might break the whole system. For that reason, a variety of automated, manual and build in tests are ran periodically.
@@ -658,7 +636,7 @@ When using the back-end tool, it is possible to do everything that the web inter
 
 \begin{figure}[h!]
 	\vspace{0.5cm}
-	\includegraphics[width=12cm]{deeploy_help_cli.png}
+	\includegraphics[width=12cm]{deeploy_help_cli}
 	\vspace{0.5cm}
 	\caption{\texttt{Deeploy} command-line back-end interface for help}
 	\label{fig:deeploy-help}
@@ -666,7 +644,7 @@ When using the back-end tool, it is possible to do everything that the web inter
 
 \begin{figure}[h!]
 d Pr\vspace{0.5cm}
-\includegraphics[width=12cm]{deeploy_new_help_cli.png}
+\includegraphics[width=12cm]{deeploy_new_help_cli}
 \vspace{0.5cm}
 \caption{\texttt{Deeploy} command-line back-end interface for new machine - help}
 \label{fig:deeploy-new-help}
@@ -784,7 +762,7 @@ Other than alive information, the solution provides detailed statistics about re
 \begin{figure}[ht]
 	\vspace{0.5cm}
 	\begin{center}
-	\includegraphics[width=7.5cm]{monitorix_screenshot.png}
+	\includegraphics[width=7.5cm]{monitorix_screenshot}
 	\end{center}
 	\vspace{0.5cm}
 	\caption{Monitorix view from the web interface}
@@ -794,14 +772,14 @@ Other than alive information, the solution provides detailed statistics about re
 Checking the 'alive' status of a machine can be implemented more efficiently. The current implementation is prone to scalability issues, where numerous instances linearly slow down the process. The check also has a large overhead due to making requests to every possible machine (even ones that are known to be in good state). Future work can improve the process by adding a ping service on each machine, which periodically contacts the server to update 'alive' status. This approach would help with scalability and would reflect a machine's state more accurately.
 Furthermore, the \texttt{Nagios} software can be installed on each instance for even richer status information. Nagios is the industry standard in \gls{IT} infrastructure monitoring \cite{nagios-website}. Having this open-source professional grade  software would also benefit the platform when it comes to adoption and reliability.
 
-\subsection{Web Interface}
+\subsection{Web Interface - requirement}
 The requirement ~\nameref{itm:website}  is listed on page~\pageref{itm:website} in section `\ref{itm:website}'.
 Large portion of the work went into creating an intuitive web interface through which a machine is being deployed. During the demonstration, positive feedback was provided for the overall experience and feeling throughout the process.
 Once the user logs to the web interface, the option to create a new machine becomes available. The pages are shown in figure \ref{fig:welcome_screen_deeploy}.
 
 \begin{figure}[H]
 	\vspace{0.5cm}
-	\includegraphics[width=10cm]{build_form.jpg}
+	\includegraphics[width=10cm]{build_form}
 	\vspace{0.5cm}
 	\caption{Home screen and creation form}
 	\label{fig:welcome_screen_deeploy}
@@ -843,12 +821,6 @@ Something that is currently lacking is the ability to amend ports and packages. 
 \subsection{System resource validation}
 During the deployment process, a machine is validated on its own and the platform's state is not considered. For example, if there is not disk space available or the system is low on \gls{ram}, this will not get detected and failure might happen. This has not been implemented because it requires managing virtual hard drives and storing meta-data about the virtual machine with status of the whole platform. It would require large sum of work and would take significant amount of work, possibly making it impossible to deliver the platform on time.
 Not tackling this issue helped allocate more time on the core components and the actual operations of this work.
-
-\subsubsection{Security evaluation - Leaking passwords}
-When using the command line tool on the server platform, \gls{unix} command \texttt{ps} can be used to see all arguments passed to the build tool. When using the --password flag, this will disclose it.
-For this exploit to happen, the platform owner must invoke the tool manually.
-
-In the most common case, this command would leak the \gls{api} key of a user. Future work might opt for using a hash of the \gls{api} key and have the option of regenerating it. This would significantly reduce chances f further exploitation upon system breach.
 
 \newpage
 \section{Conclusion}
@@ -1236,15 +1208,6 @@ Because of that experience, the dissertation write-up process was changed to doc
 		author = {Nagios Enterprises.},
 		year = {2017},
 		note = {Accessed: May 1, 2017}
-	}
-
-	@online{twitter-uses-rails,
-		title = {},
-		author = {},
-		year = {},
-		note = {Accessed: May 1, 2017},
-		url = {https://www.infoq.com/articles/twitter-java-use},
-		
 	}
 
 \end{filecontents*}

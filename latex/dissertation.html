@@ -1,0 +1,2569 @@
+<img 
+src="dissertation0x.png" alt="PICT" >
+                                                                  
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"  
+  "http://www.w3.org/TR/html4/loose.dtd">  
+<html > 
+<head><title>CSC3095:Web Platform for Digital Deployment of Virtual Servers</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+<meta name="generator" content="TeX4ht (http://www.tug.org/tex4ht/)"> 
+<meta name="originator" content="TeX4ht (http://www.tug.org/tex4ht/)"> 
+<!-- html --> 
+<meta name="src" content="dissertation.tex"> 
+<link rel="stylesheet" type="text/css" href="dissertation.css"> 
+</head><body 
+>
+   <div class="maketitle">
+                                                                  <img 
+src="dissertation1x.png" alt="PICT" >
+<img 
+src="dissertation2x.png" alt="PICT" >
+                                                                  
+                                                                  <img 
+src="dissertation3x.png" alt="PICT" >
+<img 
+src="dissertation4x.png" alt="PICT" >
+                                                                  
+
+<h2 class="titleHead">CSC3095:Web Platform for Digital Deployment
+of Virtual Servers</h2>
+        <div class="author" ><span 
+class="cmr-12">Plamen Kolev</span>
+<br /><span 
+class="cmbx-12">Student number </span><span 
+class="cmr-12">: 130221960</span>
+<br />   <span 
+class="cmbx-12">Supervisor </span><span 
+class="cmr-12">: Neil Speirs</span></div><br />
+<div class="date" ><span 
+class="cmr-12">03.03.2017</span></div>
+   </div>
+<!--l. 261--><p class="indent" >
+                                                                  <img 
+src="dissertation5x.png" alt="PICT" >
+<img 
+src="dissertation6x.png" alt="PICT" >
+                                                                  
+   <h3 class="sectionHead"><span class="titlemark">1   </span> <a 
+ id="x1-10001"></a>Declaration</h3>
+<!--l. 263--><p class="noindent" >I declare that this dissertation represents my own work except where otherwise
+stated.
+<!--l. 265--><p class="noindent" >
+   <h3 class="sectionHead"><span class="titlemark">2   </span> <a 
+ id="x1-20002"></a>Acknowledgements</h3>
+<!--l. 267--><p class="noindent" >pending 
+<!--l. 270--><p class="indent" >
+                                                                  <img 
+src="dissertation7x.png" alt="PICT" >
+<img 
+src="dissertation8x.png" alt="PICT" >
+                                                                  
+   <h3 class="sectionHead"><span class="titlemark">3   </span> <a 
+ id="x1-30003"></a>Abstract</h3>
+<!--l. 273--><p class="noindent" >pending 
+                                                                  <img 
+src="dissertation9x.png" alt="PICT" >
+<img 
+src="dissertation10x.png" alt="PICT" >
+                                                                  
+   <h3 class="likesectionHead"><a 
+ id="x1-40003"></a>Contents</h3>
+   <div class="tableofcontents">
+   <span class="sectionToc" >1 <a 
+href="#x1-10001" id="QQ2-1-1">Declaration</a></span>
+<br />   <span class="sectionToc" >2 <a 
+href="#x1-20002" id="QQ2-1-2">Acknowledgements</a></span>
+<br />   <span class="sectionToc" >3 <a 
+href="#x1-30003" id="QQ2-1-3">Abstract</a></span>
+<br />   <span class="sectionToc" >4 <a 
+href="#x1-60004" id="QQ2-1-6">Introduction</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >4.1 <a 
+href="#x1-70004.1" id="QQ2-1-9">Purpose</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >4.2 <a 
+href="#x1-80004.2" id="QQ2-1-10">Demographic</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >4.3 <a 
+href="#x1-90004.3" id="QQ2-1-11">Aim and Objectives</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >4.3.1 <a 
+href="#x1-100004.3.1" id="QQ2-1-12">Aim</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >4.3.2 <a 
+href="#x1-110004.3.2" id="QQ2-1-13">Objectives</a></span>
+<br />   <span class="sectionToc" >5 <a 
+href="#x1-120005" id="QQ2-1-14">Background</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >5.1 <a 
+href="#x1-130005.1" id="QQ2-1-15">Virtualisation and &#8221;The Cloud&#8221; </a></span>
+<br />   &#x00A0;<span class="subsectionToc" >5.2 <a 
+href="#x1-140005.2" id="QQ2-1-18">Similar in the field</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >5.2.1 <a 
+href="#x1-150005.2.1" id="QQ2-1-19">Amazon Web Services<sup class="textsuperscript"><span 
+class="cmr-9">TM</span></sup>EC2</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >5.2.2 <a 
+href="#x1-160005.2.2" id="QQ2-1-20">Microsoft Azure</a></span>
+<br />   <span class="sectionToc" >6 <a 
+href="#x1-170006" id="QQ2-1-21">Work</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >6.1 <a 
+href="#x1-180006.1" id="QQ2-1-22">Overview</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >6.2 <a 
+href="#x1-190006.2" id="QQ2-1-23">Vagrant</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >6.3 <a 
+href="#x1-200006.3" id="QQ2-1-24">Workflow</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >6.4 <a 
+href="#x1-210006.4" id="QQ2-1-25">Languages and frameworks</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >6.5 <a 
+href="#x1-220006.5" id="QQ2-1-26">The deeploy module - architecture</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >6.6 <a 
+href="#x1-230006.6" id="QQ2-1-29">Virtual networks</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >6.7 <a 
+href="#x1-240006.7" id="QQ2-1-30">Extending virtual machines</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >6.8 <a 
+href="#x1-250006.8" id="QQ2-1-31">Security</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >6.8.1 <a 
+href="#x1-260006.8.1" id="QQ2-1-32">Passwords and authentication</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >6.8.2 <a 
+href="#x1-270006.8.2" id="QQ2-1-33"><span id="textcolor1">SSH</span> Credentials without password</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >6.8.3 <a 
+href="#x1-280006.8.3" id="QQ2-1-34">Leaking passwords</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >6.8.4 <a 
+href="#x1-290006.8.4" id="QQ2-1-35">Guest Isolation</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >6.8.5 <a 
+href="#x1-300006.8.5" id="QQ2-1-36"><span id="textcolor2">SSH</span> Keys</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >6.8.6 <a 
+href="#x1-310006.8.6" id="QQ2-1-37">Source of packages</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >6.8.7 <a 
+href="#x1-320006.8.7" id="QQ2-1-38">Development practices</a></span>
+<br />   <span class="sectionToc" >7 <a 
+href="#x1-330007" id="QQ2-1-39">Testing</a></span>
+<br />   <span class="sectionToc" >8 <a 
+href="#x1-340008" id="QQ2-1-40">Evaluation</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >8.1 <a 
+href="#x1-350008.1" id="QQ2-1-41">Introduction</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >8.2 <a 
+href="#x1-360008.2" id="QQ2-1-42">Deployment Overview</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >8.3 <a 
+href="#x1-370008.3" id="QQ2-1-45">Deployment Time Results</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >8.4 <a 
+href="#x1-380008.4" id="QQ2-1-49">Deployment Progress</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >8.5 <a 
+href="#x1-390008.5" id="QQ2-1-50">Investigating Failures</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >8.6 <a 
+href="#x1-400008.6" id="QQ2-1-51">Extensibility of solution</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >8.7 <a 
+href="#x1-410008.7" id="QQ2-1-52">Health monitor</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >8.8 <a 
+href="#x1-420008.8" id="QQ2-1-54">Web Interface - requirement</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >8.9 <a 
+href="#x1-430008.9" id="QQ2-1-57">Authentication and Credential management</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >8.10 <a 
+href="#x1-440008.10" id="QQ2-1-58">Documentation</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >8.11 <a 
+href="#x1-450008.11" id="QQ2-1-59">Firewall and package management</a></span>
+                                                                  <img 
+src="dissertation11x.png" alt="PICT" >
+<img 
+src="dissertation12x.png" alt="PICT" >
+                                                                  
+<br />   &#x00A0;<span class="subsectionToc" >8.12 <a 
+href="#x1-460008.12" id="QQ2-1-60">System resource validation</a></span>
+<br />   <span class="sectionToc" >9 <a 
+href="#x1-470009" id="QQ2-1-61">Conclusion</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >9.1 <a 
+href="#x1-480009.1" id="QQ2-1-62">Constrains</a></span>
+<br />   <span class="sectionToc" >10 <a 
+href="#x1-4900010" id="QQ2-1-63">References</a></span>
+<br />   <span class="sectionToc" >11 <a 
+href="#x1-5100011" id="QQ2-1-65">Glossary</a></span>
+<br />   <span class="sectionToc" >12 <a 
+href="#x1-5300012" id="QQ2-1-67">Appendix</a></span>
+<br />   <span class="sectionToc" >13 <a 
+href="#x1-5400013" id="QQ2-1-68">Planning</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >13.1 <a 
+href="#x1-5500013.1" id="QQ2-1-69">First Semester</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >13.2 <a 
+href="#x1-5600013.2" id="QQ2-1-70">Second Semester</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >13.2.1 <a 
+href="#x1-5700013.2.1" id="QQ2-1-71">Developmen</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >13.2.2 <a 
+href="#x1-5800013.2.2" id="QQ2-1-72">Learning period</a></span>
+<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >13.2.3 <a 
+href="#x1-5900013.2.3" id="QQ2-1-73">Documentation</a></span>
+   </div>
+                                                                  <img 
+src="dissertation13x.png" alt="PICT" >
+<img 
+src="dissertation14x.png" alt="PICT" >
+                                                                  
+   <h3 class="likesectionHead"><a 
+ id="x1-50003"></a>List of Figures</h3>
+   <div class="tableofcontents"><span class="lofToc" >1&#x00A0;<a 
+href="#x1-6001r1">The two types of virtualisation [10]</a></span><br /><span class="lofToc" >2&#x00A0;<a 
+href="#x1-6002r2">VSphere data-store manager screen-shot.
+Source [18]</a></span><br /><span class="lofToc" >3&#x00A0;<a 
+href="#x1-13001r3">Heterogeneous server configuration. Source [24][p.59]</a></span><br /><span class="lofToc" >4&#x00A0;<a 
+href="#x1-13002r4">Resource and
+vCenter Management, allocating <span id="textcolor3">CPU</span> resources. Source [36]</a></span><br /><span class="lofToc" >5&#x00A0;<a 
+href="#x1-22001r5">Architecture of the
+deeploy module</a></span><br /><span class="lofToc" >6&#x00A0;<a 
+href="#x1-22002r6">Deeploy build flow</a></span><br /><span class="lofToc" >7&#x00A0;<a 
+href="#x1-36001r7"><span 
+class="cmtt-10">Deeploy </span>command-line back-end interface for
+help</a></span><br /><span class="lofToc" >8&#x00A0;<a 
+href="#x1-36002r8"><span 
+class="cmtt-10">Deeploy </span>command-line back-end interface for new machine - help</a></span><br /><span class="lofToc" >9&#x00A0;<a 
+href="#x1-37020r9">Deploying
+Ubuntu through back-end interface, time taken before and after</a></span><br /><span class="lofToc" >10&#x00A0;<a 
+href="#x1-37043r10">Deploying
+Centos through back-end interface, time taken before and after</a></span><br /><span class="lofToc" >11&#x00A0;<a 
+href="#x1-37063r11">Deploying Debian
+through back-end interface, time taken before and after.</a></span><br /><span class="lofToc" >12&#x00A0;<a 
+href="#x1-41001r12">Monitorix view from
+the web interface</a></span><br /><span class="lofToc" >13&#x00A0;<a 
+href="#x1-42001r13">Home screen and creation form</a></span><br /><span class="lofToc" >14&#x00A0;<a 
+href="#x1-42002r14">Dashboard sample screen</a></span><br />
+   </div>
+                                                                  <img 
+src="dissertation15x.png" alt="PICT" >
+<img 
+src="dissertation16x.png" alt="PICT" >
+                                                                  
+<!--l. 282--><p class="indent" >
+                                                                  <img 
+src="dissertation17x.png" alt="PICT" >
+<img 
+src="dissertation18x.png" alt="PICT" >
+                                                                  
+   <h3 class="sectionHead"><span class="titlemark">4   </span> <a 
+ id="x1-60004"></a>Introduction</h3>
+<!--l. 285--><p class="noindent" >As of the year 2016, there are currently three billion people that have access
+to the internet [<a 
+href="#Xictonline">15</a>]. Google handles between two and three billion search
+queries per day [<a 
+href="#Xa">30</a>]. Dealing with so many requests on daily basis requires full
+utilisation of the available hardware resources. Part of Google&#8217;s ability to scale
+and be efficient is due to the emergence of cloud infrastructure. The topic
+of this paper deals with one of the building blocks of cloud computing -
+virtualisation.
+<!--l. 287--><p class="indent" >
+     <div class="quote">
+     <!--l. 288--><p class="noindent" >&#8221;The quickest and cheapest method to providing the necessary level
+     of abstraction in terms of server resource is currently virtualisation&#x2026;&#8221;
+                                                           <!--l. 288--><p class="noindent" >&#8212;
+                                                         Paul
+                                                     Robinson,
+                                                       Google
+                                                        Cloud
+                                                    Computing
+                                                          [<a 
+href="#XSecuringtheCloud">38</a>]</div>
+<!--l. 291--><p class="indent" >   The term virtualisation is defined as the ability of one piece of hardware to run
+multiple operating systems [<a 
+href="#Xb">17</a>]. In this paper, a virtual machine, or an instance, is an
+operating system that runs on top of a &#8221;physical&#8221; operating system. The &#8221;physical&#8221;
+<a 
+href="#glo:operating-system"><span id="textcolor4">operating system</span></a> is referred to as the &#8221;host&#8221; system. Creating a platform
+that uses such technology enables an organisation to quickly set up any
+environment (operating system) that can be used in a variety of cases. It is
+important to note that there are two forms of virtualisation, bare-metal and
+hosted [<a 
+href="#Xvirtualisation-security-guidance">10</a>]. This work uses the latter approach. The difference is illustrated in
+<a 
+href="#x1-6001r1">1<!--tex4ht:ref: fig:types-of-virtualisation --></a>.
+<!--l. 293--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                  <img 
+src="dissertation19x.png" alt="PICT" >
+<img 
+src="dissertation20x.png" alt="PICT" >
+                                                                  
+<a 
+ id="x1-6001r1"></a>
+                                                                  <img 
+src="dissertation21x.png" alt="PICT" >
+<img 
+src="dissertation22x.png" alt="PICT" >
+                                                                  
+
+<!--l. 296--><p class="noindent" ><img 
+src="resources/images/virtualisation.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;1: </span><span  
+class="content">The two types of virtualisation [<a 
+href="#Xvirtualisation-security-guidance">10</a>]</span></div><!--tex4ht:label?: x1-6001r1 -->
+                                                                  <img 
+src="dissertation23x.png" alt="PICT" >
+<img 
+src="dissertation24x.png" alt="PICT" >
+                                                                  
+<!--l. 300--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 302--><p class="indent" >   When a business wants to buy a high performing computer for each employee,
+that would requires physical access to perform repairs, maintenance and
+management. Physical systems are more difficult to manage because they are
+distributed across a large area, making quick access slow or impossible. Another
+downside of not using virtualisation is non-scalable hardware utilisation. This is the
+case where one machine uses maximum resources but another one is idle.
+A computer that has predefined hardware specification cannot use more
+processing power than initially installed. Automating physical servers is also
+nearly impossible due to them lacking the necessary abstraction control
+layer.
+<!--l. 305--><p class="indent" >   These are some problems that virtualisation technology can solve. It is now a core
+part of most new desktop Intel chips and is integral part of all server-grade
+processors as listed in the manufacturer&#8217;s page [<a 
+href="#Xintel-virtualisation-chip-support">31</a>].
+<!--l. 307--><p class="indent" >   This helps with performance, as a virtual machine can be configured on the fly to
+use flexible amount of resources or a shared pool of computational units. This
+technology also allows for easy server migration. A physical machine cannot be
+moved in a couple of minutes to a different continent (physical location) but a
+virtualised operating system can be &#8221;copy-pasted&#8221; at will for very little cost. Physical
+infrastructure is also prone to hardware-related bugs. This is a case when a software
+solution causes issues, because it was not tested on all the machines that run it.
+These physical machines might have different network cards, processors, lack certain
+hardware components or have older hardware version. The virtual platform has the
+benefit of abstracting away these components, ensuring that once tested,
+the software running on top of it would exhibit predictable behaviour [<span 
+class="cmbx-10">?</span>
+][p.59].
+<!--l. 309--><p class="indent" >   How does virtualisation allow for easy <a 
+href="#glo:migration"><span id="textcolor5">migrations</span></a>? It achieves the task by
+abstracting away the available physical storage medium. On the virtualised host, they
+would appear as a large pool of <a 
+href="#glo:partition"><span id="textcolor6">partitions</span></a> with the data ready for management.
+Figure <a 
+href="#x1-6002r2">2<!--tex4ht:ref: fig:vmware-datastore-image --></a> shows a real world application, where more storage device can be added and
+the current one can be assigned/managed.
+<!--l. 311--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                  <img 
+src="dissertation25x.png" alt="PICT" >
+<img 
+src="dissertation26x.png" alt="PICT" >
+                                                                  
+<a 
+ id="x1-6002r2"></a>
+                                                                  <img 
+src="dissertation27x.png" alt="PICT" >
+<img 
+src="dissertation28x.png" alt="PICT" >
+                                                                  
+
+<!--l. 314--><p class="noindent" ><img 
+src="resources/images/datastore.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;2: </span><span  
+class="content">VSphere data-store manager screen-shot. Source [<a 
+href="#Xvmware-storage-pool-screenshot">18</a>]</span></div><!--tex4ht:label?: x1-6002r2 -->
+                                                                  <img 
+src="dissertation29x.png" alt="PICT" >
+<img 
+src="dissertation30x.png" alt="PICT" >
+                                                                  
+<!--l. 318--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 320--><p class="indent" >   Having access to the virtualisation host allows the data of such system to be
+copied all at once to a different provider with the only requirement - have enough
+capacity to store the information. The alternative without using a virtualisation
+platform would be to gain physical access to each storage medium individually and
+copying the data incrementally.
+   <h4 class="subsectionHead"><span class="titlemark">4.1   </span> <a 
+ id="x1-70004.1"></a>Purpose</h4>
+<!--l. 323--><p class="noindent" >The project aims to utilise open-source virtualisation technology and make the
+process of managing and creating virtual machines automated through a web
+interface. The solution should allow a system manager to open a website, fill in a web
+form with enough information about the desired <a 
+href="#glo:operating-system"><span id="textcolor7">operating system</span></a>, click a button and
+create it. After that, the person should be able to securely download identity file and
+connect to the machine.
+<!--l. 325--><p class="indent" >   The management website should also allow for the selection of predefined software
+packages. The solution should also show if the virtual machine is alive and allow the
+user to shut it down and bring it up. Port management should also be possible when
+building the machine. These features, alongside the benefits of virtualisation should
+create a secure infrastructure for many applications, from virtual office workstation,
+to server testing and deployment.
+<!--l. 327--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">4.2   </span> <a 
+ id="x1-80004.2"></a>Demographic</h4>
+<!--l. 328--><p class="noindent" >This solution is aimed at small companies who want to get the benefits of
+virtualisation, as well as easier machine management. It does so by giving the user
+common Linux versions, simple credential management and instructions during
+operations. The target demographic is also businesses who have low budget for
+automation and system management and cannot afford to have a dedicated team
+member for the task. Another use case is individuals who want to perform
+calculations on a machine and then power it off, who do not have resources or the
+time to set up their own environment.
+<!--l. 331--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">4.3   </span> <a 
+ id="x1-90004.3"></a>Aim and Objectives</h4>
+<!--l. 332--><p class="noindent" >
+   <h5 class="subsubsectionHead"><span class="titlemark">4.3.1   </span> <a 
+ id="x1-100004.3.1"></a>Aim</h5>
+<!--l. 333--><p class="noindent" >Give developers a platform for easy deployment, management and monitoring of
+virtual servers.
+                                                                  <img 
+src="dissertation31x.png" alt="PICT" >
+<img 
+src="dissertation32x.png" alt="PICT" >
+                                                                  
+   <h5 class="subsubsectionHead"><span class="titlemark">4.3.2   </span> <a 
+ id="x1-110004.3.2"></a>Objectives</h5>
+<!--l. 336--><p class="noindent" >
+     <dl class="description"><dt class="description">
+<span 
+class="cmbx-10">Deploy</span> </dt><dd 
+class="description">Deploy a virtual machine of the user&#8217;s choice through shell scripts
+         <ol  class="enumerate1" >
+         <li 
+  class="enumerate" id="x1-11002x1">The main feature of the solution is the deployment of the virtual
+         machine instances. The following will be achieved by using Oracle&#8217;s
+         virtualisation documentation for Virtualbox and the shell scripting
+         language and the automation tool <a 
+href="#glo:puppet"><span id="textcolor8">puppet</span></a>.
+         </li>
+         <li 
+  class="enumerate" id="x1-11004x2">The above will be accomplished through the custom ruby module
+         written for this dissertation - <span 
+class="cmtt-10">deeploy</span></li></ol>
+     </dd><dt class="description">
+<span 
+class="cmbx-10">Firewall</span> </dt><dd 
+class="description">Configure firewall settings
+         <ul class="itemize1">
+         <li class="itemize">Will be achieved through the virtualisation technology&#8217;s <a 
+href="#glo:api"><span id="textcolor9">API</span></a>. The
+         purpose  is  to  add  extra  security  layer  to  the  guest  <a 
+href="#glo:operating-system"><span id="textcolor10">operating
+         system</span></a>. Firewall settings are managed by a software called ufw -
+         Uncomplicated Fire Wall</li></ul>
+     </dd><dt class="description">
+<span 
+class="cmbx-10">Access</span> </dt><dd 
+class="description">Allow console access and set up authentication credentials (SSH keys) for
+     the instances
+         <ul class="itemize1">
+         <li class="itemize">The solution will generate unique shell credentials for each machine
+         individually. Upon creation, the user should be able to download the
+         credentials and use them to connect to the instance.</li></ul>
+     </dd><dt class="description">
+<span 
+class="cmbx-10">Health Monitoring</span> </dt><dd 
+class="description">Monitor &#8217;alive&#8217; status of the virtual instances, show machine
+     resources
+     </dd><dt class="description">
+<span 
+class="cmbx-10">Package install</span> </dt><dd 
+class="description">Allow the user to install software from a predefined list
+     </dd><dt class="description">
+<span 
+class="cmbx-10">Web Interface</span> </dt><dd 
+class="description">Create a website that will manage and instantiate the machines on
+     the behalf of the user</dd></dl>
+<!--l. 357--><p class="noindent" >
+                                                                  <img 
+src="dissertation33x.png" alt="PICT" >
+<img 
+src="dissertation34x.png" alt="PICT" >
+                                                                  
+   <h3 class="sectionHead"><span class="titlemark">5   </span> <a 
+ id="x1-120005"></a>Background</h3>
+<!--l. 359--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">5.1   </span> <a 
+ id="x1-130005.1"></a>Virtualisation and &#8221;The Cloud&#8221; </h4>
+<!--l. 360--><p class="noindent" >&#8221;The most important feature of virtualisation that enables its cloud capabilities is
+the level of abstraction it provides. The key feature is the ability to hide the
+underlying hardware architecture.&#8221; [<a 
+href="#Xheterogenious-cloud-computing">24</a>][p.59]. The article Heterogeneous Cloud
+Computing: The way forward considers an architecture that interleaves different
+hardware components together, enabling their utilisation on-demand. For example, a
+cluster of graphic cards or processors that support different <a 
+href="#glo:operating-system"><span id="textcolor11">operating system</span></a>
+architectures (x86, ARM, ATOM) can be attached in domain-specific tasks. Such
+set-up would allow the platform to be more flexible and less congested because
+these dedicated components would do the &#8221;heavy lifting. It also has the
+benefit of doing special computations - like rendering video much quicker and
+efficient.
+<!--l. 362--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                  <img 
+src="dissertation35x.png" alt="PICT" >
+<img 
+src="dissertation36x.png" alt="PICT" >
+                                                                  
+<a 
+ id="x1-13001r3"></a>
+                                                                  <img 
+src="dissertation37x.png" alt="PICT" >
+<img 
+src="dissertation38x.png" alt="PICT" >
+                                                                  
+
+<!--l. 364--><p class="noindent" ><img 
+src="resources/images/heterogenious.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;3: </span><span  
+class="content">Heterogeneous server configuration. Source [<a 
+href="#Xheterogenious-cloud-computing">24</a>][p.59]</span></div><!--tex4ht:label?: x1-13001r3 -->
+                                                                  <img 
+src="dissertation39x.png" alt="PICT" >
+<img 
+src="dissertation40x.png" alt="PICT" >
+                                                                  
+<!--l. 368--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 370--><p class="indent" >   &#8221;Virtualization abstracts compute resourcestypically as virtual machines
+(VMs)with associated storage and networking connectivity. The cloud determines
+how those virtualized resources are allocated, delivered, and presented. Virtualization
+is not necessary to create a cloud environment, but it enables rapid scaling of
+resources in a way that nonvirtualized environments find hard to achieve.&#8221;[<a 
+href="#Xintel-cloud-computing-guide">4</a>][p10]
+<!--l. 379--><p class="indent" >   Virtualisation provides the abstraction that makes it much easier to get data to
+and from the cloud. This technology is the basis for creating high availability services
+and applications when implemented properly.[<a 
+href="#Xintel-cloud-computing-guide">4</a>][p10]. Intel&#8217;s virtualisation and cloud
+computing guide talks about it as a way to provide corporate platform services in a
+more organised matter. The guide also covers making the infrastructure easier to
+organise from the standpoint of <a 
+href="#glo:IT"><span id="textcolor12">I.T.</span></a>. This is the case because these virtual
+servers are easier to diagnose and monitor as well as organise and automate
+[<a 
+href="#Xintel-cloud-computing-guide">4</a>][p8]. Virtual machine diagnostics and monitoring is a practice where the
+behaviour of the machine is observed over a period of time. This includes
+network traffic, memory usage, <a 
+href="#glo:cpu"><span id="textcolor13">CPU</span></a> performance and utilisation. It also
+contains information about how much disk storage the machine is taking and
+information about the machine&#8217;s running status. Additionally, x86 computer
+architecture support hardware statistics counters. Performance counters
+are part of the kernel&#8217;s sub-system and are the basis for providing reliable
+hardware information for monitoring and reporting [<a 
+href="#Xrhel-performance-counters">25</a>]. This data can be
+used to gain insights into why a machine is malfunctioning. These counters
+can be vital in determining the type of issue with the machine (network
+related issue, hard-drive read-write failure, defecting processor, etc.). Network
+outages can be detected and accommodated for by analysing aggregated
+network statistics. This is useful in an event of denial of service attacks
+(DoS). High networking usage might indicate malicious behaviour such as
+artificial congestion - an attacker making numerious requests to slow down the
+service. On the other hand, this type of monitoring can ensure on-demand
+scaling in critical moments. Legitimate customer demands must be met by
+allocating more hardware and network bandwidth as a result of increased
+demand.
+<!--l. 385--><p class="indent" >   Virtual machine organisation is the practice of managing a variety of components
+associated with the platform and its resources. The <a 
+href="#glo:IT"><span id="textcolor14">I.T.</span></a> department of an
+organisation is in charge of managing the physical storage on which the
+&#8221;virtual&#8221; platform is running. In the infrastructure disks are partitioned and
+organised in pools - then mounted over the network. This configuration
+uses S.A.N, or storage area network. This is a network entirely dedicated to
+transferring data between computer systems and the storage drives [<a 
+href="#Xibm-san-storage">32</a>][p.11].
+Mapping physical drives to virtual ones over the network is a stepping stone in
+enabling any type of server infrastructure, including virtualised one, to have
+enough capacity to grow and meet the customer&#8217;s demands. It also ensures the
+right level of redundancy, as a large portion of the hard drives can be put in
+place in case of a failure. Storing virtual machine on network drives makes it
+possible to copy machine instance from one cluster to another, or change data
+centres.
+                                                                  <img 
+src="dissertation41x.png" alt="PICT" >
+<img 
+src="dissertation42x.png" alt="PICT" >
+                                                                  
+<!--l. 388--><p class="indent" >   Any server infrastructure requires high bandwidth network connection, virtual
+networks are no exception. The network throughput of the platform depends on the
+internet service provider (ISP) physical connection speed. That network is used
+by the virtualisation platform and is converted to numerous private and
+public networks internally. The benefits of such abstraction is the ability to
+create flexible and disposable internal/external networks per machine or
+cluster of machines. The ability to share a network, or be in a private network
+is a security consideration. This feature is important from the standpoint
+of security. For example, for a business logic application, one can set up
+a client-facing web server that is accessible from the global internet. The
+machine on which this application is running will have a database connection to
+another machine running a dedicated database software (mysql, postgresql,
+mongodb,etc.). The connection between the two machine would be configured
+as a private network. It ensures that nobody from the outside world has
+access to that database machine. This configuration is explored in Amazon&#8217;s
+accessing database instance in a virtual cloud[<a 
+href="#Xamazon-scenarios-for-accessing-db-instance-in-vpc">29</a>]. The setup is shown in figure
+<span 
+class="cmbx-10">??</span>.
+<!--l. 391--><p class="indent" >   It is impossible to talk about such infrastructure without considering the most
+important component of operations, the <a 
+href="#glo:cpu"><span id="textcolor15">CPU</span></a>. When providing the hardware
+resources for computing, having enough calculation power is essential, otherwise each
+virtual machine would be slow and unresponsive. A server rack with many
+Intel<sup class="textsuperscript"><span 
+class="cmr-9">TM</span></sup><a 
+href="#glo:xeon"><span id="textcolor16">Xeon</span></a> or other server-grade chip are set to run on top of the virtualisation
+technology (<a 
+href="#glo:virtualbox"><span id="textcolor17">virtualbox</span></a>, <a 
+href="#glo:vmware"><span id="textcolor18">VmWare</span></a> <a 
+href="#x1-6001r1">1<!--tex4ht:ref: fig:types-of-virtualisation --></a>. All of the computing resources are then also
+abstracted away. For example, when using <a 
+href="#glo:vmware"><span id="textcolor19">VmWare</span></a> <a 
+href="#glo:vsphere"><span id="textcolor20">vSphere</span></a>, instead of
+seeing every single processor, you are given the option of allocating certain
+amount of megahertz per instance. A guide on configuring <a 
+href="#glo:cpu"><span id="textcolor21">CPU</span></a> usage is
+covered in VMware Cookbook [<a 
+href="#Xvmware-cookbook">36</a>]. CPU allocation screen is shown in figure
+<a 
+href="#x1-13002r4">4<!--tex4ht:ref: fig:cpu-allocation --></a>
+<!--l. 393--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                  <img 
+src="dissertation43x.png" alt="PICT" >
+<img 
+src="dissertation44x.png" alt="PICT" >
+                                                                  
+<a 
+ id="x1-13002r4"></a>
+                                                                  <img 
+src="dissertation45x.png" alt="PICT" >
+<img 
+src="dissertation46x.png" alt="PICT" >
+                                                                  
+
+<!--l. 395--><p class="noindent" ><img 
+src="resources/images/httpatomoreillycomsourceoreillyimages329633.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;4:  </span><span  
+class="content">Resource  and  vCenter  Management,  allocating  <a 
+href="#glo:cpu"><span id="textcolor22">CPU</span></a>  resources.
+Source [<a 
+href="#Xvmware-cookbook">36</a>]</span></div><!--tex4ht:label?: x1-13002r4 -->
+                                                                  <img 
+src="dissertation47x.png" alt="PICT" >
+<img 
+src="dissertation48x.png" alt="PICT" >
+                                                                  
+<!--l. 399--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 401--><p class="indent" >   Considering the fact that all of these hardware components have to be managed
+by a human to ensure smooth operation during heavy and light loads, automation
+plays very big role in the process. Automation is the process of automatically
+creating <a 
+href="#glo:virtual_machine"><span id="textcolor23">virtual machine</span></a> and dynamically allocating computing resources associated
+with it. Big cloud platforms such as <a 
+href="#glo:amazon-web-services"><span id="textcolor24">Amazon Web Services</span></a> and <a 
+href="#glo:azure"><span id="textcolor25">Azure</span></a> have almost
+absolute automation. Azure even provide their tool as a service - Azure Automation
+[<a 
+href="#Xazure-automation-overview">9</a>], Amazon use tools like <a 
+href="#glo:chef"><span id="textcolor26">chef</span></a> and in-house tools [<a 
+href="#Xthe-case-for-investing-cloud-automation">23</a>]. Computing resources are
+allocated based on usage, where a paying customer can use a lot of resources for a
+certain price (scaling on demand).
+   <h4 class="subsectionHead"><span class="titlemark">5.2   </span> <a 
+ id="x1-140005.2"></a>Similar in the field</h4>
+<!--l. 404--><p class="noindent" >For the duration of this work, a variety of technologies, frameworks and utilities have
+been evaluated, that will achieve the goal of automated system deployment. Part of
+the work was experimenting with different &#8221;cloud&#8221; virtual machine deployment
+services. This has given insight into the key requirements that ought to be provided
+by the platform.
+<!--l. 406--><p class="indent" >   Something that all major platform providers have in common is the ability to
+scale and their price model. The reason is that the platform allow for the hardware
+configuration parameters to be tuned at will per user within minutes. This means
+that when the <a 
+href="#glo:virtual_machine"><span id="textcolor27">virtual machine</span></a> is created, later on the &#8221;hardware&#8221; resources can be
+modified and changed easily.
+<!--l. 408--><p class="indent" >   A commonality is the price model. All of the below mentioned platform providers
+use some form of pay-as-you-go. This means that companies requiring extra
+computation at time critical periods can take advantage of more computation. An
+example would be personal project of Harrison Kinsley for gene sequencing in his
+online learning series[<a 
+href="#Xharrison-kinsley-tutorials">19</a>]. He used 5 <a 
+href="#glo:gpu"><span id="textcolor28">GPUs</span></a> for an hour to perform the necessary
+computation, then retrieved the results and then destroyed the machines. As a
+result, one can use sophisticated hardware for a fee with very little set-up
+overhead.
+<!--l. 410--><p class="noindent" >
+   <h5 class="subsubsectionHead"><span class="titlemark">5.2.1   </span> <a 
+ id="x1-150005.2.1"></a>Amazon Web Services<sup class="textsuperscript"><span 
+class="cmr-9">TM</span></sup>EC2</h5>
+<!--l. 412--><p class="noindent" >Amazon are the leaders in cloud deployment with 30% world market share[<a 
+href="#Xamazon-marketshare">11</a>]. Their
+services range from providing <a 
+href="#glo:dns"><span id="textcolor29">DNS</span></a> to deploying their custom virtual machines.
+Because of the widespread usage of their service (popularity), this is the main
+platform that inspired the work.
+<!--l. 414--><p class="indent" >   The main focus of the dissertation is not about the AWS platform, but about
+their service EC2 - virtual machine deployment.
+<!--l. 416--><p class="indent" >   EC2 allows a user to do the following:
+     <ul class="itemize1">
+     <li class="itemize">Create scalable <a 
+href="#glo:virtual_machine"><span id="textcolor30">virtual machine</span></a>. This includes selecting <a 
+href="#glo:operating-system"><span id="textcolor31">operating system</span></a>
+     type with a variety of options (Windows Server Ubuntu Linux, Red Hat
+                                                                  <img 
+src="dissertation49x.png" alt="PICT" >
+<img 
+src="dissertation50x.png" alt="PICT" >
+                                                                  
+     Linux, Amazon Custom Images). They also offer machines for database
+     only purposes (Amazon RDS).
+     </li>
+     <li class="itemize">Select from a family of options that include general purpose machines,
+     memory optimised, storage optimised, machines with dedicate <a 
+href="#glo:gpu"><span id="textcolor32">GPUs</span></a> and
+     optimised storage.
+     </li>
+     <li class="itemize">The amount of <a 
+href="#glo:cpu"><span id="textcolor33">CPUs</span></a> to be used for the machine
+     </li>
+     <li class="itemize">Amount of <a 
+href="#glo:ram"><span id="textcolor34">RAM</span></a> in gigabytes to be used
+     </li>
+     <li class="itemize">Storage capacity and storage type, e.g. how much and how fast it can be.
+     </li>
+     <li class="itemize">Because  they  have  their  network  load-balancers,  it  is  also  possible  to
+     configure the network performance of the machine(throughput).
+     </li>
+     <li class="itemize">Configure IPV6 support. IPV6 is the updated internet protocol that allows for
+     3<span 
+class="cmmi-10">.</span>4 <span 
+class="cmsy-10">&#x00D7; </span>10<sup><span 
+class="cmr-7">38</span></sup>
+     network addresses to be allocated.</li></ul>
+<!--l. 434--><p class="indent" >   Some other benefits of EC2 is the ability to integrate with every other Amazon
+Web Service product. The service is also running on top of Amazon&#8217;s network which
+ensures reliability and availability across many regions. EC2&#8217;s pricing model has
+application for hobbyists and corporations alike due to the provided hardware
+options and the flexible pricing. Prices range from $0.044 to $14.400 per hour [<a 
+href="#Xamazon-ec2-prices">14</a>].
+The service also receives publicity from having Netflix and Airbnb hosted on their
+platform. A downside to AWS is that they do not allow for custom <a 
+href="#glo:kernel"><span id="textcolor35">kernels</span></a>
+to be used, leaving users to rely on the predefined images provided by the
+platform.
+<!--l. 438--><p class="noindent" >
+   <h5 class="subsubsectionHead"><span class="titlemark">5.2.2   </span> <a 
+ id="x1-160005.2.2"></a>Microsoft Azure</h5>
+<!--l. 439--><p class="noindent" >Microsoft Azure is also among the biggest virtual machine and cloud computing
+providers in the world and has 10% of the global market[<a 
+href="#Xamazon-marketshare">11</a>]. As this is a Microsoft
+product, it is fully integrated with their text editor - Visual Studio. This makes it
+easier and more convenient to develop, deliver and integrate with Azure through the
+tool. Azure also has the benefit of being a very large provider - allowing them to use
+34 data centres distributed across the globe [<a 
+href="#Xazure-datacenter-locations">5</a>]. This ensures high availability and
+fast response times. The service is also compliant with regional regulations and
+requirements, making it suitable for fintech and health service deployment
+[<a 
+href="#Xazure-compliance">6</a>].
+                                                                  <img 
+src="dissertation51x.png" alt="PICT" >
+<img 
+src="dissertation52x.png" alt="PICT" >
+                                                                  
+<!--l. 441--><p class="indent" >   As the platform is provided by Microsoft, the creators of Windows, it can provide
+<a 
+href="#glo:operating-system"><span id="textcolor36">operating system</span></a> specific features to its customers, such as integration with their
+products and services. This makes it ideal form Windows compliant companies that
+have bought licensed corporate software. Similar support would be difficult from a
+different provider, as they are not the maintainers of the software provided. Users of
+<a 
+href="#glo:azure"><span id="textcolor37">Azure</span></a> also have the benefits of Microsoft Windows features coming first to their
+platform.
+<!--l. 443--><p class="indent" >
+                                                                  <img 
+src="dissertation53x.png" alt="PICT" >
+<img 
+src="dissertation54x.png" alt="PICT" >
+                                                                  
+   <h3 class="sectionHead"><span class="titlemark">6   </span> <a 
+ id="x1-170006"></a>Work</h3>
+<!--l. 446--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">6.1   </span> <a 
+ id="x1-180006.1"></a>Overview</h4>
+<!--l. 447--><p class="noindent" >This chapter aims to give a more in-depth view into the process of scoping,
+developing, planning and building the application. This ranges from picking the tools
+to limiting the scope, making assumptions, as well as the scheduling of each task.
+Creating such a platform from scratch is a daunting task even for an experienced
+software engineer.
+<!--l. 449--><p class="indent" >   For the above reason, the initial research into building the right tool-chain was
+essential to the success of the project.
+<!--l. 451--><p class="indent" >   The development methodology can be broken into the following steps:
+     <ol  class="enumerate1" >
+     <li 
+  class="enumerate" id="x1-18002x1">Research  into  virtualisation  technology  to  understand  the  underlying
+     components.
+     </li>
+     <li 
+  class="enumerate" id="x1-18004x2">Select  free  and  open-source  software  components  that  can  be  coupled
+     together to orchestrate and utilise above mentioned technology. The public
+     libraries used also allowed me to extend, modify and build on top of during
+     the development process.
+     </li>
+     <li 
+  class="enumerate" id="x1-18006x3">Build a set of core and advanced features.  Core features are essential
+     for a good operational and usable solution. Advanced features are the
+     things that make this solution go above and beyond the scope of existing
+     applications.
+     </li>
+     <li 
+  class="enumerate" id="x1-18008x4">Integrate components into one final solution
+     </li>
+     <li 
+  class="enumerate" id="x1-18010x5">Do sufficient testing to ensure that the platform behaves as expected.
+     </li>
+     <li 
+  class="enumerate" id="x1-18012x6">Build a web interface that ties the creation process into a web form
+     </li>
+     <li 
+  class="enumerate" id="x1-18014x7">Allow for health-monitoring per machine instance</li></ol>
+<!--l. 473--><p class="indent" >   A hypervisor is a computer software or hardware that creates the platform layer
+to a virtual machine and makes it possible to host multiple instances with different
+configurations [<a 
+href="#Xibmvirtualisation">22</a>].
+                                                                  <img 
+src="dissertation55x.png" alt="PICT" >
+<img 
+src="dissertation56x.png" alt="PICT" >
+                                                                  
+<!--l. 475--><p class="indent" >   Initially, the plan was to use a hypervisor virtualisation solution such as
+<a 
+href="#glo:virtualbox"><span id="textcolor38">virtualbox</span></a> and <a 
+href="#glo:vmware"><span id="textcolor39">VmWare</span></a> just by themselves, and use the <a 
+href="#glo:bash"><span id="textcolor40">bash</span></a> shell scripting language
+to interface directly with them. A decision was made to use Virtualbox, as it is an
+<a 
+href="#glo:open-source"><span id="textcolor41">open-source</span></a> software solution, has strong community, allows third party
+plug-ins and is a solution build by Oracle - a large software corporation.
+There are other alternatives (gnome boxes, CHROOT), but what influenced
+the choice is that virtualbox is configurable and can be controlled from the
+command-line straight out of the box. Another deciding factor was also
+the extensibility that it offers with third party modules developed by the
+community and the core team (guest additions, virtualbox standard development
+kit).
+<!--l. 477--><p class="indent" >   Another reason for not choosing a more unpopular technology is due to the
+willingness of an adopter to switch their entire virtual infrastructure to it. The
+Virtualbox software is well supported by Oracle, and as such, it would make the
+transition to the platform easier.
+<!--l. 479--><p class="indent" >   During the period when researching Virtualbox, the command-line <a 
+href="#glo:api"><span id="textcolor42">API</span></a>
+documentation was used extensively. In the process, a variety of customisable
+parameters when building a virtual machine were discovered, like the different
+possibilities in setting up networks (private, network shared, host only, etc.), exposing
+ports, as well as different hardware configurations (RAM, hard drive, CPU count).
+After using the command line tools and writing a simple shell scripts for managing
+creation of different resources, a decision was made to use a tool that manages the
+different technical details of each virtual machine. Instead of building the manager
+from scratch, an open-source hypervisor provisioner software was used instead. The
+tools is called <a 
+href="#glo:vagrant"><span id="textcolor43">Vagrant</span></a>.
+<!--l. 481--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">6.2   </span> <a 
+ id="x1-190006.2"></a>Vagrant</h4>
+<!--l. 482--><p class="noindent" >Vagrant by Hashicorp, is a tool built by a company specialising in easy virtual
+machine configuration management and set-up Their <a 
+href="#glo:api"><span id="textcolor44">API</span></a> provides the following
+features.
+     <ul class="itemize1">
+     <li class="itemize">Allow  the  administrator  to  create  a  <a 
+href="#glo:vagrant"><span id="textcolor45">Vagrant</span></a>  configuration  file  (called
+     Vagrantfile),   which   describes   end-to-end   each   operation   that   will
+     be  performed  to  the  virtual  machine  instance  (including  the  Linux
+     distribution that will get installed on it).
+     </li>
+     <li class="itemize">Create  a  system  compatible  with  their  platform  starting  from  a  bare
+     configuration  and  incrementally  building  a  bespoke  instance.  These
+     instances can be managed and shared on the internet.
+     </li>
+     <li class="itemize">Managing network interfaces
+                                                                  <img 
+src="dissertation57x.png" alt="PICT" >
+<img 
+src="dissertation58x.png" alt="PICT" >
+                                                                  
+     </li>
+     <li class="itemize">Configure ports
+     </li>
+     <li class="itemize">Allow port access to adapter network (in private networks)
+     </li>
+     <li class="itemize">Create a custom machine compatable with the platform
+     </li>
+     <li class="itemize">Kick-start  automation  by  running  one  of  the  supported  automation
+     frameworks (chef, puppet)</li></ul>
+<!--l. 501--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">6.3   </span> <a 
+ id="x1-200006.3"></a>Workflow</h4>
+<!--l. 502--><p class="noindent" >The framework that was created uses a <a 
+href="#glo:virtual_machine"><span id="textcolor46">virtual machine</span></a> instance object and
+authenticated user that owns it. When the user fills the web form with the relevant
+information, it will pass the configuration values directly to a virtual machine
+class. This class contains a dynamic configuration, which ensures that the
+solution is distribution agnostic. Here, the term distribution references to the
+different versions of Linux (Ubuntu, fedora, Centos, arch Linux). Separating
+dependency specific configuration by sub-classing a configuration object allows
+for a quick way for the project to be extended to accommodate for new
+distributions.
+<!--l. 504--><p class="indent" >   To do so, folder with the name of the new distribution must be placed in
+lib/configurations that describes the configuration specific settings that include
+updating and installing common software packages.
+<!--l. 506--><p class="indent" >   The framework also uses UNIX environmental variable to manage infrastructure
+state. For the purpose of continuous integration, two main isolated environments are
+used - testing and development/production. The most notable usage of such
+environment is the virtual host-only network that ensures that network interfaces do
+not clash during testing and development. The two interfaces are <span 
+class="cmtt-10">vboxnet0 </span>and
+<span 
+class="cmtt-10">vboxnet1</span>. One is for general purpose development, the another is for testing. A
+special host-only adapter is used to have an isolated ip range that is network
+agnostic, for example, on a <a 
+href="#glo:natnetwork"><span id="textcolor47">NAT network</span></a>, some IP addresses might be reserved
+or used, this case will cause a clash and the virtual machine will not be
+reachable.
+<!--l. 509--><p class="indent" >   Continuous integration is a new software development practice where versions of
+the product are merged and available after testing/building phase. It also enables
+features to be developed separately from the production environment. This
+has the benefit of ensuring production code performs as expected without
+interruptions.
+                                                                  <img 
+src="dissertation59x.png" alt="PICT" >
+<img 
+src="dissertation60x.png" alt="PICT" >
+                                                                  
+<!--l. 511--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">6.4   </span> <a 
+ id="x1-210006.4"></a>Languages and frameworks</h4>
+<!--l. 512--><p class="noindent" >When considering the architecture of the system, a list of factors were evaluated
+when building the solution. One is having few well consolidated moving parts,
+ensuring flexibility and extensibility. For that purpose the programming language
+<a 
+href="#glo:ruby"><span id="textcolor48">ruby</span></a> was chosen. It is a suitable for system automation as it is very expressive and is
+for the most part platform independent (interpreted). Its suitability comes also from
+the available tools <a 
+href="#glo:vagrant"><span id="textcolor49">Vagrant</span></a> and <a 
+href="#glo:puppet"><span id="textcolor50">puppet</span></a> which allow end-to end integration when
+developing and testing. The <a 
+href="#glo:ruby"><span id="textcolor51">ruby</span></a> programming language also draws inspiration from
+the Perl programming language. One of the Perl&#8217;s strengths is its ability to be a more
+powerful shell scripting language as well as a general purpose language.
+This is the case as it has quick syntax for executing shell scripts directly
+and get STDOUT, STDERR and exit-codes quickly. It does also has native
+implementation of common UNIX tools, like grep, wget and awk (core GNU
+utilities).[<a 
+href="#Xperl-programming-language-shell-scripting">2</a>]
+<!--l. 514--><p class="indent" >   Because the Ruby language draws inspiration and shares similar features with
+Perl, it makes it a great modern and powerful language to use in this domain-specific
+problem. The language benefits from it bein written in 1995, and being very mature.
+For that reason, there is a great amount of online help and third party library of
+great quality.
+<!--l. 516--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">6.5   </span> <a 
+ id="x1-220006.5"></a>The deeploy module - architecture</h4>
+<!--l. 518--><p class="noindent" ><hr class="figure"><div class="figure" 
+>
+                                                                  <img 
+src="dissertation61x.png" alt="PICT" >
+<img 
+src="dissertation62x.png" alt="PICT" >
+                                                                  
+<a 
+ id="x1-22001r5"></a>
+                                                                  <img 
+src="dissertation63x.png" alt="PICT" >
+<img 
+src="dissertation64x.png" alt="PICT" >
+                                                                  
+
+<!--l. 520--><p class="noindent" ><img 
+src="resources/images/architecture.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;5: </span><span  
+class="content">Architecture of the deeploy module</span></div><!--tex4ht:label?: x1-22001r5 -->
+                                                                  <img 
+src="dissertation65x.png" alt="PICT" >
+<img 
+src="dissertation66x.png" alt="PICT" >
+                                                                  
+<!--l. 524--><p class="noindent" ></div><hr class="endfigure">
+<!--l. 526--><p class="indent" >   The first component of the work is a ruby module designed specially to act as a
+back-end for the entire solution. A module is a collection of programming functions
+and libraries that are bundled together to achieve a particular task. In <a 
+href="#glo:ruby"><span id="textcolor52">ruby</span></a>, modules
+are called gems. For writing my first <a 
+href="#glo:gem"><span id="textcolor53">gem</span></a>, the official ruby guide was used as guide
+[<a 
+href="#Xruby-official-guide">35</a>].
+<!--l. 528--><p class="indent" >   The file <span 
+class="cmtt-10">lib/deeploy.rb </span>is what sets up the database connection and bootstraps
+the whole module by auto-loading every component. To ease integration, the file
+loads configuration properties from the file <span 
+class="cmtt-10">lib/config/application.yml</span>.
+<span 
+class="cmtt-10">Application.yml </span>contains configuration for production, development and
+testing, this is to allow separation and configuration of different parameters.
+The file specifies location of the database file when in development, or it
+has the database drivers in production with information about connection
+parameters. The file also describes the network interfaces to be used in each
+environment.
+<!--l. 530--><p class="indent" >   <span 
+class="cmtt-10">lib/deeploy.rb </span>has a helper method that returns the current network interface
+and <a 
+href="#glo:netmask"><span id="textcolor54">network mask</span></a>, this function is responsible for generating <a 
+href="#glo:ipaddress"><span id="textcolor55">IP addresss</span></a> and also for
+verifying that the virtual network is up and running. It does so by issuing commands
+for bringing up the virtual networks <span 
+class="cmtt-10">vboxnet </span>up, then using network sockets to
+extract relevant information. This function is the programatic equivalent to the
+command <span 
+class="cmtt-10">ifconfig or ipconfig</span>.
+<!--l. 532--><p class="indent" >   The file also contains a static function that returns a map of all supported
+distributions and the associated <a 
+href="#glo:vagrant"><span id="textcolor56">Vagrant</span></a> machine. The function is helpful
+when validating creation, and will error out if the <a 
+href="#glo:distribution"><span id="textcolor57">distribution</span></a> name is not in
+the list. When extending the supported distribution, this function needs
+updating.
+<!--l. 534--><p class="indent" >   Similarly to the supported <a 
+href="#glo:distribution"><span id="textcolor58">distributions</span></a> function, there is a static function to
+return the supported packages list, used for displaying the options and validating
+unsupported packages.
+<!--l. 536--><p class="indent" >   The module provides a function slugify, its purpose is to convert string with
+special characters and spaces to a set of words and dashes, non-ASCII characters are
+stripped.
+<!--l. 538--><p class="indent" >   <a 
+href="#glo:ipaddress"><span id="textcolor59">IP address</span></a> helper function checks if the supplied is part of the current network by
+using ruby&#8217;s <span 
+class="cmtt-10">ipaddr </span>build in module.
+<!--l. 540--><p class="indent" >   The file <span 
+class="cmtt-10">lib/vm.rb </span>contains the code for managing the virtual machine instances,
+the class is called <span 
+class="cmtt-10">Deeploy::Configurable::VM</span>. The class inherits from
+<span 
+class="cmtt-10">Configurable</span>. Calling <span 
+class="cmtt-10">VM.new </span>contains validators that raise errors upon initialising
+the class inappropriately. The method is responsible for specifying the distribution,
+available resources, configuration destination, name of the instance, packages, open
+ports and prepares it for creation. A design decision was made to allow a
+machine to be configured with the <span 
+class="cmtt-10">new </span>operator and then created by issuing
+<span 
+class="cmtt-10">machine</span><span 
+class="cmtt-10">_instance.build()</span>.
+<!--l. 543--><p class="indent" >   The method <span 
+class="cmtt-10">VM.alive() </span>verifies if the machine is alive by trying to listen on <a 
+href="#glo:ssh"><span id="textcolor60">SSH</span></a>
+port, if it fails within a time-out, the machine is updated to state of not
+alive.
+<!--l. 545--><p class="indent" >   <span 
+class="cmtt-10">VM.get() </span>is used when performing power up, power down and destroy virtual
+                                                                  <img 
+src="dissertation67x.png" alt="PICT" >
+<img 
+src="dissertation68x.png" alt="PICT" >
+                                                                  
+machines. It queries the database and discovers everything about the instance, from
+packages, to <a 
+href="#glo:ram"><span id="textcolor61">RAM</span></a> and location of configuration files.
+<!--l. 547--><p class="indent" >   The virtual machine is built only when an instance is initialised properly by
+calling <span 
+class="cmtt-10">VM.new </span>with the correct arguments and then invoke <span 
+class="cmtt-10">VM.build()</span>. The design
+decision to have a separate functionality of bootstrapping instances was mainly for
+cleaner testing by compartmentalising the components into smaller elements. The
+<span 
+class="cmtt-10">build </span>method also accepts a boolean argument. This argument tells the current
+build if it is in &#8221;dry-run&#8221; mode. The mode, the machine will create directories and
+configuration without actually bringing the instance up and running. This is again,
+done for testing reasons - they verify that different <a 
+href="#glo:distribution"><span id="textcolor62">distributions</span></a> have appropriate
+configurations.
+<!--l. 549--><p class="indent" >   During the invocation of the <span 
+class="cmtt-10">build </span>method, a <a 
+href="#glo:bash"><span id="textcolor63">bash</span></a> shell is forked and it executes
+the <a 
+href="#glo:vagrant"><span id="textcolor64">Vagrant</span></a> command that brings it on-line and installs all dependencies. The shell
+command also tells the script to write all output to a text file in the machine
+directory, the file is called <span 
+class="cmtt-10">vagrant.log</span>. Because the process takes a long time to
+finish, an axillary function <span 
+class="cmtt-10">_wait</span><span 
+class="cmtt-10">_on</span><span 
+class="cmtt-10">_build </span>is used. This function constantly goes
+through the contents of the log file and checks what is the current building state of
+the instance. Typical states are building the base, installing puppet, setting up
+dependencies, installing packages and the state everything has finished. Upon a
+successful build, the sub-shell executable will create a file called <span 
+class="cmtt-10">build.log</span>. The file
+will contain a build status. Reason for doing so is that otherwise successful run is
+determined by exit-code of vagrant, which is not a reliable method of determining
+success.
+<!--l. 552--><p class="indent" >   The module also partitions the file structure in two parts - <span 
+class="cmtt-10">userspace </span>and
+<span 
+class="cmtt-10">test</span><span 
+class="cmtt-10">_userspace</span>. The concept of userspace is used to contain virtual machine
+configurations in a hierarchical structure. Inside, there is a folder representing each
+user registered through the web interface. Inside the user folder, virtual
+machine folders with their respective names can be found. Each virtual machine
+folder contains <span 
+class="cmtt-10">Vagrantfile </span>- file that describes network configuration,
+machine type, available hardware resources, etc. The folder also contains
+<span 
+class="cmtt-10">vagrant.log</span>. This contains detailed information of what happened during the
+machine build process, and is the file that a user can view through the web
+interface.
+<!--l. 554--><p class="indent" >   In <span 
+class="cmtt-10">manifests</span>, two very important files can be found. One is in charge of
+automating firewall rules, packages, users and permissions. This automation is
+done once the machine has been brought to live. The file is created by the
+configuration manager depending on which Linux distribution has been used. This
+folder also contain a shell script that can be used when automation script is
+lacking. This file has been left there for integrity. As mentioned, there is also a
+top-level folder called <span 
+class="cmtt-10">test</span><span 
+class="cmtt-10">_userspace</span>, it is used for separation of concerns
+and is where testing machines are deployed to keep production machines
+intact.
+<!--l. 557--><p class="indent" >   The process of building a virtual machine by the <span 
+class="cmtt-10">deeploy </span>module is also
+illustrated in figure [<span 
+class="cmbx-10">? </span>].
+<!--l. 559--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                  <img 
+src="dissertation69x.png" alt="PICT" >
+<img 
+src="dissertation70x.png" alt="PICT" >
+                                                                  
+<a 
+ id="x1-22002r6"></a>
+                                                                  <img 
+src="dissertation71x.png" alt="PICT" >
+<img 
+src="dissertation72x.png" alt="PICT" >
+                                                                  
+
+<!--l. 561--><p class="noindent" ><img 
+src="build-flow.jpg" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;6: </span><span  
+class="content">Deeploy build flow</span></div><!--tex4ht:label?: x1-22002r6 -->
+                                                                  <img 
+src="dissertation73x.png" alt="PICT" >
+<img 
+src="dissertation74x.png" alt="PICT" >
+                                                                  
+<!--l. 565--><p class="indent" >   </div><hr class="endfigure">
+   <h4 class="subsectionHead"><span class="titlemark">6.6   </span> <a 
+ id="x1-230006.6"></a>Virtual networks</h4>
+<!--l. 568--><p class="noindent" >Because each machine has to be connected to the outside world, network <a 
+href="#glo:ipaddress"><span id="textcolor65">IP address</span></a>
+has to be allocated to each instance. This task is achieved using <a 
+href="#glo:virtualbox"><span id="textcolor66">virtualbox</span></a>&#8217;s
+host-only adapter. The gateway address of the adapter and its <a 
+href="#glo:netmask"><span id="textcolor67">network mask</span></a> are
+obtained and a list of possible <a 
+href="#glo:ipaddress"><span id="textcolor68">IP address</span></a> addresses are generated. Out of that list, all
+reserved ones are blacklisted. Additionally, the database gets queried for a list of
+already allocated addresses. After the process, the machine picks the first
+address from a stack and the value gets used. The reason for allocating them
+sequentially starting from the top is to avoid collisions. Other methods caused
+issues where the algorithm had to be run multiple times to obtain reliable
+results.
+<!--l. 571--><p class="indent" >   After generating the address, it gets blacklisted for further use, ensuring
+uniqueness on the network. When a machine is destroyed, its address becomes
+available again.
+<!--l. 573--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">6.7   </span> <a 
+ id="x1-240006.7"></a>Extending virtual machines</h4>
+<!--l. 574--><p class="noindent" >Additionally, the process of creating a virtual instance is using a custom image that
+has a variety of pre-installed software and firewall rules specially created for the
+dissertation. The purpose is to increase deployment time and allow for a more
+controlled package list.
+<!--l. 576--><p class="indent" >   Then a friendly name to virtual machine instance name map entry has
+to be added to the <span 
+class="cmtt-10">deeploy.rb</span>. Then a folder with the name of the new
+distribution must be placed in configurations containing files who subclass
+<span 
+class="cmtt-10">firewall</span><span 
+class="cmtt-10">_config.rb packages</span><span 
+class="cmtt-10">_config.rb puppet</span><span 
+class="cmtt-10">_config.rb shell</span><span 
+class="cmtt-10">_config.rb</span>
+<span 
+class="cmtt-10">vagrant</span><span 
+class="cmtt-10">_config.rb</span>. These files might be left blank if the distribution uses
+the default commands. Any deviations should be extended via the child
+modules.
+<!--l. 580--><p class="indent" >   Discuss the web interface 
+<!--l. 583--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">6.8   </span> <a 
+ id="x1-250006.8"></a>Security</h4>
+<!--l. 585--><p class="noindent" >Virtual machine instance isolation, privacy and authorisation is one of the most
+important security concerns. This section describes the decisions and considerations
+made during the development process. A variety of architectural and operational
+choices were also made to ensure that upon security breach, little or no data gets
+leaked.
+                                                                  <img 
+src="dissertation75x.png" alt="PICT" >
+<img 
+src="dissertation76x.png" alt="PICT" >
+                                                                  
+<!--l. 587--><p class="noindent" >
+   <h5 class="subsubsectionHead"><span class="titlemark">6.8.1   </span> <a 
+ id="x1-260006.8.1"></a>Passwords and authentication</h5>
+<!--l. 588--><p class="noindent" >The system makes the assumption that the management software is not
+compromised, as this is where all user credentials and data is stored. Access control is
+done via relational database and every machine command is authenticated against
+it.
+<!--l. 591--><p class="indent" >   For password disclosure mitigation, the passwords in the database are not stored
+as plain-text. Instead, the <span 
+class="cmtt-10">bcrypt </span>hashing algorithm is used with salt and pepper. In
+production, the operation is done for 11 rounds. The number of round is a
+configurable parameter.
+<!--l. 593--><p class="noindent" >
+   <h5 class="subsubsectionHead"><span class="titlemark">6.8.2   </span> <a 
+ id="x1-270006.8.2"></a><a 
+href="#glo:ssh"><span id="textcolor69">SSH</span></a> Credentials without password</h5>
+<!--l. 594--><p class="noindent" >A decision about access to the machine was made in favour of public-private
+key cryptography instead of using password. This improves security, as it
+generates unique pair per instance, and eliminates the risk of forgetting the
+password or having someone steal or guess it. Two strategies were considered -
+allowing users to import mandatory public key they initially generated, or
+generate key that the user can later download. The second approach was
+selected, as it would make it much more convenient and intuitive for the target
+demographic of the platform. Future work should allow paranoid system
+administrators to generate their own keys and disable any keys generated by the
+system.
+<!--l. 597--><p class="noindent" >
+   <h5 class="subsubsectionHead"><span class="titlemark">6.8.3   </span> <a 
+ id="x1-280006.8.3"></a>Leaking passwords</h5>
+<!--l. 598--><p class="noindent" >When using the command line tool on the server platform, <a 
+href="#glo:unix"><span id="textcolor70">UNIX</span></a> command <span 
+class="cmtt-10">ps </span>can
+be used to see all arguments passed to the build tool. When using the &#8211;password flag,
+this will disclose it. For this exploit to happen, the platform owner must invoke the
+tool manually.
+<!--l. 601--><p class="indent" >   In the most common case, this command would leak the <a 
+href="#glo:api"><span id="textcolor71">API</span></a> key of a user.
+Future work might opt for using a hash of the <a 
+href="#glo:api"><span id="textcolor72">API</span></a> key and have the option of
+regenerating it. This would significantly reduce chances f further exploitation upon
+system breach.
+<!--l. 603--><p class="noindent" >
+   <h5 class="subsubsectionHead"><span class="titlemark">6.8.4   </span> <a 
+ id="x1-290006.8.4"></a>Guest Isolation</h5>
+<!--l. 604--><p class="noindent" >This is one of the greatest benefits of running in a virtual environment. All the
+machine operating on top of the platform are isolated from one another and one
+<a 
+href="#glo:operating-system"><span id="textcolor73">operating system</span></a>&#8217;s calls cannot interfere with another. In terms of architecture, this
+is a good design, but there are some drawbacks.
+                                                                  <img 
+src="dissertation77x.png" alt="PICT" >
+<img 
+src="dissertation78x.png" alt="PICT" >
+                                                                  
+<!--l. 606--><p class="indent" >   One of the most severe issues with guest isolation is exploiting a vulnerability in
+virtualisation memory and reading another machine&#8217;s memory. This attack is known
+as &#8221;Virtual PC Hypervisor - Memory Protection&#8221; [<a 
+href="#Xvirtual-pc-hypervisor-memory-protection">28</a>]. An exploit can cause
+passwords leak and disclosure of sensitive information.
+<!--l. 608--><p class="noindent" >
+   <h5 class="subsubsectionHead"><span class="titlemark">6.8.5   </span> <a 
+ id="x1-300006.8.5"></a><a 
+href="#glo:ssh"><span id="textcolor74">SSH</span></a> Keys</h5>
+<!--l. 609--><p class="noindent" >The tool <a 
+href="#glo:vagrant"><span id="textcolor75">Vagrant</span></a> has two modes when generating access keys - insecure and secure.
+When insecure keys is used, every machine has the same credentials. The second
+configuration is used, as exploiting one instance leaves the whole infrastructure
+breached.
+<!--l. 611--><p class="indent" >   Furthermore, once the <a 
+href="#glo:ssh"><span id="textcolor76">SSH</span></a> keys are downloaded by the client, they are cleared
+from the host system.
+<!--l. 613--><p class="noindent" >
+   <h5 class="subsubsectionHead"><span class="titlemark">6.8.6   </span> <a 
+ id="x1-310006.8.6"></a>Source of packages</h5>
+<!--l. 614--><p class="noindent" >The solution does not provide modified version of any software - the reason is
+to reduce overhead of maintenance cost. Even though the machines have
+pre-installed applications, they have not been modified. This approach makes it
+possible to easily update any package from its official maintainer instead
+of by the platform vendor who would not necessary be expert in package
+management.
+<!--l. 616--><p class="noindent" >
+   <h5 class="subsubsectionHead"><span class="titlemark">6.8.7   </span> <a 
+ id="x1-320006.8.7"></a>Development practices</h5>
+<!--l. 617--><p class="noindent" >This work has been developed using the official documentation for every framework
+or language. The goal is to minimise exploitation vector by following the instruction
+of organisations, as they have greater insight into best practices. This makes the
+solution easier to maintain.
+<!--l. 619--><p class="noindent" >
+   <h3 class="sectionHead"><span class="titlemark">7   </span> <a 
+ id="x1-330007"></a>Testing</h3>
+<!--l. 621--><p class="noindent" >One of the concerns when developing the platform is testing interoperability. Due to
+the many moving parts, a subtle change might break the whole system.
+For that reason, a variety of automated, manual and build in tests are ran
+periodically.
+<!--l. 623--><p class="indent" >   Most notable, the core <a 
+href="#glo:gem"><span id="textcolor77">gem</span></a> <span 
+class="cmtt-10">deeploy </span>contains unit tests covering every element of
+the machine process. The official best practices guide was used to bootstrap the
+process [<a 
+href="#Xruby-unit-test-guide">27</a>]. The <a 
+href="#glo:ruby"><span id="textcolor78">ruby</span></a> unit test framework is called <span 
+class="cmtt-10">minitest </span>and is the
+recommended solution by the official guide.
+<!--l. 625--><p class="indent" >
+                                                                  <img 
+src="dissertation79x.png" alt="PICT" >
+<img 
+src="dissertation80x.png" alt="PICT" >
+                                                                  
+   <h3 class="sectionHead"><span class="titlemark">8   </span> <a 
+ id="x1-340008"></a>Evaluation</h3>
+<!--l. 628--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">8.1   </span> <a 
+ id="x1-350008.1"></a>Introduction</h4>
+<!--l. 629--><p class="noindent" >The evaluation of the work has been done with the help of Newcastle University <a 
+href="#glo:IT"><span id="textcolor79">I.T.</span></a>
+department. They helped with identifying potential security and usability issues as
+well as give general feedback. This chapter contains a detailed overview of their
+evaluation and also personal reflection about the achieved tasks. Overall the solution
+meets the specification requirements. Improvements can be made, as this is the first
+version of the platform and a perfect solution cannot be achieved from the first
+iteration.
+<!--l. 631--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">8.2   </span> <a 
+ id="x1-360008.2"></a>Deployment Overview</h4>
+<!--l. 632--><p class="noindent" >The requirement &#x00A0;<a 
+href="#x1-110004.3.2">Objectives<!--tex4ht:ref: itm:deploy --></a> is listed on page&#x00A0;<a 
+href="#x1-110004.3.2">9<!--tex4ht:ref: itm:deploy --></a> in section &#8216;<a 
+href="#x1-110004.3.2">4.3.2<!--tex4ht:ref: itm:deploy --></a>&#8217;. The objective of
+deploying a virtual machine has been achieved by giving the user the opportunity to
+deploy 3 distinctive distributions. The process takes between 1-5 minutes and
+requires an authenticated user.
+<!--l. 635--><p class="indent" >   When using the back-end tool, it is possible to do everything that the web
+interface can. Issuing <span 
+class="cmtt-10">deploy --help </span>and <span 
+class="cmtt-10">deploy new --help </span>brings up a help
+menu that gives a detailed command line manual page. Figure <a 
+href="#x1-36001r7">7<!--tex4ht:ref: fig:deeploy-help --></a> and <a 
+href="#x1-36002r8">8<!--tex4ht:ref: fig:deeploy-new-help --></a> show the
+output.
+<!--l. 637--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                  <img 
+src="dissertation81x.png" alt="PICT" >
+<img 
+src="dissertation82x.png" alt="PICT" >
+                                                                  
+<a 
+ id="x1-36001r7"></a>
+                                                                  <img 
+src="dissertation83x.png" alt="PICT" >
+<img 
+src="dissertation84x.png" alt="PICT" >
+                                                                  
+
+<!--l. 639--><p class="noindent" ><img 
+src="resources/images/deeploy_help_cli.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;7: </span><span  
+class="content"><span 
+class="cmtt-10">Deeploy </span>command-line back-end interface for help</span></div><!--tex4ht:label?: x1-36001r7 -->
+                                                                  <img 
+src="dissertation85x.png" alt="PICT" >
+<img 
+src="dissertation86x.png" alt="PICT" >
+                                                                  
+<!--l. 643--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 645--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                  <img 
+src="dissertation87x.png" alt="PICT" >
+<img 
+src="dissertation88x.png" alt="PICT" >
+                                                                  
+<a 
+ id="x1-36002r8"></a>
+                                                                  <img 
+src="dissertation89x.png" alt="PICT" >
+<img 
+src="dissertation90x.png" alt="PICT" >
+                                                                  
+<!--l. 646--><p class="noindent" >d Pr <img 
+src="resources/images/deeploy_new_help_cli.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;8: </span><span  
+class="content"><span 
+class="cmtt-10">Deeploy </span>command-line back-end interface for new machine - help</span></div><!--tex4ht:label?: x1-36002r8 -->
+                                                                  <img 
+src="dissertation91x.png" alt="PICT" >
+<img 
+src="dissertation92x.png" alt="PICT" >
+                                                                  
+<!--l. 651--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 653--><p class="indent" >   The interface thoroughly gives information about how to achieve a task with
+examples. This way, manual deployment can be done with minimal knowledge and
+lack of documentation by someone unfamiliar with the system. Creating this feature
+costed large amount of time that could have been allocated to a different feature. The
+reason is that the tool would rarely be used manually and all the work would end up
+unnoticed.
+   <h4 class="subsectionHead"><span class="titlemark">8.3   </span> <a 
+ id="x1-370008.3"></a>Deployment Time Results</h4>
+<!--l. 656--><p class="noindent" >The time it takes for a machine to build is critical, the project aimed to
+allow the user to quickly create a machine and be notified upon completion
+within sensible time. The deployment time of Ubuntu and Debian takes 1
+minute (figure <a 
+href="#x1-37020r9">9<!--tex4ht:ref: fig:deeploy-ubuntu-output --></a>), Centos takes between 1 and 2 minutes (figure <a 
+href="#x1-37043r10">10<!--tex4ht:ref: fig:deeploy-centos-output --></a> and
+<a 
+href="#x1-37063r11">11<!--tex4ht:ref: fig:deeploy-debian-output --></a>).
+<!--l. 658--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                  <img 
+src="dissertation93x.png" alt="PICT" >
+<img 
+src="dissertation94x.png" alt="PICT" >
+                                                                  
+<a 
+ id="x1-37020r9"></a>
+                                                                  <img 
+src="dissertation95x.png" alt="PICT" >
+<img 
+src="dissertation96x.png" alt="PICT" >
+                                                                  
+<!--l. 659-->
+<div class="lstlisting" id="listing-1"><span class="label"><a 
+ id="x1-37001r1"></a></span>deploy&#x00A0;new&#x00A0;<span 
+class="cmsy-10">--</span>distribution&#x00A0;ubuntu&#x00A0;<span 
+class="cmsy-10">--</span>vm_user=plamen&#x00A0;<br /><span class="label"><a 
+ id="x1-37002r2"></a></span><span 
+class="cmsy-10">--</span>auth_token&#x00A0;<span 
+class="cmsy-10">*******</span>&#x00A0;<br /><span class="label"><a 
+ id="x1-37003r3"></a></span>&#x00A0;<br /><span class="label"><a 
+ id="x1-37004r4"></a></span>Sun&#x00A0;30&#x00A0;Apr&#x00A0;18:45:50&#x00A0;BST&#x00A0;2017&#x00A0;<br /><span class="label"><a 
+ id="x1-37005r5"></a></span>Building&#x00A0;VM&#x00A0;&#8217;callipygian<span 
+class="cmsy-10">-</span>engaging<span 
+class="cmsy-10">-</span>reposition&#8217;.&#x00A0;<br /><span class="label"><a 
+ id="x1-37006r6"></a></span>Please&#x00A0;<span 
+class="cmbx-10">wait</span>&#x00A0;<br /><span class="label"><a 
+ id="x1-37007r7"></a></span>Status:&#x00A0;Configuring&#x00A0;network&#x00A0;interfaces&#x00A0;<br /><span class="label"><a 
+ id="x1-37008r8"></a></span>Status:&#x00A0;Setting&#x00A0;up&#x00A0;rules&#x00A0;and&#x00A0;software&#x00A0;<br /><span class="label"><a 
+ id="x1-37009r9"></a></span>Build&#x00A0;successfull&#x00A0;!&#x00A0;<br /><span class="label"><a 
+ id="x1-37010r10"></a></span>==================================================&#x00A0;<br /><span class="label"><a 
+ id="x1-37011r11"></a></span>Operation&#x00A0;successfull:&#x00A0;<br /><span class="label"><a 
+ id="x1-37012r12"></a></span><span 
+class="cmsy-10">--------------------------------------------------</span>&#x00A0;<br /><span class="label"><a 
+ id="x1-37013r13"></a></span>VM&#x00A0;NAME:&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;<span 
+class="cmsy-10">|</span>&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;callipygian<span 
+class="cmsy-10">-</span>engaging<span 
+class="cmsy-10">-</span>reposition&#x00A0;<br /><span class="label"><a 
+ id="x1-37014r14"></a></span>IP:&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;<span 
+class="cmsy-10">|</span>&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;88.168.56.254&#x00A0;<br /><span class="label"><a 
+ id="x1-37015r15"></a></span>User:&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;<span 
+class="cmsy-10">|</span>&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;plamen&#x00A0;<br /><span class="label"><a 
+ id="x1-37016r16"></a></span><span 
+class="cmsy-10">--------------------------------------------------</span>&#x00A0;<br /><span class="label"><a 
+ id="x1-37017r17"></a></span>Distribution:&#x00A0;&#x00A0;<span 
+class="cmsy-10">|</span>&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;ubuntu&#x00A0;<br /><span class="label"><a 
+ id="x1-37018r18"></a></span>==================================================&#x00A0;<br /><span class="label"><a 
+ id="x1-37019r19"></a></span>Sun&#x00A0;30&#x00A0;Apr&#x00A0;18:46:41&#x00A0;BST&#x00A0;2017
+</div>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;9: </span><span  
+class="content">Deploying Ubuntu through back-end interface, time taken before and
+after</span></div><!--tex4ht:label?: x1-37020r9 -->
+                                                                  <img 
+src="dissertation97x.png" alt="PICT" >
+<img 
+src="dissertation98x.png" alt="PICT" >
+                                                                  
+<!--l. 682--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 684--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                  <img 
+src="dissertation99x.png" alt="PICT" >
+<img 
+src="dissertation100x.png" alt="PICT" >
+                                                                  
+<a 
+ id="x1-37043r10"></a>
+                                                                  <img 
+src="dissertation101x.png" alt="PICT" >
+<img 
+src="dissertation102x.png" alt="PICT" >
+                                                                  
+<!--l. 685-->
+<div class="lstlisting" id="listing-2"><span class="label"><a 
+ id="x1-37021r1"></a></span>deploy&#x00A0;new&#x00A0;<span 
+class="cmsy-10">--</span>distribution&#x00A0;centos&#x00A0;<span 
+class="cmsy-10">--</span>vm_user=plamen&#x00A0;<br /><span class="label"><a 
+ id="x1-37022r2"></a></span><span 
+class="cmsy-10">--</span>auth_token&#x00A0;<span 
+class="cmsy-10">*******</span>&#x00A0;<br /><span class="label"><a 
+ id="x1-37023r3"></a></span>&#x00A0;<br /><span class="label"><a 
+ id="x1-37024r4"></a></span>Sun&#x00A0;30&#x00A0;Apr&#x00A0;19:46:54&#x00A0;BST&#x00A0;2017&#x00A0;<br /><span class="label"><a 
+ id="x1-37025r5"></a></span>Building&#x00A0;VM&#x00A0;&#8217;thyroidal<span 
+class="cmsy-10">-</span>corporate<span 
+class="cmsy-10">-</span><span 
+class="cmbx-10">break</span><span 
+class="cmsy-10">-</span>of<span 
+class="cmsy-10">-</span>the<span 
+class="cmsy-10">-</span>day&#8217;.&#x00A0;<br /><span class="label"><a 
+ id="x1-37026r6"></a></span>Please&#x00A0;<span 
+class="cmbx-10">wait</span>&#x00A0;<br /><span class="label"><a 
+ id="x1-37027r7"></a></span>Status:&#x00A0;Configuring&#x00A0;network&#x00A0;interfaces&#x00A0;<br /><span class="label"><a 
+ id="x1-37028r8"></a></span>Status:&#x00A0;Setting&#x00A0;up&#x00A0;rules&#x00A0;and&#x00A0;software&#x00A0;<br /><span class="label"><a 
+ id="x1-37029r9"></a></span>Status:&#x00A0;Packages&#x00A0;Repository&#x00A0;updated&#x00A0;<br /><span class="label"><a 
+ id="x1-37030r10"></a></span>Build&#x00A0;successfull&#x00A0;!&#x00A0;<br /><span class="label"><a 
+ id="x1-37031r11"></a></span>==================================================&#x00A0;<br /><span class="label"><a 
+ id="x1-37032r12"></a></span>Operation&#x00A0;successfull:&#x00A0;<br /><span class="label"><a 
+ id="x1-37033r13"></a></span><span 
+class="cmsy-10">--------------------------------------------------</span>&#x00A0;<br /><span class="label"><a 
+ id="x1-37034r14"></a></span>VM&#x00A0;NAME:&#x00A0;&#x00A0;&#x00A0;&#x00A0;<span 
+class="cmsy-10">|</span>&#x00A0;&#x00A0;thyroidal<span 
+class="cmsy-10">-</span>corporate&#x00A0;<br /><span class="label"><a 
+ id="x1-37035r15"></a></span>IP:&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;<span 
+class="cmsy-10">|</span>&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;88.168.56.251&#x00A0;<br /><span class="label"><a 
+ id="x1-37036r16"></a></span>User:&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;<span 
+class="cmsy-10">|</span>&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;plamen&#x00A0;<br /><span class="label"><a 
+ id="x1-37037r17"></a></span><span 
+class="cmsy-10">--------------------------------------------------</span>&#x00A0;<br /><span class="label"><a 
+ id="x1-37038r18"></a></span>Distribution:&#x00A0;&#x00A0;<span 
+class="cmsy-10">|</span>&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;centos&#x00A0;<br /><span class="label"><a 
+ id="x1-37039r19"></a></span>==================================================&#x00A0;<br /><span class="label"><a 
+ id="x1-37040r20"></a></span>Sun&#x00A0;30&#x00A0;Apr&#x00A0;19:48:25&#x00A0;BST&#x00A0;2017
+</div>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;10: </span><span  
+class="content">Deploying Centos through back-end interface, time taken before and
+after</span></div><!--tex4ht:label?: x1-37043r10 -->
+                                                                  <img 
+src="dissertation103x.png" alt="PICT" >
+<img 
+src="dissertation104x.png" alt="PICT" >
+                                                                  
+<!--l. 710--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 712--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                  <img 
+src="dissertation105x.png" alt="PICT" >
+<img 
+src="dissertation106x.png" alt="PICT" >
+                                                                  
+<a 
+ id="x1-37063r11"></a>
+                                                                  <img 
+src="dissertation107x.png" alt="PICT" >
+<img 
+src="dissertation108x.png" alt="PICT" >
+                                                                  
+<!--l. 713-->
+<div class="lstlisting" id="listing-3"><span class="label"><a 
+ id="x1-37044r1"></a></span>deploy&#x00A0;new&#x00A0;<span 
+class="cmsy-10">--</span>distribution&#x00A0;debian&#x00A0;<span 
+class="cmsy-10">--</span>vm_user=plamen&#x00A0;<br /><span class="label"><a 
+ id="x1-37045r2"></a></span><span 
+class="cmsy-10">--</span>auth_token&#x00A0;<span 
+class="cmsy-10">*******</span>&#x00A0;<br /><span class="label"><a 
+ id="x1-37046r3"></a></span>&#x00A0;<br /><span class="label"><a 
+ id="x1-37047r4"></a></span>Sun&#x00A0;30&#x00A0;Apr&#x00A0;19:49:41&#x00A0;BST&#x00A0;2017&#x00A0;<br /><span class="label"><a 
+ id="x1-37048r5"></a></span>Building&#x00A0;VM&#x00A0;&#8217;unflurried<span 
+class="cmsy-10">-</span>sparing<span 
+class="cmsy-10">-</span>czech&#8217;.&#x00A0;<br /><span class="label"><a 
+ id="x1-37049r6"></a></span>Please&#x00A0;<span 
+class="cmbx-10">wait</span>&#x00A0;<br /><span class="label"><a 
+ id="x1-37050r7"></a></span>Status:&#x00A0;Configuring&#x00A0;network&#x00A0;interfaces&#x00A0;<br /><span class="label"><a 
+ id="x1-37051r8"></a></span>Status:&#x00A0;Setting&#x00A0;up&#x00A0;rules&#x00A0;and&#x00A0;software&#x00A0;<br /><span class="label"><a 
+ id="x1-37052r9"></a></span>Build&#x00A0;successfull&#x00A0;!&#x00A0;<br /><span class="label"><a 
+ id="x1-37053r10"></a></span>==================================================&#x00A0;<br /><span class="label"><a 
+ id="x1-37054r11"></a></span>Operation&#x00A0;successfull:&#x00A0;<br /><span class="label"><a 
+ id="x1-37055r12"></a></span><span 
+class="cmsy-10">--------------------------------------------------</span>&#x00A0;<br /><span class="label"><a 
+ id="x1-37056r13"></a></span>VM&#x00A0;NAME:&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;<span 
+class="cmsy-10">|</span>&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;unflurried<span 
+class="cmsy-10">-</span>sparing<span 
+class="cmsy-10">-</span>czech&#x00A0;<br /><span class="label"><a 
+ id="x1-37057r14"></a></span>IP:&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;<span 
+class="cmsy-10">|</span>&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;88.168.56.250&#x00A0;<br /><span class="label"><a 
+ id="x1-37058r15"></a></span>User:&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;<span 
+class="cmsy-10">|</span>&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;plamen&#x00A0;<br /><span class="label"><a 
+ id="x1-37059r16"></a></span><span 
+class="cmsy-10">--------------------------------------------------</span>&#x00A0;<br /><span class="label"><a 
+ id="x1-37060r17"></a></span>Distribution:&#x00A0;&#x00A0;<span 
+class="cmsy-10">|</span>&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;debian&#x00A0;<br /><span class="label"><a 
+ id="x1-37061r18"></a></span>==================================================&#x00A0;<br /><span class="label"><a 
+ id="x1-37062r19"></a></span>Sun&#x00A0;30&#x00A0;Apr&#x00A0;19:50:32&#x00A0;BST&#x00A0;2017
+</div>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;11: </span><span  
+class="content">Deploying Debian through back-end interface, time taken before
+and after.</span></div><!--tex4ht:label?: x1-37063r11 -->
+                                                                  <img 
+src="dissertation109x.png" alt="PICT" >
+<img 
+src="dissertation110x.png" alt="PICT" >
+                                                                  
+<!--l. 736--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 738--><p class="indent" >   A deployment of a machine took more than 5 minutes initially, but work went
+into reducing that time by packaging common applications together. This approach
+was successful and reduced client&#8217;s wait time significantly, making the tool more
+usable.
+<!--l. 740--><p class="indent" >   The benchmarking numbers are achieved on <span 
+class="cmtt-10">Intel(R) Core(TM) i3-4170 CPU @</span>
+<span 
+class="cmtt-10">3.70GHz</span>, <span 
+class="cmtt-10">ATA Samsung SSD 850 EVO </span>drive. Machine running <span 
+class="cmtt-10">Fedora Workstation</span>
+<span 
+class="cmtt-10">25 Headless</span>.
+   <h4 class="subsectionHead"><span class="titlemark">8.4   </span> <a 
+ id="x1-380008.4"></a>Deployment Progress</h4>
+<!--l. 743--><p class="noindent" >During build time, the deployment script outputs progress messages when key
+stages are detected. The system would become more user-friendly if more
+stages are added. Increasing response time adds to usability and perceived
+reliability.
+<!--l. 745--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">8.5   </span> <a 
+ id="x1-390008.5"></a>Investigating Failures</h4>
+<!--l. 746--><p class="noindent" >Deploying a machine successful is not always the case. Large chunk of the code
+ensures that errors are detected, reported and deployment is rolled back (cleanup).
+This is important, as the user of the system must always be aware of any
+progress or failure. Detecting and reporting unsuccessful builds is done via
+providing failure status in the web interface. The failed machine&#8217;s logs are
+also accessible, making it possible to report issues via emailing such files
+to a system maintainer. The platform detects network failures, <a 
+href="#glo:ipaddress"><span id="textcolor80">IP address</span></a>
+allocation errors, bad arguments or build taking too much time as well as
+deployment script crashes. An issue with this process as of now is that detection
+happens, but detailed report of what went wrong is lacking. An extension to the
+system should allow the user to go to a dedicated error page. It will give a
+description of what exactly caused the failure and give the ability to report
+it.
+<!--l. 750--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">8.6   </span> <a 
+ id="x1-400008.6"></a>Extensibility of solution</h4>
+<!--l. 751--><p class="noindent" >Part of allowing users to use any machine they want is due to the platform being
+extensible. As described in the work section of this paper, the solution achieves this
+extensibility - evident by the supported multiple machines. The issue with this
+feature as of now is lack of documentation. An article that describes the process of
+adding a new supported distribution with pictures and examples would improve
+adoption and ease of use for future development.
+                                                                  <img 
+src="dissertation111x.png" alt="PICT" >
+<img 
+src="dissertation112x.png" alt="PICT" >
+                                                                  
+<!--l. 754--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">8.7   </span> <a 
+ id="x1-410008.7"></a>Health monitor</h4>
+<!--l. 755--><p class="noindent" >The requirement &#x00A0;<a 
+href="#x1-110004.3.2">Objectives<!--tex4ht:ref: itm:healthmonitor --></a> is listed on page&#x00A0;<a 
+href="#x1-110004.3.2">9<!--tex4ht:ref: itm:healthmonitor --></a> in section &#8216;<a 
+href="#x1-110004.3.2">4.3.2<!--tex4ht:ref: itm:healthmonitor --></a>&#8217;. Part of the
+specification is about monitoring virtual instance&#8217;s health. This topic includes
+detecting machine crashes, sending log reports, restarting the <a 
+href="#glo:kernel"><span id="textcolor81">kernel</span></a> upon failure,
+monitor available resources and much more. Because creating a complete health
+monitoring solution would have been outside of the scope of this dissertation
+and would have taken large amount of time, a compromise solution has
+been provided. What has been implemented is a balance between effort and
+usability.
+<!--l. 758--><p class="indent" >   The current solution uses <a 
+href="#glo:cron"><span id="textcolor82">CRON</span></a> job to check the status of each virtual machine
+every minute. The result updates the web interface and a user can notice that a
+machine is running or not. The process involves checking if the <a 
+href="#glo:ssh"><span id="textcolor83">SSH</span></a> port is
+responding to packet alive messages. This port has been selected, as it is the gateway
+to the machine. If no response is given back, the machine is assumed to be dead or
+unusable.
+<!--l. 760--><p class="indent" >   Other than alive information, the solution provides detailed statistics about
+resource usage over time. It can show processor load over a large time period, disk
+writes, network traffic usage and many more parameters. This information is
+available in the web interface under each machine&#8217;s own section. The implementation
+is shown in figure <a 
+href="#x1-41001r12">12<!--tex4ht:ref: fig:healthmonitoring-page --></a>.
+<!--l. 762--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                  <img 
+src="dissertation113x.png" alt="PICT" >
+<img 
+src="dissertation114x.png" alt="PICT" >
+                                                                  
+<a 
+ id="x1-41001r12"></a>
+                                                                  <img 
+src="dissertation115x.png" alt="PICT" >
+<img 
+src="dissertation116x.png" alt="PICT" >
+                                                                  
+<div class="center" 
+>
+<!--l. 764--><p class="noindent" >
+
+<!--l. 765--><p class="noindent" ><img 
+src="resources/images/monitorix_screenshot.png" alt="PIC"  
+></div>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;12: </span><span  
+class="content">Monitorix view from the web interface</span></div><!--tex4ht:label?: x1-41001r12 -->
+                                                                  <img 
+src="dissertation117x.png" alt="PICT" >
+<img 
+src="dissertation118x.png" alt="PICT" >
+                                                                  
+<!--l. 770--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 772--><p class="indent" >   Checking the &#8217;alive&#8217; status of a machine can be implemented more efficiently. The
+current implementation is prone to scalability issues, where numerous instances
+linearly slow down the process. The check also has a large overhead due to making
+requests to every possible machine (even ones that are known to be in good
+state). Future work can improve the process by adding a ping service on each
+machine, which periodically contacts the server to update &#8217;alive&#8217; status. This
+approach would help with scalability and would reflect a machine&#8217;s state more
+accurately. Furthermore, the <span 
+class="cmtt-10">Nagios </span>software can be installed on each instance
+for even richer status information. Nagios is the industry standard in <a 
+href="#glo:IT"><span id="textcolor84">I.T.</span></a>
+infrastructure monitoring [<a 
+href="#Xnagios-website">8</a>]. Having this open-source professional grade
+software would also benefit the platform when it comes to adoption and
+reliability.
+   <h4 class="subsectionHead"><span class="titlemark">8.8   </span> <a 
+ id="x1-420008.8"></a>Web Interface - requirement</h4>
+<!--l. 776--><p class="noindent" >The requirement &#x00A0;<a 
+href="#x1-110004.3.2">Objectives<!--tex4ht:ref: itm:website --></a> is listed on page&#x00A0;<a 
+href="#x1-110004.3.2">9<!--tex4ht:ref: itm:website --></a> in section &#8216;<a 
+href="#x1-110004.3.2">4.3.2<!--tex4ht:ref: itm:website --></a>&#8217;. Large portion of
+the work went into creating an intuitive web interface through which a machine is
+being deployed. During the demonstration, positive feedback was provided for the
+overall experience and feeling throughout the process. Once the user logs to the web
+interface, the option to create a new machine becomes available. The pages are shown
+in figure <a 
+href="#x1-42001r13">13<!--tex4ht:ref: fig:welcome_screen_deeploy --></a>.
+<!--l. 780--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                  <img 
+src="dissertation119x.png" alt="PICT" >
+<img 
+src="dissertation120x.png" alt="PICT" >
+                                                                  
+<a 
+ id="x1-42001r13"></a>
+                                                                  <img 
+src="dissertation121x.png" alt="PICT" >
+<img 
+src="dissertation122x.png" alt="PICT" >
+                                                                  
+
+<!--l. 782--><p class="noindent" ><img 
+src="resources/images/build_form.jpg" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;13: </span><span  
+class="content">Home screen and creation form</span></div><!--tex4ht:label?: x1-42001r13 -->
+                                                                  <img 
+src="dissertation123x.png" alt="PICT" >
+<img 
+src="dissertation124x.png" alt="PICT" >
+                                                                  
+<!--l. 786--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 788--><p class="indent" >   When submitting the form, few validation passes are made before the machine is
+build. Validating parameters is essential, or the build process will fail when receiving
+incorrect arguments. The form provides clues about failed validation, making it
+convenient to fill in the correct details. Validators check uniqueness of machine name,
+presence of virtual machine owner, distribution, <a 
+href="#glo:ram"><span id="textcolor85">RAM</span></a> within range and conflicting
+packages.
+<!--l. 791--><p class="indent" >   When the correct parameters are passed and the form is successfully submited,
+the user receives a progress bar indicating the build status with two possible
+outcomes - success or failure. The various stages are shown in figure <span 
+class="cmbx-10">??</span>.
+Upon failed build, the logs can be checked to gain insights into what went
+wrong.
+<!--l. 794--><p class="indent" >   From the web dashboard, it is possible to view the running state of all machines.
+Extra information about <a 
+href="#glo:ipaddress"><span id="textcolor86">IP address</span></a> of the machine, user name and distribution is
+also displayed. The interface also allows for the machine to be powered off,
+turned back on or destroyed. The dashboard allows the user to download
+authentication certificate and gives instruction commands on how to access the
+machine.
+<!--l. 796--><p class="indent" >   This window makes it easy for a new user who has not used certificate based
+authentication to quickly access the machine. User experience techniques are also
+used to illustrate commands, failures, and important information. The dashboard is
+shown in figure <a 
+href="#x1-42002r14">14<!--tex4ht:ref: fig:web-interface-dashboard --></a>. The page is also responsive, ensuring proper presentation across
+different screen resolutions.
+<!--l. 798--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                  <img 
+src="dissertation125x.png" alt="PICT" >
+<img 
+src="dissertation126x.png" alt="PICT" >
+                                                                  
+<a 
+ id="x1-42002r14"></a>
+                                                                  <img 
+src="dissertation127x.png" alt="PICT" >
+<img 
+src="dissertation128x.png" alt="PICT" >
+                                                                  
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;14: </span><span  
+class="content">Dashboard sample screen</span></div><!--tex4ht:label?: x1-42002r14 -->
+                                                                  <img 
+src="dissertation129x.png" alt="PICT" >
+<img 
+src="dissertation130x.png" alt="PICT" >
+                                                                  
+<!--l. 804--><p class="indent" >   </div><hr class="endfigure">
+   <h4 class="subsectionHead"><span class="titlemark">8.9   </span> <a 
+ id="x1-430008.9"></a>Authentication and Credential management</h4>
+<!--l. 807--><p class="noindent" >The requirement &#x00A0;<a 
+href="#x1-110004.3.2">Objectives<!--tex4ht:ref: itm:access --></a> is listed on page&#x00A0;<a 
+href="#x1-110004.3.2">9<!--tex4ht:ref: itm:access --></a> in section &#8216;<a 
+href="#x1-110004.3.2">4.3.2<!--tex4ht:ref: itm:access --></a>&#8217;. The feedback from
+<a 
+href="#glo:nuit"><span id="textcolor87">NUIT</span></a> for using certificate files for authentication instead of passwords was positive.
+As part of the security concerns, this provides secure authentication channel. Future
+work should allow users to generate keys themselves and import them though the
+web interface, as well as revoke old certificate keys. The decision to give
+preconfigured authentication credentials is because of the target demographic.
+Potential early adopters of the platform will have little to no experience in
+the field and would appreciate the convenience of credential being already
+set-up.
+<!--l. 812--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">8.10   </span> <a 
+ id="x1-440008.10"></a>Documentation</h4>
+<!--l. 813--><p class="noindent" >Currently little to no documentation is provided. This can be improved
+by writing articles on how to deploy the platform to a host with different
+configurations. Also the inclusion of ruby documentation (rdoc) embedded
+in each source code file would improve code maintainability. This type of
+documentation is very helpful when new developers join to develop. Having a quick
+description of what each code function does can significantly reduce training
+time.
+<!--l. 815--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">8.11   </span> <a 
+ id="x1-450008.11"></a>Firewall and package management</h4>
+<!--l. 816--><p class="noindent" >The requirements &#x00A0;<a 
+href="#x1-110004.3.2">Objectives<!--tex4ht:ref: itm:firewall --></a> and &#x00A0;<a 
+href="#x1-110004.3.2">Objectives<!--tex4ht:ref: itm:packages --></a> are listed on page&#x00A0;<a 
+href="#x1-110004.3.2">9<!--tex4ht:ref: itm:firewall --></a> in section &#8217;<a 
+href="#x1-110004.3.2">4.3.2<!--tex4ht:ref: itm:firewall --></a>&#8217;.
+The solution provides the ability to open network ports to the outside world and to
+do package management during the install process via the web interface. Currently,
+few common packages can be installed to illustrate the functionality. Future work
+should go into finding the most vital packages and offer them as an option. This is
+possible due to the ability of the solution to extend packages, ports and deployment
+flow.
+<!--l. 819--><p class="indent" >   Something that is currently lacking is the ability to amend ports and packages.
+After the build process is over, one can manually connect to the machine and
+install/remove software but the process is not automated after the machine is already
+deployed.
+<!--l. 821--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">8.12   </span> <a 
+ id="x1-460008.12"></a>System resource validation</h4>
+                                                                  <img 
+src="dissertation131x.png" alt="PICT" >
+<img 
+src="dissertation132x.png" alt="PICT" >
+                                                                  
+<!--l. 822--><p class="noindent" >During the deployment process, a machine is validated on its own and the platform&#8217;s
+state is not considered. For example, if there is not disk space available or the system
+is low on <a 
+href="#glo:ram"><span id="textcolor88">RAM</span></a>, this will not get detected and failure might happen. This has not
+been implemented because it requires managing virtual hard drives and storing
+meta-data about the virtual machine with status of the whole platform. It would
+require large sum of work and would take significant amount of work, possibly
+making it impossible to deliver the platform on time. Not tackling this issue helped
+allocate more time on the core components and the actual operations of this
+work.
+<!--l. 825--><p class="indent" >
+                                                                  <img 
+src="dissertation133x.png" alt="PICT" >
+<img 
+src="dissertation134x.png" alt="PICT" >
+                                                                  
+   <h3 class="sectionHead"><span class="titlemark">9   </span> <a 
+ id="x1-470009"></a>Conclusion</h3>
+<!--l. 828--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">9.1   </span> <a 
+ id="x1-480009.1"></a>Constrains</h4>
+<!--l. 829--><p class="noindent" >Because of the limited duration of the dissertation and the immense work that has to
+be carried throughout the implementation (testing, documentation, development,
+debugging, planning, architecture, external tools, hardware constrains, etc.) certain
+limitations had to be put in place to ensure that the project will be completed within
+the appropriate period.
+<!--l. 831--><p class="indent" >   The initial constrain that has been defined is limiting the solution to a single
+host. This work is done as a proof-of-concept system that has the potential of
+being scaled up and extended to support a cluster deployment in the near
+future. Creating a distributed and scalable implementation of this work goes
+beyond the scope. This is not to say that it is limited to single host, but
+testing and planning guarantee that it will be fully functional under such
+condition.
+<!--l. 834--><p class="indent" >   As a future task, it would be possible to deploy multiple instances of the
+underlying infrastructure that are managed and synchronised with a technology like
+puppet or chef. Then, creating virtual machines can be done via a manager machine
+that picks a host based on a round-robin algorithm or on load. Additional
+implementation steps must be carried out to ensure that the web platform
+and the manager understands the physical location of the virtual machine.
+Physical location references to the real hardware (the host) running the virtual
+machine.
+<!--l. 836--><p class="indent" >   Another assumption and a constrain is the availability of a network interface. To
+simplify the development process and allow for different isolated environments,
+virtual networks were used. A network environment is the space in which all the
+virtual machines have visibility of one another. It also makes it possible to allocate
+different network addresses dynamically and verify availability of resources. Another
+important bit is the fact that one must be connected to the network environment to
+communicate with the machines inside of it. VirtualBox&#8217;s host-only networking
+interfaces have been used to create multiple network instances that allow for the
+creation of machines that are independent of each other when developing and
+testing.
+<!--l. 838--><p class="indent" >   When further extending the solution, additional work has to be carried out to
+ensure integration with a public <a 
+href="#glo:dns"><span id="textcolor89">DNS</span></a> server, and some adjustments ought to be made
+to allow the production <a 
+href="#glo:dns"><span id="textcolor90">DNS</span></a> to allocate <a 
+href="#glo:dhcp"><span id="textcolor91">DHCP</span></a> <a 
+href="#glo:ipaddress"><span id="textcolor92">IP address</span></a> to the virtual
+machines.
+<!--l. 840--><p class="indent" >   The solution aims to orchestrate and automate generic virtual machine
+deployment, but creating a solution that enables every <a 
+href="#glo:operating-system"><span id="textcolor93">operating system</span></a> to be
+deployable would require extensive amount of extra work. Future work can make it
+possible to deploy Windows, Mac OS and more Linux variants as part of the
+infrastructure, but this is yet not the case.
+                                                                  <img 
+src="dissertation135x.png" alt="PICT" >
+<img 
+src="dissertation136x.png" alt="PICT" >
+                                                                  
+<!--l. 842--><p class="indent" >   Windows is not supported yet, as it has completely different architecture and has
+a separate interface for managing networking, users, installation and permissions.
+Doing windows deployment also requires licensing of their <a 
+href="#glo:operating-system"><span id="textcolor94">operating system</span></a>. Another
+constrain in working with windows is that not many core components are
+configurable or accessible via a script making automation very difficult or impossible,
+or are not freely available.
+<!--l. 844--><p class="indent" >   Mac OSX virtual deployment was also something left for future. It also has
+similar issues to windows virtualisation (licensing, exposed <a 
+href="#glo:api"><span id="textcolor95">API</span></a>), as well as it is a
+platform that I have no experience with.
+<!--l. 846--><p class="indent" >   For the purpose of this work, the decision to have limited scope of allowed Linux
+distributions to Ubuntu, Centos and Debian was made, but it is important to note
+that the architecture allows extending that list. Development was done with that in
+mind.
+<!--l. 848--><p class="indent" >   What enables this flexibility is the configuration set-up in <span 
+class="cmtt-10">deeploy </span>module. If one
+is to add a custom linux distribution, it&#8217;s image must be created from a virtual
+machine provider (virtualbox). Doing so consists of creating a base virtual machine,
+supply necessary vagrant components to it. Then the machine is exported to an
+image, this image is then imported as a vagrant machine. The following
+process is explained more in-depth in the official <a 
+href="#glo:vagrant"><span id="textcolor96">Vagrant</span></a> documentation
+[<a 
+href="#Xvagrant-create-base-box">13</a>].
+<!--l. 850--><p class="indent" >
+                                                                  <img 
+src="dissertation137x.png" alt="PICT" >
+<img 
+src="dissertation138x.png" alt="PICT" >
+                                                                  
+   <h3 class="sectionHead"><span class="titlemark">10   </span> <a 
+ id="x1-4900010"></a>References</h3>
+<!--l. 1--><p class="noindent" >
+   <h3 class="likesectionHead"><a 
+ id="x1-5000010"></a>References</h3>
+<!--l. 1--><p class="noindent" >
+    <div class="thebibliography">
+    <p class="bibitem" ><span class="biblabel">
+ <a 
+ id="Xwhat-is-migration"></a>[1] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Antony&#x00A0;Higginson Birgit&#x00A0;Kreuz.  <span 
+class="cmti-10">Migrating Oracle Databases</span>.  Oracle
+    Corporation, June 2014.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+ <a 
+ id="Xperl-programming-language-shell-scripting"></a>[2] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Buddy Burden.  Perl vs shell scripts, April 16, 2012.  Accessed: April
+    10, 2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+ <a 
+ id="Xwhat_is_partition"></a>[3] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Bill Calkins. <span 
+class="cmti-10">Oracle Solaris 11</span>. Prentice Hall, 2013.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+ <a 
+ id="Xintel-cloud-computing-guide"></a>[4] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Intel Corporation. Virtualization and cloud computing, 2013. Accessed:
+    April 04, 2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+ <a 
+ id="Xazure-datacenter-locations"></a>[5] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Microsoft Corporation. Azure regions, 2016. Accessed: April 20, 2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+ <a 
+ id="Xazure-compliance"></a>[6] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Microsoft Corporation.  The trusted cloud, 2017.  Accessed: April 20,
+    2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+ <a 
+ id="Xwhat_is_virtual_machine"></a>[7] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Oracle corporation. Oracle<sup class="textsuperscript"><span 
+class="cmr-9">TM</span></sup>vm user&#8217;s guide, 2015. Accessed: March
+    08, 2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+ <a 
+ id="Xnagios-website"></a>[8] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Nagios Enterprises.  Nagios official website, 2017.  Accessed: May 1,
+    2017.
+    </p>
+                                                                  <img 
+src="dissertation139x.png" alt="PICT" >
+<img 
+src="dissertation140x.png" alt="PICT" >
+                                                                  
+    <p class="bibitem" ><span class="biblabel">
+ <a 
+ id="Xazure-automation-overview"></a>[9] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Matt&#x00A0;Goedtel et&#x00A0;.al.   Azure automation overview, October 5, 2010.
+    Accessed: April 20, 2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xvirtualisation-security-guidance"></a>[10] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>National       Technical&#x00A0;Authority       for       Information&#x00A0;Assurance.
+    Virtualisation security guidance, May 19, 2016. Accessed: April 10, 2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xamazon-marketshare"></a>[11] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Synergy&#x00A0;Research  Group.   Amazon  leads;  microsoft,  ibm  &amp;  google
+    chase; others trail. Accessed: April 02, 2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xvagrant-definition"></a>[12] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Hashicorp. Why vagrant? Accessed: 27.03.2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xvagrant-create-base-box"></a>[13] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Hashicorp. Creating a base box, 2017. Accessed: April 28, 2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xamazon-ec2-prices"></a>[14] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Garret Heaton. Amazon ec2 instance comparison. Accessed: April 04,
+    2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xictonline"></a>[15] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>ITU ICT. Ict facts and figures 2016, 2015. Accessed: March 08, 2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xwhatisnat"></a>[16] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Javvin&#x00A0;Technologies  Inc.     <span 
+class="cmti-10">Network  Protocols  Handbook</span>.     Javvin
+    Technologies, 2005.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xb"></a>[17] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Techopedia Inc.  Definition of virtualization.  Accessed: November 26,
+    2016.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xvmware-storage-pool-screenshot"></a>[18] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Lee&#x00A0;Smith Jr.  vsphere 5.5 storage profiles are now storage policies,
+    October 28, 2013. Accessed: April 15, 2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xharrison-kinsley-tutorials"></a>[19] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Harrison Kinsley.  Python programming tutorials.  Accessed: April 03,
+    2017.
+                                                                  <img 
+src="dissertation141x.png" alt="PICT" >
+<img 
+src="dissertation142x.png" alt="PICT" >
+                                                                  
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xpuppet-definition"></a>[20] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Puppet Labs. Puppet documentation. Accessed: 27.03.2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xvmware-definition"></a>[21] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>STEVE LOHR, August 30, 2009. Accessed: April 10, 2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xibmvirtualisation"></a>[22] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Shannon Meier.   <span 
+class="cmti-10">IBM Systems Virtualization: Servers, Storage, and</span>
+    <span 
+class="cmti-10">Software</span>. IBM, April 2008.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xthe-case-for-investing-cloud-automation"></a>[23] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Kate Miller.  The case for investing in cloud automation, October 7,
+    2016.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xheterogenious-cloud-computing"></a>[24] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>San Murugesan.  <span 
+class="cmti-10">Heterogeneous Cloud Computing: The Way Forward</span>.
+    BRITE Proffesional Services, 2015.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xrhel-performance-counters"></a>[25] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Inc. Red&#x00A0;Hat.   Performance counters for linux (pcl) tools and perf.
+    Accessed: April 05, 2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xtechopedia-it-definition"></a>[26] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Margaret Rouse. Information technology (it).
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xruby-unit-test-guide"></a>[27] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Gem Sawyer. Ruby guides, 2017. Accessed: April 13, 2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xvirtual-pc-hypervisor-memory-protection"></a>[28] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Core Security.  Virtual pc hypervisor - memory protection, 17 March,
+    2010. Accessed: April 28, 2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xamazon-scenarios-for-accessing-db-instance-in-vpc"></a>[29] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Amazon&#x00A0;Web Services. Scenarios for accessing a db instance in a vpc,
+    September 27, 2015. Accessed: April 20, 2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xa"></a>[30] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Internet&#x00A0;Live Stats.  Google search statistics.  Accessed: November 26,
+    2016.
+                                                                  <img 
+src="dissertation143x.png" alt="PICT" >
+<img 
+src="dissertation144x.png" alt="PICT" >
+                                                                  
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xintel-virtualisation-chip-support"></a>[31] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Intel Support.   Intel virtualization technology requirements, Feb 28,
+    2017. Accessed: April 10, 2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xibm-san-storage"></a>[32] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Jon Tate. <span 
+class="cmti-10">Introduction to Storage Area Networks</span>. IBM, 2016.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xruby-definition"></a>[33] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Ruby team. Ruby homepage. Accessed: 27.03.2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xruby-on-rails-definition"></a>[34] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Ruby On&#x00A0;Rails team. Getting started with rails. Accessed: 27.03.2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xruby-official-guide"></a>[35] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>RubyGem Team. Make your own gem, 2011. Accessed: April 13, 2017.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xvmware-cookbook"></a>[36] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Ryan Troy. <span 
+class="cmti-10">VMware cookbook</span>. Oreilly Media, 2012.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xvsphere-definition"></a>[37] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Inc. VMware. <span 
+class="cmti-10">VMware vSphere Introduction</span>. 2009.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+<a 
+ id="XSecuringtheCloud"></a>[38] <span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Vic&#x00A0;(J.R.) Winkler. <span 
+class="cmti-10">Securing the Cloud</span>. Elsevier/Syngress, 2011.
+</p>
+    </div>
+<!--l. 856--><p class="noindent" >
+                                                                  <img 
+src="dissertation145x.png" alt="PICT" >
+<img 
+src="dissertation146x.png" alt="PICT" >
+                                                                  
+   <h3 class="sectionHead"><span class="titlemark">11   </span> <a 
+ id="x1-5100011"></a>Glossary</h3>
+<!--l. 1--><p class="noindent" ><a 
+ id="likesection.1"></a>
+   <h3 class="likesectionHead"><a 
+ id="x1-5200011"></a>Glossary</h3>
+<!--l. 2--><p class="noindent" >
+     <dl class="description"><dt class="description">
+<a 
+ id="glo:amazon-web-services"></a><span 
+class="cmbx-10">Amazon Web Services</span> </dt><dd 
+class="description">Amazon&#8217;s cloud infrastructure as a service . 7
+     </dd><dt class="description">
+<a 
+ id="glo:api"></a><span 
+class="cmbx-10">API</span> </dt><dd 
+class="description">Application Programmable interface, usually a way for exposing features
+     of a certain program to the developer. Often used to automate a task. . 4,
+     11, 16
+     </dd><dt class="description">
+<a 
+ id="glo:azure"></a><span 
+class="cmbx-10">Azure</span> </dt><dd 
+class="description">Microsoft&#8217;s cloud infrastructure as a service . 7, 9<p class="theindex">
+     </dd><dt class="description">
+<a 
+ id="glo:bash"></a><span 
+class="cmbx-10">bash</span> </dt><dd 
+class="description">Bourne Again SHell, a UNIX command line virtual shell language. 10, 14</p><p class="theindex">
+     </dd><dt class="description">
+<a 
+ id="glo:chef"></a><span 
+class="cmbx-10">chef</span> </dt><dd 
+class="description">Tool for automating, deployment and configuring software. 7
+     </dd><dt class="description">
+<a 
+ id="glo:cpu"></a><span 
+class="cmbx-10">CPU</span> </dt><dd 
+class="description">Central Processing Unit, the hardware component that is responsible
+     for  executing  instructions,  evaluate  expressions  and  perform  algebraic
+     operations.. 6, 7, 9</p><p class="theindex">
+     </dd><dt class="description">
+<a 
+ id="glo:dhcp"></a><span 
+class="cmbx-10">DHCP</span> </dt><dd 
+class="description">Dynamic Host Configuration Protocol. 16
+     </dd><dt class="description">
+<a 
+ id="glo:distribution"></a><span 
+class="cmbx-10">distribution</span> </dt><dd 
+class="description">Is a term that describes a Linux operating system with associated
+     packages and pre-installed software . 13, 14
+     </dd><dt class="description">
+<a 
+ id="glo:dns"></a><span 
+class="cmbx-10">DNS</span> </dt><dd 
+class="description">Domain Name System, used to resolve internet addresses into human
+     readable domain names. 8, 16</p><p class="theindex">
+     </dd><dt class="description">
+<a 
+ id="glo:gem"></a><span 
+class="cmbx-10">gem</span> </dt><dd 
+class="description">Ruby programming language term for module or package . 12
+     </dd><dt class="description">
+<a 
+ id="glo:gpu"></a><span 
+class="cmbx-10">GPU</span> </dt><dd 
+class="description">Graphical  Processing  Unit,  a  computer  hardware  component  that
+     specialises in processing highly parallel instructions.. 8, 9</p><p class="theindex">
+     </dd><dt class="description">
+<a 
+ id="glo:html"></a><span 
+class="cmbx-10">html</span> </dt><dd 
+class="description">Hypertext Markup Language, used for displaying web page . 25</p><p class="theindex">
+                                                                  <img 
+src="dissertation147x.png" alt="PICT" >
+<img 
+src="dissertation148x.png" alt="PICT" >
+                                                                  
+     </dd><dt class="description">
+<a 
+ id="glo:IT"></a><span 
+class="cmbx-10">I.T.</span> </dt><dd 
+class="description">or  Internet  Technology  is  defined  by  Techopedia  as  use  of  computers,
+     storage networking and other devices and a variety of other hardware with
+     the purpose of exchanging digital information [<a 
+href="#Xtechopedia-it-definition">26</a>] . 6
+     </dd><dt class="description">
+<a 
+ id="glo:ipaddress"></a><span 
+class="cmbx-10">IP address</span> </dt><dd 
+class="description">An identifier that helps locating a resource on the network, usually
+     represents a computer device connected to a network . 13, 14, 16, 25</p><p class="theindex">
+     </dd><dt class="description">
+<a 
+ id="glo:kernel"></a><span 
+class="cmbx-10">kernel</span> </dt><dd 
+class="description">Is the core component of an operating system that provides all the
+     services necessary for every component of the system.. 9</p><p class="theindex">
+     </dd><dt class="description">
+<a 
+ id="glo:migration"></a><span 
+class="cmbx-10">migration</span> </dt><dd 
+class="description">Migration is the ability to switch to a new version, platform, or
+     physical location [<a 
+href="#Xwhat-is-migration">1</a>]. This term come from database management, but is
+     also used in other computer science fields. . 2</p><p class="theindex">
+     </dd><dt class="description">
+<a 
+ id="glo:natnetwork"></a><span 
+class="cmbx-10">NAT network</span> </dt><dd 
+class="description">A technique where one IP address is mapped to more internal
+     ip addresses, used for security and reduced number of ips. [<a 
+href="#Xwhatisnat">16</a>] . 12
+     </dd><dt class="description">
+<a 
+ id="glo:netmask"></a><span 
+class="cmbx-10">network mask</span> </dt><dd 
+class="description">A netmask is a 32 bits field whose p high order bits are set
+     to 1 and the low order bits are set to 0. The number of high order bits
+     set 1 indicates the length of the subnet identifier. Netmasks are usually
+     represented  in  the  same  dotted  decimal  format  as  IPv4  addresses.  [<span 
+class="cmbx-10">?</span>
+     ]p.143]netmask-definition . 13</p><p class="theindex">
+     </dd><dt class="description">
+<a 
+ id="glo:open-source"></a><span 
+class="cmbx-10">open-source</span> </dt><dd 
+class="description">Software that makes its code openly available, allows derived
+     work without restrictions and its distribution is done freely. 10
+     </dd><dt class="description">
+<a 
+ id="glo:operating-system"></a><span 
+class="cmbx-10">operating system</span> </dt><dd 
+class="description">The  platform  on  which  all  user  and  system  software  is
+     running. Examples are Windows, Linux, OSX, Android, iOSX. 1, 3&#8211;5, 9,
+     16</p><p class="theindex">
+     </dd><dt class="description">
+<a 
+ id="glo:partition"></a><span 
+class="cmbx-10">partition</span> </dt><dd 
+class="description">Bill Calkins defines partition as &#8221;Disks are divided into regions called
+     disk slices or disk partitions. A slice is composed of a single range of
+     contiguous blocks. It is a physical subset of the disk (except for slice 2,
+     which represents the entire disk).&#8221;[<a 
+href="#Xwhat_is_partition">3</a>] . 2
+     </dd><dt class="description">
+<a 
+ id="glo:puppet"></a><span 
+class="cmbx-10">puppet</span> </dt><dd 
+class="description">Open source Puppet helps you describe machine configurations in a
+     declarative language, bring machines to a desired state, and keep them
+     there through automation.[<a 
+href="#Xpuppet-definition">20</a>] . 4, 12, 25</p><p class="theindex">
+                                                                  <img 
+src="dissertation149x.png" alt="PICT" >
+<img 
+src="dissertation150x.png" alt="PICT" >
+                                                                  
+     </dd><dt class="description">
+<a 
+ id="glo:ram"></a><span 
+class="cmbx-10">RAM</span> </dt><dd 
+class="description">Random Access Memory, also main memory, is a computer hardware
+     component that stores information for fast retrieval.. 9, 14
+     </dd><dt class="description">
+<a 
+ id="glo:ruby"></a><span 
+class="cmbx-10">ruby</span> </dt><dd 
+class="description">A dynamic, open source programming language with a focus on simplicity
+     and productivity. It has an elegant syntax that is natural to read and easy
+     to write.[<a 
+href="#Xruby-definition">33</a>] . 12, 25
+     </dd><dt class="description">
+<a 
+ id="glo:ruby-on-rails"></a><span 
+class="cmbx-10">Ruby On Rails</span> </dt><dd 
+class="description">Rails is a web application development framework written in
+     the Ruby language. It is designed to make programming web applications
+     easier by making assumptions about what every developer needs to get
+     started. It allows you to write less code while accomplishing more than
+     many other languages and frameworks.[<a 
+href="#Xruby-on-rails-definition">34</a>] . 25</p><p class="theindex">
+     </dd><dt class="description">
+<a 
+ id="glo:ssh"></a><span 
+class="cmbx-10">SSH</span> </dt><dd 
+class="description">SSH: secure shell, a network protocol that allows a remote connection to
+     a terminal . 14
+     </dd><dt class="description">
+<a 
+ id="glo:standup"></a><span 
+class="cmbx-10">stand-up</span> </dt><dd 
+class="description">A daily team meeting where every team member gives an overview
+     of done tasks, current tasks and any future work that needs to be done by
+     that member. . 23</p><p class="theindex">
+     </dd><dt class="description">
+<a 
+ id="glo:vagrant"></a><span 
+class="cmbx-10">Vagrant</span> </dt><dd 
+class="description">Vagrant provides easy to configure, reproducible, and portable work
+     environments built on top of industry-standard technology and controlled
+     by a single consistent workflow to help maximize the productivity and
+     flexibility of you and your team. [<a 
+href="#Xvagrant-definition">12</a>] . 11&#8211;14, 25
+     </dd><dt class="description">
+<a 
+ id="glo:virtual_machine"></a><span 
+class="cmbx-10">virtual machine</span> </dt><dd 
+class="description">Oracle  Corporation  defines  it  &#8221;as  a  virtualized  operating
+     system with its associated software and applications&#8221;[<a 
+href="#Xwhat_is_virtual_machine">7</a>] . 7&#8211;9, 11
+     </dd><dt class="description">
+<a 
+ id="glo:virtualbox"></a><span 
+class="cmbx-10">virtualbox</span> </dt><dd 
+class="description">Open-source virtualisation technology created by Oracle. 7, 10
+     </dd><dt class="description">
+<a 
+ id="glo:vmware"></a><span 
+class="cmbx-10">VmWare</span> </dt><dd 
+class="description">VMware is the leader in so-called virtual machine software, it is also
+     the name of the product that the company produces [<a 
+href="#Xvmware-definition">21</a>] . 7, 10
+     </dd><dt class="description">
+<a 
+ id="glo:vsphere"></a><span 
+class="cmbx-10">vSphere</span> </dt><dd 
+class="description">Is a technology used to manage large collections of infrastructure
+     (such  as  CPUs,  storage,  and  networking)  as  a  seamless  and  dynamic
+     operating   environment,   and   also   manages   the   complexity   of   a
+     datacenter[<a 
+href="#Xvsphere-definition">37</a>] . 7</p><p class="theindex">
+     </dd><dt class="description">
+<a 
+ id="glo:xeon"></a><span 
+class="cmbx-10">Xeon</span> </dt><dd 
+class="description">The Xeon processor family is Intel&#8217;s server grade processors . 7</dd></dl>
+                                                                  <img 
+src="dissertation151x.png" alt="PICT" >
+<img 
+src="dissertation152x.png" alt="PICT" >
+                                                                  
+<!--l. 859--><p class="noindent" >
+                                                                  <img 
+src="dissertation153x.png" alt="PICT" >
+<img 
+src="dissertation154x.png" alt="PICT" >
+                                                                  
+   <h3 class="sectionHead"><span class="titlemark">12   </span> <a 
+ id="x1-5300012"></a>Appendix</h3>
+<!--l. 862--><p class="noindent" >
+   <h3 class="sectionHead"><span class="titlemark">13   </span> <a 
+ id="x1-5400013"></a>Planning</h3>
+<div class="center" 
+>
+<!--l. 864--><p class="noindent" >
+
+<!--l. 865--><p class="noindent" ><img 
+src="resources/images/gantt.jpg" alt="PIC"  
+></div>
+<!--l. 868--><p class="noindent" >As part of the development cycle, I had a supervisor meeting every fortnight. The
+goal was to discuss work progress and ensure things are moving forward. During
+these meetings, I received feedback, raised concerns and showed progress in a
+<a 
+href="#glo:standup"><span id="textcolor97">stand-up</span></a> fashion. Occasionally, the meetings were not about progress update, but
+about demonstration of the work done so far with the purpose of obtaining feedback
+and presentation practice.
+<!--l. 870--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">13.1   </span> <a 
+ id="x1-5500013.1"></a>First Semester</h4>
+<!--l. 871--><p class="noindent" >When creating the project plan, two core stages were taken into consideration. The
+first stage is semester one. During that period, the ground work was laid, on
+which all future development and testing was based. This was a critical
+moment into the building process. It allowed for a more in-depth research using
+materials created by the leading experts in the field (Amazon, Intel, Oracle).
+Their guides and documents helped gaining more understanding in various
+aspects of building cloud-ready applications, infrastructure security and
+automation.
+<!--l. 873--><p class="indent" >   The research helped when rationing about the features that need implementing. It
+also illustrated the scope, and the challenges that need to be faced. The research gave
+an insight into why this problem requires solving, and pointed me to open-source
+projects that achieve parts of the work.
+<!--l. 875--><p class="indent" >   The first semester was not only about research, but also about describing the
+constrains, limitations and infrastructure decisions that need to be made in order to
+demonstrate a product that has real-world applications. The materials helped
+me also to identify potential risks and issues that might arise, such as the
+security risk of running multiple virtual machines onto the same physical
+space. This is a potential risk situation, as an attacker can read the private
+data of another machine if the person gets access to the memory of the
+&#8221;host&#8221;.
+<!--l. 878--><p class="indent" >   Work also went into creating presentation and project proposal for the upcoming
+work, which gave an outline and highlighted the features that the work addresses.
+                                                                  <img 
+src="dissertation155x.png" alt="PICT" >
+<img 
+src="dissertation156x.png" alt="PICT" >
+                                                                  
+When creating the presentation, I wanted to be as generic as possible as not to
+present information and ideas that the additional research might prove impossible to
+implement or not practical.
+<!--l. 881--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">13.2   </span> <a 
+ id="x1-5600013.2"></a>Second Semester</h4>
+<!--l. 883--><p class="noindent" >The tasks accomplished during the second semester are related to implementing,
+refining, iterating, evaluating and documenting the solution. This is the time where
+all the main features, functional and non-functional requirements got developed,
+tested and documented. It must be noted that for the most part, each cycle was not
+incrementally tackled, but instead, numerous development-testing-documenting
+phases were used to achieve the final result.
+<div class="center" 
+>
+<!--l. 884--><p class="noindent" >
+
+<!--l. 885--><p class="noindent" ><img 
+src="resources/images/agile.jpg" alt="PIC"  
+></div>
+<!--l. 888--><p class="indent" >   For the most part, the project was completed using agile principles. Each cycle
+that shaped the final product is described below.
+   <h5 class="subsubsectionHead"><span class="titlemark">13.2.1   </span> <a 
+ id="x1-5700013.2.1"></a>Developmen</h5>
+<!--l. 890--><p class="noindent" >As planned, the work was broke down to subtasks. The initial plan is not
+to develop the whole system and assemble the parts together at the end,
+but to build a minimum viable product (MVP) and increment and improve
+onwards.
+<!--l. 892--><p class="indent" >   This was done in order to assure that the platform can be built with
+the available tools and that the requirements can be met at the end of the
+project.
+<!--l. 894--><p class="indent" >   Being able to create a virtual machine with a known <a 
+href="#glo:ipaddress"><span id="textcolor98">IP address</span></a> from a script was
+the first thing that had to be accomplished. Creating custom users, opening ports
+and creating the web interface was planned later as something that could be built on
+top of the &#8221;core&#8221; product.
+<!--l. 896--><p class="noindent" >
+   <h5 class="subsubsectionHead"><span class="titlemark">13.2.2   </span> <a 
+ id="x1-5800013.2.2"></a>Learning period</h5>
+<!--l. 897--><p class="noindent" >For the duration of this project, a variety of new technologies were tried and
+evaluated, such as <a 
+href="#glo:vagrant"><span id="textcolor99">Vagrant</span></a>, <a 
+href="#glo:puppet"><span id="textcolor100">puppet</span></a>, <a 
+href="#glo:ruby-on-rails"><span id="textcolor101">Ruby On Rails</span></a>, <a 
+href="#glo:ruby"><span id="textcolor102">ruby</span></a>.
+<!--l. 899--><p class="indent" >   As part of the learning cycle, the official ruby programming language manual was
+used. It helped gain proficiency and to understand the fundamental constructs that
+were used throughout the tutorials, articles, blogs and other learning materials. The
+process taught me about declaring variables, scopes, for loops and any extra syntax
+unlike other programming languages. To get up and running with <a 
+href="#glo:ruby"><span id="textcolor103">ruby</span></a>, the period
+                                                                  <img 
+src="dissertation157x.png" alt="PICT" >
+<img 
+src="dissertation158x.png" alt="PICT" >
+                                                                  
+between first and second semester was planned to build basic command line
+programs.
+<!--l. 901--><p class="indent" >   Another part of the development strategy was to do a small web project using
+ruby on rails just to get a feeling of what is possible in terms of rapid development
+and ease of use. This small project included building forms, validation, manipulating
+database objects and creating <a 
+href="#glo:html"><span id="textcolor104">html</span></a> pages. This was done in February (the beginning
+of second semester), with the purpose of determining if this tool is right for the
+job.
+<!--l. 903--><p class="indent" >   The task of learning <a 
+href="#glo:puppet"><span id="textcolor105">puppet</span></a> was achieved by creating end-to-end automation
+scrip of an apache server doing various tasks. Puppet&#8217;s power is to get a
+machine&#8217;s configuration to a known state and ensure all software packages
+are present. Doing this exercise was overall a good practice, as it led to a
+faster implementation and integration later on when working on the actual
+platform.
+<!--l. 905--><p class="noindent" >
+   <h5 class="subsubsectionHead"><span class="titlemark">13.2.3   </span> <a 
+ id="x1-5900013.2.3"></a>Documentation</h5>
+<!--l. 906--><p class="noindent" >The initial plan as stated in the project proposal is to document the work
+during each stage of the process, like implementing a new feature. Later,
+the decision was made to not strictly follow that plan, as there were few
+components that changed drastically. For example, in the beginning, using
+chef was planned for configuration automation and management instead
+of puppet. After evaluating and experimenting with it for 5 days, it was
+apparent that the set-up overhead was slowing down the actual development
+process.
+<!--l. 908--><p class="indent" >   Because of that experience, the dissertation write-up process was changed to
+documenting features only when they are established. And reasonably stable. The
+document paper is written using the latex language.
+    
+</body></html> 
+
+                                                                  <img 
+src="dissertation159x.png" alt="PICT" >
+
+

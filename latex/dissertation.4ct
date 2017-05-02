@@ -1,0 +1,75 @@
+\expandafter\ifx\csname doTocEntry\endcsname\relax \expandafter\endinput\fi 
+\doTocEntry\tocsection{1}{\csname a:TocLink\endcsname{1}{x1-10001}{QQ2-1-1}{Declaration}}{4}\relax 
+\doTocEntry\tocsection{2}{\csname a:TocLink\endcsname{1}{x1-20002}{QQ2-1-2}{Acknowledgements}}{4}\relax 
+\doTocEntry\tocsection{3}{\csname a:TocLink\endcsname{1}{x1-30003}{QQ2-1-3}{Abstract}}{5}\relax 
+\doTocEntry\toclikesection{}{\csname a:TocLink\endcsname{1}{x1-40003}{QQ2-1-4}{Contents}}{6}\relax 
+\doTocEntry\toclikesection{}{\csname a:TocLink\endcsname{1}{x1-50003}{QQ2-1-5}{List of Figures}}{8}\relax 
+\doTocEntry\tocsection{4}{\csname a:TocLink\endcsname{1}{x1-60004}{QQ2-1-6}{Introduction}}{2}\relax 
+\doTocEntry\toclof{1}{\csname a:TocLink\endcsname{1}{x1-6001r1}{}{\ignorespaces The two types of virtualisation \cite {virtualisation-security-guidance}}}{figure}\relax 
+\doTocEntry\toclof{2}{\csname a:TocLink\endcsname{1}{x1-6002r2}{}{\ignorespaces VSphere data-store manager screen-shot. Source \cite {vmware-storage-pool-screenshot}}}{figure}\relax 
+\doTocEntry\tocsubsection{4.1}{\csname a:TocLink\endcsname{1}{x1-70004.1}{QQ2-1-9}{Purpose}}{8}\relax 
+\doTocEntry\tocsubsection{4.2}{\csname a:TocLink\endcsname{1}{x1-80004.2}{QQ2-1-10}{Demographic}}{8}\relax 
+\doTocEntry\tocsubsection{4.3}{\csname a:TocLink\endcsname{1}{x1-90004.3}{QQ2-1-11}{Aim and Objectives}}{8}\relax 
+\doTocEntry\tocsubsubsection{4.3.1}{\csname a:TocLink\endcsname{1}{x1-100004.3.1}{QQ2-1-12}{Aim}}{8}\relax 
+\doTocEntry\tocsubsubsection{4.3.2}{\csname a:TocLink\endcsname{1}{x1-110004.3.2}{QQ2-1-13}{Objectives}}{9}\relax 
+\doTocEntry\tocsection{5}{\csname a:TocLink\endcsname{1}{x1-120005}{QQ2-1-14}{Background}}{10}\relax 
+\doTocEntry\tocsubsection{5.1}{\csname a:TocLink\endcsname{1}{x1-130005.1}{QQ2-1-15}{Virtualisation and "The Cloud" }}{10}\relax 
+\doTocEntry\toclof{3}{\csname a:TocLink\endcsname{1}{x1-13001r3}{}{\ignorespaces Heterogeneous server configuration. Source \cite {heterogenious-cloud-computing}[p.59]}}{figure}\relax 
+\doTocEntry\toclof{4}{\csname a:TocLink\endcsname{1}{x1-13002r4}{}{\ignorespaces Resource and vCenter Management, allocating \gls {cpu} resources. Source \cite {vmware-cookbook}}}{figure}\relax 
+\doTocEntry\tocsubsection{5.2}{\csname a:TocLink\endcsname{1}{x1-140005.2}{QQ2-1-18}{Similar in the field}}{17}\relax 
+\doTocEntry\tocsubsubsection{5.2.1}{\csname a:TocLink\endcsname{1}{x1-150005.2.1}{QQ2-1-19}{Amazon Web Services\texttrademark EC2}}{17}\relax 
+\doTocEntry\tocsubsubsection{5.2.2}{\csname a:TocLink\endcsname{1}{x1-160005.2.2}{QQ2-1-20}{Microsoft Azure}}{18}\relax 
+\doTocEntry\tocsection{6}{\csname a:TocLink\endcsname{1}{x1-170006}{QQ2-1-21}{Work}}{20}\relax 
+\doTocEntry\tocsubsection{6.1}{\csname a:TocLink\endcsname{1}{x1-180006.1}{QQ2-1-22}{Overview}}{20}\relax 
+\doTocEntry\tocsubsection{6.2}{\csname a:TocLink\endcsname{1}{x1-190006.2}{QQ2-1-23}{Vagrant}}{21}\relax 
+\doTocEntry\tocsubsection{6.3}{\csname a:TocLink\endcsname{1}{x1-200006.3}{QQ2-1-24}{Workflow}}{22}\relax 
+\doTocEntry\tocsubsection{6.4}{\csname a:TocLink\endcsname{1}{x1-210006.4}{QQ2-1-25}{Languages and frameworks}}{23}\relax 
+\doTocEntry\tocsubsection{6.5}{\csname a:TocLink\endcsname{1}{x1-220006.5}{QQ2-1-26}{The deeploy module - architecture}}{23}\relax 
+\doTocEntry\toclof{5}{\csname a:TocLink\endcsname{1}{x1-22001r5}{}{\ignorespaces Architecture of the deeploy module}}{figure}\relax 
+\doTocEntry\toclof{6}{\csname a:TocLink\endcsname{1}{x1-22002r6}{}{\ignorespaces Deeploy build flow}}{figure}\relax 
+\doTocEntry\tocsubsection{6.6}{\csname a:TocLink\endcsname{1}{x1-230006.6}{QQ2-1-29}{Virtual networks}}{30}\relax 
+\doTocEntry\tocsubsection{6.7}{\csname a:TocLink\endcsname{1}{x1-240006.7}{QQ2-1-30}{Extending virtual machines}}{30}\relax 
+\doTocEntry\tocsubsection{6.8}{\csname a:TocLink\endcsname{1}{x1-250006.8}{QQ2-1-31}{Security}}{30}\relax 
+\doTocEntry\tocsubsubsection{6.8.1}{\csname a:TocLink\endcsname{1}{x1-260006.8.1}{QQ2-1-32}{Passwords and authentication}}{31}\relax 
+\doTocEntry\tocsubsubsection{6.8.2}{\csname a:TocLink\endcsname{1}{x1-270006.8.2}{QQ2-1-33}{\gls {ssh} Credentials without password}}{31}\relax 
+\doTocEntry\tocsubsubsection{6.8.3}{\csname a:TocLink\endcsname{1}{x1-280006.8.3}{QQ2-1-34}{Leaking passwords}}{31}\relax 
+\doTocEntry\tocsubsubsection{6.8.4}{\csname a:TocLink\endcsname{1}{x1-290006.8.4}{QQ2-1-35}{Guest Isolation}}{31}\relax 
+\doTocEntry\tocsubsubsection{6.8.5}{\csname a:TocLink\endcsname{1}{x1-300006.8.5}{QQ2-1-36}{\gls {ssh} Keys}}{32}\relax 
+\doTocEntry\tocsubsubsection{6.8.6}{\csname a:TocLink\endcsname{1}{x1-310006.8.6}{QQ2-1-37}{Source of packages}}{32}\relax 
+\doTocEntry\tocsubsubsection{6.8.7}{\csname a:TocLink\endcsname{1}{x1-320006.8.7}{QQ2-1-38}{Development practices}}{32}\relax 
+\doTocEntry\tocsection{7}{\csname a:TocLink\endcsname{1}{x1-330007}{QQ2-1-39}{Testing}}{32}\relax 
+\doTocEntry\tocsection{8}{\csname a:TocLink\endcsname{1}{x1-340008}{QQ2-1-40}{Evaluation}}{33}\relax 
+\doTocEntry\tocsubsection{8.1}{\csname a:TocLink\endcsname{1}{x1-350008.1}{QQ2-1-41}{Introduction}}{33}\relax 
+\doTocEntry\tocsubsection{8.2}{\csname a:TocLink\endcsname{1}{x1-360008.2}{QQ2-1-42}{Deployment Overview}}{33}\relax 
+\doTocEntry\toclof{7}{\csname a:TocLink\endcsname{1}{x1-36001r7}{}{\ignorespaces \texttt  {Deeploy} command-line back-end interface for help}}{figure}\relax 
+\doTocEntry\toclof{8}{\csname a:TocLink\endcsname{1}{x1-36002r8}{}{\ignorespaces \texttt  {Deeploy} command-line back-end interface for new machine - help}}{figure}\relax 
+\doTocEntry\tocsubsection{8.3}{\csname a:TocLink\endcsname{1}{x1-370008.3}{QQ2-1-45}{Deployment Time Results}}{39}\relax 
+\doTocEntry\toclof{9}{\csname a:TocLink\endcsname{1}{x1-37020r9}{}{\ignorespaces Deploying Ubuntu through back-end interface, time taken before and after}}{figure}\relax 
+\doTocEntry\toclof{10}{\csname a:TocLink\endcsname{1}{x1-37043r10}{}{\ignorespaces Deploying Centos through back-end interface, time taken before and after}}{figure}\relax 
+\doTocEntry\toclof{11}{\csname a:TocLink\endcsname{1}{x1-37063r11}{}{\ignorespaces Deploying Debian through back-end interface, time taken before and after.}}{figure}\relax 
+\doTocEntry\tocsubsection{8.4}{\csname a:TocLink\endcsname{1}{x1-380008.4}{QQ2-1-49}{Deployment Progress}}{48}\relax 
+\doTocEntry\tocsubsection{8.5}{\csname a:TocLink\endcsname{1}{x1-390008.5}{QQ2-1-50}{Investigating Failures}}{48}\relax 
+\doTocEntry\tocsubsection{8.6}{\csname a:TocLink\endcsname{1}{x1-400008.6}{QQ2-1-51}{Extensibility of solution}}{48}\relax 
+\doTocEntry\tocsubsection{8.7}{\csname a:TocLink\endcsname{1}{x1-410008.7}{QQ2-1-52}{Health monitor}}{49}\relax 
+\doTocEntry\toclof{12}{\csname a:TocLink\endcsname{1}{x1-41001r12}{}{\ignorespaces Monitorix view from the web interface}}{figure}\relax 
+\doTocEntry\tocsubsection{8.8}{\csname a:TocLink\endcsname{1}{x1-420008.8}{QQ2-1-54}{Web Interface - requirement}}{52}\relax 
+\doTocEntry\toclof{13}{\csname a:TocLink\endcsname{1}{x1-42001r13}{}{\ignorespaces Home screen and creation form}}{figure}\relax 
+\doTocEntry\toclof{14}{\csname a:TocLink\endcsname{1}{x1-42002r14}{}{\ignorespaces Dashboard sample screen}}{figure}\relax 
+\doTocEntry\tocsubsection{8.9}{\csname a:TocLink\endcsname{1}{x1-430008.9}{QQ2-1-57}{Authentication and Credential management}}{58}\relax 
+\doTocEntry\tocsubsection{8.10}{\csname a:TocLink\endcsname{1}{x1-440008.10}{QQ2-1-58}{Documentation}}{58}\relax 
+\doTocEntry\tocsubsection{8.11}{\csname a:TocLink\endcsname{1}{x1-450008.11}{QQ2-1-59}{Firewall and package management}}{58}\relax 
+\doTocEntry\tocsubsection{8.12}{\csname a:TocLink\endcsname{1}{x1-460008.12}{QQ2-1-60}{System resource validation}}{58}\relax 
+\doTocEntry\tocsection{9}{\csname a:TocLink\endcsname{1}{x1-470009}{QQ2-1-61}{Conclusion}}{60}\relax 
+\doTocEntry\tocsubsection{9.1}{\csname a:TocLink\endcsname{1}{x1-480009.1}{QQ2-1-62}{Constrains}}{60}\relax 
+\doTocEntry\tocsection{10}{\csname a:TocLink\endcsname{1}{x1-4900010}{QQ2-1-63}{References}}{62}\relax 
+\doTocEntry\toclikesection{}{\csname a:TocLink\endcsname{1}{x1-5000010}{QQ2-1-64}{References}}{62}\relax 
+\doTocEntry\tocsection{11}{\csname a:TocLink\endcsname{1}{x1-5100011}{QQ2-1-65}{Glossary}}{66}\relax 
+\doTocEntry\toclikesection{}{\csname a:TocLink\endcsname{1}{x1-5200011}{QQ2-1-66}{Glossary}}{66}\relax 
+\doTocEntry\tocsection{12}{\csname a:TocLink\endcsname{1}{x1-5300012}{QQ2-1-67}{Appendix}}{70}\relax 
+\doTocEntry\tocsection{13}{\csname a:TocLink\endcsname{1}{x1-5400013}{QQ2-1-68}{Planning}}{70}\relax 
+\doTocEntry\tocsubsection{13.1}{\csname a:TocLink\endcsname{1}{x1-5500013.1}{QQ2-1-69}{First Semester}}{70}\relax 
+\doTocEntry\tocsubsection{13.2}{\csname a:TocLink\endcsname{1}{x1-5600013.2}{QQ2-1-70}{Second Semester}}{71}\relax 
+\doTocEntry\tocsubsubsection{13.2.1}{\csname a:TocLink\endcsname{1}{x1-5700013.2.1}{QQ2-1-71}{Developmen}}{71}\relax 
+\doTocEntry\tocsubsubsection{13.2.2}{\csname a:TocLink\endcsname{1}{x1-5800013.2.2}{QQ2-1-72}{Learning period}}{71}\relax 
+\doTocEntry\tocsubsubsection{13.2.3}{\csname a:TocLink\endcsname{1}{x1-5900013.2.3}{QQ2-1-73}{Documentation}}{72}\relax 
+\par 
