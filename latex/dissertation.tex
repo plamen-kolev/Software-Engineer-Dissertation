@@ -573,11 +573,13 @@ Additionally, the process of creating a virtual instance is using a custom image
 
 Then a friendly name to virtual machine instance name map entry has to be added to the \texttt{deeploy.rb}. Then a folder with the name of the new distribution must be placed in configurations containing files who subclass \texttt{firewall\_config.rb packages\_config.rb puppet\_config.rb shell\_config.rb vagrant\_config.rb}. These files might be left blank if the distribution uses the default commands. Any deviations should be extended via the child modules.
 
-\subsection{The Web Server}
+\subsection{Building The Web Server}
 The core module \texttt{deeploy} is natively integrated into a \gls{ruby-on-rails} web-server. Ruby on Rails has been chosen as it is one of the most popular web frameworks and is used by big online companies like Twitter \cite{twitter-uses-rails}. Other reasons are that during the evaluation process, the documentation and support was extensive and provided enough information to quickly start building application with little overhead. Being written in \gls{ruby} made it an easy choice when integrating.
 
+\subsubsection{Database and authentication}
 First part of building the web server was creating relational database model for different machine states and building a credential system for user authentication and authorisation. Password concerns are described in section ~\nameref{Passwords and authentication}.
 
+\subsubsection{Web Form}
 The web interface has a web form where machines can be build. Every filed in this form is validated on the back-end to ensure proper arguments. The validation happens transparently through the \texttt{deeploy}'s helper functions. Upon detected issues, such as open ports outside of available ranges, conflicting instance name, invalid packages, logged user and supported distribution. Upon detection of invalid arguments, the web form gives hints of what went wrong. The form also validates compatible packages, for example package nginx and apache2 cannot be installed simultaneously as they work on the same port. The process is illustrated in figure \ref{fig:valid-invalid-form}. 
 
 \begin{figure}[h!]
@@ -588,9 +590,22 @@ The web interface has a web form where machines can be build. Every filed in thi
 	\label{fig:valid-invalid-form}
 \end{figure}
 
-Initially, the interface had an issue with instance build responsiveness. It took the command to build a machine and it waited until the whole process was completed (1 to 2 minutes) before the success screen was shown. This is the case, as the web request was not completed until the \texttt{deeploy} module returned an exit code to the web server. 
+\subsubsection{Asynchronous deployment}
+Initially, the interface had an issue with instance build responsiveness. It took the command to build a machine and it waited until the whole process was completed (1 to 2 minutes) before the success screen was shown. This is the case, as the web request will not complete until the \texttt{deeploy} module returned an exit code to the build process. 
 
-Sidekiq module
+To avoid long wait times and unresponsive interface, redis cache queue is used. Upon build request, the request returns a success code and a loading screen is shown (figure \ref{fig:web-interface-build-status}). Then the build request is placed on a queue in \texttt{redis} memory. A build worker is implemented, it monitors for any pending jobs and picks them and begins the build process. During that stage, the \texttt{deeploy} module updates the database machine object's build progress. The website's front end constantly pings the \gls{api} to obtain the current build stage, if the stage is success or failure, the continue button appears. The same pipeline is used for stopping, starting and terminating a machine. 
+
+Upon unsuccessful build, the web server pulls the build logs and creates a downloadable link to the resource. This is done for debugging purposes. The middleware which ensures that \texttt{redis} jobs are completed is called \texttt{sidekiq}, the build worker discussed above is written with the support of sidekiq's documentation \cite{sidekiq-getting-started}. It is important to note that if \texttt{redis} is not working, the machine build functionality will not work. For this reason, in order to run the web server, redis and sidekiq must be up and running, otherwise code has been added to raise exceptions.
+
+\subsubsection{Implementing the Health monitor}
+Two strategies were used when providing the machine status. The first one is using a health service 'worker' process. This is again written in \texttt{sidekiq} framework and it has hooks with \texttt{deeploy} module's machine state calls. A \gls{cron} task runs every minute and checks the state of each machine via the worker. A machine is assumed to be alive if the health worker gets an acknowledged after connection attempt on \gls{ssh} port 22. If this connection cannot be established, the machine is assumed to be inaccessible.
+
+The second strategy is pre-installing a free and open-source software \texttt{monitorix}, a tool for monitoring a variety of hardware parameters over a large period of time. The setup is configured in such a way that a firewall is blocking external connection to the monitorix's ports and only the web platform's \gls{ipaddress} is allowed. This ensures that only a logged-in user can view the performance statistics of the machines. A running interface of monitorix is shown in figure \ref{fig:monitorix-example}
+
+
+
+Certificate
+
 
 Healthmonitor cronjob
 
@@ -1239,12 +1254,18 @@ Because of that experience, the dissertation write-up process was changed to doc
 	}
 
 	@online{twitter-uses-rails,
-		title = {},
-		author = {},
-		year = {},
+		title = {Twitter Shifting More Code to JVM, Citing Performance and Encapsulation As Primary Drivers},
+		author = {Charles Humble},
+		year = {July 4, 2011},
 		note = {Accessed: May 1, 2017},
-		url = {https://www.infoq.com/articles/twitter-java-use},
-		
+		url = {https://www.infoq.com/articles/twitter-java-use},		
+	}
+
+	@online{sidekiq-getting-started,
+	year = {March 1, 2017},
+	title = {Sidekiq Wiki Home},
+	author = { Mike Perham},
+	url = {https://github.com/mperham/sidekiq/wiki}
 	}
 
 \end{filecontents*}
