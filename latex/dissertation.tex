@@ -1,7 +1,7 @@
 \documentclass{article}
 \title{CSC3095:Web Platform for Digital Deployment of Virtual Servers}
 
-\date{03.03.2017}
+\date{03.05.2017}
 \author{Plamen Kolev\\ \textbf{Student number} : 130221960\\ \textbf{Supervisor} : Neil Speirs}
 
 % USERPACKAGES
@@ -45,6 +45,8 @@
     description={Migration is the ability to switch to a new version, platform, or physical location \cite{what-is-migration}. This term come from database management, but is also used in other computer science fields.
     }
 }
+
+\newglossaryentry{rsync}{name={rsync},description={utility for transfer and synchronisation of files across machines over a network}}
 
 \newglossaryentry{dns}{
     name={DNS},
@@ -595,25 +597,19 @@ Initially, the interface had an issue with instance build responsiveness. It too
 
 To avoid long wait times and unresponsive interface, redis cache queue is used. Upon build request, the request returns a success code and a loading screen is shown (figure \ref{fig:web-interface-build-status}). Then the build request is placed on a queue in \texttt{redis} memory. A build worker is implemented, it monitors for any pending jobs and picks them and begins the build process. During that stage, the \texttt{deeploy} module updates the database machine object's build progress. The website's front end constantly pings the \gls{api} to obtain the current build stage, if the stage is success or failure, the continue button appears. The same pipeline is used for stopping, starting and terminating a machine. 
 
-Upon unsuccessful build, the web server pulls the build logs and creates a downloadable link to the resource. This is done for debugging purposes. The middleware which ensures that \texttt{redis} jobs are completed is called \texttt{sidekiq}, the build worker discussed above is written with the support of sidekiq's documentation \cite{sidekiq-getting-started}. It is important to note that if \texttt{redis} is not working, the machine build functionality will not work. For this reason, in order to run the web server, redis and sidekiq must be up and running, otherwise code has been added to raise exceptions.
+Upon unsuccessful build, the web server pulls the build logs and creates a downloadable link to the resource. This is done for debugging purposes. The middleware which ensures that \texttt{redis} jobs are completed is called \texttt{sidekiq}, the build worker discussed above is written with the support of sidekiq's documentation \cite{sidekiq-getting-started}. It is important to note that if \texttt{redis} is not working, the machine build functionality will not work. For this reason, in order to run the web server, redis and sidekiq must be up and running. Code has been added to raise exceptions when redis or sidekiq are not running..
 
 \subsubsection{Implementing the Health monitor}
 Two strategies were used when providing the machine status. The first one is using a health service 'worker' process. This is again written in \texttt{sidekiq} framework and it has hooks with \texttt{deeploy} module's machine state calls. A \gls{cron} task runs every minute and checks the state of each machine via the worker. A machine is assumed to be alive if the health worker gets an acknowledged after connection attempt on \gls{ssh} port 22. If this connection cannot be established, the machine is assumed to be inaccessible.
 
 The second strategy is pre-installing a free and open-source software \texttt{monitorix}, a tool for monitoring a variety of hardware parameters over a large period of time. The setup is configured in such a way that a firewall is blocking external connection to the monitorix's ports and only the web platform's \gls{ipaddress} is allowed. This ensures that only a logged-in user can view the performance statistics of the machines. A running interface of monitorix is shown in figure \ref{fig:monitorix-example}
 
+\subsubsection{Obtaining Certificates}
+The web server has the necessary code to allow an authenticated user to download their authentication certificate files for gaining access to their respective machine. Work has been done to ensure the user understands how to use the certificate - a short code snippet tailored for the machine is provided with each instance. Upon certificate download, the authentication files are deleted from the server for security reasons.
 
-
-Certificate
-
-
-Healthmonitor cronjob
-
-Asynchronous build
-
-Providing logs
-
-Providing management interface
+\subsubsection{Management Functionality}
+The interface is also a gateway to managing the state of the
+machines. The web dashboard of a logged in user, as shown in figure \ref{fig:web-dashboard}, gives information about many aspects of the created instances. This is where the management panel for powering on, off, destroying and restarting is exposed. All of these features use the core \texttt{deeploy} module for this functionality.
 
 \subsection{Security}
 
@@ -855,6 +851,9 @@ The solution provides the ability to open network ports to the outside world and
 
 Something that is currently lacking is the ability to amend ports and packages. After the build process is over, one can manually connect to the machine and install/remove software but the process is not automated after the machine is already deployed.
 
+\subsection{Package Mirroring}
+As part of the evaluation feedback, a suggestion was made to use package mirroring server in the future. This is a server that contains a \gls{rsync} copy of the official distribution packages. The idea is to have everything necessary downloaded, making it installable to every new virtual instance almost immediately. This will have the effect of reducing bandwidth costs and reduce build times.
+
 \subsection{System resource validation}
 During the deployment process, a machine is validated on its own and the platform's state is not considered. For example, if there is not disk space available or the system is low on \gls{ram}, this will not get detected and failure might happen. This has not been implemented because it requires managing virtual hard drives and storing meta-data about the virtual machine with status of the whole platform. It would require large sum of work and would take significant amount of work, possibly making it impossible to deliver the platform on time.
 Not tackling this issue helped allocate more time on the core components and the actual operations of this work.
@@ -865,30 +864,36 @@ For this exploit to happen, the platform owner must invoke the tool manually.
 
 In the most common case, this command would leak the \gls{api} key of a user. Future work might opt for using a hash of the \gls{api} key and have the option of regenerating it. This would significantly reduce chances f further exploitation upon system breach.
 
+\subsubsection{Allocation of network addresses}
+A demonstration of \glspl{ipaddress} allocation was peformed during the evaluation. Deciding to give network addresses incrementally received positive feedback. The reasoning behind using such approach is that no network conflict can happen and a stable address resolution can be achieved.
+
 \newpage
 \section{Conclusion}
 
-\subsection{Constrains}
-Because of the limited duration of the dissertation and the immense work that has to be carried throughout the implementation (testing, documentation, development, debugging, planning, architecture, external tools, hardware constrains, etc.) certain limitations had to be put in place to ensure that the project will be completed within the appropriate period.
+\subsection{Fulfilment of requirements}
+The current solution successfully achieved the outlined objectives. It allows for secure access, management and configuration of a machine, guides the user through the user experience and makes it quick and easy to get stated. 
 
-The initial constrain that has been defined is limiting the solution to a single host. This work is done as a proof-of-concept system that has the potential of being scaled up and extended to support a cluster deployment in the near future.
-Creating a distributed and scalable implementation of this work goes beyond the scope. This is not to say that it is limited to single host, but testing and planning guarantee that it will be fully functional under such condition.
+The platform creates a machine quickly and gives feedback to the user though the entire process and similar user experience has been provided throughout the solution. 
 
-As a future task, it would be possible to deploy multiple instances of the underlying infrastructure that are managed and synchronised with a technology like puppet or chef. Then, creating virtual machines can be done via a manager machine that picks a host based on a round-robin algorithm or on load. Additional implementation steps must be carried out to ensure that the web platform and the manager understands the physical location of the virtual machine. Physical location references to the real hardware (the host) running the virtual machine.
+\subsection{Things learned}
 
-Another assumption and a constrain is the availability of a network interface. To simplify the development process and allow for  different isolated environments, virtual networks were used. A network environment is the space in which all the virtual machines have visibility of one another. It also makes it possible to allocate different network addresses dynamically and verify availability of resources. Another important bit is the fact that one must be connected to the network environment to communicate with the machines inside of it. VirtualBox's host-only networking interfaces have been used to create multiple network instances that allow for the creation of machines that are independent of each other when developing and testing.
+\subsection{Future work}
+Because of the limited duration of the dissertation and the work work that has to be carried throughout the implementation (testing, documentation, development, debugging, planning, architecture, external tools, hardware constrains, etc.) certain limitations are put in place to ensure that the project will be completed within the deadline.
+
+The initial constrain are defined to limit the solution to a single host. This work is done as a proof-of-concept system that has the potential to be scaled up and extended to support a clustered deployment.
+Creating a distributed and scalable implementation of this work goes beyond the scope of the objectives. This is not to say that it is limited to single host, but testing and planning guarantee that it will be fully functional under such condition.
+
+It should be possible to deploy multiple instances of the underlying infrastructure managed and synchronised with a technology like puppet or chef. Then, creating virtual machines can be done via a manager machine which picks a host based on a round-robin algorithm. Additional implementation steps must be carried out to ensure that the web platform and the manager understands the physical location of the virtual machine. Physical location references to the real hardware (the host) running the virtual machine.
+
+The current solution makes assumptions about the available network interface. Right now, one must be connected to the network environment to communicate with the machines inside of the virtual network. VirtualBox's host-only networking interfaces is used to create multiple network instances that allow for the creation of machines independently of one another during developing and testing.
 
 When further extending the solution, additional work has to be carried out to ensure integration with a public \gls{dns} server, and some adjustments ought to be made to allow the production \gls{dns} to allocate \gls{dhcp} \gls{ipaddress} to the virtual machines.
 
-The solution aims to orchestrate and automate generic virtual machine deployment, but creating a solution that enables every \gls{operating-system} to be deployable would require extensive amount of extra work. Future work can make it possible to deploy Windows, Mac OS and more Linux variants as part of the infrastructure, but this is yet not the case.
+The solution aims to orchestrate and automate generic virtual machine deployment, but creating a solution that enables every \gls{operating-system} to be deployable would require extensive amount of additional changes. Future work should make it possible to deploy Windows, Mac OS and more Linux distributions as part of the infrastructure.
 
 Windows is not supported yet, as it has completely different architecture and has a separate interface for managing networking, users, installation and permissions. Doing windows deployment also requires licensing of their \gls{operating-system}. Another constrain in working with windows is that not many core components are configurable or accessible via a script making automation very difficult or impossible, or are not freely available.
 
 Mac OSX virtual deployment was also something left for future. It also has similar issues to windows virtualisation (licensing, exposed \gls{api}), as well as it is a platform that I have no experience with.
-
-For the purpose of this work, the decision to have limited scope of allowed Linux distributions to Ubuntu, Centos and Debian was made, but it is important to note that the architecture allows extending that list. Development was done with that in mind.
-
-What enables this flexibility is the configuration set-up in \texttt{deeploy} module. If one is to add a custom linux distribution, it's image must be created from a virtual machine provider (virtualbox). Doing so consists of creating a base virtual machine, supply necessary vagrant components to it. Then the machine is exported to an image, this image is then imported as a vagrant machine. The following process is explained more in-depth in the official \gls{vagrant} documentation \cite{vagrant-create-base-box}.
 
 \newpage
 \section{References}
