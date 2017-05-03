@@ -648,12 +648,14 @@ Continuous integration methodologies were adopted, and the solution benefits fro
 
 The object-oriented pattern for building modular software was used. This approach ensured separation of concerns - each file does one function and it does it well. This approach makes it possible to extend the functionality of the platform easily.
 
+
 \newpage
 \section{Testing}
 
 One of the concerns when developing the platform is testing interoperability. Due to the many moving parts, a subtle change might break the whole system. For that reason, a variety of automated, manual and build in tests are ran periodically.
 
 Most notable, the core \gls{gem} \texttt{deeploy} contains unit tests covering every element of the machine process. The official best practices guide was used to bootstrap the process \cite{ruby-unit-test-guide}. The \gls{ruby} unit test framework is called \texttt{minitest} and is the recommended solution by the official guide.
+
 
 \newpage
 \section{Evaluation}
@@ -875,7 +877,14 @@ The current solution successfully achieved the outlined objectives. It allows fo
 
 The platform creates a machine quickly and gives feedback to the user though the entire process and similar user experience has been provided throughout the solution. 
 
-\subsection{Things learned}
+\subsection{Personal development}
+This project had a very positive impact on my professional development. I gained skills in the field of virtualisation and cloud computing. In the beginning, I had little to no knowledge on the subject, but now I am more comfortable and familiar with the concepts and methodologies. Building the system also helped me appreciate and adopt as part of my work flow automation and testing practices. Another benefit was practising development with different environments and managing features via version control. 
+
+Because the project was mainly concerned with the Linux \gls{operating-system}, a large amount was learned about the inner workings of commands, using the shell to chain commands together and fork processes. 
+
+In a world that adopts virtual machines more and more, it is also a valuable skill to understand the underlying platform, as opportunities to manage and maintain such system rise more and more.
+
+Overall the work has helped me become a better professional with a diversified skill set, it has let me experience the process of delivering a solution from begin to finish.
 
 \subsection{Future work}
 Because of the limited duration of the dissertation and the work work that has to be carried throughout the implementation (testing, documentation, development, debugging, planning, architecture, external tools, hardware constrains, etc.) certain limitations are put in place to ensure that the project will be completed within the deadline.
@@ -957,7 +966,7 @@ Because of that experience, the dissertation write-up process was changed to doc
 
 \begin{filecontents*}{research.bib}
 
-    @online{amazon-marketshare,
+    @misc{amazon-marketshare,
         author = {Synergy Research Group},
         title = {Amazon Leads; Microsoft, IBM \& Google Chase; Others Trail},
         url = {https://www.srgresearch.com/articles/amazon-leads-microsoft-ibm-google-chase-others-trail},
@@ -965,14 +974,14 @@ Because of that experience, the dissertation write-up process was changed to doc
         note = {Accessed: April 02, 2017}
     }
 
-    @online{harrison-kinsley-tutorials,
+    @misc{harrison-kinsley-tutorials,
         url = {https://www.youtube.com/user/sentdex/about},
         note = {Accessed: April 03, 2017},
         title = {Python Programming tutorials},
         author = {Harrison Kinsley}
     }
 
-    @online{a,
+    @misc{a,
         author = {Internet Live Stats},
         title = {Google Search Statistics},
         url = {http://www.internetlivestats.com/google-search-statistics},
@@ -980,7 +989,7 @@ Because of that experience, the dissertation write-up process was changed to doc
         note = {Accessed: November 26, 2016}
     },
 
-    @online{b,
+    @misc{b,
         author = {Techopedia Inc},
         title = {Definition of Virtualization},
         url = {https://www.techopedia.com/definition/719/virtualization},
@@ -988,28 +997,28 @@ Because of that experience, the dissertation write-up process was changed to doc
         note = {Accessed: November 26, 2016}
     },
 
-    @online{vagrant-definition,
+    @misc{vagrant-definition,
         author = {Hashicorp},
         title = {WHY VAGRANT?},
         url = {https://www.vagrantup.com/docs/why-vagrant/},
         note = {Accessed: 27.03.2017}
     },
 
-    @online{puppet-definition,
+    @misc{puppet-definition,
         author = {Puppet Labs},
         title = {Puppet Documentation},
         url = {https://docs.puppet.com/},
         note = {Accessed: 27.03.2017}
     },
 
-    @online{ruby-on-rails-definition,
+    @misc{ruby-on-rails-definition,
         author = {Ruby On Rails team},
         title = {Getting Started with Rails},
         url = {http://guides.rubyonrails.org/getting_started.html},
         note = {Accessed: 27.03.2017}
     },
 
-    @online{ruby-definition,
+    @misc{ruby-definition,
         author = {Ruby team},
         title = {Ruby homepage},
         url = {https://www.ruby-lang.org/en/},
@@ -1017,7 +1026,7 @@ Because of that experience, the dissertation write-up process was changed to doc
     },
 
 
-    @online{ictonline,
+    @misc{ictonline,
         author = {ITU ICT},
         title = {ICT Facts and Figures 2016},
         url = {http://www.itu.int/en/ITU-D/Statistics/Documents/facts/ICTFactsFigures2016.pdf},
@@ -1042,7 +1051,7 @@ Because of that experience, the dissertation write-up process was changed to doc
         isbn      =  {978-0-13-300710-7},
     }
 
-    @online{what_is_virtual_machine,
+    @misc{what_is_virtual_machine,
         author    = {Oracle corporation},
         title     = {Oracle\texttrademark VM User's Guide},
         year      = {2015},
@@ -1071,7 +1080,7 @@ Because of that experience, the dissertation write-up process was changed to doc
         publisher = {Javvin Technologies},
     }
 
-    @online{intel-cloud-computing-guide,
+    @misc{intel-cloud-computing-guide,
         author = {Intel Corporation},
         title = {Virtualization and Cloud Computing},
         year = {2013},
@@ -1080,7 +1089,7 @@ Because of that experience, the dissertation write-up process was changed to doc
 
     }
 
-    @online{amazon-ec2-prices,
+    @misc{amazon-ec2-prices,
         url = {http://www.ec2instances.info/},
         title = {Amazon EC2 Instance Comparison},
         author = {Garret Heaton},
@@ -1088,15 +1097,15 @@ Because of that experience, the dissertation write-up process was changed to doc
     }
 
 
-    @online{techopedia-it-definition,
+    @misc{techopedia-it-definition,
         url = {http://searchdatacenter.techtarget.com/definition/IT},
         author = {Margaret Rouse},
-        title = {Information Technology (IT) }
+        title = {Information Technology (IT) },
         year = {April, 2015},
         note = {Accessed: April 05, 2017},
     }
 
-    @online{rhel-performance-counters,
+    @misc{rhel-performance-counters,
         url = {https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Developer_Guide/perf.html},
         title = {Performance Counters for Linux (PCL) Tools and perf},
         author = {Red Hat, Inc.},
@@ -1121,16 +1130,18 @@ Because of that experience, the dissertation write-up process was changed to doc
     }
 
     @book{vsphere-definition,
-        title = {VMware vSphere Introduction},
+        title = {Introduction to VMware vSphere},
         author = {VMware, Inc.},
+		publisher = {VMWare Inc},
+		url = {http://www.vmware.com/pdf/vsphere4/r41/vsp_41_intro_vs.pdf},
         year = {2009}
     }
 
-    @online{vmware-definition,
+    @misc{vmware-definition,
         url = {http://www.nytimes.com/2009/08/31/technology/business-computing/31virtual.html},
         note = {Accessed: April 10, 2017},
         author = {STEVE LOHR},
-        year = {August 30, 2009}
+        year = {August 30, 2009},
         title = {Challenging Microsoft With a New Technology}
     }
 
@@ -1139,7 +1150,7 @@ Because of that experience, the dissertation write-up process was changed to doc
         title = {}
     }
 
-    @online{perl-programming-language-shell-scripting,
+    @misc{perl-programming-language-shell-scripting,
         url = {http://blogs.perl.org/users/buddy_burden/2012/04/perl-vs-shell-scripts.html},
         title = {Perl vs Shell Scripts},
         author = {Buddy Burden},
@@ -1147,7 +1158,7 @@ Because of that experience, the dissertation write-up process was changed to doc
         note = {Accessed: April 10, 2017},
     }
 
-	@online{virtualisation-security-guidance,
+	@misc{virtualisation-security-guidance,
 	    url = {https://www.ncsc.gov.uk/guidance/virtualisation-security-guidance},
 		title = {Virtualisation Security Guidance},
 		author = {National Technical Authority for Information Assurance},
@@ -1155,7 +1166,7 @@ Because of that experience, the dissertation write-up process was changed to doc
 		note = {Accessed: April 10, 2017},
 	}
 
-	@online{intel-virtualisation-chip-support,
+	@misc{intel-virtualisation-chip-support,
 		url = {http://www.intel.com/content/www/us/en/support/boards-and-kits/desktop-boards/000005758.html},
 		title = { Intel® Virtualization Technology Requirements},
 		author = {Intel Support},
@@ -1163,7 +1174,7 @@ Because of that experience, the dissertation write-up process was changed to doc
 		note = {Accessed: April 10, 2017},
 	}
 
-	@online{vmware-storage-pool-screenshot,
+	@misc{vmware-storage-pool-screenshot,
 		author  = {Lee Smith Jr.},
 		title   = {vSphere 5.5 Storage Profiles Are Now Storage Policies},
 		year    = {October 28, 2013},
@@ -1171,7 +1182,7 @@ Because of that experience, the dissertation write-up process was changed to doc
 		note = {Accessed: April 15, 2017},
 	}
 
-	@online{amazon-scenarios-for-accessing-db-instance-in-vpc,
+	@misc{amazon-scenarios-for-accessing-db-instance-in-vpc,
 		author = {Amazon Web Services},
 		title = {Scenarios for Accessing a DB Instance in a VPC},
 		year = {September 27, 2015},
@@ -1186,20 +1197,20 @@ Because of that experience, the dissertation write-up process was changed to doc
 		publisher = {Oreilly Media}
 	}
 
-	@online{azure-automation-overview,
+	@misc{azure-automation-overview,
 		author = {Matt Goedtel et .al},
 		year = {October 5, 2010},
 		title = {Azure Automation overview},
 		note = {Accessed: April 20, 2017}
 	}
 
-	@online{the-case-for-investing-cloud-automation,
+	@misc{the-case-for-investing-cloud-automation,
 		author = {Kate Miller},
 		year = {October 7, 2016},
 		title = {The Case for Investing in Cloud Automation}
 	}
 
-    @online{ruby-official-guide,
+    @misc{ruby-official-guide,
 		author = {RubyGem Team},
 		title = {Make your own gem},
 		url = {http://guides.rubygems.org/make-your-own-gem/},
@@ -1207,7 +1218,7 @@ Because of that experience, the dissertation write-up process was changed to doc
 		note = {Accessed: April 13, 2017}
 	}
 
-	@online{netmask-definition,
+	@misc{netmask-definition,
 		author = {Olivier Bonaventure},
 		title = {Computer Networking : Principles, Protocols and Practice},
 		url = {https://www.saylor.org/site/wp-content/uploads/2012/02/Computer-Networking-Principles-Bonaventure-1-30-31-OTC1.pdf},
@@ -1215,7 +1226,7 @@ Because of that experience, the dissertation write-up process was changed to doc
 		note = {Accessed: April 13, 2017}
 	}
 
-	@online{ruby-unit-test-guide,
+	@misc{ruby-unit-test-guide,
 		author = {Gem Sawyer},
 		title = {Ruby Guides},
 		url = {http://guides.rubygems.org/make-your-own-gem/},
@@ -1223,42 +1234,42 @@ Because of that experience, the dissertation write-up process was changed to doc
 		note = {Accessed: April 13, 2017}
 	}
 
-	@online{azure-datacenter-locations,
+	@misc{azure-datacenter-locations,
 		title = {Azure regions},
 		author = {Microsoft Corporation},
 		year = {2016},
 		note = {Accessed: April 20, 2017}
 	}
 
-	@online{azure-compliance,
+	@misc{azure-compliance,
 		title = {The Trusted Cloud},
 		author = {Microsoft Corporation},
 		year = {2017},
 		note = {Accessed: April 20, 2017}
 	}
 
-	@online{vagrant-create-base-box,
+	@misc{vagrant-create-base-box,
 		title = {Creating a Base Box },
 		author = {Hashicorp},
 		year = {2017},
 		note = {Accessed: April 28, 2017}
 	}
 
-	@online{virtual-pc-hypervisor-memory-protection,
+	@misc{virtual-pc-hypervisor-memory-protection,
 		title = {Virtual PC Hypervisor - Memory Protection},
 		author = {Core Security},
 		year = {17 March, 2010},
 		note = {Accessed: April 28, 2017}
 	}
 
-	@online{nagios-website,
+	@misc{nagios-website,
 		title = {Nagios Official Website},
 		author = {Nagios Enterprises.},
 		year = {2017},
 		note = {Accessed: May 1, 2017}
 	}
 
-	@online{twitter-uses-rails,
+	@misc{twitter-uses-rails,
 		title = {Twitter Shifting More Code to JVM, Citing Performance and Encapsulation As Primary Drivers},
 		author = {Charles Humble},
 		year = {July 4, 2011},
@@ -1266,11 +1277,12 @@ Because of that experience, the dissertation write-up process was changed to doc
 		url = {https://www.infoq.com/articles/twitter-java-use},		
 	}
 
-	@online{sidekiq-getting-started,
-	year = {March 1, 2017},
-	title = {Sidekiq Wiki Home},
-	author = { Mike Perham},
-	url = {https://github.com/mperham/sidekiq/wiki}
+	@misc{sidekiq-getting-started,
+		year = {March 1, 2017},
+		title = {Sidekiq Wiki Home},
+		author = { Mike Perham},
+		url = {https://github.com/mperham/sidekiq/wiki},
+		note = {Accessed: May 1, 2017},
 	}
 
 \end{filecontents*}
