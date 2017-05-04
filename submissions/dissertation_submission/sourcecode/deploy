@@ -1,0 +1,245 @@
+#!/usr/bin/env ruby
+
+# dependencies
+
+require 'rubygems'
+require 'bundler/setup'
+require 'commander/import'
+require 'random-word' # used for vm name generation
+require 'fileutils'   # used for recursive folder creation
+require 'figaro'
+require 'slugify'
+require 'deeploy'
+
+# load .env file
+
+Figaro.application = Figaro::Application.new(environment: "development", path: "#{File.expand_path("#{File.dirname(__FILE__)}")}/config/application.yml")
+Figaro.load
+
+# ensures that database connection is established
+Deeploy::Configurable.new
+
+program :name, 'deploy'
+program :version, '0.0.1'
+program :description, 'Create and destroy virtual machines'
+
+# used for authentication of the user
+global_option '--auth_user STRING',String, 'Specifies the authenticated user'
+global_option '--auth_password STRING',String, 'Specifies the authenticated user\'s password'
+global_option '--auth_token STRING', String, 'Instead of using user/password, use token instead'
+
+command :new do |c|
+  c.syntax = 'deploy new [options]'
+  c.summary = 'Creates a new virtual machine'
+  c.description = 'Deploys a new virtual machine, sets up user and allocates public ip'
+  c.example "Example", "deploy new --auth_user usermail@website.com --auth_password password --vm_user nameofvm --distribution ubuntu"
+  # used for authentication of the user
+  # options for the actual virtual machine credentials, e.g. adduser foo with password bar
+  c.option '--vm_user STRING',        String, "Username of the machine"
+  c.option '--distribution STRING',   String, 'The distribution flavour (ubuntu, debian, etc.)'
+  c.option '--vm_name STRING',        String, 'The name of the machine, generates a random name if left blank'
+  c.option '--ports STRING',     String, 'Ports that need to be opened, comma seperated'
+  c.option '--packages STRING',String, 'List of software to be installed on the machine, comma seperated'
+  # c.option '--disk STRING',String, 'Size in gigabytes for the machine'
+  c.option '--ram STRING',String, 'Size in gigabytes for the machine'
+
+
+  c.action do |args, options|
+
+    # VARS
+
+    options.default :vm_name => "#{RandomWord.adjs.next} #{RandomWord.adjs.next} #{RandomWord.nouns.next}"
+    options.vm_name = options.vm_name.slugify
+
+    valid_args!({
+      'vm_user' => options.vm_user,
+      'distribution' => options.distribution
+    }, options)
+
+    # use username password or token
+    owner = auth(options)
+
+    # grab ports(optional)
+    ports = []
+    if options.ports
+      ports = options.ports.split(',').uniq
+    end
+
+    # grap packages(optional)
+    packages = []
+    if options.packages
+      packages = options.packages.split(',').uniq
+    end
+
+    ram = options.ram ||= 1
+    
+    machine = Deeploy::VM.new(
+      distribution: options.distribution,
+      title: options.vm_name,
+      owner: owner,
+      vm_user: options.vm_user,
+      opts: {
+        'packages' => packages,
+        # 'disk' => disk,
+        'ports' => ports,
+        'ram' => ram
+      }
+    )
+    if machine
+      machine.build()
+    else
+      $stdout.puts("Unable to create machine")
+    end
+  end
+end
+
+
+
+command :list do |c|
+  c.syntax = 'deploy list [options]'
+  c.summary = 'List virtual machines associated with a user'
+  c.description = 'List virtual machines associated with a user'
+  c.example "Example", "deploy list --auth_token token "
+
+  # used for authentication of the user
+
+  c.action do |args, options|
+
+    valid_args!(options)
+
+    owner = auth(options)
+    
+    machines = owner.fetch_machines()
+    machines.each do |machine|
+      $stdout.printf "#{machine.title} \t"
+    end
+
+    $stdout.puts "No machines found" if ! machines.length
+
+    # adds newline for formatting
+    $stdout.puts ""
+  end
+end
+
+command :destroy do |c|
+  c.syntax = 'deploy destroy [options]'
+  c.summary = 'Removes a virtual machine'
+  c.description = 'Removes a virtual machine'
+  c.example "Example", "deploy destroy --auth_token token --vm_name virtualmachinename"
+
+  # options for the actual virtual machine credentials, e.g. adduser foo with password bar
+  c.option '--vm_name STRING',String, 'The name of the machine'
+  c.action do |args, options|
+
+    # enforce required arguments
+
+    valid_args!({
+      'vm_name' => options.vm_name
+    }, options)
+
+    m = Deeploy::VM.get(title: options.vm_name, owner: auth(options))
+    if m
+      m.destroy
+    else
+      $stderr.puts("Could not find machine")
+    end
+  end
+end
+
+command :down do |c|
+  c.syntax = 'deploy down [options]'
+  c.summary = 'Turns a virtual machine off'
+  c.description = 'Turns a virtual machine off'
+  c.example "Example", "deploy down --auth_token token --vm_name virtualmachinename"
+
+  # options for the actual virtual machine credentials, e.g. adduser foo with password bar
+  c.option '--vm_name STRING',String, 'The name of the machine'
+  c.action do |args, options|
+
+    # enforce required arguments
+
+    valid_args!({
+      'vm_name' => options.vm_name
+    }, options)
+
+    m = Deeploy::VM.get(title: options.vm_name, owner: auth(options))
+    if m
+      m.down
+    else
+      $stderr.puts("Could not find machine")
+    end
+  end
+end
+
+command :up do |c|
+  c.syntax = 'deploy down [options]'
+  c.summary = 'Turns a virtual machine on'
+  c.description = 'Turns a virtual machine on'
+  c.example "Example", "deploy down --auth_token token --vm_name virtualmachinename"
+
+  # options for the actual virtual machine credentials, e.g. adduser foo with password bar
+  c.option '--vm_name STRING',String, 'The name of the machine'
+  c.action do |args, options|
+
+    # enforce required arguments
+
+    valid_args!({
+      'vm_name' => options.vm_name
+    }, options)
+
+    Deeploy::VM.get(title: options.vm_name, owner: auth(options)).up
+  end
+end
+
+def valid_args!(args={}, options)
+  errors=0
+  # first, check if auth args are passed
+
+  if !((options.auth_user and options.auth_password) or options.auth_token)
+    $stderr.puts "Missing authentication: \nUse --auth_user username --auth_password password\nOr --auth_token token,\n"
+    errors+=1
+  end
+
+  args.each do |key, value|
+    if value.to_s.empty?
+      $stderr.puts "Missing argument: --#{key},\n"
+      errors+=1
+    else
+      errors=0
+      # first, check if auth args are passed
+
+      if ! options.auth_user and ! options.auth_password and ! options.auth_token
+        $stderr.puts "No authentication parameters passed: \nUse --auth_user username --auth_password password\nOr --auth_token token,\n"
+        errors+=1
+      end
+
+      if !((options.auth_user and options.auth_password) or options.auth_token)
+        $stderr.puts "Missing authentication: \nUse --auth_user username --auth_password password\nOr --auth_token token,\n"
+        errors+=1
+      end
+
+      args.each do |key, value|
+        if value.to_s.empty?
+          $stderr.puts "Missing argument: --#{key},\n"
+          errors+=1
+        end
+      end
+
+    end
+
+    if errors > 0
+      $stderr.puts "Use --help for more information"
+      exit 1
+    end
+  end
+end
+
+def auth(options)
+  owner = nil
+  if options.auth_user && options.auth_password
+    owner = Deeploy::User::authenticate(email: options.auth_user, password: options.auth_password)
+  else
+    owner = Deeploy::User::authenticate(token: options.auth_token)
+  end
+  return owner
+end

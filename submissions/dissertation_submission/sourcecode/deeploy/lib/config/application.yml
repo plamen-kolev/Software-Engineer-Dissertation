@@ -1,0 +1,38 @@
+# Add configuration values here, as shown below.
+#
+# pusher_app_id: "2954"
+# pusher_key: 7381a978f7dd7f9a1117
+# pusher_secret: abdc3b896a0ffb85d373
+# stripe_api_key: sk_test_2J0l093xOyW72XUYJHE4Dv2r
+# stripe_publishable_key: pk_test_ro9jV5SNwGb1yYlQfzG17LHK
+#
+production:
+  DEVISE_COST: '11'
+  HASHING_PEPPER: asdasdasdcce440asdasdasdasdasde090714f7e614eddb9b95cab38bd475b539b7d5cc845e
+  DATABASE_ADAPTER: sqlite3
+
+  DATABASE_HOST: localhost
+  DATABASE_DB: ''
+  DATABASE_USERNAME: ''
+  DATABASE_PASSWORD: ''
+  NETWORK_INTERFACE: vboxnet0
+  RAILS_ENV: development
+  DEEPLOY_ENV: production
+
+test:
+  database_host: localhost
+  database_adapter: sqlite3
+  network_interface: vboxnet1
+  rails_env: test
+  db_path: '/home/hallagat/Projects/dissertation/sourcecode/db'
+  machine_path: "/home/hallagat/Projects/dissertation/sourcecode"
+  DEEPLOY_ENV: test
+
+development:
+  database_host: localhost
+  database_adapter: sqlite3
+  network_interface: vboxnet0
+  rails_env: development
+  db_path: '/home/hallagat/Projects/dissertation/sourcecode/db'
+  machine_path: "/home/hallagat/Projects/dissertation/sourcecode"
+  DEEPLOY_ENV: development

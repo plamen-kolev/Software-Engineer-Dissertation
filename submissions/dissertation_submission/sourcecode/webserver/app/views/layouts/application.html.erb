@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Deeploy</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= render 'layouts/header' %>
+    <% if not $has_network %>
+      <div class="col-md-12 container">
+        <div class="alert alert-danger">
+          <strong>Danger!</strong> Network interfaces not setup correctly, Netmask <%= $network_mask %>, IP address: <%= $network_host %>
+          <br/> Ensure that the IP is different to the local network.
+        </div>
+      </div>
+    <% end %>
+
+    <% if not $sidekiq_running %>
+      <div class="col-md-12 container">
+        <div class="alert alert-danger">
+          <strong>Danger!</strong> Queue server not running
+        </div>
+      </div>
+  <% end %>
+
+    <%= yield %>
+    <%= render 'layouts/footer' %>
+  </body>
+
+  <%= yield :scripts %>
+</html>
