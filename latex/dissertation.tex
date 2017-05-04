@@ -6,7 +6,7 @@
 
 % USERPACKAGES
 \usepackage{hyperref}
-
+\usepackage[toc,page]{appendix}
 \usepackage{graphicx}
 \graphicspath{ {resources/images/} }
 \usepackage{glossaries}
@@ -652,10 +652,18 @@ The object-oriented pattern for building modular software was used. This approac
 \newpage
 \section{Testing}
 
-One of the concerns when developing the platform is testing interoperability. Due to the many moving parts, a subtle change might break the whole system. For that reason, a variety of automated, manual and build in tests are ran periodically.
+One of the concerns when developing the platform is testing interoperability. Due to the many moving parts, a subtle change might break the whole system. For that reason, a variety of automated, manual and built-in tests are ran periodically.
 
-Most notable, the core \gls{gem} \texttt{deeploy} contains unit tests covering every element of the machine process. The official best practices guide was used to bootstrap the process \cite{ruby-unit-test-guide}. The \gls{ruby} unit test framework is called \texttt{minitest} and is the recommended solution by the official guide.
+Most notable, the core \gls{gem} \texttt{deeploy} contains unit tests covering every element of the machine process. The official best practices guide was used to bootstrap the process \cite{ruby-unit-test-guide}. The \gls{ruby} unit test framework is called \texttt{minitest} and is the recommended solution from the framework provider.
+The core tests verify that an address can be allocated, machine name can be generated and try to perform basic operations, such as building every possible machine. The tests also try to install every package, open a variety of ports, bring machines up and down and destroy them.
 
+As a core principle, the testing is implemented in a such way that is self contained and clean-up is done after each test. This ensures that tests do not conflict with each-other and testing is compartmentalised. During a running of a test, before and after actions are always triggered to bring the environment to a known state.
+
+The tests also set a testing environmental variable, which forces them to be on a testing private network with their own name-space. For example, in production, the configuration of users is stored in a folder \texttt{users}, but in testing, a different folder called \texttt{test\_users} is used. This separation ensures both environments can coexist without overwriting each-other or conflict on the same network. The web server also uses a separate testing database during testing to ensure no users become affected. This methodology is achieved thanks to the initial architecture of the solution - as it is always aware of which context it is running in.
+
+The unit tests had a very positive effect on the quality of the development process. When a new feature is implemented, it is pushed upstream only after the tests are passing. Another benefit of the written tests is their integration into the core of the product. For example, the testing if a machine is running after deploy is performed every time upon build, if the test fails, the actual deployment fails. Having automated tests also reduces drastically manual testing, giving more time to do actual development and implement features. 
+
+Even though the core component \texttt{deeploy} has automated tests, the web side relies heavily on manual testing. When any new changes are made, the whole interfaced is checked for errors by hand to ensure proper integration. Generally, this is not a good practice, but it was a compromise due to little development time. If more time was available, selenium web driver would be used to do full interface testing. Selenium allows for Javascript - client side code to be executed on a web page, making it possible to automate user clicks and actions. The issue is that integrating this testing framework with the solution would have taken significant amount of effort and time. 
 
 \newpage
 \section{Evaluation}
@@ -914,9 +922,15 @@ Mac OSX virtual deployment was also something left for future. It also has simil
 \section{Glossary}
 \printglossary
 \newpage
-\section{Appendix}
+%\section{Appendix}
+
+\begin{appendices}
+
+\section{Additional reading materials}
 
 \section{Planning}
+
+%\section{Planning}
 
 \begin{center}
 	\includegraphics[width=12cm]{gantt.jpg}
@@ -963,7 +977,7 @@ The task of learning \gls{puppet} was achieved by creating end-to-end automation
 The initial plan as stated in the project proposal is to document the work during each stage of the process, like implementing a new feature. Later, the decision was made to not strictly follow that plan, as there were few components that changed drastically. For example, in the beginning, using chef was planned for configuration automation and management instead of puppet. After evaluating and experimenting with it for 5 days, it was apparent that the set-up overhead was slowing down the actual development process.
 
 Because of that experience, the dissertation write-up process was changed to documenting features only when they are established. And reasonably stable. The document paper is written using the latex language.
-
+\end{appendices}
 \begin{filecontents*}{research.bib}
 
     @misc{amazon-marketshare,
