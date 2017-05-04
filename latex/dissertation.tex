@@ -618,16 +618,25 @@ To avoid long wait times and unresponsive interface, redis cache queue is used. 
 Upon unsuccessful build, the web server pulls the build logs and creates a downloadable link to the resource. This is done for debugging purposes. The middleware which ensures that \texttt{redis} jobs are completed is called \texttt{sidekiq}, the build worker discussed above is written with the support of sidekiq's documentation \cite{sidekiq-getting-started}. It is important to note that if \texttt{redis} is not working, the machine build functionality will not work. For this reason, in order to run the web server, redis and sidekiq must be up and running. Code has been added to raise exceptions when these tools are not running.
 
 \subsubsection{Implementing the Health monitor}
-Two strategies were used when providing the machine status. The first one is using a health service 'worker' process. This is again written in \texttt{sidekiq} framework and it has hooks with \texttt{deeploy} module's machine state calls. A \gls{cron} task runs every minute and checks the state of each machine via the worker. A machine is assumed to be alive if the health worker gets an edged after connection attempt on \gls{ssh} port 22. If this connection cannot be established, the machine is assumed to be inaccessible.
+Two strategies were used when checking machine status. The first one is using a health service 'worker' process. This is again written in with the help of \texttt{sidekiq} and has hooks with \texttt{deeploy} module's machine state. A \gls{cron} task runs every minute and checks the state of each machine via the worker. A machine is assumed to be alive if the health worker gets an acknowledgement after connection attempt on \gls{ssh} port 22. If this connection cannot be established, the machine is assumed to be inaccessible.
 
 The second strategy is pre-installing a free and open-source software \texttt{monitorix}, a tool for monitoring a variety of hardware parameters over a large period of time. The setup is configured in such a way that a firewall is blocking external connection to the monitorix's ports and only the web platform's \gls{ipaddress} is allowed. This ensures that only a logged-in user can view the performance statistics of the machines. A running interface of monitorix is shown in figure \ref{fig:monitorix-example}
+
+\begin{figure}[h!]
+	\vspace{0.5cm}
+	\includegraphics[width=12cm]{monitorix_screenshot_orig.png}
+	\vspace{0.5cm}
+	\caption{Monitorix user interface}
+	\label{fig:monitorix-example}
+\end{figure}
+
 
 \subsubsection{Obtaining Certificates}
 The web server has the necessary code to allow an authenticated user to download their authentication certificate files for gaining access to their respective machine. Work has been done to ensure the user understands how to use the certificate - a short code snippet tailored for the machine is provided with each instance. Upon certificate download, the authentication files are deleted from the server for security reasons.
 
 \subsubsection{Management Functionality}
 The interface is also a gateway to managing the state of the
-machines. The web dashboard of a logged in user, as shown in figure \ref{fig:web-dashboard}, gives information about many aspects of the created instances. This is where the management panel for powering on, off, destroying and restarting is exposed. All of these features use the core \texttt{deeploy} module for this functionality.
+machines. The web dashboard of a logged in user, as shown in figure \ref{fig:web-interface-dashboard}, gives information about many aspects of the created instances. This is where the management panel for powering on, off, destroying and restarting is exposed. All of these features use the core \texttt{deeploy} module for this functionality.
 
 \subsection{Security}
 
@@ -647,7 +656,7 @@ Two strategies were considered - allowing users to import mandatory public key t
 \subsubsection{Guest Isolation concerns}
 This is one of the greatest benefits of running in a virtual environment. All the machine operating on top of the platform are isolated from one another and one \gls{operating-system}'s calls cannot interfere with another. In terms of architecture, this is a good design, but there are some drawbacks.
 
-One of the most severe issues with guest isolation is exploiting a vulnerability in virtualisation memory and reading another machine's memory. This attack is known as "Virtual PC Hypervisor - Memory Protection" \cite{virtual-pc-hypervisor-memory-protection}.  An exploit can cause passwords leak and disclosure of sensitive information.
+One of the most severe issues with guest isolation is exploiting a vulnerability in virtualisation memory and reading another machine's memory. This attack is known as "Virtual PC Hypervisor - Memory Protection violation" \cite{virtual-pc-hypervisor-memory-protection}.  An exploit can cause passwords leak and disclosure of sensitive information.
 
 \subsubsection{\gls{ssh} Keys}
 The tool \gls{vagrant} has two modes when generating access keys - insecure and secure. When insecure keys is used, every machine has the same credentials. The second configuration is used, as exploiting one instance leaves the whole infrastructure breached.
@@ -691,7 +700,7 @@ The evaluation of the work has been done with the help of Newcastle University \
 
 \subsection{Deployment Overview}
 The requirement ~\nameref{itm:deploy}  is listed on page~\pageref{itm:deploy} in section `\ref{itm:deploy}'.
-The objective of deploying a virtual machine has been achieved by giving the user the opportunity to deploy 3 distinctive distributions. The process takes between 1-5 minutes and requires an authenticated user.
+The objective of deploying a virtual machine has been achieved by giving the user the opportunity to deploy 3 distinctive distributions. The process takes between 1-2 minutes and requires an authenticated user.
 
 When using the back-end tool, it is possible to do everything that the web interface can. Issuing \texttt{deploy --help} and \texttt{deploy new --help} brings up a help menu that gives a detailed command line manual page. Figure \ref{fig:deeploy-help} and \ref{fig:deeploy-new-help} show the output.
 
@@ -804,7 +813,7 @@ The benchmarking numbers are achieved on \texttt{Intel(R) Core(TM) i3-4170 CPU @
 During build time, the deployment script outputs progress messages when key stages are detected. The system would become more user-friendly if more stages are added. Increasing response time adds to usability and perceived reliability.
 
 \subsection{Investigating Failures}
-Deploying a machine successful is not always the case. Large chunk of the code ensures that errors are detected, reported and deployment is rolled back (cleanup). This is important, as the user of the system must always be aware of any progress or failure.
+Deploying a machine successfully is not always the case. Large chunk of the code ensures that errors are detected, reported and deployment is rolled back (cleanup). This is important, as the user of the system must always be aware of any progress or failure.
 Detecting and reporting unsuccessful builds is done via providing failure status in the web interface. The failed machine's logs are also accessible, making it possible to report issues via emailing such files to a system maintainer. The platform detects network failures, \gls{ipaddress} allocation errors, bad arguments or build taking too much time as well as deployment script crashes.
 An issue with this process as of now is that detection happens, but detailed report of what went wrong is lacking. An extension to the system should allow the user to go to a dedicated error page. It will give a description of what exactly caused the failure and give the ability to report it.
 
@@ -850,6 +859,15 @@ When submitting the form, few validation passes are made before the machine is b
 Validators check uniqueness of machine name, presence of virtual machine owner, distribution, \gls{ram} within range and conflicting packages.
 
 When the correct parameters are passed and the form is successfully submited, the user receives a progress bar indicating the build status with two possible outcomes - success or failure. The various stages are shown in figure \ref{fig:build_stages}.
+
+\begin{figure}[H]
+	\vspace{0.5cm}
+	\includegraphics[width=10cm]{build_stages.jpg}
+	\vspace{0.5cm}
+	\caption{Build Stages Overview}
+	\label{fig:build_stages}
+\end{figure}
+
 Upon failed build, the logs can be checked to gain insights into what went wrong.
 
 From the web dashboard, it is possible to view the running state of all machines. Extra information about \gls{ipaddress} of the machine, user name and distribution is also displayed. The interface also allows for the machine to be powered off, turned back on or destroyed. The dashboard allows the user to download authentication certificate and gives instruction commands on how to access the machine.
@@ -877,14 +895,14 @@ Currently little to no documentation is provided. This can be improved by writin
 The requirements ~\nameref{itm:firewall} and ~\nameref{itm:packages} are listed on page~\pageref{itm:firewall} in section '\ref{itm:firewall}'.
 The solution provides the ability to open network ports to the outside world and to do package management during the install process via the web interface. Currently, few common packages can be installed to illustrate the functionality. Future work should go into finding the most vital packages and offer them as an option. This is possible due to the ability of the solution to extend packages, ports and deployment flow.
 
-Something that is currently lacking is the ability to amend ports and packages. After the build process is over, one can manually connect to the machine and install/remove software but the process is not automated after the machine is already deployed.
+Something that is currently lacking is the ability to amend ports and packages. After the build process is over, one can manually connect to the machine and install/remove software but the process is not automated after the machine is already deployed via the web interface.
 
 \subsection{Package Mirroring}
 As part of the evaluation feedback, a suggestion was made to use package mirroring server in the future. This is a server that contains a \gls{rsync} copy of the official distribution packages. The idea is to have everything necessary downloaded, making it installable to every new virtual instance almost immediately. This will have the effect of reducing bandwidth costs and reduce build times.
 
 \subsection{System resource validation}
 During the deployment process, a machine is validated on its own and the platform's state is not considered. For example, if there is not disk space available or the system is low on \gls{ram}, this will not get detected and failure might happen. This has not been implemented because it requires managing virtual hard drives and storing meta-data about the virtual machine with status of the whole platform. It would require large sum of work and would take significant amount of work, possibly making it impossible to deliver the platform on time.
-Not tackling this issue helped allocate more time on the core components and the actual operations of this work.
+Not tackling this issue helped allocate more time on the core components and deliver the assignment on time.
 
 \subsubsection{Security evaluation - Leaking passwords}
 When using the command line tool on the server platform, \gls{unix} command \texttt{ps} can be used to see all arguments passed to the build tool. When using the --password flag, this will disclose it.
@@ -906,14 +924,14 @@ The platform creates a machine quickly and gives feedback to the user though the
 \subsection{Personal development}
 This project had a very positive impact on my professional development. I gained skills in the field of virtualisation and cloud computing. In the beginning, I had little to no knowledge on the subject, but now I am more comfortable and familiar with the concepts and methodologies. Building the system also helped me appreciate and adopt as part of my work flow automation and testing practices. Another benefit was practising development with different environments and managing features via version control. 
 
-Because the project was mainly concerned with the Linux \gls{operating-system}, a large amount was learned about the inner workings of commands, using the shell to chain commands together and fork processes. 
+Because the project was mainly concerned with the Linux \gls{operating-system}, a large amount was learned about the inner workings of commands, using the shell to chain commands together (pipe) and fork processes. 
 
-In a world that adopts virtual machines more and more, it is also a valuable skill to understand the underlying platform, as opportunities to manage and maintain such system rise more and more.
+In a world that adopts virtual machines more and more, it is also a valuable skill to understand the underlying platform, as opportunities to manage and maintain such system arise more and more.
 
 Overall the work has helped me become a better professional with a diversified skill set, it has let me experience the process of delivering a solution from begin to finish.
 
 \subsection{Future work}
-Because of the limited duration of the dissertation and the work work that has to be carried throughout the implementation (testing, documentation, development, debugging, planning, architecture, external tools, hardware constrains, etc.) certain limitations are put in place to ensure that the project will be completed within the deadline.
+Because of the limited duration of the dissertation and the work that has to be carried throughout the implementation (testing, documentation, development, debugging, planning, architecture, external tools, hardware constrains, etc.) certain limitations are put in place to ensure that the project will be completed within the deadline.
 
 The initial constrain are defined to limit the solution to a single host. This work is done as a proof-of-concept system that has the potential to be scaled up and extended to support a clustered deployment.
 Creating a distributed and scalable implementation of this work goes beyond the scope of the objectives. This is not to say that it is limited to single host, but testing and planning guarantee that it will be fully functional under such condition.
