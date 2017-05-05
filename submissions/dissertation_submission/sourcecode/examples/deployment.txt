@@ -1,7 +1,0 @@
-./deploy new --auth_user local@host.com --auth_password password --vm_name ubuntu_vm --distribution ubuntu --vm_user plamen --vm_password password
-
-./deploy new --auth_user local@host.com --auth_password password --vm_name centos_vm --distribution centos --vm_user plamen --vm_password password
-
-./deploy new --auth_token securetoken --vm_name crypto --distribution ubuntu --vm_user plamen --vm_password hello
-
-./deploy list --auth_token securetoken 
