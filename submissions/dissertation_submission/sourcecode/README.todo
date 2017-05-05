@@ -1,0 +1,10 @@
+Create download pem file section in the website
+Create warning in the website if no virtual interface is up
+Write tests for open ports
+Write ping test to verify machine up
+
+Test connecting with pem file
+Enable custom software installation
+Test custom software installation
+Do ping test
+Allow machines to be restarted from the user

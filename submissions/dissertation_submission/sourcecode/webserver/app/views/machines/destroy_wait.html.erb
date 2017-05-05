@@ -1,0 +1,31 @@
+<div class="col-md-12 container">
+  <div class='center-container' style="margin-top:30px;">
+    <div class="center">
+      <%= image_tag 'spiffygif_92x92.gif', class: 'image_spinner', alt: 'taken from http://spiffygif.com/', style: 'margin-bottom:20px' %>
+      <strong id="machine_build_status">Destroying machine <%= @machine.title %>: please wait</strong>
+      <div class="go_to_index"></div>
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+    var interval = setInterval(function () {
+        $.ajax({
+            url: 'http://localhost:3000/machines/<%= @machine.title %>/status',
+            success: function(result){
+                if (result.exists == false){
+                    console.log("clearing interval");
+                    clearInterval(interval);
+                    $('#machine_build_status').html('Machine destroyed');
+                    $('.image_spinner').hide();
+                    $('.go_to_index').html("<a href='/' class='btn btn-primary btn-lg' role='button'>Continue</a>");
+                }
+
+            }
+
+        });
+    }, 500);
+</script>
+
